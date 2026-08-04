@@ -37,8 +37,8 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
   const geometry = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
-    const green = new THREE.Color("#b9ff9b");
-    const blue = new THREE.Color("#5da6ff");
+    const white = new THREE.Color("#f7fcff");
+    const blue = new THREE.Color("#9ed7ff");
 
     for (let index = 0; index < count; index += 1) {
       const radius = 2.3 + Math.random() * 4.7;
@@ -47,7 +47,7 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
       positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta);
       positions[index * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.62;
       positions[index * 3 + 2] = radius * Math.cos(phi);
-      const color = green.clone().lerp(blue, Math.random());
+      const color = white.clone().lerp(blue, Math.random());
       colors[index * 3] = color.r;
       colors[index * 3 + 1] = color.g;
       colors[index * 3 + 2] = color.b;
@@ -115,24 +115,26 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
   const points = useRef<THREE.Points>(null);
   const motionTime = useRef(0);
-  const count = reducedMotion ? 760 : 1120;
+  const surfaceCount = reducedMotion ? 760 : 1120;
+  const trailCount = reducedMotion ? 48 : 84;
+  const totalCount = surfaceCount + trailCount;
   const cloud = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
-    const sizes = new Float32Array(count);
-    const phases = new Float32Array(count);
+    const positions = new Float32Array(totalCount * 3);
+    const colors = new Float32Array(totalCount * 3);
+    const sizes = new Float32Array(totalCount);
+    const phases = new Float32Array(totalCount);
     const palette = [
-      new THREE.Color("#b9ff9b"),
-      new THREE.Color("#7ebe70"),
-      new THREE.Color("#5da6ff"),
-      new THREE.Color("#87c7ff"),
-      new THREE.Color("#605be5"),
-      new THREE.Color("#b9ff9b"),
+      new THREE.Color("#ffffff"),
+      new THREE.Color("#dff4ff"),
+      new THREE.Color("#b9e2ff"),
+      new THREE.Color("#8fcaff"),
+      new THREE.Color("#eef9ff"),
+      new THREE.Color("#c9eaff"),
     ];
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
 
-    for (let index = 0; index < count; index += 1) {
-      const pointProgress = index / Math.max(count - 1, 1);
+    for (let index = 0; index < surfaceCount; index += 1) {
+      const pointProgress = index / Math.max(surfaceCount - 1, 1);
       const y = 1 - pointProgress * 2;
       const radius = Math.sqrt(Math.max(0, 1 - y * y));
       const angle = goldenAngle * index;
@@ -145,8 +147,29 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       colors[offset] = color.r;
       colors[offset + 1] = color.g;
       colors[offset + 2] = color.b;
-      sizes[index] = index % 61 === 0 ? 2.55 : index % 19 === 0 ? 1.72 : index % 7 === 0 ? 1.08 : 0.6;
+      sizes[index] = index % 61 === 0 ? 3.05 : index % 19 === 0 ? 2.08 : index % 7 === 0 ? 1.34 : 0.82;
       phases[index] = (index * 0.754877666) % (Math.PI * 2);
+    }
+
+    const trailSegments = trailCount / 3;
+    for (let localIndex = 0; localIndex < trailCount; localIndex += 1) {
+      const index = surfaceCount + localIndex;
+      const trail = localIndex % 3;
+      const step = Math.floor(localIndex / 3);
+      const trailProgress = step / Math.max(trailSegments - 1, 1);
+      const angle = -1.12 + trailProgress * 2.24 + trail * 1.18;
+      const radius = 1.42 + trail * 0.24 + Math.sin(trailProgress * Math.PI) * 0.12;
+      const offset = index * 3;
+      positions[offset] = Math.cos(angle) * radius;
+      positions[offset + 1] = (trailProgress - 0.5) * (0.9 - trail * 0.1) + Math.sin(angle * 1.7 + trail) * 0.16;
+      positions[offset + 2] = Math.sin(angle) * radius * 0.62 - 0.18 + trail * 0.08;
+
+      const color = palette[(localIndex + trail * 2) % palette.length];
+      colors[offset] = color.r;
+      colors[offset + 1] = color.g;
+      colors[offset + 2] = color.b;
+      sizes[index] = localIndex % 11 === 0 ? 2.4 : localIndex % 5 === 0 ? 1.36 : 0.72;
+      phases[index] = (localIndex * 1.173 + trail * 0.8) % (Math.PI * 2);
     }
 
     return {
@@ -156,23 +179,23 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       phases,
       basePositions: positions.slice(),
     };
-  }, [count]);
-  const velocities = useMemo(() => new Float32Array(count * 3), [count]);
+  }, [surfaceCount, totalCount, trailCount]);
+  const velocities = useMemo(() => new Float32Array(totalCount * 3), [totalCount]);
   const dotUniforms = useMemo(() => ({ uOpacity: { value: 1 } }), []);
 
   useFrame((state, delta) => {
     if (!group.current || !points.current) return;
     const isCompact = state.size.width < 980;
-    const radarWidth = isCompact
+    const visualWidth = isCompact
       ? Math.min(state.size.width * (state.size.width < 720 ? 1.12 : 0.62), 560)
       : Math.min(state.size.width * 0.44, 680);
-    const radarCenterOffset = isCompact
+    const visualCenterOffset = isCompact
       ? 0
-      : state.size.width * 0.42 - radarWidth * 0.5;
+      : state.size.width * 0.42 - visualWidth * 0.5;
     const cameraSpan = 2 * Math.tan(THREE.MathUtils.degToRad(20)) * 7;
-    const targetX = radarCenterOffset * cameraSpan / state.size.height;
+    const targetX = visualCenterOffset * cameraSpan / state.size.height;
     const targetScale = THREE.MathUtils.clamp(
-      radarWidth * 0.48 * cameraSpan / (2 * state.size.height),
+      visualWidth * 0.43 * cameraSpan / (2 * state.size.height),
       state.size.width < 720 ? 0.58 : 0.7,
       0.86,
     );
@@ -200,7 +223,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     points.current.rotation.y += safeDelta * 0.016;
     points.current.rotation.x = -0.1 + Math.sin(animatedTime * 0.42) * 0.052;
 
-    for (let index = 0; index < count; index += 1) {
+    for (let index = 0; index < surfaceCount; index += 1) {
       const offset = index * 3;
       const baseX = cloud.basePositions[offset];
       const baseY = cloud.basePositions[offset + 1];
@@ -234,6 +257,27 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       positions[offset + 2] = currentZ + velocities[offset + 2];
     }
 
+    for (let index = surfaceCount; index < totalCount; index += 1) {
+      const offset = index * 3;
+      const phase = cloud.phases[index];
+      const currentX = positions[offset];
+      const currentY = positions[offset + 1];
+      const currentZ = positions[offset + 2];
+      const targetX = cloud.basePositions[offset] + Math.sin(animatedTime * 0.58 + phase) * 0.045;
+      const targetY = cloud.basePositions[offset + 1] + Math.cos(animatedTime * 0.46 + phase) * 0.035;
+      const targetZ = cloud.basePositions[offset + 2] + Math.sin(animatedTime * 0.52 + phase * 0.7) * 0.04;
+
+      velocities[offset] += (targetX - currentX) * 8.5 * safeDelta;
+      velocities[offset + 1] += (targetY - currentY) * 8.5 * safeDelta;
+      velocities[offset + 2] += (targetZ - currentZ) * 8.5 * safeDelta;
+      velocities[offset] *= damping;
+      velocities[offset + 1] *= damping;
+      velocities[offset + 2] *= damping;
+      positions[offset] = currentX + velocities[offset];
+      positions[offset + 1] = currentY + velocities[offset + 1];
+      positions[offset + 2] = currentZ + velocities[offset + 2];
+    }
+
     positionAttribute.needsUpdate = true;
   });
 
@@ -257,10 +301,10 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             varying float vOpacity;
             void main() {
               vColor = color;
-              vOpacity = mix(0.36, 0.94, clamp(pointSize / 2.55, 0.0, 1.0));
+              vOpacity = mix(0.44, 0.98, clamp(pointSize / 3.05, 0.0, 1.0));
               vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
               gl_Position = projectionMatrix * viewPosition;
-              gl_PointSize = pointSize * 4.15 * (7.0 / max(1.0, -viewPosition.z));
+              gl_PointSize = pointSize * 5.05 * (7.0 / max(1.0, -viewPosition.z));
             }
           `}
           fragmentShader={`
@@ -538,8 +582,7 @@ export function SigmaExperience() {
         <div className="experience-fallback" />
         <div className="tech-hud">
           <div className="tech-hud__grid" />
-          <div className="tech-hud__orb" />
-          <div className="tech-hud__scan" />
+          <div className="tech-hud__aura" />
         </div>
         <ExperienceCanvas progress={progress} reducedMotion={reducedMotion} />
         <div className="experience-vignette" />
