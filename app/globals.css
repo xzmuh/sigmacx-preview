@@ -1665,11 +1665,13 @@ video {
 }
 
 .trust-metric > span {
+  display: inline-block;
+  padding-block: 0.03em 0.09em;
   color: #397a59;
   font-size: clamp(5rem, 11vw, 10rem);
   font-weight: 650;
   letter-spacing: -0.09em;
-  line-height: 0.8;
+  line-height: 0.9;
   background: linear-gradient(135deg, #2c6c50 0%, #5d8f71 54%, #605be5 135%);
   background-clip: text;
   -webkit-background-clip: text;
