@@ -273,7 +273,15 @@ export function SigmaExperience() {
     let cleanupMotion = () => {};
     const context = gsap.context(() => {
       if (!reducedMotion) {
-        const lenis = new Lenis({ duration: 1.1, smoothWheel: true, syncTouch: false });
+        const lenis = new Lenis({
+          duration: 1.35,
+          easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+          smoothWheel: true,
+          wheelMultiplier: 0.82,
+          touchMultiplier: 1.1,
+          syncTouch: false,
+          anchors: { offset: -88, duration: 1.25 },
+        });
         lenis.on("scroll", ScrollTrigger.update);
         const tick = (time: number) => lenis.raf(time * 1000);
         gsap.ticker.add(tick);
