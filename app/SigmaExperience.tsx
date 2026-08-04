@@ -58,6 +58,30 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
     return next;
   }, [count]);
 
+  const particleTexture = useMemo(() => {
+    const size = 32;
+    const data = new Uint8Array(size * size * 4);
+    for (let y = 0; y < size; y += 1) {
+      for (let x = 0; x < size; x += 1) {
+        const dx = (x + 0.5) / size - 0.5;
+        const dy = (y + 0.5) / size - 0.5;
+        const distance = Math.sqrt(dx * dx + dy * dy) / 0.5;
+        const glow = Math.max(0, 1 - distance);
+        const alpha = Math.pow(glow, 1.65);
+        const offset = (y * size + x) * 4;
+        data[offset] = 255;
+        data[offset + 1] = 255;
+        data[offset + 2] = 255;
+        data[offset + 3] = Math.round(alpha * 255);
+      }
+    }
+    const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+    texture.needsUpdate = true;
+    texture.magFilter = THREE.LinearFilter;
+    texture.minFilter = THREE.LinearFilter;
+    return texture;
+  }, []);
+
   useFrame((state, delta) => {
     if (!points.current || reducedMotion) return;
     points.current.rotation.y += delta * (0.12 + progress.current * 0.16);
@@ -72,9 +96,11 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
   return (
     <points ref={points} geometry={geometry}>
       <pointsMaterial
-        size={0.031}
+        size={0.072}
+        map={particleTexture}
+        alphaTest={0.015}
         transparent
-        opacity={0.86}
+        opacity={0.76}
         vertexColors
         sizeAttenuation
         depthWrite={false}
@@ -87,87 +113,37 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
-  const rings = useRef<Array<THREE.Mesh | null>>([]);
 
   useFrame((state, delta) => {
-    if (!group.current || !shell.current || reducedMotion) return;
-    group.current.rotation.y += delta * 0.34;
+    if (!group.current || !shell.current) return;
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,
       state.size.width < 980 ? 0 : 1.85,
       0.05,
     );
-    group.current.rotation.x = THREE.MathUtils.lerp(
-      group.current.rotation.x,
-      state.pointer.y * 0.32 + progress.current * 0.52,
-      0.06,
-    );
-    group.current.rotation.z = THREE.MathUtils.lerp(
-      group.current.rotation.z,
-      state.pointer.x * -0.24 + progress.current * 0.22,
-      0.06,
-    );
-    const pulse = 1 + Math.sin(state.clock.elapsedTime * 2.1) * 0.055;
-    shell.current.scale.setScalar(pulse + progress.current * 0.22);
-    rings.current.forEach((ring, index) => {
-      if (!ring) return;
-      ring.rotation.z += delta * (index % 2 === 0 ? 0.32 + index * 0.08 : -0.42);
-      ring.rotation.x += delta * (0.05 + index * 0.025);
-    });
+    if (reducedMotion) return;
+    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.08, 0.04);
+    shell.current.rotation.y += delta * 0.1;
+    shell.current.rotation.x += delta * 0.025;
+    shell.current.scale.setScalar(1 + progress.current * 0.04);
   });
 
   return (
     <Float speed={reducedMotion ? 0 : 1.45} rotationIntensity={0.24} floatIntensity={0.38}>
       <group ref={group} position={[1.85, 0.05, 0]}>
         <mesh ref={shell}>
-          <sphereGeometry args={[1.22, 72, 72]} />
-          <meshPhysicalMaterial
-            color="#102844"
-            emissive="#153d58"
-            emissiveIntensity={0.5}
-            roughness={0.16}
-            metalness={0.38}
-            clearcoat={0.85}
-            clearcoatRoughness={0.12}
-            transparent
-            opacity={0.68}
-          />
-        </mesh>
-        <mesh scale={1.015}>
-          <icosahedronGeometry args={[1.22, 4]} />
+          <icosahedronGeometry args={[0.92, 3]} />
           <meshBasicMaterial
             color="#5da6ff"
             transparent
-            opacity={0.16}
+            opacity={0.34}
             wireframe
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
-        <mesh scale={0.64}>
-          <sphereGeometry args={[1.16, 48, 48]} />
-          <meshPhysicalMaterial
-            color="#b9ff9b"
-            emissive="#b9ff9b"
-            emissiveIntensity={1.7}
-            transparent
-            opacity={0.24}
-            roughness={0.1}
-          />
-        </mesh>
-        <mesh scale={1.18}>
-          <sphereGeometry args={[1.28, 64, 64]} />
-          <meshBasicMaterial
-            color="#5da6ff"
-            transparent
-            opacity={0.045}
-            side={THREE.BackSide}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
         {[1.68, 2.02, 2.38].map((radius, index) => (
           <mesh
             key={radius}
-            ref={(element) => { rings.current[index] = element; }}
             rotation={[
               Math.PI / (2.4 + index * 0.35),
               index * 0.76,
@@ -183,16 +159,6 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             />
           </mesh>
         ))}
-        <mesh scale={1.5}>
-          <icosahedronGeometry args={[1.28, 2]} />
-          <meshBasicMaterial
-            color="#5da6ff"
-            transparent
-            opacity={0.05}
-            wireframe
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
       </group>
     </Float>
   );
