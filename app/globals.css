@@ -1713,15 +1713,32 @@ video {
   margin-top: 3rem;
 }
 
+.footer-bridge {
+  position: relative;
+  z-index: 7;
+  height: 220px;
+  margin: -110px 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 17, 38, 0) 0%,
+    rgba(7, 17, 38, 0.82) 30%,
+    #071126 47%,
+    #071126 53%,
+    rgba(7, 17, 38, 0.82) 70%,
+    rgba(7, 17, 38, 0) 100%
+  );
+}
+
 .footer {
   position: relative;
   z-index: 4;
   overflow: hidden;
   margin-top: -1px;
-  padding: clamp(4.5rem, 7vw, 7rem) 5vw 1.6rem;
+  padding: clamp(7rem, 9vw, 9rem) 5vw 1.6rem;
   border-top: 0;
   background:
-    radial-gradient(circle at 88% 10%, rgba(96, 91, 229, 0.17), transparent 28%),
+    radial-gradient(circle at 88% 30%, rgba(96, 91, 229, 0.17), transparent 30%),
     radial-gradient(circle at 12% 40%, rgba(93, 166, 255, 0.08), transparent 32%),
     linear-gradient(180deg, #071126 0%, #050a16 42%);
 }
@@ -1758,7 +1775,14 @@ video {
     linear-gradient(rgba(93, 166, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(93, 166, 255, 0.1) 1px, transparent 1px);
   background-size: 72px 72px;
-  mask-image: linear-gradient(90deg, transparent, black 34%, black 86%, transparent);
+  mask-image:
+    linear-gradient(180deg, transparent 0, black 180px),
+    linear-gradient(90deg, transparent, black 34%, black 86%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 0, black 180px),
+    linear-gradient(90deg, transparent, black 34%, black 86%, transparent);
+  -webkit-mask-composite: source-in;
 }
 
 .footer-orbit {
@@ -2548,6 +2572,11 @@ video {
 
   .footer {
     padding: 5rem 1.2rem 2rem;
+  }
+
+  .footer-bridge {
+    height: 160px;
+    margin: -80px 0;
   }
 
   .footer-top {

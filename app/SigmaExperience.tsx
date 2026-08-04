@@ -651,6 +651,7 @@ export function SigmaExperience() {
         </section>
       </main>
 
+      <div className="footer-bridge" aria-hidden="true" />
       <footer className="footer">
         <div className="footer-atmosphere" aria-hidden="true">
           <span className="footer-orbit footer-orbit--outer" />
