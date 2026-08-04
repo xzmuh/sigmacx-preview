@@ -185,7 +185,10 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     };
   }, [surfaceCount, totalCount, trailCount]);
   const velocities = useMemo(() => new Float32Array(totalCount * 3), [totalCount]);
-  const dotUniforms = useMemo(() => ({ uOpacity: { value: 1 } }), []);
+  const dotUniforms = useMemo(() => ({
+    uOpacity: { value: 1 },
+    uTime: { value: 0 },
+  }), []);
 
   useFrame((state, delta) => {
     if (!group.current || !points.current) return;
@@ -218,6 +221,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     const safeDelta = Math.min(delta, 1 / 30);
     motionTime.current += safeDelta * 0.78;
     const animatedTime = motionTime.current;
+    dotUniforms.uTime.value = animatedTime;
     const positionAttribute = points.current.geometry.getAttribute("position") as THREE.BufferAttribute;
     const positions = positionAttribute.array as Float32Array;
     const damping = Math.pow(0.87, safeDelta * 60);
@@ -301,27 +305,34 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
           uniforms={dotUniforms}
           vertexShader={`
             attribute float pointSize;
+            uniform float uTime;
             varying vec3 vColor;
             varying float vOpacity;
+            varying float vSignal;
             void main() {
               vColor = color;
               vOpacity = mix(0.44, 0.98, clamp(pointSize / 3.05, 0.0, 1.0));
+              float sweepPosition = sin(uTime * 0.72) * 0.94;
+              vSignal = 1.0 - smoothstep(0.045, 0.19, abs(position.y - sweepPosition));
               vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
               gl_Position = projectionMatrix * viewPosition;
-              gl_PointSize = pointSize * 5.05 * (7.0 / max(1.0, -viewPosition.z));
+              gl_PointSize = pointSize * (5.05 + vSignal * 1.25) * (7.0 / max(1.0, -viewPosition.z));
             }
           `}
           fragmentShader={`
             uniform float uOpacity;
             varying vec3 vColor;
             varying float vOpacity;
+            varying float vSignal;
             void main() {
               float distanceToCenter = length(gl_PointCoord - vec2(0.5));
               float core = 1.0 - smoothstep(0.16, 0.34, distanceToCenter);
               float halo = (1.0 - smoothstep(0.24, 0.5, distanceToCenter)) * 0.24;
               float alpha = min(1.0, core + halo);
               if (alpha < 0.02) discard;
-              gl_FragColor = vec4(vColor, alpha * vOpacity * uOpacity);
+              vec3 signalColor = vec3(0.73, 1.0, 0.61);
+              vec3 outputColor = mix(vColor, signalColor, vSignal * 0.52);
+              gl_FragColor = vec4(outputColor, alpha * vOpacity * uOpacity * (1.0 + vSignal * 0.16));
             }
           `}
         />
@@ -587,6 +598,12 @@ export function SigmaExperience() {
         <div className="tech-hud">
           <div className="tech-hud__grid" />
           <div className="tech-hud__aura" />
+          <div className="tech-hud__frame">
+            <span className="tech-hud__telemetry tech-hud__telemetry--one"><i /> NEURAL FIELD / ACTIVE</span>
+            <span className="tech-hud__telemetry tech-hud__telemetry--two">SYNC 98.42%</span>
+            <span className="tech-hud__telemetry tech-hud__telemetry--three">LATENCY / 018 MS</span>
+            <span className="tech-hud__rail"><i /><i /><i /><i /><i /><i /></span>
+          </div>
         </div>
         <ExperienceCanvas progress={progress} reducedMotion={reducedMotion} />
         <div className="experience-vignette" />
