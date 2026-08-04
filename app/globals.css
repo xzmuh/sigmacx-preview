@@ -980,8 +980,9 @@ video {
 }
 
 .client-rail {
-  width: 100vw;
-  margin: 0 0 2rem calc(50% - 50vw);
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto 2rem;
   overflow: hidden;
 }
 
@@ -999,9 +1000,9 @@ video {
 
 .client-rail img {
   flex: 0 0 auto;
-  width: 180px;
-  height: 86px;
-  padding: 1.8rem;
+  width: 210px;
+  height: 98px;
+  padding: 1.9rem;
   object-fit: contain;
   filter: brightness(0) saturate(100%);
   opacity: 0.48;
@@ -2575,8 +2576,9 @@ video {
   }
 
   .client-rail img {
-    width: 140px;
-    padding: 1.4rem;
+    width: 154px;
+    height: 82px;
+    padding: 1.35rem;
   }
 
   .testimonials,

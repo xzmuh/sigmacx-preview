@@ -25,7 +25,7 @@ const clientLogos = [
   "/media/client-04.png",
 ];
 
-const clientLogoLoop = [...clientLogos, ...clientLogos, ...clientLogos];
+const clientLogoLoop = [...clientLogos, ...clientLogos];
 
 type ExperienceProps = {
   progress: MutableRefObject<number>;
@@ -436,7 +436,7 @@ export function SigmaExperience() {
           scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.7 },
         });
 
-        gsap.to(".client-rail__track", { xPercent: -50, duration: 32, ease: "none", repeat: -1 });
+        gsap.to(".client-rail__track", { xPercent: -50, duration: 28, ease: "none", repeat: -1 });
 
         gsap.to(".insight-visual span", {
           scaleY: 0.28,
