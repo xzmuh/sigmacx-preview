@@ -888,99 +888,6 @@ video {
   clip-path: polygon(0 72%, 100% 31%, 100% 44%, 0 84%);
 }
 
-.personalization {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.55fr);
-  gap: clamp(4rem, 9vw, 10rem);
-  align-items: end;
-  padding: 9rem 7vw 7rem;
-}
-
-.personalization .section-index {
-  color: #53716a;
-}
-
-.personalization-copy h2 {
-  margin: 0;
-  max-width: 980px;
-  font-size: clamp(3.4rem, 7vw, 8rem);
-  font-weight: 430;
-  letter-spacing: -0.078em;
-  line-height: 0.94;
-}
-
-.personalization-copy h2 strong {
-  color: var(--violet);
-  font-weight: 430;
-}
-
-.personalization-copy > p {
-  max-width: 650px;
-  margin: 2rem 0 0;
-  color: rgba(10, 20, 44, 0.58);
-  font-size: 1rem;
-  line-height: 1.75;
-}
-
-.impact-card {
-  position: relative;
-  min-height: 440px;
-  padding: 2rem;
-  overflow: hidden;
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 90% 0, rgba(185, 255, 155, 0.28), transparent 36%),
-    var(--navy);
-  color: var(--white);
-  box-shadow: 0 30px 90px rgba(10, 20, 44, 0.16);
-}
-
-.impact-card::after {
-  position: absolute;
-  right: -38%;
-  bottom: -38%;
-  width: 120%;
-  aspect-ratio: 1;
-  content: "";
-  border: 1px solid rgba(185, 255, 155, 0.18);
-  border-radius: 50%;
-  animation: orbitSpin 16s linear infinite;
-}
-
-.impact-card__number {
-  display: block;
-  color: var(--green);
-  font-size: clamp(5.5rem, 10vw, 9rem);
-  font-weight: 650;
-  letter-spacing: -0.09em;
-  line-height: 0.85;
-}
-
-.impact-card p {
-  position: relative;
-  z-index: 2;
-  max-width: 360px;
-  margin-top: 3rem;
-  color: rgba(255, 255, 255, 0.66);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.impact-card p strong {
-  color: var(--white);
-}
-
-.impact-card small {
-  position: absolute;
-  z-index: 2;
-  bottom: 2rem;
-  left: 2rem;
-  color: rgba(255, 255, 255, 0.34);
-  font-family: monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
-}
-
 .proof {
   padding: 10rem 5vw;
   border-radius: 32px 32px 0 0;
@@ -1597,12 +1504,12 @@ video {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 92vh;
-  padding: 8rem 5vw;
+  min-height: 78vh;
+  padding: 8rem 5vw 5rem;
   overflow: hidden;
   background:
     radial-gradient(circle at 50% 75%, rgba(185, 255, 155, 0.14), transparent 28%),
-    var(--navy);
+    linear-gradient(180deg, var(--navy), #071126);
   text-align: center;
 }
 
@@ -1635,12 +1542,28 @@ video {
   position: relative;
   z-index: 4;
   overflow: hidden;
-  padding: clamp(5rem, 8vw, 8rem) 5vw 1.6rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.09);
+  margin-top: -1px;
+  padding: clamp(4.5rem, 7vw, 7rem) 5vw 1.6rem;
+  border-top: 0;
   background:
     radial-gradient(circle at 88% 10%, rgba(96, 91, 229, 0.17), transparent 28%),
     radial-gradient(circle at 12% 40%, rgba(93, 166, 255, 0.08), transparent 32%),
-    #050a16;
+    linear-gradient(180deg, #071126 0%, #050a16 42%);
+}
+
+.footer::before {
+  position: absolute;
+  z-index: 1;
+  top: -40vw;
+  left: 50%;
+  width: 76vw;
+  height: 76vw;
+  content: "";
+  transform: translateX(-50%);
+  border: 1px solid rgba(185, 255, 155, 0.13);
+  border-radius: 50%;
+  box-shadow: 0 0 120px rgba(185, 255, 155, 0.06), inset 0 0 80px rgba(93, 166, 255, 0.04);
+  pointer-events: none;
 }
 
 .footer-atmosphere {
@@ -2199,14 +2122,6 @@ video {
     gap: 4rem;
   }
 
-  .personalization {
-    grid-template-columns: 1fr;
-  }
-
-  .impact-card {
-    width: min(100%, 620px);
-  }
-
   .trust-metric {
     grid-template-columns: auto 1fr;
   }
@@ -2324,15 +2239,6 @@ video {
     height: 110px;
   }
 
-  .personalization {
-    gap: 4rem;
-    padding: 6rem 1.2rem;
-  }
-
-  .impact-card {
-    min-height: 390px;
-  }
-
   .story-intro {
     margin-bottom: 5rem;
     text-align: left;
@@ -2441,7 +2347,7 @@ video {
   }
 
   .final-cta {
-    min-height: 82vh;
+    min-height: 72vh;
     padding-inline: 1.2rem;
   }
 

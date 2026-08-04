@@ -472,7 +472,7 @@ export function SigmaExperience() {
 
         <section id="experience" ref={story} className="signal-story section-dark" aria-labelledby="story-title">
           <div className="story-intro" data-reveal>
-            <span className="section-index">01 / A inteligência</span>
+            <span className="section-index">02 / A inteligência</span>
             <h2 id="story-title">Toda conversa<br />tem algo a dizer.</h2>
             <p>O SigmaCX transforma milhares de interações em uma visão viva da sua operação.</p>
           </div>
@@ -507,19 +507,6 @@ export function SigmaExperience() {
         <div className="section-transition section-transition--dark-light" aria-hidden="true">
           <span /><span /><span />
         </div>
-
-        <section className="personalization section-light" aria-labelledby="personalization-title">
-          <div className="personalization-copy" data-reveal>
-            <span className="section-index">02 / Experiência única</span>
-            <h2 id="personalization-title">Cada cliente é único.<br /><strong>Cada experiência também.</strong></h2>
-            <p>Adaptar cada interação ao contexto e à necessidade de cada pessoa gera experiências que fazem sentido de verdade.</p>
-          </div>
-          <aside className="impact-card" data-reveal>
-            <span className="impact-card__number">40%</span>
-            <p>A personalização aumenta a satisfação e pode elevar o ticket médio em até <strong>40%</strong> em determinados setores.</p>
-            <small>FONTE / BOSTON CONSULTING GROUP</small>
-          </aside>
-        </section>
 
         <section id="proof" className="proof section-light" aria-labelledby="proof-title">
           <div className="section-heading" data-reveal>
@@ -634,7 +621,7 @@ export function SigmaExperience() {
             </div>
           </div>
           <div className="security-copy" data-reveal>
-            <span className="section-index">05 / Confiança por design</span>
+            <span className="section-index">06 / Confiança por design</span>
             <h2 id="security-title">Dados sensíveis.<br /><span>Proteção inegociável.</span></h2>
             <p>Criptografia, protocolos globais e monitoramento contínuo do primeiro “olá” ao fim do atendimento.</p>
             <div className="cert-row">
