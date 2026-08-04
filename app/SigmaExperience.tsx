@@ -112,7 +112,7 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 
 function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
-  const shell = useRef<THREE.Mesh>(null);
+  const shell = useRef<THREE.Group>(null);
 
   useFrame((state, delta) => {
     if (!group.current || !shell.current) return;
@@ -130,17 +130,33 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
 
   return (
     <Float speed={reducedMotion ? 0 : 1.45} rotationIntensity={0.24} floatIntensity={0.38}>
-      <group ref={group} position={[1.85, 0.05, 0]}>
-        <mesh ref={shell}>
-          <icosahedronGeometry args={[0.92, 3]} />
-          <meshBasicMaterial
-            color="#5da6ff"
-            transparent
-            opacity={0.34}
-            wireframe
-            blending={THREE.AdditiveBlending}
-          />
-        </mesh>
+      <group ref={group} position={[0, 0.05, 0]}>
+        <group ref={shell}>
+          <mesh>
+            <sphereGeometry args={[0.9, 72, 72]} />
+            <meshPhysicalMaterial
+              color="#0d203d"
+              emissive="#153552"
+              emissiveIntensity={0.32}
+              roughness={0.2}
+              metalness={0.38}
+              clearcoat={0.72}
+              clearcoatRoughness={0.14}
+              transparent
+              opacity={0.74}
+            />
+          </mesh>
+          <mesh scale={1.018}>
+            <icosahedronGeometry args={[0.9, 3]} />
+            <meshBasicMaterial
+              color="#5da6ff"
+              transparent
+              opacity={0.38}
+              wireframe
+              blending={THREE.AdditiveBlending}
+            />
+          </mesh>
+        </group>
         {[1.68, 2.02, 2.38].map((radius, index) => (
           <mesh
             key={radius}
