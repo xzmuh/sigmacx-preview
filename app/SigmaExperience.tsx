@@ -194,17 +194,17 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     if (!group.current || !points.current) return;
     const isCompact = state.size.width < 980;
     const visualWidth = isCompact
-      ? Math.min(state.size.width * (state.size.width < 720 ? 1.12 : 0.62), 560)
-      : Math.min(state.size.width * 0.44, 680);
+      ? Math.min(state.size.width * (state.size.width < 720 ? 1.18 : 0.72), 640)
+      : Math.min(state.size.width * 0.5, 780);
     const visualCenterOffset = isCompact
       ? 0
       : state.size.width * 0.42 - visualWidth * 0.5;
     const cameraSpan = 2 * Math.tan(THREE.MathUtils.degToRad(20)) * 7;
     const targetX = visualCenterOffset * cameraSpan / state.size.height;
     const targetScale = THREE.MathUtils.clamp(
-      visualWidth * 0.59 * cameraSpan / (2 * state.size.height),
-      state.size.width < 720 ? 0.72 : 0.86,
-      1.12,
+      visualWidth * 0.64 * cameraSpan / (2 * state.size.height),
+      state.size.width < 720 ? 0.78 : 0.94,
+      1.24,
     );
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,

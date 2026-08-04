@@ -468,7 +468,7 @@ video {
   position: absolute;
   top: 50%;
   right: 8vw;
-  width: min(44vw, 680px);
+  width: min(50vw, 780px);
   aspect-ratio: 1;
   transform: translateY(-50%);
   opacity: clamp(0.24, calc(0.92 - var(--story-progress)), 0.86);
@@ -477,7 +477,7 @@ video {
     radial-gradient(ellipse at 62% 42%, rgba(119, 190, 255, 0.11), transparent 48%),
     radial-gradient(ellipse at 65% 58%, rgba(185, 255, 155, 0.09), transparent 38%),
     radial-gradient(ellipse at 38% 62%, rgba(255, 255, 255, 0.065), transparent 52%);
-  filter: saturate(0.96);
+  overflow: visible;
 }
 
 .tech-hud__aura::before,
@@ -515,7 +515,7 @@ video {
   position: absolute;
   top: 50%;
   right: 8vw;
-  width: min(44vw, 680px);
+  width: min(50vw, 780px);
   aspect-ratio: 1;
   transform: translateY(-50%);
   opacity: clamp(0.18, calc(0.72 - var(--story-progress)), 0.68);
@@ -2674,7 +2674,7 @@ video {
   .tech-hud__aura,
   .tech-hud__frame {
     right: 50%;
-    width: min(62vw, 560px);
+    width: min(72vw, 640px);
     transform: translate(50%, -50%);
   }
 
@@ -2763,7 +2763,7 @@ video {
   .tech-hud__aura,
   .tech-hud__frame {
     right: 50%;
-    width: 112vw;
+    width: 118vw;
     transform: translate(50%, -50%);
     opacity: 0.58;
   }
