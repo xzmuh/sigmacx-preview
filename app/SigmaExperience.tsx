@@ -624,10 +624,10 @@ export function SigmaExperience() {
         </section>
 
         <section className="final-cta section-dark" aria-labelledby="final-title">
-          <p className="eyebrow" data-reveal>O próximo sinal é seu.</p>
-          <h2 id="final-title" data-reveal>Veja o que o SigmaCX<br />pode revelar.</h2>
+          <p className="eyebrow" data-reveal>Vamos conversar?</p>
+          <h2 id="final-title" data-reveal>Veja o que a SigmaCX<br />pode fazer por você.</h2>
           <a className="pill pill--primary pill--large" href={DEMO_URL} target="_blank" rel="noreferrer" data-reveal>
-            Converse com um especialista <span aria-hidden="true">↗</span>
+            Agende uma demonstração <span aria-hidden="true">↗</span>
           </a>
         </section>
       </main>
