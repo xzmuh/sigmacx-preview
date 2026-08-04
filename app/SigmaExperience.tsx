@@ -58,6 +58,35 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
     return next;
   }, [count]);
 
+  const material = useMemo(
+    () => new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      vertexShader: `
+        attribute vec3 color;
+        varying vec3 vColor;
+        void main() {
+          vColor = color;
+          vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * viewPosition;
+          gl_PointSize = clamp(18.0 / max(1.0, -viewPosition.z), 1.4, 4.2);
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+        void main() {
+          float distanceToCenter = length(gl_PointCoord - vec2(0.5));
+          float alpha = 1.0 - smoothstep(0.18, 0.5, distanceToCenter);
+          if (alpha < 0.02) discard;
+          gl_FragColor = vec4(vColor, alpha * 0.78);
+        }
+      `,
+    }),
+    [],
+  );
+
   useFrame((state, delta) => {
     if (!points.current || reducedMotion) return;
     points.current.rotation.y += delta * (0.12 + progress.current * 0.16);
@@ -70,17 +99,7 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
   });
 
   return (
-    <points ref={points} geometry={geometry}>
-      <pointsMaterial
-        size={0.032}
-        transparent
-        opacity={0.72}
-        vertexColors
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
+    <points ref={points} geometry={geometry} material={material} />
   );
 }
 
@@ -94,7 +113,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     group.current.rotation.y += delta * 0.34;
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,
-      state.viewport.width < 8 ? 0 : 1.85,
+      state.size.width < 980 ? 0 : 1.85,
       0.05,
     );
     group.current.rotation.x = THREE.MathUtils.lerp(
@@ -120,27 +139,44 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     <Float speed={reducedMotion ? 0 : 1.45} rotationIntensity={0.24} floatIntensity={0.38}>
       <group ref={group} position={[1.85, 0.05, 0]}>
         <mesh ref={shell}>
-          <icosahedronGeometry args={[1.28, 3]} />
+          <sphereGeometry args={[1.28, 96, 96]} />
           <meshPhysicalMaterial
-            color="#0d1b38"
-            emissive="#214b75"
-            emissiveIntensity={0.34}
-            roughness={0.24}
-            metalness={0.45}
+            color="#173450"
+            emissive="#163d54"
+            emissiveIntensity={0.62}
+            roughness={0.1}
+            metalness={0.28}
+            clearcoat={1}
+            clearcoatRoughness={0.08}
+            iridescence={0.72}
+            iridescenceIOR={1.3}
+            transmission={0.16}
+            thickness={1.4}
             transparent
-            opacity={0.72}
-            wireframe
+            opacity={0.82}
           />
         </mesh>
-        <mesh scale={0.58}>
-          <icosahedronGeometry args={[1.24, 2]} />
+        <mesh scale={0.64}>
+          <sphereGeometry args={[1.2, 64, 64]} />
           <meshPhysicalMaterial
             color="#b9ff9b"
             emissive="#b9ff9b"
-            emissiveIntensity={1.4}
+            emissiveIntensity={2.2}
             transparent
-            opacity={0.2}
-            roughness={0.12}
+            opacity={0.3}
+            roughness={0.06}
+            transmission={0.22}
+            thickness={0.8}
+          />
+        </mesh>
+        <mesh scale={1.18}>
+          <sphereGeometry args={[1.28, 64, 64]} />
+          <meshBasicMaterial
+            color="#5da6ff"
+            transparent
+            opacity={0.065}
+            side={THREE.BackSide}
+            blending={THREE.AdditiveBlending}
           />
         </mesh>
         {[1.68, 2.02, 2.38].map((radius, index) => (
@@ -153,7 +189,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
               index * 0.33,
             ]}
           >
-            <torusGeometry args={[radius, 0.008 + index * 0.002, 10, 140]} />
+            <torusGeometry args={[radius, 0.012 + index * 0.002, 16, 180]} />
             <meshBasicMaterial
               color={index === 1 ? "#5da6ff" : "#b9ff9b"}
               transparent
@@ -162,12 +198,12 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             />
           </mesh>
         ))}
-        <mesh scale={1.48}>
-          <icosahedronGeometry args={[1.28, 1]} />
+        <mesh scale={1.5}>
+          <sphereGeometry args={[1.28, 32, 24]} />
           <meshBasicMaterial
             color="#5da6ff"
             transparent
-            opacity={0.075}
+            opacity={0.055}
             wireframe
             blending={THREE.AdditiveBlending}
           />
@@ -302,7 +338,6 @@ export function SigmaExperience() {
           scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.7 },
         });
 
-        gsap.to(".tech-hud__orb", { rotation: 360, duration: 22, ease: "none", repeat: -1 });
         gsap.to(".client-rail__track", { xPercent: -50, duration: 16, ease: "none", repeat: -1 });
 
         gsap.to(".insight-visual span", {
