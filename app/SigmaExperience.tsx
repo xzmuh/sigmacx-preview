@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Float } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -60,19 +60,19 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 
   useFrame((state, delta) => {
     if (!points.current || reducedMotion) return;
-    points.current.rotation.y += delta * (0.028 + progress.current * 0.08);
-    points.current.rotation.x = state.pointer.y * 0.08 + progress.current * 0.18;
+    points.current.rotation.y += delta * (0.12 + progress.current * 0.16);
+    points.current.rotation.x = state.pointer.y * 0.14 + progress.current * 0.22;
     points.current.position.x = THREE.MathUtils.lerp(
       points.current.position.x,
-      state.pointer.x * 0.16,
-      0.035,
+      state.pointer.x * 0.32,
+      0.055,
     );
   });
 
   return (
     <points ref={points} geometry={geometry}>
       <pointsMaterial
-        size={0.022}
+        size={0.032}
         transparent
         opacity={0.72}
         vertexColors
@@ -87,27 +87,38 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Mesh>(null);
+  const rings = useRef<Array<THREE.Mesh | null>>([]);
 
   useFrame((state, delta) => {
     if (!group.current || !shell.current || reducedMotion) return;
-    group.current.rotation.y += delta * 0.12;
+    group.current.rotation.y += delta * 0.34;
+    group.current.position.x = THREE.MathUtils.lerp(
+      group.current.position.x,
+      state.viewport.width < 8 ? 0 : 1.85,
+      0.05,
+    );
     group.current.rotation.x = THREE.MathUtils.lerp(
       group.current.rotation.x,
-      state.pointer.y * 0.16 + progress.current * 0.52,
-      0.035,
+      state.pointer.y * 0.32 + progress.current * 0.52,
+      0.06,
     );
     group.current.rotation.z = THREE.MathUtils.lerp(
       group.current.rotation.z,
-      state.pointer.x * -0.11 + progress.current * 0.22,
-      0.035,
+      state.pointer.x * -0.24 + progress.current * 0.22,
+      0.06,
     );
-    const pulse = 1 + Math.sin(state.clock.elapsedTime * 1.1) * 0.025;
+    const pulse = 1 + Math.sin(state.clock.elapsedTime * 2.1) * 0.055;
     shell.current.scale.setScalar(pulse + progress.current * 0.22);
+    rings.current.forEach((ring, index) => {
+      if (!ring) return;
+      ring.rotation.z += delta * (index % 2 === 0 ? 0.32 + index * 0.08 : -0.42);
+      ring.rotation.x += delta * (0.05 + index * 0.025);
+    });
   });
 
   return (
-    <Float speed={reducedMotion ? 0 : 0.75} rotationIntensity={0.12} floatIntensity={0.18}>
-      <group ref={group}>
+    <Float speed={reducedMotion ? 0 : 1.45} rotationIntensity={0.24} floatIntensity={0.38}>
+      <group ref={group} position={[1.85, 0.05, 0]}>
         <mesh ref={shell}>
           <icosahedronGeometry args={[1.28, 3]} />
           <meshPhysicalMaterial
@@ -135,6 +146,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
         {[1.68, 2.02, 2.38].map((radius, index) => (
           <mesh
             key={radius}
+            ref={(element) => { rings.current[index] = element; }}
             rotation={[
               Math.PI / (2.4 + index * 0.35),
               index * 0.76,
@@ -150,6 +162,16 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             />
           </mesh>
         ))}
+        <mesh scale={1.48}>
+          <icosahedronGeometry args={[1.28, 1]} />
+          <meshBasicMaterial
+            color="#5da6ff"
+            transparent
+            opacity={0.075}
+            wireframe
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
       </group>
     </Float>
   );
@@ -158,7 +180,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
 function ExperienceCanvas(props: ExperienceProps) {
   return (
     <Canvas
-      camera={{ position: [0, 0, 7], fov: 42 }}
+      camera={{ position: [0, 0, 7], fov: 40 }}
       dpr={[1, 1.45]}
       gl={{
         antialias: true,
@@ -167,11 +189,10 @@ function ExperienceCanvas(props: ExperienceProps) {
       }}
     >
       <ambientLight intensity={0.42} />
-      <pointLight position={[3, 3, 4]} intensity={12} color="#b9ff9b" />
-      <pointLight position={[-4, -2, 3]} intensity={9} color="#5da6ff" />
+      <pointLight position={[3, 3, 4]} intensity={18} color="#b9ff9b" />
+      <pointLight position={[-4, -2, 3]} intensity={13} color="#5da6ff" />
       <SignalField {...props} />
       <IntelligenceCore {...props} />
-      <Environment preset="night" />
     </Canvas>
   );
 }
@@ -227,6 +248,7 @@ export function SigmaExperience() {
     if (!root.current) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    let cleanupMotion = () => {};
     const context = gsap.context(() => {
       if (!reducedMotion) {
         const lenis = new Lenis({ duration: 1.1, smoothWheel: true, syncTouch: false });
@@ -237,10 +259,43 @@ export function SigmaExperience() {
 
         gsap
           .timeline({ defaults: { ease: "power3.out" } })
-          .from(".site-header", { y: -24, opacity: 0, duration: 0.9 })
+          .to(".intro-curtain", { scaleY: 0, duration: 1.05, ease: "power4.inOut", transformOrigin: "top" })
+          .from(".site-header", { y: -24, opacity: 0, duration: 0.9 }, "-=0.45")
           .from(".hero-kicker", { y: 26, opacity: 0, duration: 0.75 }, "-=0.45")
           .from(".hero-title .line", { yPercent: 108, duration: 1.05, stagger: 0.11 }, "-=0.45")
           .from(".hero-copy, .hero-actions, .hero-meta", { y: 24, opacity: 0, duration: 0.75, stagger: 0.09 }, "-=0.65");
+
+        gsap.to(".hero-stage", {
+          yPercent: 24,
+          opacity: 0.2,
+          ease: "none",
+          scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.7 },
+        });
+
+        gsap.to(".tech-hud__orb", { rotation: 360, duration: 22, ease: "none", repeat: -1 });
+        gsap.to(".client-rail__track", { xPercent: -50, duration: 16, ease: "none", repeat: -1 });
+
+        gsap.to(".insight-visual span", {
+          scaleY: 0.28,
+          transformOrigin: "bottom",
+          duration: 0.75,
+          stagger: { each: 0.08, yoyo: true, repeat: -1 },
+          ease: "sine.inOut",
+        });
+
+        gsap.to(".channel-node", {
+          scale: 1.13,
+          boxShadow: "0 0 38px rgba(185,255,155,.22)",
+          duration: 1.05,
+          stagger: { each: 0.22, yoyo: true, repeat: -1 },
+          ease: "sine.inOut",
+        });
+
+        ScrollTrigger.create({
+          start: 0,
+          end: "max",
+          onUpdate: (self) => document.documentElement.style.setProperty("--page-progress", String(self.progress)),
+        });
 
         ScrollTrigger.create({
           trigger: story.current,
@@ -288,7 +343,7 @@ export function SigmaExperience() {
         };
         window.addEventListener("pointermove", move);
 
-        return () => {
+        cleanupMotion = () => {
           window.removeEventListener("pointermove", move);
           gsap.ticker.remove(tick);
           lenis.destroy();
@@ -296,23 +351,33 @@ export function SigmaExperience() {
       }
     }, root);
 
-    return () => context.revert();
+    return () => {
+      cleanupMotion();
+      context.revert();
+    };
   }, [reducedMotion]);
 
   return (
     <div ref={root} id="top" className="site-shell">
       <a className="skip-link" href="#main">Pular para o conteúdo</a>
+      <div className="intro-curtain" aria-hidden="true"><span>SIGMA / SIGNAL ONLINE</span></div>
       <div className="cursor-glow" aria-hidden="true" />
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <div className="experience-layer" aria-hidden="true">
         <div className="experience-fallback" />
+        <div className="tech-hud">
+          <div className="tech-hud__grid" />
+          <div className="tech-hud__orb" />
+          <div className="tech-hud__scan" />
+        </div>
         <ExperienceCanvas progress={progress} reducedMotion={reducedMotion} />
         <div className="experience-vignette" />
       </div>
 
       <main id="main">
         <section className="hero section-dark" aria-labelledby="hero-title">
+          <div className="hero-stage">
           <div className="hero-kicker">
             <span className="signal-dot" />
             CX inteligente começa com a tecnologia certa
@@ -331,6 +396,7 @@ export function SigmaExperience() {
             <a className="text-link" href={DEMO_URL} target="_blank" rel="noreferrer">
               Fale com um especialista <span aria-hidden="true">↗</span>
             </a>
+          </div>
           </div>
           <div className="hero-meta" aria-label="Capacidades da plataforma">
             <span>Voz</span><span>Texto</span><span>Dados</span><span>IA</span>
@@ -379,9 +445,11 @@ export function SigmaExperience() {
             <p>Resultados reais, em operações onde cada conversa importa.</p>
           </div>
           <div className="client-rail" data-reveal aria-label="Empresas clientes">
-            {[...clientLogos, ...clientLogos].map((logo, index) => (
-              <img key={`${logo}-${index}`} src={logo} alt={index < clientLogos.length ? "Empresa cliente SigmaCX" : ""} aria-hidden={index >= clientLogos.length} />
-            ))}
+            <div className="client-rail__track">
+              {[...clientLogos, ...clientLogos].map((logo, index) => (
+                <img key={`${logo}-${index}`} src={logo} alt={index < clientLogos.length ? "Empresa cliente SigmaCX" : ""} aria-hidden={index >= clientLogos.length} />
+              ))}
+            </div>
           </div>
           <div className="testimonials">
             <article className="quote-card" data-reveal>
