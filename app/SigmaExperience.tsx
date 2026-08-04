@@ -32,31 +32,6 @@ type ExperienceProps = {
   reducedMotion: boolean;
 };
 
-const CORE_VERTEX_SHADER = `
-  varying vec3 vWorldNormal;
-  varying vec3 vViewDirection;
-
-  void main() {
-    vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-    vWorldNormal = normalize(mat3(modelMatrix) * normal);
-    vViewDirection = cameraPosition - worldPosition.xyz;
-    gl_Position = projectionMatrix * viewMatrix * worldPosition;
-  }
-`;
-
-const CORE_FRAGMENT_SHADER = `
-  varying vec3 vWorldNormal;
-  varying vec3 vViewDirection;
-
-  void main() {
-    float facing = max(dot(normalize(vWorldNormal), normalize(vViewDirection)), 0.0);
-    float fresnel = pow(1.0 - facing, 2.15);
-    float verticalMix = clamp(vWorldNormal.y * 0.5 + 0.5, 0.0, 1.0);
-    vec3 color = mix(vec3(0.36, 0.65, 1.0), vec3(0.73, 1.0, 0.61), verticalMix);
-    gl_FragColor = vec4(color, fresnel * 0.36);
-  }
-`;
-
 function SignalField({ progress, reducedMotion }: ExperienceProps) {
   const points = useRef<THREE.Points>(null);
   const count = reducedMotion ? 360 : 860;
@@ -139,24 +114,70 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 
 function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
-  const shell = useRef<THREE.Group>(null);
+  const neuralCloud = useRef<THREE.Group>(null);
+  const nodeMeshes = useRef<Array<THREE.Mesh | null>>([]);
   const fadeMaterials = useRef<Array<{ material: THREE.Material & { opacity: number }; opacity: number }>>([]);
-  const nodePositions = useMemo(() => {
-    const total = 24;
-    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+  const neuralNodes = useMemo(() => {
+    const total = 34;
+    const random = (seed: number) => {
+      const value = Math.sin(seed * 91.117) * 43758.5453;
+      return value - Math.floor(value);
+    };
+
     return Array.from({ length: total }, (_, index) => {
-      const y = 1 - (index / (total - 1)) * 2;
-      const radius = Math.sqrt(1 - y * y);
-      const angle = goldenAngle * index;
-      return [Math.cos(angle) * radius * 1.08, y * 1.08, Math.sin(angle) * radius * 1.08] as const;
+      const theta = random(index + 1) * Math.PI * 2;
+      const phi = Math.acos(2 * random(index + 17) - 1);
+      const radius = 0.24 + Math.cbrt(random(index + 43)) * 0.84;
+      const emphasis = index % 7 === 0;
+      return {
+        position: [
+          Math.sin(phi) * Math.cos(theta) * radius * 1.06,
+          Math.sin(phi) * Math.sin(theta) * radius * 0.9,
+          Math.cos(phi) * radius * 0.82,
+        ] as [number, number, number],
+        size: emphasis ? 0.075 : 0.034 + random(index + 71) * 0.018,
+        color: emphasis ? "#b9ff9b" : index % 3 === 0 ? "#87c7ff" : "#5da6ff",
+        opacity: emphasis ? 0.88 : 0.52 + random(index + 89) * 0.2,
+        phase: random(index + 101) * Math.PI * 2,
+        breath: emphasis ? 0.24 : 0.13,
+      };
     });
   }, []);
+
+  const neuralConnections = useMemo(() => {
+    const positions: number[] = [];
+    const connected = new Set<string>();
+
+    neuralNodes.forEach((node, index) => {
+      const nearest = neuralNodes
+        .map((candidate, candidateIndex) => ({
+          candidateIndex,
+          distance: candidateIndex === index
+            ? Number.POSITIVE_INFINITY
+            : new THREE.Vector3(...node.position).distanceTo(new THREE.Vector3(...candidate.position)),
+        }))
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, index % 4 === 0 ? 2 : 1);
+
+      nearest.forEach(({ candidateIndex }) => {
+        const key = [index, candidateIndex].sort((a, b) => a - b).join("-");
+        if (connected.has(key)) return;
+        connected.add(key);
+        positions.push(...node.position, ...neuralNodes[candidateIndex].position);
+      });
+    });
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    return geometry;
+  }, [neuralNodes]);
 
   useEffect(() => {
     const materials: Array<{ material: THREE.Material & { opacity: number }; opacity: number }> = [];
     group.current?.traverse((object) => {
-      if (!(object instanceof THREE.Mesh)) return;
-      const meshMaterials = Array.isArray(object.material) ? object.material : [object.material];
+      if (!("material" in object)) return;
+      const objectMaterial = (object as THREE.Mesh).material;
+      const meshMaterials = Array.isArray(objectMaterial) ? objectMaterial : [objectMaterial];
       meshMaterials.forEach((material) => {
         if ("opacity" in material) {
           const fadeMaterial = material as THREE.Material & { opacity: number };
@@ -168,7 +189,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   }, []);
 
   useFrame((state, delta) => {
-    if (!group.current || !shell.current) return;
+    if (!group.current || !neuralCloud.current) return;
     const isCompact = state.size.width < 980;
     const radarWidth = isCompact
       ? Math.min(state.size.width * (state.size.width < 720 ? 1.12 : 0.62), 560)
@@ -197,96 +218,55 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     });
     if (reducedMotion) return;
     group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.04, 0.04);
-    shell.current.rotation.y += delta * 0.072;
-    shell.current.rotation.x += delta * 0.016;
-    shell.current.scale.setScalar(1 + progress.current * 0.018);
+    neuralCloud.current.rotation.y += delta * 0.046;
+    neuralCloud.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.16) * 0.055;
+    nodeMeshes.current.forEach((node, index) => {
+      if (!node) return;
+      const metadata = neuralNodes[index];
+      const pulse = 1 + Math.sin(state.clock.elapsedTime * 0.9 + metadata.phase) * metadata.breath;
+      node.scale.setScalar(pulse);
+    });
   });
 
   return (
     <Float speed={reducedMotion ? 0 : 1.05} rotationIntensity={0.12} floatIntensity={0.2}>
       <group ref={group} position={[0, 0.05, 0]}>
-        <mesh position={[0, 0, -1.12]} scale={2.8}>
+        <mesh position={[0, 0, -1.05]} scale={2.45}>
           <circleGeometry args={[1, 96]} />
           <meshBasicMaterial
             color="#2f75c8"
             transparent
-            opacity={0.025}
+            opacity={0.016}
             depthWrite={false}
-            blending={THREE.AdditiveBlending}
           />
         </mesh>
-        <group ref={shell}>
-          <mesh>
-            <sphereGeometry args={[1, 96, 96]} />
-            <meshPhysicalMaterial
-              color="#07172d"
-              emissive="#12395d"
-              emissiveIntensity={0.22}
-              roughness={0.24}
-              metalness={0.36}
-              clearcoat={0.88}
-              clearcoatRoughness={0.1}
-              transparent
-              opacity={0.74}
-            />
-          </mesh>
-          <mesh scale={0.72}>
-            <sphereGeometry args={[1, 64, 64]} />
-            <meshBasicMaterial
-              color="#6caeff"
-              transparent
-              opacity={0.035}
-              depthWrite={false}
-              blending={THREE.AdditiveBlending}
-            />
-          </mesh>
-          <mesh scale={1.018}>
-            <icosahedronGeometry args={[1, 4]} />
-            <meshBasicMaterial
+        <group ref={neuralCloud}>
+          <lineSegments geometry={neuralConnections}>
+            <lineBasicMaterial
               color="#72b6ff"
               transparent
-              opacity={0.28}
-              wireframe
+              opacity={0.13}
               depthWrite={false}
-              blending={THREE.AdditiveBlending}
             />
-          </mesh>
-          <mesh scale={1.075}>
-            <sphereGeometry args={[1, 96, 96]} />
-            <shaderMaterial
-              vertexShader={CORE_VERTEX_SHADER}
-              fragmentShader={CORE_FRAGMENT_SHADER}
-              transparent
-              depthWrite={false}
-              blending={THREE.AdditiveBlending}
-            />
-          </mesh>
-          {nodePositions.map((position, index) => (
-            <mesh key={index} position={position}>
-              <sphereGeometry args={[index % 5 === 0 ? 0.035 : 0.022, 12, 12]} />
+          </lineSegments>
+          {neuralNodes.map((node, index) => (
+            <mesh
+              key={index}
+              ref={(mesh) => { nodeMeshes.current[index] = mesh; }}
+              position={node.position}
+            >
+              <sphereGeometry args={[node.size, 16, 16]} />
               <meshBasicMaterial
-                color={index % 5 === 0 ? "#b9ff9b" : "#74b8ff"}
+                color={node.color}
                 transparent
-                opacity={index % 5 === 0 ? 0.7 : 0.42}
-                depthWrite={false}
-                blending={THREE.AdditiveBlending}
-              />
-            </mesh>
-          ))}
-          {[1.18, 1.3].map((radius, index) => (
-            <mesh key={radius} rotation={[Math.PI / (2.7 + index), index * 0.9, index * 0.45]}>
-              <torusGeometry args={[radius, 0.006, 10, 160]} />
-              <meshBasicMaterial
-                color={index === 0 ? "#5da6ff" : "#b9ff9b"}
-                transparent
-                opacity={index === 0 ? 0.18 : 0.12}
+                opacity={node.opacity}
                 depthWrite={false}
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
           ))}
         </group>
-        {[1.68, 2.02, 2.38].map((radius, index) => (
+        {[1.62, 2.12].map((radius, index) => (
           <mesh
             key={radius}
             rotation={[
@@ -295,29 +275,12 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
               index * 0.33,
             ]}
           >
-            <torusGeometry args={[radius, 0.012 + index * 0.002, 16, 180]} />
+            <torusGeometry args={[radius, 0.008 + index * 0.002, 12, 160]} />
             <meshBasicMaterial
               color={index === 1 ? "#5da6ff" : "#b9ff9b"}
               transparent
-              opacity={0.2 - index * 0.035}
+              opacity={index === 0 ? 0.105 : 0.075}
               depthWrite={false}
-              blending={THREE.AdditiveBlending}
-            />
-          </mesh>
-        ))}
-        {[
-          [1.36, 0.94, 0.18],
-          [-1.58, -0.34, 0.3],
-          [0.42, -1.72, 0.1],
-        ].map((position, index) => (
-          <mesh key={index} position={position as [number, number, number]}>
-            <sphereGeometry args={[index === 0 ? 0.055 : 0.038, 14, 14]} />
-            <meshBasicMaterial
-              color={index === 1 ? "#5da6ff" : "#b9ff9b"}
-              transparent
-              opacity={0.58}
-              depthWrite={false}
-              blending={THREE.AdditiveBlending}
             />
           </mesh>
         ))}
@@ -337,9 +300,6 @@ function ExperienceCanvas(props: ExperienceProps) {
         powerPreference: "high-performance",
       }}
     >
-      <ambientLight intensity={0.28} />
-      <pointLight position={[3, 3, 4]} intensity={8} color="#b9ff9b" />
-      <pointLight position={[-4, -2, 3]} intensity={5} color="#5da6ff" />
       <SignalField {...props} />
       <IntelligenceCore {...props} />
     </Canvas>
