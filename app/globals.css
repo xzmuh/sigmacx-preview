@@ -630,8 +630,8 @@ video {
   background:
     radial-gradient(circle at 18% 50%, rgba(93, 166, 255, 0.15), transparent 30%),
     linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(8, 18, 41, 0.94));
-  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 220px), transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 220px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 90px, #000 calc(100% - 220px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 90px, #000 calc(100% - 220px), transparent 100%);
 }
 
 .manifesto-signal {
@@ -2432,8 +2432,8 @@ video {
     min-height: auto;
     margin-bottom: -110px;
     padding: 8rem 1.2rem calc(8rem + 110px);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 150px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 150px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 64px, #000 calc(100% - 150px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 64px, #000 calc(100% - 150px), transparent 100%);
   }
 
   .manifesto-signal {
