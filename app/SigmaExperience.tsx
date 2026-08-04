@@ -39,6 +39,7 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
     const colors = new Float32Array(count * 3);
     const white = new THREE.Color("#f7fcff");
     const blue = new THREE.Color("#9ed7ff");
+    const green = new THREE.Color("#b9ff9b");
 
     for (let index = 0; index < count; index += 1) {
       const radius = 2.3 + Math.random() * 4.7;
@@ -47,7 +48,7 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
       positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta);
       positions[index * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.62;
       positions[index * 3 + 2] = radius * Math.cos(phi);
-      const color = white.clone().lerp(blue, Math.random());
+      const color = index % 13 === 0 ? green : white.clone().lerp(blue, Math.random());
       colors[index * 3] = color.r;
       colors[index * 3 + 1] = color.g;
       colors[index * 3 + 2] = color.b;
@@ -126,11 +127,12 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     const palette = [
       new THREE.Color("#ffffff"),
       new THREE.Color("#dff4ff"),
-      new THREE.Color("#b9e2ff"),
+      new THREE.Color("#b9ff9b"),
       new THREE.Color("#8fcaff"),
       new THREE.Color("#eef9ff"),
-      new THREE.Color("#c9eaff"),
+      new THREE.Color("#7ebe70"),
     ];
+    const signalGreen = new THREE.Color("#b9ff9b");
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
 
     for (let index = 0; index < surfaceCount; index += 1) {
@@ -143,7 +145,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       positions[offset + 1] = y * 1.1;
       positions[offset + 2] = Math.sin(angle) * radius * 1.1;
 
-      const color = palette[index % palette.length];
+      const color = index % 61 === 0 ? signalGreen : palette[index % palette.length];
       colors[offset] = color.r;
       colors[offset + 1] = color.g;
       colors[offset + 2] = color.b;
@@ -164,7 +166,9 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       positions[offset + 1] = (trailProgress - 0.5) * (0.9 - trail * 0.1) + Math.sin(angle * 1.7 + trail) * 0.16;
       positions[offset + 2] = Math.sin(angle) * radius * 0.62 - 0.18 + trail * 0.08;
 
-      const color = palette[(localIndex + trail * 2) % palette.length];
+      const color = localIndex % 11 === 0
+        ? signalGreen
+        : palette[(localIndex + trail * 2) % palette.length];
       colors[offset] = color.r;
       colors[offset + 1] = color.g;
       colors[offset + 2] = color.b;
@@ -195,9 +199,9 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     const cameraSpan = 2 * Math.tan(THREE.MathUtils.degToRad(20)) * 7;
     const targetX = visualCenterOffset * cameraSpan / state.size.height;
     const targetScale = THREE.MathUtils.clamp(
-      visualWidth * 0.43 * cameraSpan / (2 * state.size.height),
-      state.size.width < 720 ? 0.58 : 0.7,
-      0.86,
+      visualWidth * 0.59 * cameraSpan / (2 * state.size.height),
+      state.size.width < 720 ? 0.72 : 0.86,
+      1.12,
     );
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,
