@@ -790,6 +790,13 @@ export function SigmaExperience() {
               </div>
             </article>
           </div>
+        </section>
+
+        <div className="section-transition section-transition--dark-light" aria-hidden="true">
+          <span /><span /><span />
+        </div>
+
+        <section id="trust" className="trust-interlude section-light" aria-label="Confiança do consumidor">
           <aside className="trust-metric" data-reveal>
             <span>81%</span>
             <p>dos clientes dizem que a <strong>confiança em uma marca</strong> é um fator decisivo para a compra.</p>
@@ -797,7 +804,7 @@ export function SigmaExperience() {
           </aside>
         </section>
 
-        <div className="section-transition section-transition--navy-deep" aria-hidden="true">
+        <div className="section-transition section-transition--trust-security" aria-hidden="true">
           <span /><span /><span />
         </div>
 
