@@ -526,7 +526,12 @@ export function SigmaExperience() {
 
         <section id="security" className="security section-dark" aria-labelledby="security-title">
           <div className="security-orbit" aria-hidden="true">
-            <img src="/media/security-globe.png" alt="" />
+            <div className="security-core">
+              <span className="security-core__code">PRIVACY CORE</span>
+              <span className="security-core__lock"><i /></span>
+              <strong>LGPD</strong>
+              <small>DATA / SECURE</small>
+            </div>
           </div>
           <div className="security-copy" data-reveal>
             <span className="section-index">05 / Confiança por design</span>
