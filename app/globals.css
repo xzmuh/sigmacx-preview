@@ -635,10 +635,13 @@ video {
   gap: clamp(3rem, 8vw, 10rem);
   align-items: center;
   min-height: 105vh;
-  padding: 10rem 7vw;
+  margin-bottom: -170px;
+  padding: 10rem 7vw calc(10rem + 170px);
   background:
     radial-gradient(circle at 18% 50%, rgba(93, 166, 255, 0.15), transparent 30%),
     linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(8, 18, 41, 0.94));
+  mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 220px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 220px), transparent 100%);
 }
 
 .manifesto-signal {
@@ -722,7 +725,7 @@ video {
 
 .signal-story {
   min-height: 340vh;
-  padding: 12rem 5vw 0;
+  padding: calc(12rem + 170px) 5vw 0;
   background: linear-gradient(180deg, rgba(5, 11, 25, 0.05), rgba(5, 11, 25, 0.8) 90%);
 }
 
@@ -2215,7 +2218,7 @@ video {
 
   .signal-story {
     min-height: auto;
-    padding: 8rem 1.2rem 4rem;
+    padding: calc(8rem + 110px) 1.2rem 4rem;
     background: rgba(5, 11, 25, 0.7);
   }
 
@@ -2223,7 +2226,10 @@ video {
     grid-template-columns: 1fr;
     gap: 6rem;
     min-height: auto;
-    padding: 8rem 1.2rem;
+    margin-bottom: -110px;
+    padding: 8rem 1.2rem calc(8rem + 110px);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 150px), transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 calc(100% - 150px), transparent 100%);
   }
 
   .manifesto-signal {
