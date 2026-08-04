@@ -521,15 +521,6 @@ video {
   aspect-ratio: 1;
   transform: translateY(-50%);
   opacity: clamp(0.18, calc(0.72 - var(--story-progress)), 0.68);
-  background:
-    linear-gradient(90deg, rgba(191, 229, 255, 0.42), rgba(191, 229, 255, 0.42)) left top / 74px 1px no-repeat,
-    linear-gradient(rgba(191, 229, 255, 0.42), rgba(191, 229, 255, 0.42)) left top / 1px 38px no-repeat,
-    linear-gradient(90deg, rgba(185, 255, 155, 0.34), rgba(185, 255, 155, 0.34)) right top / 48px 1px no-repeat,
-    linear-gradient(rgba(185, 255, 155, 0.34), rgba(185, 255, 155, 0.34)) right top / 1px 26px no-repeat,
-    linear-gradient(90deg, rgba(185, 255, 155, 0.3), rgba(185, 255, 155, 0.3)) left bottom / 42px 1px no-repeat,
-    linear-gradient(rgba(185, 255, 155, 0.3), rgba(185, 255, 155, 0.3)) left bottom / 1px 24px no-repeat,
-    linear-gradient(90deg, rgba(191, 229, 255, 0.34), rgba(191, 229, 255, 0.34)) right bottom / 82px 1px no-repeat,
-    linear-gradient(rgba(191, 229, 255, 0.34), rgba(191, 229, 255, 0.34)) right bottom / 1px 40px no-repeat;
   animation: frameSignal 4.8s ease-in-out infinite alternate;
 }
 
