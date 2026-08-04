@@ -1,7 +1,6 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
@@ -114,82 +113,55 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 
 function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
-  const neuralCloud = useRef<THREE.Group>(null);
-  const nodeMeshes = useRef<Array<THREE.Mesh | null>>([]);
-  const fadeMaterials = useRef<Array<{ material: THREE.Material & { opacity: number }; opacity: number }>>([]);
-  const neuralNodes = useMemo(() => {
-    const total = 34;
-    const random = (seed: number) => {
-      const value = Math.sin(seed * 91.117) * 43758.5453;
-      return value - Math.floor(value);
+  const points = useRef<THREE.Points>(null);
+  const motionTime = useRef(0);
+  const count = reducedMotion ? 760 : 1120;
+  const cloud = useMemo(() => {
+    const positions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
+    const phases = new Float32Array(count);
+    const palette = [
+      new THREE.Color("#b9ff9b"),
+      new THREE.Color("#7ebe70"),
+      new THREE.Color("#5da6ff"),
+      new THREE.Color("#87c7ff"),
+      new THREE.Color("#605be5"),
+      new THREE.Color("#b9ff9b"),
+    ];
+    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+    for (let index = 0; index < count; index += 1) {
+      const pointProgress = index / Math.max(count - 1, 1);
+      const y = 1 - pointProgress * 2;
+      const radius = Math.sqrt(Math.max(0, 1 - y * y));
+      const angle = goldenAngle * index;
+      const offset = index * 3;
+      positions[offset] = Math.cos(angle) * radius * 1.1;
+      positions[offset + 1] = y * 1.1;
+      positions[offset + 2] = Math.sin(angle) * radius * 1.1;
+
+      const color = palette[index % palette.length];
+      colors[offset] = color.r;
+      colors[offset + 1] = color.g;
+      colors[offset + 2] = color.b;
+      sizes[index] = index % 61 === 0 ? 2.55 : index % 19 === 0 ? 1.72 : index % 7 === 0 ? 1.08 : 0.6;
+      phases[index] = (index * 0.754877666) % (Math.PI * 2);
+    }
+
+    return {
+      positions,
+      colors,
+      sizes,
+      phases,
+      basePositions: positions.slice(),
     };
-
-    return Array.from({ length: total }, (_, index) => {
-      const theta = random(index + 1) * Math.PI * 2;
-      const phi = Math.acos(2 * random(index + 17) - 1);
-      const radius = 0.24 + Math.cbrt(random(index + 43)) * 0.84;
-      const emphasis = index % 7 === 0;
-      return {
-        position: [
-          Math.sin(phi) * Math.cos(theta) * radius * 1.06,
-          Math.sin(phi) * Math.sin(theta) * radius * 0.9,
-          Math.cos(phi) * radius * 0.82,
-        ] as [number, number, number],
-        size: emphasis ? 0.075 : 0.034 + random(index + 71) * 0.018,
-        color: emphasis ? "#b9ff9b" : index % 3 === 0 ? "#87c7ff" : "#5da6ff",
-        opacity: emphasis ? 0.88 : 0.52 + random(index + 89) * 0.2,
-        phase: random(index + 101) * Math.PI * 2,
-        breath: emphasis ? 0.24 : 0.13,
-      };
-    });
-  }, []);
-
-  const neuralConnections = useMemo(() => {
-    const positions: number[] = [];
-    const connected = new Set<string>();
-
-    neuralNodes.forEach((node, index) => {
-      const nearest = neuralNodes
-        .map((candidate, candidateIndex) => ({
-          candidateIndex,
-          distance: candidateIndex === index
-            ? Number.POSITIVE_INFINITY
-            : new THREE.Vector3(...node.position).distanceTo(new THREE.Vector3(...candidate.position)),
-        }))
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, index % 4 === 0 ? 2 : 1);
-
-      nearest.forEach(({ candidateIndex }) => {
-        const key = [index, candidateIndex].sort((a, b) => a - b).join("-");
-        if (connected.has(key)) return;
-        connected.add(key);
-        positions.push(...node.position, ...neuralNodes[candidateIndex].position);
-      });
-    });
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
-    return geometry;
-  }, [neuralNodes]);
-
-  useEffect(() => {
-    const materials: Array<{ material: THREE.Material & { opacity: number }; opacity: number }> = [];
-    group.current?.traverse((object) => {
-      if (!("material" in object)) return;
-      const objectMaterial = (object as THREE.Mesh).material;
-      const meshMaterials = Array.isArray(objectMaterial) ? objectMaterial : [objectMaterial];
-      meshMaterials.forEach((material) => {
-        if ("opacity" in material) {
-          const fadeMaterial = material as THREE.Material & { opacity: number };
-          materials.push({ material: fadeMaterial, opacity: fadeMaterial.opacity });
-        }
-      });
-    });
-    fadeMaterials.current = materials;
-  }, []);
+  }, [count]);
+  const velocities = useMemo(() => new Float32Array(count * 3), [count]);
+  const dotUniforms = useMemo(() => ({ uOpacity: { value: 1 } }), []);
 
   useFrame((state, delta) => {
-    if (!group.current || !neuralCloud.current) return;
+    if (!group.current || !points.current) return;
     const isCompact = state.size.width < 980;
     const radarWidth = isCompact
       ? Math.min(state.size.width * (state.size.width < 720 ? 1.12 : 0.62), 560)
@@ -213,79 +185,100 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       THREE.MathUtils.lerp(group.current.scale.x, targetScale - progress.current * 0.045, 0.05),
     );
     const visualIntensity = 1 - 0.86 * Math.sqrt(progress.current);
-    fadeMaterials.current.forEach(({ material, opacity }) => {
-      material.opacity = opacity * visualIntensity;
-    });
+    dotUniforms.uOpacity.value = visualIntensity;
     if (reducedMotion) return;
+
+    const safeDelta = Math.min(delta, 1 / 30);
+    motionTime.current += safeDelta * 0.78;
+    const animatedTime = motionTime.current;
+    const positionAttribute = points.current.geometry.getAttribute("position") as THREE.BufferAttribute;
+    const positions = positionAttribute.array as Float32Array;
+    const damping = Math.pow(0.87, safeDelta * 60);
+
     group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.04, 0.04);
-    neuralCloud.current.rotation.y += delta * 0.046;
-    neuralCloud.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.16) * 0.055;
-    nodeMeshes.current.forEach((node, index) => {
-      if (!node) return;
-      const metadata = neuralNodes[index];
-      const pulse = 1 + Math.sin(state.clock.elapsedTime * 0.9 + metadata.phase) * metadata.breath;
-      node.scale.setScalar(pulse);
-    });
+    points.current.rotation.z += safeDelta * 0.032;
+    points.current.rotation.y += safeDelta * 0.016;
+    points.current.rotation.x = -0.1 + Math.sin(animatedTime * 0.42) * 0.052;
+
+    for (let index = 0; index < count; index += 1) {
+      const offset = index * 3;
+      const baseX = cloud.basePositions[offset];
+      const baseY = cloud.basePositions[offset + 1];
+      const baseZ = cloud.basePositions[offset + 2];
+      const currentX = positions[offset];
+      const currentY = positions[offset + 1];
+      const currentZ = positions[offset + 2];
+      const phase = cloud.phases[index];
+      const longitude = Math.atan2(baseZ, baseX);
+      const latitude = Math.asin(THREE.MathUtils.clamp(baseY / 1.1, -1, 1));
+
+      const travelingWave = Math.sin(animatedTime * 2.15 - latitude * 9.5 + longitude * 2.4);
+      const crossWave = Math.sin(animatedTime * 1.45 + longitude * 6.2 + phase);
+      const fineRipple = Math.sin(animatedTime * 3.8 + latitude * 15 - phase * 0.6);
+      const gelatin = Math.sin(animatedTime * 1.18 + phase + baseY * 3.2) * 0.024;
+      const radialScale = 1 + travelingWave * 0.034 + crossWave * 0.022 + fineRipple * 0.008 + gelatin;
+      const shearX = Math.sin(animatedTime * 0.82 + baseY * 4.8) * 0.025;
+      const shearY = Math.cos(animatedTime * 0.7 + baseX * 4.1) * 0.02;
+      const targetX = baseX * radialScale + shearX * baseZ;
+      const targetY = baseY * (radialScale + gelatin * 0.45) + shearY * baseX;
+      const targetZ = baseZ * radialScale - shearX * baseX;
+
+      velocities[offset] += (targetX - currentX) * 11.5 * safeDelta;
+      velocities[offset + 1] += (targetY - currentY) * 11.5 * safeDelta;
+      velocities[offset + 2] += (targetZ - currentZ) * 11.5 * safeDelta;
+      velocities[offset] *= damping;
+      velocities[offset + 1] *= damping;
+      velocities[offset + 2] *= damping;
+      positions[offset] = currentX + velocities[offset];
+      positions[offset + 1] = currentY + velocities[offset + 1];
+      positions[offset + 2] = currentZ + velocities[offset + 2];
+    }
+
+    positionAttribute.needsUpdate = true;
   });
 
   return (
-    <Float speed={reducedMotion ? 0 : 1.05} rotationIntensity={0.12} floatIntensity={0.2}>
-      <group ref={group} position={[0, 0.05, 0]}>
-        <mesh position={[0, 0, -1.05]} scale={2.45}>
-          <circleGeometry args={[1, 96]} />
-          <meshBasicMaterial
-            color="#2f75c8"
-            transparent
-            opacity={0.016}
-            depthWrite={false}
-          />
-        </mesh>
-        <group ref={neuralCloud}>
-          <lineSegments geometry={neuralConnections}>
-            <lineBasicMaterial
-              color="#72b6ff"
-              transparent
-              opacity={0.13}
-              depthWrite={false}
-            />
-          </lineSegments>
-          {neuralNodes.map((node, index) => (
-            <mesh
-              key={index}
-              ref={(mesh) => { nodeMeshes.current[index] = mesh; }}
-              position={node.position}
-            >
-              <sphereGeometry args={[node.size, 16, 16]} />
-              <meshBasicMaterial
-                color={node.color}
-                transparent
-                opacity={node.opacity}
-                depthWrite={false}
-                blending={THREE.AdditiveBlending}
-              />
-            </mesh>
-          ))}
-        </group>
-        {[1.62, 2.12].map((radius, index) => (
-          <mesh
-            key={radius}
-            rotation={[
-              Math.PI / (2.4 + index * 0.35),
-              index * 0.76,
-              index * 0.33,
-            ]}
-          >
-            <torusGeometry args={[radius, 0.008 + index * 0.002, 12, 160]} />
-            <meshBasicMaterial
-              color={index === 1 ? "#5da6ff" : "#b9ff9b"}
-              transparent
-              opacity={index === 0 ? 0.105 : 0.075}
-              depthWrite={false}
-            />
-          </mesh>
-        ))}
-      </group>
-    </Float>
+    <group ref={group} position={[0, 0.05, 0]}>
+      <points ref={points}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[cloud.positions, 3]} />
+          <bufferAttribute attach="attributes-color" args={[cloud.colors, 3]} />
+          <bufferAttribute attach="attributes-pointSize" args={[cloud.sizes, 1]} />
+        </bufferGeometry>
+        <shaderMaterial
+          transparent
+          depthWrite={false}
+          vertexColors
+          blending={THREE.NormalBlending}
+          uniforms={dotUniforms}
+          vertexShader={`
+            attribute float pointSize;
+            varying vec3 vColor;
+            varying float vOpacity;
+            void main() {
+              vColor = color;
+              vOpacity = mix(0.36, 0.94, clamp(pointSize / 2.55, 0.0, 1.0));
+              vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+              gl_Position = projectionMatrix * viewPosition;
+              gl_PointSize = pointSize * 4.15 * (7.0 / max(1.0, -viewPosition.z));
+            }
+          `}
+          fragmentShader={`
+            uniform float uOpacity;
+            varying vec3 vColor;
+            varying float vOpacity;
+            void main() {
+              float distanceToCenter = length(gl_PointCoord - vec2(0.5));
+              float core = 1.0 - smoothstep(0.16, 0.34, distanceToCenter);
+              float halo = (1.0 - smoothstep(0.24, 0.5, distanceToCenter)) * 0.24;
+              float alpha = min(1.0, core + halo);
+              if (alpha < 0.02) discard;
+              gl_FragColor = vec4(vColor, alpha * vOpacity * uOpacity);
+            }
+          `}
+        />
+      </points>
+    </group>
   );
 }
 
