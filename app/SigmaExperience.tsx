@@ -508,6 +508,16 @@ export function SigmaExperience() {
           },
         });
 
+        ScrollTrigger.create({
+          trigger: ".story-track",
+          start: "top 68%",
+          end: "bottom 38%",
+          scrub: 0.65,
+          onUpdate: (self) => {
+            document.documentElement.style.setProperty("--signal-line-progress", String(self.progress));
+          },
+        });
+
         gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
           gsap.from(element, {
             y: 54,
@@ -521,8 +531,9 @@ export function SigmaExperience() {
         gsap.utils.toArray<HTMLElement>(".story-step").forEach((element) => {
           gsap.fromTo(
             element,
-            { opacity: 0.2 },
+            { x: element.classList.contains("story-step--right") ? 56 : -56, opacity: 0.16 },
             {
+              x: 0,
               opacity: 1,
               scrollTrigger: {
                 trigger: element,
@@ -628,6 +639,14 @@ export function SigmaExperience() {
             <p>O SigmaCX transforma milhares de interações em uma visão viva da sua operação.</p>
           </div>
           <div className="story-track">
+            <div className="story-line" aria-hidden="true">
+              <span className="story-line__track" />
+              <span className="story-line__fill" />
+              <span className="story-line__pulse" />
+              <span className="story-line__node story-line__node--one" />
+              <span className="story-line__node story-line__node--two" />
+              <span className="story-line__node story-line__node--three" />
+            </div>
             <article className="story-step">
               <span className="step-number">01</span>
               <div>
