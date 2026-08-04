@@ -167,21 +167,44 @@ video {
 
 .site-header {
   position: fixed;
-  top: 18px;
+  top: 20px;
   left: 50%;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: min(1180px, calc(100% - 32px));
-  min-height: 62px;
-  padding: 9px 10px 9px 18px;
+  width: min(1380px, calc(100% - 48px));
+  min-height: 66px;
+  padding: 10px 12px 10px 20px;
   transform: translateX(-50%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 999px;
-  background: rgba(7, 16, 37, 0.7);
-  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.26);
-  backdrop-filter: blur(20px) saturate(130%);
+  background: rgba(7, 16, 37, 0.24);
+  box-shadow: 0 10px 42px rgba(0, 0, 0, 0.06);
+  backdrop-filter: blur(10px) saturate(115%);
+  transition:
+    top 620ms var(--ease-sigma),
+    width 720ms var(--ease-sigma),
+    min-height 620ms var(--ease-sigma),
+    padding 620ms var(--ease-sigma),
+    border-color 520ms ease,
+    background 520ms ease,
+    box-shadow 620ms ease,
+    backdrop-filter 520ms ease;
+}
+
+.site-header--compact {
+  top: 10px;
+  width: min(980px, calc(100% - 40px));
+  min-height: 54px;
+  padding: 6px 7px 6px 15px;
+  border-color: rgba(185, 255, 155, 0.17);
+  background: linear-gradient(115deg, rgba(6, 14, 32, 0.93), rgba(12, 28, 50, 0.82));
+  box-shadow:
+    0 18px 54px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 0 34px rgba(93, 166, 255, 0.055);
+  backdrop-filter: blur(24px) saturate(145%);
 }
 
 .brand {
@@ -194,6 +217,11 @@ video {
 .brand img {
   width: 124px;
   height: auto;
+  transition: width 620ms var(--ease-sigma), opacity 320ms ease;
+}
+
+.site-header--compact .brand img {
+  width: 104px;
 }
 
 .nav {
@@ -203,11 +231,36 @@ video {
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.77rem;
   font-weight: 500;
+  transition: gap 620ms var(--ease-sigma), font-size 620ms var(--ease-sigma);
 }
 
 .nav a {
   position: relative;
-  transition: color 180ms ease;
+  display: inline-flex;
+  align-items: center;
+  transition: color 260ms ease, transform 320ms var(--ease-sigma);
+}
+
+.nav a::before {
+  margin-right: 0.46rem;
+  content: attr(data-index);
+  color: rgba(185, 255, 155, 0.58);
+  font-family: monospace;
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  transition: width 480ms var(--ease-sigma), margin 480ms var(--ease-sigma), opacity 260ms ease;
+}
+
+.site-header--compact .nav {
+  gap: clamp(0.85rem, 1.7vw, 1.45rem);
+  font-size: 0.7rem;
+}
+
+.site-header--compact .nav a::before {
+  width: 0;
+  margin-right: 0;
+  overflow: hidden;
+  opacity: 0;
 }
 
 .nav a::after {
@@ -238,6 +291,11 @@ video {
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: gap 520ms var(--ease-sigma);
+}
+
+.site-header--compact .header-actions {
+  gap: 9px;
 }
 
 .language {
@@ -259,6 +317,7 @@ video {
   font-weight: 600;
   letter-spacing: 0.1em;
   cursor: pointer;
+  transition: opacity 320ms ease;
 }
 
 .motion-toggle i {
@@ -300,6 +359,11 @@ video {
   border-color: transparent;
   background: var(--green);
   color: var(--navy);
+}
+
+.site-header--compact .pill--small {
+  min-height: 40px;
+  padding: 0.62rem 0.92rem;
 }
 
 .pill--primary {
@@ -2273,6 +2337,12 @@ video {
     width: calc(100% - 24px);
   }
 
+  .site-header--compact {
+    top: 8px;
+    width: calc(100% - 36px);
+    min-height: 54px;
+  }
+
   .nav {
     position: absolute;
     top: calc(100% + 10px);
@@ -2384,6 +2454,11 @@ video {
   .site-header {
     min-height: 56px;
     padding: 7px 8px 7px 15px;
+  }
+
+  .site-header--compact {
+    min-height: 50px;
+    padding: 5px 6px 5px 13px;
   }
 
   .brand img {

@@ -314,22 +314,24 @@ function Header({
   setMenuOpen,
   motionEnabled,
   setMotionEnabled,
+  compact,
 }: {
   menuOpen: boolean;
   setMenuOpen: (open: boolean) => void;
   motionEnabled: boolean;
   setMotionEnabled: (enabled: boolean) => void;
+  compact: boolean;
 }) {
   return (
-    <header className="site-header">
+    <header className={compact ? "site-header site-header--compact" : "site-header"}>
       <a className="brand" href="#top" aria-label="SigmaCX — início">
         <img src="/media/logo-white.png" alt="SigmaCX" />
       </a>
       <nav className={menuOpen ? "nav nav--open" : "nav"} aria-label="Navegação principal">
-        <a href="#experience" onClick={() => setMenuOpen(false)}>Experiência</a>
-        <a href="#platform" onClick={() => setMenuOpen(false)}>Sigma Suite</a>
-        <a href="#proof" onClick={() => setMenuOpen(false)}>Resultados</a>
-        <a href="#security" onClick={() => setMenuOpen(false)}>Segurança</a>
+        <a data-index="01" href="#experience" onClick={() => setMenuOpen(false)}>Experiência</a>
+        <a data-index="02" href="#platform" onClick={() => setMenuOpen(false)}>Sigma Suite</a>
+        <a data-index="03" href="#proof" onClick={() => setMenuOpen(false)}>Resultados</a>
+        <a data-index="04" href="#security" onClick={() => setMenuOpen(false)}>Segurança</a>
       </nav>
       <div className="header-actions">
         <button
@@ -366,6 +368,7 @@ export function SigmaExperience() {
   const progress = useRef(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [motionEnabled, setMotionEnabled] = useState(true);
+  const [headerCompact, setHeaderCompact] = useState(false);
   const reducedMotion = !motionEnabled;
 
   useEffect(() => {
@@ -377,6 +380,20 @@ export function SigmaExperience() {
   useEffect(() => {
     window.localStorage.setItem("sigmacx-motion", motionEnabled ? "on" : "off");
   }, [motionEnabled]);
+
+  useEffect(() => {
+    let frame = 0;
+    const updateHeader = () => {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => setHeaderCompact(window.scrollY > 72));
+    };
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateHeader);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (!root.current) return;
@@ -513,6 +530,7 @@ export function SigmaExperience() {
         setMenuOpen={setMenuOpen}
         motionEnabled={motionEnabled}
         setMotionEnabled={setMotionEnabled}
+        compact={headerCompact}
       />
 
       <div className="experience-layer" aria-hidden="true">
