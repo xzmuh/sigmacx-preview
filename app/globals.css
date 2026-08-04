@@ -1031,8 +1031,14 @@ video {
   height: 86px;
   padding: 1.8rem;
   object-fit: contain;
-  filter: grayscale(1) contrast(1.1);
-  opacity: 0.62;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.48;
+  transition: opacity 420ms var(--ease-sigma), transform 520ms var(--ease-sigma);
+}
+
+.client-rail img:hover {
+  transform: translateY(-3px);
+  opacity: 0.82;
 }
 
 .connection-media video,
