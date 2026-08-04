@@ -439,6 +439,17 @@ export function SigmaExperience() {
           <div className="scroll-cue" aria-hidden="true"><span /> Role para conectar os sinais</div>
         </section>
 
+        <section className="manifesto section-dark" aria-labelledby="manifesto-title">
+          <div className="manifesto-signal" aria-hidden="true">
+            <span>CH</span><span>WA</span><span>VOZ</span><span>IA</span>
+          </div>
+          <div className="manifesto-copy" data-reveal>
+            <span className="section-index">01 / Por que existimos</span>
+            <p>Em um mundo com tantos canais, mensagens e demandas, o atendimento virou uma tarefa trabalhosa. A relação entre marcas e clientes se tornou automática demais.</p>
+            <h2 id="manifesto-title">O SigmaCX nasceu<br /><strong>para mudar isso.</strong></h2>
+          </div>
+        </section>
+
         <section id="experience" ref={story} className="signal-story section-dark" aria-labelledby="story-title">
           <div className="story-intro" data-reveal>
             <span className="section-index">01 / A inteligência</span>
@@ -473,11 +484,28 @@ export function SigmaExperience() {
           </div>
         </section>
 
+        <div className="section-transition section-transition--dark-light" aria-hidden="true">
+          <span /><span /><span />
+        </div>
+
+        <section className="personalization section-light" aria-labelledby="personalization-title">
+          <div className="personalization-copy" data-reveal>
+            <span className="section-index">02 / Experiência única</span>
+            <h2 id="personalization-title">Cada cliente é único.<br /><strong>Cada experiência também.</strong></h2>
+            <p>Adaptar cada interação ao contexto e à necessidade de cada pessoa gera experiências que fazem sentido de verdade.</p>
+          </div>
+          <aside className="impact-card" data-reveal>
+            <span className="impact-card__number">40%</span>
+            <p>A personalização aumenta a satisfação e pode elevar o ticket médio em até <strong>40%</strong> em determinados setores.</p>
+            <small>FONTE / BOSTON CONSULTING GROUP</small>
+          </aside>
+        </section>
+
         <section id="proof" className="proof section-light" aria-labelledby="proof-title">
           <div className="section-heading" data-reveal>
-            <span className="section-index">02 / Confiança</span>
-            <h2 id="proof-title">Soluções que<br />conquistam líderes.</h2>
-            <p>Resultados reais, em operações onde cada conversa importa.</p>
+            <span className="section-index">03 / Confiança</span>
+            <h2 id="proof-title">Empresas que confiam<br /><strong>na tecnologia.</strong></h2>
+            <p>Marcas que confiam na tecnologia para transformar o relacionamento com seus clientes e, assim como nós, acreditam na excelência da experiência e no poder do atendimento inteligente.</p>
           </div>
           <div className="client-rail" data-reveal aria-label="Empresas clientes">
             <div className="client-rail__track">
@@ -504,23 +532,31 @@ export function SigmaExperience() {
           </div>
         </section>
 
+        <div className="section-transition section-transition--light-dark" aria-hidden="true">
+          <span /><span /><span />
+        </div>
+
         <section className="connection section-dark" aria-labelledby="connection-title">
           <div className="connection-media" data-reveal>
             <video src="/media/woman.mp4" autoPlay muted loop playsInline preload="metadata" aria-label="Pessoa em uma experiência de atendimento conectada" />
             <div className="video-data"><span>CONNECTION / 01</span><span>LIVE SIGNAL</span></div>
           </div>
           <div className="connection-copy" data-reveal>
-            <span className="section-index">03 / Experiência</span>
-            <h2 id="connection-title">Transforme atendimentos em conexões reais.</h2>
-            <p>Atendimentos deixam de ser transações e passam a criar vínculos entre marcas e clientes.</p>
+            <img className="dialogi-logo" src="/media/dialogi.png" alt="Dialogi" />
+            <span className="section-index">04 / Conexão entre marcas e pessoas</span>
+            <h2 id="connection-title">Conversas digitais mais humanas.</h2>
+            <p>O Dialogi é uma plataforma de inteligência artificial voltada para criar conversas digitais mais humanas, fluidas e eficientes.</p>
+            <p><strong>Integrando WhatsApp, chat, redes sociais e voz, o Dialogi conecta marcas e clientes com velocidade, empatia e automação inteligente.</strong></p>
             <a className="pill pill--outline" href="#platform">Conheça a plataforma <span aria-hidden="true">→</span></a>
           </div>
         </section>
 
         <section id="platform" className="platform section-dark" aria-labelledby="platform-title">
           <div className="section-heading section-heading--dark" data-reveal>
-            <span className="section-index">04 / Sigma Suite</span>
-            <h2 id="platform-title">Uma inteligência.<br />Três forças conectadas.</h2>
+            <span className="section-index">05 / Sigma Suite</span>
+            <h2 id="platform-title">Inteligência para<br />decisões de CX.</h2>
+            <p>O Sigma é uma plataforma completa para gestão da experiência do cliente: integra canais, automatiza interações e gera insights em tempo real.</p>
+            <p><strong>Cada módulo trabalha de forma integrada para proporcionar uma jornada contínua, inteligente e orientada a resultados.</strong></p>
           </div>
           <div className="suite-grid">
             <article className="suite-card suite-card--brain" data-reveal>
@@ -557,7 +593,16 @@ export function SigmaExperience() {
               </div>
             </article>
           </div>
+          <aside className="trust-metric" data-reveal>
+            <span>81%</span>
+            <p>dos clientes dizem que a <strong>confiança em uma marca</strong> é um fator decisivo para a compra.</p>
+            <small>TRUST / CUSTOMER EXPERIENCE</small>
+          </aside>
         </section>
+
+        <div className="section-transition section-transition--navy-deep" aria-hidden="true">
+          <span /><span /><span />
+        </div>
 
         <section id="security" className="security section-dark" aria-labelledby="security-title">
           <div className="security-orbit" aria-hidden="true">

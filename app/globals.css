@@ -624,6 +624,97 @@ video {
   background: var(--green);
 }
 
+.manifesto {
+  display: grid;
+  grid-template-columns: 0.78fr 1.22fr;
+  gap: clamp(3rem, 8vw, 10rem);
+  align-items: center;
+  min-height: 105vh;
+  padding: 10rem 7vw;
+  background:
+    radial-gradient(circle at 18% 50%, rgba(93, 166, 255, 0.15), transparent 30%),
+    linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(8, 18, 41, 0.94));
+}
+
+.manifesto-signal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(34vw, 480px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(93, 166, 255, 0.2);
+  border-radius: 50%;
+  animation: manifestoRotate 28s linear infinite;
+}
+
+.manifesto-signal::before,
+.manifesto-signal::after {
+  position: absolute;
+  content: "";
+  border-radius: 50%;
+}
+
+.manifesto-signal::before {
+  inset: 18%;
+  border: 1px dashed rgba(185, 255, 155, 0.22);
+}
+
+.manifesto-signal::after {
+  inset: 38%;
+  background: radial-gradient(circle, rgba(185, 255, 155, 0.35), rgba(93, 166, 255, 0.05) 58%, transparent 70%);
+  box-shadow: 0 0 70px rgba(185, 255, 155, 0.14);
+  animation: signalPulse 2.2s ease-in-out infinite;
+}
+
+.manifesto-signal span {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(10, 20, 44, 0.82);
+  color: rgba(255, 255, 255, 0.55);
+  font-family: monospace;
+  font-size: 0.58rem;
+  animation: manifestoCounterRotate 28s linear infinite;
+}
+
+.manifesto-signal span:nth-child(1) { top: -28px; }
+.manifesto-signal span:nth-child(2) { right: -28px; }
+.manifesto-signal span:nth-child(3) { bottom: -28px; }
+.manifesto-signal span:nth-child(4) { left: -28px; color: var(--green); }
+
+@keyframes manifestoRotate { to { transform: rotate(360deg); } }
+@keyframes manifestoCounterRotate { to { transform: rotate(-360deg); } }
+
+.manifesto-copy {
+  max-width: 940px;
+}
+
+.manifesto-copy > p {
+  max-width: 770px;
+  margin: 0 0 3.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: clamp(1.25rem, 2.2vw, 2.2rem);
+  letter-spacing: -0.045em;
+  line-height: 1.35;
+}
+
+.manifesto-copy h2 {
+  margin: 0;
+  font-size: clamp(3.6rem, 7vw, 8rem);
+  font-weight: 440;
+  letter-spacing: -0.078em;
+  line-height: 0.93;
+}
+
+.manifesto-copy h2 strong {
+  color: var(--green);
+  font-weight: 440;
+}
+
 .signal-story {
   min-height: 340vh;
   padding: 12rem 5vw 0;
@@ -707,6 +798,184 @@ video {
   color: rgba(255, 255, 255, 0.5);
 }
 
+.section-transition {
+  position: relative;
+  z-index: 6;
+  height: clamp(110px, 13vw, 210px);
+  margin-block: -1px;
+  overflow: hidden;
+}
+
+.section-transition span {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.section-transition span:nth-child(1) {
+  animation: transitionBreathe 8s ease-in-out infinite alternate;
+}
+
+.section-transition span:nth-child(2) {
+  animation: transitionBreathe 10s 0.8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes transitionBreathe {
+  to { transform: scaleX(1.035) translateX(-0.5%); }
+}
+
+.section-transition--dark-light {
+  background: var(--mist);
+}
+
+.section-transition--dark-light span:nth-child(1) {
+  background: #071329;
+  clip-path: polygon(0 0, 100% 0, 100% 28%, 0 72%);
+}
+
+.section-transition--dark-light span:nth-child(2) {
+  background: linear-gradient(90deg, rgba(96, 91, 229, 0.8), rgba(93, 166, 255, 0.7));
+  clip-path: polygon(0 53%, 100% 12%, 100% 38%, 0 78%);
+  opacity: 0.68;
+}
+
+.section-transition--dark-light span:nth-child(3) {
+  background: linear-gradient(90deg, rgba(185, 255, 155, 0.5), rgba(93, 166, 255, 0.25));
+  clip-path: polygon(0 72%, 100% 35%, 100% 52%, 0 88%);
+}
+
+.section-transition--light-dark {
+  background: var(--navy-deep);
+}
+
+.section-transition--light-dark span:nth-child(1) {
+  background: var(--mist);
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 15%);
+}
+
+.section-transition--light-dark span:nth-child(2) {
+  background: linear-gradient(90deg, rgba(185, 255, 155, 0.52), rgba(93, 166, 255, 0.5));
+  clip-path: polygon(0 12%, 100% 42%, 100% 60%, 0 30%);
+}
+
+.section-transition--light-dark span:nth-child(3) {
+  background: linear-gradient(90deg, rgba(96, 91, 229, 0.42), rgba(93, 166, 255, 0.2));
+  clip-path: polygon(0 28%, 100% 58%, 100% 73%, 0 45%);
+}
+
+.section-transition--navy-deep {
+  background: var(--navy-deep);
+}
+
+.section-transition--navy-deep span:nth-child(1) {
+  background: var(--navy);
+  clip-path: polygon(0 0, 100% 0, 100% 25%, 0 66%);
+}
+
+.section-transition--navy-deep span:nth-child(2) {
+  background: linear-gradient(90deg, rgba(96, 91, 229, 0.45), rgba(93, 166, 255, 0.3));
+  clip-path: polygon(0 56%, 100% 16%, 100% 35%, 0 76%);
+}
+
+.section-transition--navy-deep span:nth-child(3) {
+  background: rgba(185, 255, 155, 0.16);
+  clip-path: polygon(0 72%, 100% 31%, 100% 44%, 0 84%);
+}
+
+.personalization {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.55fr);
+  gap: clamp(4rem, 9vw, 10rem);
+  align-items: end;
+  padding: 9rem 7vw 7rem;
+}
+
+.personalization .section-index {
+  color: #53716a;
+}
+
+.personalization-copy h2 {
+  margin: 0;
+  max-width: 980px;
+  font-size: clamp(3.4rem, 7vw, 8rem);
+  font-weight: 430;
+  letter-spacing: -0.078em;
+  line-height: 0.94;
+}
+
+.personalization-copy h2 strong {
+  color: var(--violet);
+  font-weight: 430;
+}
+
+.personalization-copy > p {
+  max-width: 650px;
+  margin: 2rem 0 0;
+  color: rgba(10, 20, 44, 0.58);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.impact-card {
+  position: relative;
+  min-height: 440px;
+  padding: 2rem;
+  overflow: hidden;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 90% 0, rgba(185, 255, 155, 0.28), transparent 36%),
+    var(--navy);
+  color: var(--white);
+  box-shadow: 0 30px 90px rgba(10, 20, 44, 0.16);
+}
+
+.impact-card::after {
+  position: absolute;
+  right: -38%;
+  bottom: -38%;
+  width: 120%;
+  aspect-ratio: 1;
+  content: "";
+  border: 1px solid rgba(185, 255, 155, 0.18);
+  border-radius: 50%;
+  animation: orbitSpin 16s linear infinite;
+}
+
+.impact-card__number {
+  display: block;
+  color: var(--green);
+  font-size: clamp(5.5rem, 10vw, 9rem);
+  font-weight: 650;
+  letter-spacing: -0.09em;
+  line-height: 0.85;
+}
+
+.impact-card p {
+  position: relative;
+  z-index: 2;
+  max-width: 360px;
+  margin-top: 3rem;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.impact-card p strong {
+  color: var(--white);
+}
+
+.impact-card small {
+  position: absolute;
+  z-index: 2;
+  bottom: 2rem;
+  left: 2rem;
+  color: rgba(255, 255, 255, 0.34);
+  font-family: monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+}
+
 .proof {
   padding: 10rem 5vw;
   border-radius: 32px 32px 0 0;
@@ -726,6 +995,11 @@ video {
 
 .section-heading h2 {
   font-size: clamp(3.2rem, 6.8vw, 7rem);
+}
+
+.section-heading h2 strong {
+  color: var(--violet);
+  font-weight: 430;
 }
 
 .section-heading > p {
@@ -871,14 +1145,28 @@ video {
   max-width: 620px;
 }
 
+.dialogi-logo {
+  width: min(230px, 55%);
+  margin-bottom: 2.8rem;
+}
+
 .connection-copy h2 {
   font-size: clamp(3.2rem, 5.8vw, 6.4rem);
 }
 
 .connection-copy > p {
   max-width: 500px;
-  margin: 2rem 0 2.6rem;
+  margin: 1.4rem 0 0;
   color: rgba(255, 255, 255, 0.52);
+}
+
+.connection-copy > p strong {
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 540;
+}
+
+.connection-copy .pill {
+  margin-top: 2.6rem;
 }
 
 .platform {
@@ -894,6 +1182,19 @@ video {
 
 .section-heading--dark h2 {
   font-size: clamp(3.3rem, 7.6vw, 8rem);
+}
+
+.section-heading--dark > p {
+  max-width: 780px;
+  margin: 1.6rem 0 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: clamp(0.95rem, 1.3vw, 1.12rem);
+  line-height: 1.75;
+}
+
+.section-heading--dark > p strong {
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 540;
 }
 
 .suite-grid {
@@ -1047,6 +1348,52 @@ video {
   background: linear-gradient(180deg, var(--green), rgba(93, 166, 255, 0.22));
   box-shadow: 0 0 24px rgba(185, 255, 155, 0.08);
   transform-origin: top;
+}
+
+.trust-metric {
+  display: grid;
+  grid-template-columns: auto minmax(280px, 0.85fr) auto;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: center;
+  max-width: 1260px;
+  margin: 7rem auto 0;
+  padding: clamp(2rem, 4vw, 4rem);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  background:
+    linear-gradient(120deg, rgba(93, 166, 255, 0.12), transparent 48%),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 0 60px rgba(93, 166, 255, 0.03);
+}
+
+.trust-metric > span {
+  color: var(--green);
+  font-size: clamp(5rem, 11vw, 10rem);
+  font-weight: 650;
+  letter-spacing: -0.09em;
+  line-height: 0.8;
+  text-shadow: 0 0 60px rgba(185, 255, 155, 0.12);
+}
+
+.trust-metric p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: clamp(1.15rem, 2vw, 1.8rem);
+  letter-spacing: -0.04em;
+  line-height: 1.35;
+}
+
+.trust-metric p strong {
+  color: var(--white);
+  font-weight: 560;
+}
+
+.trust-metric small {
+  color: rgba(255, 255, 255, 0.3);
+  font-family: monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  writing-mode: vertical-rl;
 }
 
 .security {
@@ -1830,6 +2177,27 @@ video {
     margin: 0;
   }
 
+  .manifesto {
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 4rem;
+  }
+
+  .personalization {
+    grid-template-columns: 1fr;
+  }
+
+  .impact-card {
+    width: min(100%, 620px);
+  }
+
+  .trust-metric {
+    grid-template-columns: auto 1fr;
+  }
+
+  .trust-metric small {
+    display: none;
+  }
+
   .connection,
   .security {
     grid-template-columns: 1fr;
@@ -1919,6 +2287,35 @@ video {
     background: rgba(5, 11, 25, 0.7);
   }
 
+  .manifesto {
+    grid-template-columns: 1fr;
+    gap: 6rem;
+    min-height: auto;
+    padding: 8rem 1.2rem;
+  }
+
+  .manifesto-signal {
+    width: min(72vw, 340px);
+    margin: 0 auto;
+  }
+
+  .manifesto-copy > p {
+    font-size: 1.2rem;
+  }
+
+  .section-transition {
+    height: 110px;
+  }
+
+  .personalization {
+    gap: 4rem;
+    padding: 6rem 1.2rem;
+  }
+
+  .impact-card {
+    min-height: 390px;
+  }
+
   .story-intro {
     margin-bottom: 5rem;
     text-align: left;
@@ -2001,6 +2398,21 @@ video {
     right: 1.6rem;
     bottom: 1.8rem;
     left: 1.6rem;
+  }
+
+  .section-heading--dark > p {
+    margin-top: 1.25rem;
+  }
+
+  .trust-metric {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 2rem;
+  }
+
+  .trust-metric > span {
+    font-size: 7rem;
   }
 
   .security {
