@@ -804,7 +804,7 @@ export function SigmaExperience() {
           </aside>
         </section>
 
-        <div className="section-transition section-transition--trust-security" aria-hidden="true">
+        <div className="section-transition section-transition--light-dark" aria-hidden="true">
           <span /><span /><span />
         </div>
 
@@ -820,7 +820,15 @@ export function SigmaExperience() {
           <div className="security-copy" data-reveal>
             <span className="section-index">07 / Confiança por design</span>
             <h2 id="security-title">Dados sensíveis.<br /><span>Proteção inegociável.</span></h2>
-            <p>Criptografia, protocolos globais e monitoramento contínuo do primeiro “olá” ao fim do atendimento.</p>
+            <p>Cada conversa, troca de informação e registro do cliente carrega dados sensíveis que precisam ser tratados com proteção.</p>
+            <p>O SigmaCX foi projetado com protocolos de segurança, criptografia de ponta a ponta e conformidade com normas globais. Do momento em que um cliente envia uma mensagem até a finalização do atendimento, tudo permanece protegido e monitorado.</p>
+            <div className="security-flow" aria-label="Fluxo contínuo de proteção de dados">
+              <span><small>01</small>Conversa</span>
+              <i aria-hidden="true" />
+              <span><small>02</small>Criptografia</span>
+              <i aria-hidden="true" />
+              <span><small>03</small>Monitoramento</span>
+            </div>
             <div className="cert-row">
               <span>LGPD</span><span>GDPR</span><span>PCI</span><span>ISO 27001</span>
             </div>
