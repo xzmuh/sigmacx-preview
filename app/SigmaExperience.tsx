@@ -25,6 +25,8 @@ const clientLogos = [
   "/media/client-04.png",
 ];
 
+const clientLogoLoop = [...clientLogos, ...clientLogos, ...clientLogos];
+
 type ExperienceProps = {
   progress: MutableRefObject<number>;
   reducedMotion: boolean;
@@ -305,7 +307,7 @@ export function SigmaExperience() {
           scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: 0.7 },
         });
 
-        gsap.to(".client-rail__track", { xPercent: -50, duration: 16, ease: "none", repeat: -1 });
+        gsap.to(".client-rail__track", { xPercent: -50, duration: 32, ease: "none", repeat: -1 });
 
         gsap.to(".insight-visual span", {
           scaleY: 0.28,
@@ -498,8 +500,17 @@ export function SigmaExperience() {
           </div>
           <div className="client-rail" data-reveal aria-label="Empresas clientes">
             <div className="client-rail__track">
-              {[...clientLogos, ...clientLogos].map((logo, index) => (
-                <img key={`${logo}-${index}`} src={logo} alt={index < clientLogos.length ? "Empresa cliente SigmaCX" : ""} aria-hidden={index >= clientLogos.length} />
+              {[0, 1].map((group) => (
+                <div className="client-rail__group" key={group} aria-hidden={group === 1}>
+                  {clientLogoLoop.map((logo, index) => (
+                    <img
+                      key={`${group}-${logo}-${index}`}
+                      src={logo}
+                      alt={group === 0 && index < clientLogos.length ? "Empresa cliente SigmaCX" : ""}
+                      aria-hidden={group === 1 || index >= clientLogos.length}
+                    />
+                  ))}
+                </div>
               ))}
             </div>
           </div>
