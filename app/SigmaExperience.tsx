@@ -543,6 +543,36 @@ export function SigmaExperience() {
           <span /><span /><span />
         </div>
 
+        <section className="solution-compare section-dark" aria-labelledby="solutions-title">
+          <div className="solution-compare__heading" data-reveal>
+            <span className="section-index">04 / Soluções conectadas</span>
+            <h2 id="solutions-title">Duas plataformas.<br /><strong>Uma experiência contínua.</strong></h2>
+          </div>
+          <div className="solution-compare__grid">
+            <article className="solution-card" data-reveal>
+              <span className="solution-card__code">SIGMA / CX OPERATING SYSTEM</span>
+              <h3>Inteligência para decisões de CX</h3>
+              <p>O Sigma é uma plataforma completa para gestão da experiência do cliente, que integra canais, automatiza interações e gera insights em tempo real.</p>
+              <p><strong>Cada módulo do Sigma trabalha de forma integrada para proporcionar uma jornada contínua, inteligente e centrada no cliente.</strong></p>
+              <div className="solution-card__brand solution-card__brand--sigma">
+                <img src="/media/sigma-mark.png" alt="" /><span>Sigma</span>
+              </div>
+              <a className="solution-card__link" href="#platform">Conheça o Sigma <span aria-hidden="true">→</span></a>
+            </article>
+
+            <article className="solution-card solution-card--dialogi" data-reveal>
+              <span className="solution-card__code">DIALOGI / HUMAN CONVERSATIONS</span>
+              <h3>Conexão entre marcas e pessoas</h3>
+              <p>O Dialogi é uma plataforma de inteligência artificial voltada para criar conversas digitais mais humanas, fluidas e eficientes.</p>
+              <p><strong>Integrando WhatsApp, chat, redes sociais e voz, o Dialogi conecta marcas e clientes com velocidade, empatia e automação inteligente.</strong></p>
+              <div className="solution-card__brand">
+                <img src="/media/dialogi.png" alt="Dialogi AI" />
+              </div>
+              <a className="solution-card__link" href="https://dialogiai.com/pt/home-4/" target="_blank" rel="noreferrer">Conheça o Dialogi AI <span aria-hidden="true">↗</span></a>
+            </article>
+          </div>
+        </section>
+
         <section className="connection section-dark" aria-labelledby="connection-title">
           <div className="connection-media" data-reveal>
             <video src="/media/woman.mp4" autoPlay muted loop playsInline preload="metadata" aria-label="Pessoa em uma experiência de atendimento conectada" />
@@ -550,7 +580,7 @@ export function SigmaExperience() {
           </div>
           <div className="connection-copy" data-reveal>
             <img className="dialogi-logo" src="/media/dialogi.png" alt="Dialogi" />
-            <span className="section-index">04 / Conexão entre marcas e pessoas</span>
+            <span className="section-index">05 / Conexão entre marcas e pessoas</span>
             <h2 id="connection-title">Conversas digitais mais humanas.</h2>
             <p>O Dialogi é uma plataforma de inteligência artificial voltada para criar conversas digitais mais humanas, fluidas e eficientes.</p>
             <p><strong>Integrando WhatsApp, chat, redes sociais e voz, o Dialogi conecta marcas e clientes com velocidade, empatia e automação inteligente.</strong></p>
@@ -560,7 +590,7 @@ export function SigmaExperience() {
 
         <section id="platform" className="platform section-dark" aria-labelledby="platform-title">
           <div className="section-heading section-heading--dark" data-reveal>
-            <span className="section-index">05 / Sigma Suite</span>
+            <span className="section-index">06 / Sigma Suite</span>
             <h2 id="platform-title">Inteligência para<br />decisões de CX.</h2>
             <p>O Sigma é uma plataforma completa para gestão da experiência do cliente: integra canais, automatiza interações e gera insights em tempo real.</p>
             <p><strong>Cada módulo trabalha de forma integrada para proporcionar uma jornada contínua, inteligente e orientada a resultados.</strong></p>
@@ -621,7 +651,7 @@ export function SigmaExperience() {
             </div>
           </div>
           <div className="security-copy" data-reveal>
-            <span className="section-index">06 / Confiança por design</span>
+            <span className="section-index">07 / Confiança por design</span>
             <h2 id="security-title">Dados sensíveis.<br /><span>Proteção inegociável.</span></h2>
             <p>Criptografia, protocolos globais e monitoramento contínuo do primeiro “olá” ao fim do atendimento.</p>
             <div className="cert-row">
