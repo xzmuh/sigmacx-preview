@@ -545,6 +545,10 @@ video {
   padding: 0.1em 0.08em 0.16em;
 }
 
+.motion-off .line-wrap {
+  overflow: visible;
+}
+
 .line {
   display: block;
 }
