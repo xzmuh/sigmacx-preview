@@ -197,7 +197,17 @@ function ExperienceCanvas(props: ExperienceProps) {
   );
 }
 
-function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (open: boolean) => void }) {
+function Header({
+  menuOpen,
+  setMenuOpen,
+  motionEnabled,
+  setMotionEnabled,
+}: {
+  menuOpen: boolean;
+  setMenuOpen: (open: boolean) => void;
+  motionEnabled: boolean;
+  setMotionEnabled: (enabled: boolean) => void;
+}) {
   return (
     <header className="site-header">
       <a className="brand" href="#top" aria-label="SigmaCX — início">
@@ -210,6 +220,15 @@ function Header({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (op
         <a href="#security" onClick={() => setMenuOpen(false)}>Segurança</a>
       </nav>
       <div className="header-actions">
+        <button
+          className="motion-toggle"
+          type="button"
+          onClick={() => setMotionEnabled(!motionEnabled)}
+          aria-pressed={motionEnabled}
+          aria-label={motionEnabled ? "Pausar animações" : "Ativar animações"}
+        >
+          <i /> MOTION {motionEnabled ? "ON" : "OFF"}
+        </button>
         <span className="language" aria-label="Idioma atual: português">PT</span>
         <a className="pill pill--small" href={DEMO_URL} target="_blank" rel="noreferrer">
           Agende uma demo <span aria-hidden="true">↗</span>
@@ -234,15 +253,18 @@ export function SigmaExperience() {
   const story = useRef<HTMLElement>(null);
   const progress = useRef(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
+  const [motionEnabled, setMotionEnabled] = useState(true);
+  const reducedMotion = !motionEnabled;
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReducedMotion(media.matches);
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
+    const saved = window.localStorage.getItem("sigmacx-motion");
+    if (saved === "off") setMotionEnabled(false);
+    window.matchMedia("(prefers-reduced-motion: reduce)");
   }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("sigmacx-motion", motionEnabled ? "on" : "off");
+  }, [motionEnabled]);
 
   useLayoutEffect(() => {
     if (!root.current) return;
@@ -358,11 +380,16 @@ export function SigmaExperience() {
   }, [reducedMotion]);
 
   return (
-    <div ref={root} id="top" className="site-shell">
+    <div ref={root} id="top" className={motionEnabled ? "site-shell motion-on" : "site-shell motion-off"}>
       <a className="skip-link" href="#main">Pular para o conteúdo</a>
       <div className="intro-curtain" aria-hidden="true"><span>SIGMA / SIGNAL ONLINE</span></div>
       <div className="cursor-glow" aria-hidden="true" />
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
+        motionEnabled={motionEnabled}
+        setMotionEnabled={setMotionEnabled}
+      />
 
       <div className="experience-layer" aria-hidden="true">
         <div className="experience-fallback" />

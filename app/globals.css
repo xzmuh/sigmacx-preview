@@ -227,6 +227,34 @@ video {
   letter-spacing: 0.08em;
 }
 
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.42);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+.motion-toggle i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.motion-toggle[aria-pressed="false"] i {
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: none;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;
@@ -1369,8 +1397,10 @@ video {
 
 .footer-manifesto h2 em {
   color: var(--green);
-  font-family: Georgia, serif;
-  font-weight: 400;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-weight: 430;
+  font-style: normal;
+  letter-spacing: -0.065em;
 }
 
 .footer-manifesto > p {
@@ -1683,6 +1713,7 @@ video {
 @media (max-width: 720px) {
   .cursor-glow,
   .language,
+  .motion-toggle,
   .header-actions .pill,
   .hero-meta,
   .scroll-cue {
@@ -1899,20 +1930,20 @@ video {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html:has(.site-shell:not(.motion-on)) {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
+  .site-shell:not(.motion-on) *,
+  .site-shell:not(.motion-on) *::before,
+  .site-shell:not(.motion-on) *::after {
     scroll-behavior: auto !important;
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
 
-  .intro-curtain {
+  .site-shell:not(.motion-on) .intro-curtain {
     display: none;
   }
 }
