@@ -53,13 +53,13 @@ const CORE_FRAGMENT_SHADER = `
     float fresnel = pow(1.0 - facing, 2.15);
     float verticalMix = clamp(vWorldNormal.y * 0.5 + 0.5, 0.0, 1.0);
     vec3 color = mix(vec3(0.36, 0.65, 1.0), vec3(0.73, 1.0, 0.61), verticalMix);
-    gl_FragColor = vec4(color, fresnel * 0.68);
+    gl_FragColor = vec4(color, fresnel * 0.36);
   }
 `;
 
 function SignalField({ progress, reducedMotion }: ExperienceProps) {
   const points = useRef<THREE.Points>(null);
-  const count = reducedMotion ? 420 : 1150;
+  const count = reducedMotion ? 360 : 860;
   const geometry = useMemo(() => {
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
@@ -123,11 +123,11 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
   return (
     <points ref={points} geometry={geometry}>
       <pointsMaterial
-        size={0.072}
+        size={0.056}
         map={particleTexture}
         alphaTest={0.015}
         transparent
-        opacity={0.76}
+        opacity={0.54}
         vertexColors
         sizeAttenuation
         depthWrite={false}
@@ -140,6 +140,7 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
 function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
   const shell = useRef<THREE.Group>(null);
+  const fadeMaterials = useRef<Array<{ material: THREE.Material & { opacity: number }; opacity: number }>>([]);
   const nodePositions = useMemo(() => {
     const total = 24;
     const goldenAngle = Math.PI * (3 - Math.sqrt(5));
@@ -151,29 +152,65 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
     });
   }, []);
 
+  useEffect(() => {
+    const materials: Array<{ material: THREE.Material & { opacity: number }; opacity: number }> = [];
+    group.current?.traverse((object) => {
+      if (!(object instanceof THREE.Mesh)) return;
+      const meshMaterials = Array.isArray(object.material) ? object.material : [object.material];
+      meshMaterials.forEach((material) => {
+        if ("opacity" in material) {
+          const fadeMaterial = material as THREE.Material & { opacity: number };
+          materials.push({ material: fadeMaterial, opacity: fadeMaterial.opacity });
+        }
+      });
+    });
+    fadeMaterials.current = materials;
+  }, []);
+
   useFrame((state, delta) => {
     if (!group.current || !shell.current) return;
+    const isCompact = state.size.width < 980;
+    const radarWidth = isCompact
+      ? Math.min(state.size.width * (state.size.width < 720 ? 1.12 : 0.62), 560)
+      : Math.min(state.size.width * 0.44, 680);
+    const radarCenterOffset = isCompact
+      ? 0
+      : state.size.width * 0.42 - radarWidth * 0.5;
+    const cameraSpan = 2 * Math.tan(THREE.MathUtils.degToRad(20)) * 7;
+    const targetX = radarCenterOffset * cameraSpan / state.size.height;
+    const targetScale = THREE.MathUtils.clamp(
+      radarWidth * 0.48 * cameraSpan / (2 * state.size.height),
+      state.size.width < 720 ? 0.58 : 0.7,
+      0.86,
+    );
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,
-      state.size.width < 980 ? 0 : 1.72,
+      targetX,
       0.05,
     );
+    group.current.scale.setScalar(
+      THREE.MathUtils.lerp(group.current.scale.x, targetScale - progress.current * 0.045, 0.05),
+    );
+    const visualIntensity = 1 - 0.86 * Math.sqrt(progress.current);
+    fadeMaterials.current.forEach(({ material, opacity }) => {
+      material.opacity = opacity * visualIntensity;
+    });
     if (reducedMotion) return;
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.08, 0.04);
-    shell.current.rotation.y += delta * 0.1;
-    shell.current.rotation.x += delta * 0.025;
-    shell.current.scale.setScalar(1 + progress.current * 0.04);
+    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.04, 0.04);
+    shell.current.rotation.y += delta * 0.072;
+    shell.current.rotation.x += delta * 0.016;
+    shell.current.scale.setScalar(1 + progress.current * 0.018);
   });
 
   return (
-    <Float speed={reducedMotion ? 0 : 1.45} rotationIntensity={0.24} floatIntensity={0.38}>
+    <Float speed={reducedMotion ? 0 : 1.05} rotationIntensity={0.12} floatIntensity={0.2}>
       <group ref={group} position={[0, 0.05, 0]}>
         <mesh position={[0, 0, -1.12]} scale={2.8}>
           <circleGeometry args={[1, 96]} />
           <meshBasicMaterial
             color="#2f75c8"
             transparent
-            opacity={0.055}
+            opacity={0.025}
             depthWrite={false}
             blending={THREE.AdditiveBlending}
           />
@@ -184,13 +221,13 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             <meshPhysicalMaterial
               color="#07172d"
               emissive="#12395d"
-              emissiveIntensity={0.42}
-              roughness={0.16}
-              metalness={0.44}
+              emissiveIntensity={0.22}
+              roughness={0.24}
+              metalness={0.36}
               clearcoat={0.88}
               clearcoatRoughness={0.1}
               transparent
-              opacity={0.88}
+              opacity={0.74}
             />
           </mesh>
           <mesh scale={0.72}>
@@ -198,7 +235,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             <meshBasicMaterial
               color="#6caeff"
               transparent
-              opacity={0.075}
+              opacity={0.035}
               depthWrite={false}
               blending={THREE.AdditiveBlending}
             />
@@ -208,7 +245,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             <meshBasicMaterial
               color="#72b6ff"
               transparent
-              opacity={0.56}
+              opacity={0.28}
               wireframe
               depthWrite={false}
               blending={THREE.AdditiveBlending}
@@ -230,7 +267,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
               <meshBasicMaterial
                 color={index % 5 === 0 ? "#b9ff9b" : "#74b8ff"}
                 transparent
-                opacity={index % 5 === 0 ? 0.92 : 0.62}
+                opacity={index % 5 === 0 ? 0.7 : 0.42}
                 depthWrite={false}
                 blending={THREE.AdditiveBlending}
               />
@@ -242,7 +279,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
               <meshBasicMaterial
                 color={index === 0 ? "#5da6ff" : "#b9ff9b"}
                 transparent
-                opacity={index === 0 ? 0.3 : 0.2}
+                opacity={index === 0 ? 0.18 : 0.12}
                 depthWrite={false}
                 blending={THREE.AdditiveBlending}
               />
@@ -262,7 +299,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             <meshBasicMaterial
               color={index === 1 ? "#5da6ff" : "#b9ff9b"}
               transparent
-              opacity={0.38 - index * 0.065}
+              opacity={0.2 - index * 0.035}
               depthWrite={false}
               blending={THREE.AdditiveBlending}
             />
@@ -278,7 +315,7 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
             <meshBasicMaterial
               color={index === 1 ? "#5da6ff" : "#b9ff9b"}
               transparent
-              opacity={0.86}
+              opacity={0.58}
               depthWrite={false}
               blending={THREE.AdditiveBlending}
             />
@@ -300,9 +337,9 @@ function ExperienceCanvas(props: ExperienceProps) {
         powerPreference: "high-performance",
       }}
     >
-      <ambientLight intensity={0.42} />
-      <pointLight position={[3, 3, 4]} intensity={18} color="#b9ff9b" />
-      <pointLight position={[-4, -2, 3]} intensity={13} color="#5da6ff" />
+      <ambientLight intensity={0.28} />
+      <pointLight position={[3, 3, 4]} intensity={8} color="#b9ff9b" />
+      <pointLight position={[-4, -2, 3]} intensity={5} color="#5da6ff" />
       <SignalField {...props} />
       <IntelligenceCore {...props} />
     </Canvas>

@@ -470,6 +470,7 @@ video {
   width: min(44vw, 680px);
   aspect-ratio: 1;
   transform: translateY(-50%);
+  opacity: clamp(0.28, calc(1.06 - var(--story-progress)), 1);
   border: 1px solid rgba(185, 255, 155, 0.24);
   border-radius: 50%;
   background: conic-gradient(from 0deg, transparent 0 16%, rgba(185, 255, 155, 0.22) 18%, transparent 20% 47%, rgba(93, 166, 255, 0.3) 49%, transparent 52% 100%);
@@ -931,22 +932,13 @@ video {
 }
 
 .section-transition--navy-deep {
-  background: var(--navy-deep);
+  background:
+    radial-gradient(ellipse at 72% 28%, rgba(96, 91, 229, 0.12), transparent 52%),
+    linear-gradient(180deg, var(--navy) 0%, #08142a 48%, var(--navy-deep) 100%);
 }
 
-.section-transition--navy-deep span:nth-child(1) {
-  background: var(--navy);
-  clip-path: polygon(0 0, 100% 0, 100% 25%, 0 66%);
-}
-
-.section-transition--navy-deep span:nth-child(2) {
-  background: linear-gradient(90deg, rgba(96, 91, 229, 0.45), rgba(93, 166, 255, 0.3));
-  clip-path: polygon(0 56%, 100% 16%, 100% 35%, 0 76%);
-}
-
-.section-transition--navy-deep span:nth-child(3) {
-  background: rgba(185, 255, 155, 0.16);
-  clip-path: polygon(0 72%, 100% 31%, 100% 44%, 0 84%);
+.section-transition--navy-deep span {
+  display: none;
 }
 
 .proof {
@@ -1081,7 +1073,7 @@ video {
   background:
     radial-gradient(circle at 12% 100%, rgba(93, 166, 255, 0.22), transparent 36%),
     radial-gradient(circle at 88% 0%, rgba(96, 91, 229, 0.16), transparent 30%),
-    linear-gradient(180deg, var(--navy-deep), #102348);
+    linear-gradient(180deg, var(--navy-deep) 0%, #102348 72%, #071126 100%);
 }
 
 .solution-compare__heading {
@@ -1266,7 +1258,7 @@ video {
   padding: 12rem 5vw;
   background:
     radial-gradient(circle at 12% 50%, rgba(93, 166, 255, 0.14), transparent 30%),
-    var(--navy-deep);
+    linear-gradient(180deg, #071126 0%, var(--navy-deep) 30%, #071126 74%, var(--navy) 100%);
 }
 
 .connection-media {
@@ -1337,7 +1329,7 @@ video {
 
 .platform {
   padding: 10rem 5vw;
-  background: var(--navy);
+  background: linear-gradient(180deg, var(--navy) 0%, var(--navy) 86%, #071126 100%);
 }
 
 .section-heading--dark {
@@ -1570,7 +1562,7 @@ video {
   padding: 10rem 7vw;
   background:
     radial-gradient(circle at 25% 50%, rgba(96, 91, 229, 0.18), transparent 30%),
-    var(--navy-deep);
+    linear-gradient(180deg, var(--navy-deep), var(--navy));
 }
 
 .security-orbit {
