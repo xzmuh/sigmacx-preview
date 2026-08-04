@@ -548,15 +548,61 @@ export function SigmaExperience() {
       </main>
 
       <footer className="footer">
-        <div className="footer-brand">
-          <img src="/media/logo-white.png" alt="SigmaCX" />
-          <p>O hub que unifica canais, automatiza interações e gera insights estratégicos.</p>
+        <div className="footer-atmosphere" aria-hidden="true">
+          <span className="footer-orbit footer-orbit--outer" />
+          <span className="footer-orbit footer-orbit--inner" />
+          <span className="footer-scan" />
         </div>
-        <div className="footer-links">
-          <div><span>Conheça mais</span><a href="#platform">Sigma Suite</a><a href="#experience">Experiência</a><a href="#proof">Cases</a></div>
-          <div><span>Contato</span><a href={DEMO_URL} target="_blank" rel="noreferrer">Agende uma demo</a><a href="mailto:canais@nuveto.com.br">Seja parceiro</a></div>
+
+        <div className="footer-top">
+          <div className="footer-manifesto">
+            <div className="footer-identity">
+              <img src="/media/logo-white.png" alt="SigmaCX" />
+              <span><i /> SISTEMA ONLINE</span>
+            </div>
+            <h2>Tecnologia para entender.<br /><em>Inteligência para transformar.</em></h2>
+            <p>O hub que conecta canais, interpreta cada conversa e transforma sinais em decisões para negócios que não param de evoluir.</p>
+            <a className="footer-contact" href="mailto:canais@nuveto.com.br">
+              <span className="footer-contact__icon" aria-hidden="true">@</span>
+              <span><small>CANAL DIRETO</small><strong>canais@nuveto.com.br</strong></span>
+              <b aria-hidden="true">↗</b>
+            </a>
+          </div>
+
+          <nav className="footer-links" aria-label="Navegação do rodapé">
+            <div>
+              <span>PLATAFORMA</span>
+              <a href="#platform">Sigma Suite</a>
+              <a href="#experience">Experiência</a>
+              <a href="#proof">Resultados</a>
+              <a href="#security">Segurança</a>
+            </div>
+            <div>
+              <span>CONEXÕES</span>
+              <a href={DEMO_URL} target="_blank" rel="noreferrer">Agende uma demo</a>
+              <a href="mailto:canais@nuveto.com.br">Seja parceiro</a>
+              <a href="https://sigmacx.ai/" target="_blank" rel="noreferrer">Site institucional ↗</a>
+            </div>
+          </nav>
+
+          <a className="footer-launch" href={DEMO_URL} target="_blank" rel="noreferrer">
+            <span className="footer-launch__label">INICIAR CONEXÃO</span>
+            <strong>Leve inteligência<br />para cada<br />conversa.</strong>
+            <span className="footer-launch__copy">Uma demonstração rápida, guiada pela realidade da sua operação.</span>
+            <span className="footer-launch__button">Agendar demonstração <b>↗</b></span>
+          </a>
         </div>
-        <div className="footer-bottom"><span>São Paulo, Brasil</span><span>© 2026 SigmaCX</span></div>
+
+        <div className="footer-wordmark" aria-hidden="true">
+          <span>SigmaCX</span>
+          <small>CONVERSATION INTELLIGENCE / 2026</small>
+        </div>
+
+        <div className="footer-bottom">
+          <span>São Paulo / Brasil <i>UTC −03:00</i></span>
+          <span>© 2026 SigmaCX. Todos os direitos reservados.</span>
+          <span>Humano no propósito. <b>Tech por natureza.</b></span>
+        </div>
       </footer>
     </div>
   );
