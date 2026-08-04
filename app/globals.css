@@ -1163,12 +1163,25 @@ video {
   color: rgba(255, 255, 255, 0.44);
 }
 
+.solution-flow {
+  position: relative;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 54% 24% at 12% 50%, rgba(93, 166, 255, 0.22), transparent 72%),
+    radial-gradient(ellipse 48% 22% at 12% 76%, rgba(93, 166, 255, 0.12), transparent 74%),
+    radial-gradient(circle at 88% 2%, rgba(96, 91, 229, 0.16), transparent 22%),
+    linear-gradient(180deg,
+      var(--navy-deep) 0%,
+      #102348 36%,
+      #0b1d3b 50%,
+      var(--navy-deep) 66%,
+      #071126 87%,
+      var(--navy) 100%);
+}
+
 .solution-compare {
   padding: 6rem 5vw 10rem;
-  background:
-    radial-gradient(circle at 12% 100%, rgba(93, 166, 255, 0.22), transparent 36%),
-    radial-gradient(circle at 88% 0%, rgba(96, 91, 229, 0.16), transparent 30%),
-    linear-gradient(180deg, var(--navy-deep) 0%, #102348 72%, #071126 100%);
+  background: transparent;
 }
 
 .solution-compare__heading {
@@ -1351,9 +1364,7 @@ video {
   gap: clamp(3rem, 8vw, 9rem);
   align-items: center;
   padding: 12rem 5vw;
-  background:
-    radial-gradient(circle at 12% 50%, rgba(93, 166, 255, 0.14), transparent 30%),
-    linear-gradient(180deg, #071126 0%, var(--navy-deep) 30%, #071126 74%, var(--navy) 100%);
+  background: transparent;
 }
 
 .connection-media {

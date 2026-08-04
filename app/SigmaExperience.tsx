@@ -682,6 +682,7 @@ export function SigmaExperience() {
           <span /><span /><span />
         </div>
 
+        <div className="solution-flow">
         <section className="solution-compare section-dark" aria-labelledby="solutions-title">
           <div className="solution-compare__heading" data-reveal>
             <span className="section-index">04 / Soluções conectadas</span>
@@ -726,6 +727,7 @@ export function SigmaExperience() {
             <a className="pill pill--outline" href="#platform">Conheça a plataforma <span aria-hidden="true">→</span></a>
           </div>
         </section>
+        </div>
 
         <section id="platform" className="platform section-dark" aria-labelledby="platform-title">
           <div className="section-heading section-heading--dark" data-reveal>
