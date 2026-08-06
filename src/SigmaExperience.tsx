@@ -1,5 +1,3 @@
-"use client";
-
 import { Canvas, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,6 +5,7 @@ import Lenis from "lenis";
 import * as THREE from "three";
 import {
   MutableRefObject,
+  PointerEvent as ReactPointerEvent,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -341,7 +340,19 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   );
 }
 
-function ExperienceCanvas(props: ExperienceProps) {
+function CanvasReady({ onReady }: { onReady: () => void }) {
+  const reported = useRef(false);
+
+  useFrame(() => {
+    if (reported.current) return;
+    reported.current = true;
+    window.requestAnimationFrame(onReady);
+  });
+
+  return null;
+}
+
+function ExperienceCanvas(props: ExperienceProps & { onReady: () => void }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 7], fov: 40 }}
@@ -352,6 +363,7 @@ function ExperienceCanvas(props: ExperienceProps) {
         powerPreference: "high-performance",
       }}
     >
+      <CanvasReady onReady={props.onReady} />
       <SignalField {...props} />
       <IntelligenceCore {...props} />
     </Canvas>
@@ -361,37 +373,30 @@ function ExperienceCanvas(props: ExperienceProps) {
 function Header({
   menuOpen,
   setMenuOpen,
-  motionEnabled,
-  setMotionEnabled,
   compact,
 }: {
   menuOpen: boolean;
   setMenuOpen: (open: boolean) => void;
-  motionEnabled: boolean;
-  setMotionEnabled: (enabled: boolean) => void;
   compact: boolean;
 }) {
+  const setHoverOrigin = (event: ReactPointerEvent<HTMLAnchorElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const origin = event.clientX - bounds.left <= bounds.width / 2 ? "left" : "right";
+    event.currentTarget.style.setProperty("--hover-origin", origin);
+  };
+
   return (
     <header className={compact ? "site-header site-header--compact" : "site-header"}>
       <a className="brand" href="#top" aria-label="SigmaCX — início">
         <img src="/media/logo-white.png" alt="SigmaCX" />
       </a>
       <nav className={menuOpen ? "nav nav--open" : "nav"} aria-label="Navegação principal">
-        <a data-index="01" href="#experience" onClick={() => setMenuOpen(false)}>Experiência</a>
-        <a data-index="02" href="#platform" onClick={() => setMenuOpen(false)}>Sigma Suite</a>
-        <a data-index="03" href="#proof" onClick={() => setMenuOpen(false)}>Resultados</a>
-        <a data-index="04" href="#security" onClick={() => setMenuOpen(false)}>Segurança</a>
+        <a data-index="01" href="#experience" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Experiência</a>
+        <a data-index="02" href="#platform" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Sigma Suite</a>
+        <a data-index="03" href="#proof" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Resultados</a>
+        <a data-index="04" href="#security" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Segurança</a>
       </nav>
       <div className="header-actions">
-        <button
-          className="motion-toggle"
-          type="button"
-          onClick={() => setMotionEnabled(!motionEnabled)}
-          aria-pressed={motionEnabled}
-          aria-label={motionEnabled ? "Pausar animações" : "Ativar animações"}
-        >
-          <i /> MOTION {motionEnabled ? "ON" : "OFF"}
-        </button>
         <span className="language" aria-label="Idioma atual: português">PT</span>
         <a className="pill pill--small" href={DEMO_URL} target="_blank" rel="noreferrer">
           Agende uma demo <span aria-hidden="true">↗</span>
@@ -416,19 +421,17 @@ export function SigmaExperience() {
   const story = useRef<HTMLElement>(null);
   const progress = useRef(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [motionEnabled, setMotionEnabled] = useState(true);
   const [headerCompact, setHeaderCompact] = useState(false);
+  const [sceneReady, setSceneReady] = useState(false);
+  const [introMinElapsed, setIntroMinElapsed] = useState(false);
+  const motionEnabled = true;
   const reducedMotion = !motionEnabled;
+  const visualReady = reducedMotion || (sceneReady && introMinElapsed);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("sigmacx-motion");
-    if (saved === "off") setMotionEnabled(false);
-    window.matchMedia("(prefers-reduced-motion: reduce)");
+    const timer = window.setTimeout(() => setIntroMinElapsed(true), 950);
+    return () => window.clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("sigmacx-motion", motionEnabled ? "on" : "off");
-  }, [motionEnabled]);
 
   useEffect(() => {
     let frame = 0;
@@ -447,6 +450,15 @@ export function SigmaExperience() {
   useLayoutEffect(() => {
     if (!root.current) return;
     gsap.registerPlugin(ScrollTrigger);
+
+    if (!visualReady) {
+      const waitingContext = gsap.context(() => {
+        gsap.set(".intro-curtain", { animation: "none" });
+        gsap.set(".site-header, .hero-kicker, .hero-copy, .hero-actions, .hero-meta", { opacity: 0 });
+        gsap.set(".hero-title .line", { yPercent: 108 });
+      }, root);
+      return () => waitingContext.revert();
+    }
 
     let cleanupMotion = () => {};
     const context = gsap.context(() => {
@@ -467,16 +479,32 @@ export function SigmaExperience() {
 
         gsap
           .timeline({ defaults: { ease: "power3.out" } })
-          .to(".intro-curtain", { scaleY: 0, duration: 1.05, ease: "power4.inOut", transformOrigin: "top" })
-          .from(".site-header", { y: -24, opacity: 0, duration: 0.9 }, "-=0.45")
-          .from(".hero-kicker", { y: 26, opacity: 0, duration: 0.75 }, "-=0.45")
-          .from(".hero-title .line", {
-            yPercent: 108,
-            duration: 1.05,
-            stagger: 0.11,
+          .set(".intro-curtain", { animation: "none" })
+          .set(".site-header", { y: -24, opacity: 0 })
+          .set(".hero-kicker", { y: 26, opacity: 0 })
+          .set(".hero-title .line", { yPercent: 108 })
+          .set(".hero-copy, .hero-actions, .hero-meta", { y: 24, opacity: 0 })
+          .addLabel("heroReveal", 0)
+          .to(".intro-curtain", {
+            opacity: 0,
+            duration: 0.62,
+            ease: "power2.inOut",
+            onComplete: () => gsap.set(".intro-curtain", { visibility: "hidden" }),
+          }, "heroReveal")
+          .to(".site-header", { y: 0, opacity: 1, duration: 0.82 }, "heroReveal+=0.14")
+          .to(".hero-kicker", { y: 0, opacity: 1, duration: 0.62 }, "heroReveal+=0.18")
+          .to(".hero-title .line", {
+            yPercent: 0,
+            duration: 0.92,
+            stagger: 0.08,
             onComplete: () => gsap.set(".hero-title .line-wrap", { overflow: "visible" }),
-          }, "-=0.45")
-          .from(".hero-copy, .hero-actions, .hero-meta", { y: 24, opacity: 0, duration: 0.75, stagger: 0.09 }, "-=0.65");
+          }, "heroReveal+=0.22")
+          .to(".hero-copy, .hero-actions, .hero-meta", {
+            y: 0,
+            opacity: 1,
+            duration: 0.68,
+            stagger: 0.07,
+          }, "heroReveal+=0.4");
 
         gsap.to(".hero-stage", {
           yPercent: 24,
@@ -520,13 +548,32 @@ export function SigmaExperience() {
           },
         });
 
+        const signalNodes = gsap.utils.toArray<HTMLElement>(".story-line__node");
+        const signalThresholds = [1 / 6, 0.5, 5 / 6];
+        let previousSignalProgress: number | null = null;
+
         ScrollTrigger.create({
           trigger: ".story-track",
           start: "top 68%",
           end: "bottom 38%",
           scrub: 0.65,
           onUpdate: (self) => {
-            document.documentElement.style.setProperty("--signal-line-progress", String(self.progress));
+            const nextProgress = self.progress;
+            document.documentElement.style.setProperty("--signal-line-progress", String(nextProgress));
+
+            if (previousSignalProgress !== null) {
+              signalThresholds.forEach((threshold, index) => {
+                const crossed = previousSignalProgress! < threshold && nextProgress >= threshold;
+                if (!crossed) return;
+
+                const node = signalNodes[index];
+                node?.classList.remove("story-line__node--hit");
+                void node?.offsetWidth;
+                node?.classList.add("story-line__node--hit");
+              });
+            }
+
+            previousSignalProgress = nextProgress;
           },
         });
 
@@ -558,8 +605,8 @@ export function SigmaExperience() {
           );
         });
 
-        const xTo = gsap.quickTo(".cursor-glow", "x", { duration: 0.55, ease: "power3" });
-        const yTo = gsap.quickTo(".cursor-glow", "y", { duration: 0.55, ease: "power3" });
+        const xTo = gsap.quickTo(".cursor-glow", "x", { duration: 0.1, ease: "power1.out" });
+        const yTo = gsap.quickTo(".cursor-glow", "y", { duration: 0.1, ease: "power1.out" });
         const move = (event: PointerEvent) => {
           xTo(event.clientX);
           yTo(event.clientY);
@@ -571,6 +618,8 @@ export function SigmaExperience() {
           gsap.ticker.remove(tick);
           lenis.destroy();
         };
+      } else {
+        gsap.set(".intro-curtain", { display: "none" });
       }
     }, root);
 
@@ -578,18 +627,15 @@ export function SigmaExperience() {
       cleanupMotion();
       context.revert();
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, visualReady]);
 
   return (
     <div ref={root} id="top" className={motionEnabled ? "site-shell motion-on" : "site-shell motion-off"}>
       <a className="skip-link" href="#main">Pular para o conteúdo</a>
-      <div className="intro-curtain" aria-hidden="true"><span>SIGMA / SIGNAL ONLINE</span></div>
       <div className="cursor-glow" aria-hidden="true" />
       <Header
         menuOpen={menuOpen}
         setMenuOpen={setMenuOpen}
-        motionEnabled={motionEnabled}
-        setMotionEnabled={setMotionEnabled}
         compact={headerCompact}
       />
 
@@ -605,7 +651,11 @@ export function SigmaExperience() {
             <span className="tech-hud__rail"><i /><i /><i /><i /><i /><i /></span>
           </div>
         </div>
-        <ExperienceCanvas progress={progress} reducedMotion={reducedMotion} />
+        <ExperienceCanvas
+          progress={progress}
+          reducedMotion={reducedMotion}
+          onReady={() => setSceneReady(true)}
+        />
         <div className="experience-vignette" />
       </div>
 
@@ -613,7 +663,6 @@ export function SigmaExperience() {
         <section className="hero section-dark" aria-labelledby="hero-title">
           <div className="hero-stage">
           <div className="hero-kicker">
-            <span className="signal-dot" />
             CX inteligente começa com a tecnologia certa
           </div>
           <h1 id="hero-title" className="hero-title">
