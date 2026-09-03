@@ -1,0 +1,141 @@
+{
+ "title": "Data: beyond reports, what really makes the difference",
+ "lang": "en",
+ "date": "2025-10-02T19:16:57+00:00",
+ "description": "",
+ "cover": "/media/blog/blog-sigma-2_Prancheta-1.webp",
+ "blocks": [
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Data: beyond reports, what really makes the difference"
+  },
+  {
+   "t": "html",
+   "html": "<p>For a long time, talking about data in companies meant presenting weekly reports, building colorful dashboards full of charts, or reviewing KPIs in status meetings. But that alone doesn’t generate transformation. Today, talking about data goes far beyond tracking reports. It’s about building competitive intelligence, making faster decisions, and even discovering paths that weren’t on the radar. Data, when well worked, stop being a snapshot of the past and become a compass for the future.</p><p>But how do you separate what really matters from the overload of information? How do you move from the logic of “collecting metrics” to generating intelligence that truly differentiates a company in the market?</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/137.webp",
+   "alt": ""
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Relevance: not all data is worth it"
+  },
+  {
+   "t": "html",
+   "html": "<p>The biggest mistake I see in many organizations is the obsession with volume. It’s the idea that “the more, the better.” That leads to what we call a <em>data swamp</em>: a swamp of disconnected information, hard to navigate, that only increases storage and analysis costs without providing clarity.</p><p>Collecting information like trading cards. Everything becomes a metric: likes, clicks, visits, mentions, screen time, open rates… The problem is that without a filter, all of this becomes noise. And noise doesn’t create clarity.</p><p>The key is to separate noise from signal and identify which data is critical for the business:</p><ul><li><strong>Transactional data</strong> – the pulse of the business: sales, tickets resolved, contracts closed.</li><li><strong>Behavioral data</strong> – what the customer does, where they struggle, what they abandon. Here you see consumption patterns and can anticipate needs before they arise.</li><li><strong>Operational data</strong> – those that reveal efficiency (or inefficiency): cost per interaction, average handling time, conversion rate.</li><li><strong>Strategic data</strong> – those that connect everything to the future: lifetime value, churn, price elasticity, segment share.</li></ul><p>Separating noise from signal is the most important step in any data-driven journey.</p><p>When a company understands it doesn’t need to look at everything, but only what truly moves the needle, it leaves the logic of “accumulating” and starts generating practical intelligence.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dashboards don’t tell the story on their own"
+  },
+  {
+   "t": "html",
+   "html": "<p>Dashboards are important, but they don’t tell the story on their own. A single chart may alert you, but it doesn’t explain. The real value emerges when data is connected and analyzed in the right context.</p><p>If NPS drops 12 points in three months, just looking at the chart isn’t enough. You need to cross-check with other indicators: maybe wait times increased, or reopened cases spiked. In that case, the problem isn’t only customer satisfaction, but processes failing to resolve issues the first time.</p><p>To achieve that level of understanding, three practices are essential:</p><p><strong>1. Break down silos</strong> – marketing, sales, operations, and CX must analyze together.</p><p><strong>2.Look for patterns and anomalies</strong> – distinguish natural seasonality from recurring problems.</p><p><strong>3.Ask “so what?”</strong> – every metric must generate a hypothesis, insight, or action; otherwise, it’s just aesthetic data.</p><p>The big leap isn’t in measuring, but in interpreting what the numbers mean within the company’s ecosystem.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "From insight to strategy"
+  },
+  {
+   "t": "html",
+   "html": "<p>Turning data into insight is important, but the real value comes from translating it into action:</p><ul><li><strong>Operations</strong>: if 30% of calls are about the same topic, it’s time to automate and free agents for more complex cases.</li><li><strong>Customer experience</strong>: payment abandonments signal the need to redesign the checkout.</li><li><strong>Business model</strong>: high-value customers may inspire differentiated plans or tailored subscriptions.</li><li><strong>Product</strong>: support ticket patterns may indicate where to adjust features or create new ones.</li></ul><p>In short: data alone changes nothing. What transforms is the action.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Data culture: mindset before technology"
+  },
+  {
+   "t": "html",
+   "html": "<p>No strategy is sustainable without a data culture. It’s not enough to invest in BI or big data; you need a mindset:</p><ul><li>Information accessible to decision-makers.</li><li>Leaders asking the right questions.</li><li>Speed in analysis, because late data is just history.</li><li>Space to test and fail fast.</li></ul><p>This culture is what takes a company beyond reporting rituals and into true strategic competition.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Why it matters"
+  },
+  {
+   "t": "html",
+   "html": "<p>When data truly guide decisions, costs fall without hurting experience, trends are anticipated, and responses to crises are faster. Competitive advantage comes not from following the market, but from seeing earlier and acting better.</p><p>In the end, data isn’t just a record of the past, but a map of the future. Those who know how to use it with strategic vision don’t just follow the game: they open the path ahead of it.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/Wendell-Maranhao-Perfil.jpeg-1.webp",
+   "alt": ""
+  },
+  {
+   "t": "html",
+   "html": "<p>Author</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Wendell Maranhão</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Global New Business Manager</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "FAQ"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>1. Do data alone transform a company?</strong><br>No. What drives transformation is the action taken from them.</p><p><strong>2. What’s the biggest mistake companies make with data?</strong><br>Believing volume matters more than relevance, creating an overload of useless metrics.</p><p><strong>3. What is essential for a data-driven strategy?</strong><br>A strong data culture that combines access, mindset, and speed.</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>SigmaCX is the hub that unifies channels, automates interactions, and generates strategic insights for consistent and personalized journeys.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Learn more"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "About us"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dialogi AI"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Links"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Work with us"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Privacy Policy"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Contact"
+  },
+  {
+   "t": "html",
+   "html": "<p>(11) 4200-8282<br>R. Luiz Seráphico Júnior, 511, 13º andar – Cj. 132 Jardim Caravelas, São Paulo – SP, 04729-080</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>© 2025 Created by <a href=\"http://www.linkedin.com/in/dafny-bittencourt\" target=\"_blank\" rel=\"noreferrer\">Dafny B.</a></p>"
+  }
+ ]
+}

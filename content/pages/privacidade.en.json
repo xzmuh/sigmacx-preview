@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "Privacy Policy - Sigma CX",
+    "description": "Como a SigmaCX coleta, usa, compartilha e armazena seus dados."
+  },
+  "title": "When you use SigmaCX, you trust us with your data and information, and we are committed to keeping this data protected through protection systems. In this sense, this privacy policy document explains in a clear and accessible way how your information and data will be collected, used, shared and stored by our systems. Acceptance of our policy will be made when you access or use our website, our app or app, or our services. This will indicate that you are aware of and fully agree with how we will use your information and data.",
+  "intro": "When you use SigmaCX, you trust us with your data and information, and we are committed to keeping this data protected through protection systems. In this sense, this privacy policy document explains in a clear and accessible way how your information and data will be collected, used, shared and stored by our systems. Acceptance of our policy will be made when you access or use our website, our app or app, or our services. This will indicate that you are aware of and fully agree with how we will use your information and data.",
+  "sections": [
+    {
+      "title": "Quais informações a SigmaCX coleta?",
+      "paragraphs": [
+        "We collect information that you provide to us, such as:\nPersonal data – When you register with Sigma CX, you provide information such as name, email address, CPF/CNPJ, date of birth, marital status, phone number, photo, age, gender.\nSensitive personal data – You will be able to provide data such as sexual orientation, race, and political opinion, which are considered sensitive. Your sensitive data will be used for product recommendations. Through this policy, you expressly consent to the collection, use, and sharing of this data under the terms set forth herein.\nTherefore, in summary, we collect all the information actively made available by the user when using our website or our platform.",
+        "We collect information that you provide to us, such as:\nPersonal data – When you register with Sigma CX, you provide information such as name, email address, CPF/CNPJ, date of birth, marital status, phone number, photo, age, gender.\nSensitive personal data – You will be able to provide data such as sexual orientation, race, and political opinion, which are considered sensitive. Your sensitive data will be used for product recommendations. Through this policy, you expressly consent to the collection, use, and sharing of this data under the terms set forth herein.\nTherefore, in summary, we collect all the information actively made available by the user when using our website or our platform.",
+        "We collect information that you provide to us, such as:\nPersonal data – When you register with Sigma CX, you provide information such as name, email address, CPF/CNPJ, date of birth, marital status, phone number, photo, age, gender.\nSensitive personal data – You will be able to provide data such as sexual orientation, race, and political opinion, which are considered sensitive. Your sensitive data will be used for product recommendations. Through this policy, you expressly consent to the collection, use, and sharing of this data under the terms set forth herein.\nTherefore, in summary, we collect all the information actively made available by the user when using our website or our platform."
+      ]
+    },
+    {
+      "title": "Como a empresa utiliza seus dados?",
+      "paragraphs": [
+        "We at SigmaCx value your privacy very much. Therefore, all data and information about you is treated as confidential, and we will only use this information for the purposes described herein and authorized by you so that you can use SigmaCX’s services fully, always aiming to improve your customer experience.",
+        "Through this policy, the organization is authorized to use your data to:"
+      ],
+      "list": [
+        "allow access to resources and functionalities of the SigmaCX environment;",
+        "send messages such as alerts, notifications, and updates;",
+        "communicate about products, services, promotions, news, updates, events, and other matters in which you may be interested;",
+        "customize services so that they can increasingly suit your tastes and interests;",
+        "create services, products, and functionality;",
+        "better understand their behavior and build behavioral profiles."
+      ],
+      "after": [
+        "From time to time, we may use data for purposes not set out in this privacy policy, but these will be within your legitimate expectations. Any use of your data for purposes that do not comply with this prerogative will be made with your prior authorization."
+      ]
+    },
+    {
+      "title": "Exclusão de dados",
+      "paragraphs": [
+        "All data collected will be deleted from our servers when you request it, by free and facilitated procedure, or when they are no longer necessary or relevant for us to offer you our services, unless there is any other reason for their maintenance, such as any legal obligation to retain data or the need to preserve them to protect SigmaCX’s rights."
+      ]
+    },
+    {
+      "title": "Compartilhamento de informações",
+      "paragraphs": [
+        "Our organization may share the information it collects, including your sensitive data, with business partners, advertisers, sponsors, and service providers, whenever possible and anonymously, in order to preserve your privacy. You hereby expressly authorize such sharing.",
+        "SigmaCX reserves the right to provide data and information about you, including your interactions, if required by the courts to do so, which is necessary for the company to comply with national laws, or if you expressly authorize it.",
+        "All your data is confidential and only people with the proper authorizations will have access to it. Any use of this data will be in accordance with this policy. SigamCX will make all reasonable market efforts to ensure the security of our systems and your data.",
+        "Our servers are secured and controlled to ensure security and can only be accessed by previously authorized persons.",
+        "All your information, especially sensitive data, will be, whenever possible, encrypted, if this does not make it unfeasible to use it by the platform. At any time you can request a copy of your data stored in our systems.",
+        "We will keep the data and information only for as long as they are necessary or relevant for the purposes described in this policy, or for periods predetermined by law, or for as long as such data is necessary for the maintenance of the organization’s legitimate interests.",
+        "However, we cannot completely guarantee that all data and information about you on our platform will be free from unauthorized access, especially if there is improper sharing of the credentials necessary to access our application, therefore, you are solely responsible for keeping your access password in a safe place and sharing it with third parties is prohibited. You agree to notify the SigmaCX Security Team immediately, through a secure channel, of any unauthorized use of your account, as well as unauthorized access by third parties to it."
+      ]
+    },
+    {
+      "title": "Atualização da Política de Privacidade e uso de dados pessoais",
+      "paragraphs": [
+        "SigmaCX reserves the right to change this policy as many times as necessary in order to provide you with more security and convenience and to improve your experience. That’s why it’s very important that you access our policy periodically. To make it easier, we indicate at the beginning of the document the date of the last update. If material changes are made that give rise to new authorizations from you, we will publish a new privacy policy, again subject to your consent."
+      ]
+    },
+    {
+      "title": "Lei Aplicável",
+      "paragraphs": [
+        "This document is governed by and shall be construed in accordance with the laws of the Federative Republic of Brazil. The Court of the District of São Paulo, São Paulo, is hereby elected as the competent court to settle any issues that may arise from this document, with express waiver of any other, however privileged it may be."
+      ]
+    },
+    {
+      "title": "Encarregado pelo tratamento de dados pessoais",
+      "paragraphs": []
+    }
+  ],
+  "dpo": {
+    "name": "Maria Eduarda Paulino Gonçalves Cheis",
+    "email": "mariaeduarda.cheis@nuveto.com",
+    "phone": "+55 11 97855-5825"
+  },
+  "updated": "Updated on September 22, 2025."
+}

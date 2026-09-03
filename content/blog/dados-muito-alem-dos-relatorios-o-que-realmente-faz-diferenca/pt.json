@@ -1,0 +1,141 @@
+{
+ "title": "Dados: muito além dos relatórios, o que realmente faz diferença",
+ "lang": "pt",
+ "date": "2025-10-02T17:51:27+00:00",
+ "description": "",
+ "cover": "/media/blog/blog-sigma-2_Prancheta-1.webp",
+ "blocks": [
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dados: muito além dos relatórios, o que realmente faz diferença"
+  },
+  {
+   "t": "html",
+   "html": "<p>Durante muito tempo, falar sobre dados nas empresas significava apresentar relatórios semanais, montar dashboards cheios de cores e gráficos ou acompanhar KPIs em reuniões de status. Só que isso, sozinho, não gera transformação. Hoje, falar em dados vai muito além de relatórios de acompanhamento. É sobre criar inteligência competitiva, tomar decisões mais rápidas e até enxergar caminhos que não estavam no radar. Dados, quando bem trabalhados, deixam de ser fotografia do passado e passam a ser bússola para o futuro. </p><p>Mas como separar o que realmente importa no meio de tanta informação? Como sair da lógica de “colecionar métricas” e começar a gerar inteligência que realmente diferencia a empresa no mercado? </p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/137.webp",
+   "alt": ""
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Relevância: nem todo dado vale a pena"
+  },
+  {
+   "t": "html",
+   "html": "<p>O maior erro que vejo em muitas organizações é a obsessão pelo <em>volume</em> de dados. Parece haver a ideia de que “quanto mais, melhor”. Isso gera o que chamamos de <em>data swamp</em>, um pântano de informações desconexas, difícil de navegar, e que no fim das contas só aumenta o custo de armazenamento e análise, sem entregar clareza.  </p><p>Colecionar informação como quem junta figurinha. Tudo vira métrica: likes, cliques, acessos, menções, tempo de tela, taxa de abertura… O problema é que, sem filtro, tudo isso vira barulho. E barulho não gera clareza. </p><p>O ponto central é <strong>separar o ruído</strong> e identificar quais são os <strong>dados críticos para o negócio.</strong> </p><ul><li><strong>Dados transacionais</strong> – aqueles que mostram o pulso do negócio: vendas, tickets resolvidos, contratos fechados. </li></ul><ul><li><strong>Dados de comportamento</strong> – o que o cliente faz, onde ele trava, o que abandona. É aqui que a gente enxerga o padrão de consumo e começa a prever necessidade antes mesmo de ela aparecer. </li></ul><ul><li><strong>Dados operacionais</strong> – os que revelam eficiência (ou ineficiência): custo por interação, tempo médio de atendimento, taxa de conversão. </li></ul><ul><li><strong>Dados estratégicos</strong> – os que conectam tudo isso a futuro: lifetime value, churn, elasticidade de preço, participação por segmento. </li></ul><p>Separar <strong>ruído de sinal</strong> é o passo mais importante para qualquer jornada orientada a dados. </p><p>Quando a empresa entende que não precisa olhar para tudo, mas sim para aquilo que realmente move o ponteiro, ela sai da lógica de “acumular” e passa a gerar inteligência prática.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dashboards não contam história sozinhos"
+  },
+  {
+   "t": "html",
+   "html": "<p>Dashboards são importantes, mas não contam histórias sozinhos. Um gráfico isolado pode alertar, mas não explica. O valor real surge quando os dados são conectados e analisados no contexto certo.</p><p>Se o NPS caiu 12 pontos em três meses, olhar só o gráfico não basta. É preciso cruzar com outros indicadores: talvez o tempo de espera no atendimento tenha aumentado ou os chamados reabertos dispararam. Nesse caso, o problema não é só satisfação, mas processos mal resolvidos.</p><p>Para chegar a esse tipo de leitura, três práticas são essenciais:</p><p><strong>1. Quebrar silos</strong> – marketing, vendas, operações e CX precisam analisar juntos.</p><p><strong>2. Buscar padrões e anomalias</strong> – distinguir o que é sazonal de problemas recorrentes.</p><p><strong>3. Perguntar “e daí?”</strong> – toda métrica deve gerar hipótese, insight ou ação; do contrário, é apenas dado estético.</p><p>O grande salto não está em medir, mas em interpretar o que os números significam dentro do ecossistema da empresa.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Do insight à estratégia"
+  },
+  {
+   "t": "html",
+   "html": "<p>Transformar dado em insight é importante, mas o diferencial real está em convertê-lo em ação prática.</p><ul><li>Operação: se 30% das chamadas tratam do mesmo tema, é hora de automatizar e liberar agentes para casos mais complexos.</li><li>Experiência do cliente: abandonos no pagamento indicam necessidade de repensar o checkout.</li><li>Modelo de negócio: clientes de alto valor podem inspirar planos diferenciados ou assinaturas sob medida.</li><li>Produto: padrões em tickets de suporte mostram onde ajustar ou criar novas funcionalidades.</li></ul><p>Ou seja: dado sozinho não muda nada. O que transforma é a ação.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Cultura de dados: mentalidade antes de tecnologia"
+  },
+  {
+   "t": "html",
+   "html": "<p>Nenhuma estratégia se sustenta sem cultura de dados. Não basta investir em BI ou big data; é preciso mentalidade:</p><ul><li>Informação acessível a quem decide.</li><li>Líderes que fazem as perguntas certas.</li><li>Velocidade na análise, porque dado atrasado é só histórico.</li><li>Espaço para testar e errar rápido.</li></ul><p>É essa cultura que tira a empresa do ritual de relatórios e a leva a competir de forma estratégica.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Por que isso importa"
+  },
+  {
+   "t": "html",
+   "html": "<p>Quando os dados guiam de verdade, custos caem sem perder experiência, tendências são antecipadas e respostas a crises ficam mais rápidas. A vantagem competitiva surge não de seguir o mercado, mas de enxergar antes e agir melhor.</p><p>No fim, dado não é só registro do passado, mas mapa do futuro. Quem sabe usá-lo com visão estratégica não acompanha o jogo, abre caminho à frente dele.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/Wendell-Maranhao-Perfil.jpeg-1.webp",
+   "alt": ""
+  },
+  {
+   "t": "html",
+   "html": "<p>Autor</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Wendell Maranhão</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Gerente Global de Novos Negócios</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "FAQ"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>1. Dados sozinhos transformam uma empresa?</strong><br>Não. O que gera transformação é a ação tomada a partir deles.</p><p><strong>2. Qual é o maior erro das empresas em relação a dados?</strong><br>Acreditar que volume importa mais do que relevância, criando excesso de métricas inúteis.</p><p><strong>3. O que é indispensável para uma estratégia orientada a dados?</strong><br>Uma cultura de dados forte, que combine acesso, mentalidade e velocidade.</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>SigmaCX é o hub que unifica canais, automatiza interações e gera insights estratégicos para jornadas consistentes e personalizadas.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Conheça mais"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Sobre nós"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dialogi AI"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Links"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Trabalhe conosco"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Política de Privavidade"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Contato"
+  },
+  {
+   "t": "html",
+   "html": "<p>(11) 4200-8282<br>R. Luiz Seráphico Júnior, 511, 13º andar – Cj. 132 Jardim Caravelas, São Paulo – SP, 04729-080</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>© 2025 Created by <a href=\"http://www.linkedin.com/in/dafny-bittencourt\" target=\"_blank\" rel=\"noreferrer\">Dafny B.</a></p>"
+  }
+ ]
+}

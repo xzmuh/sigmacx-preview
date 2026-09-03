@@ -1,0 +1,46 @@
+{
+  "meta": { "title": "Política de Privacidade - Sigma CX", "description": "Como a SigmaCX coleta, usa, compartilha e armazena seus dados." },
+  "title": "Política de Privacidade",
+  "intro": "Quando você utiliza a SigmaCX, você nos confia seus dados e suas informações, e nós nos comprometemos a manter esses dados protegidos por meio de sistemas de proteção. Nesse sentido, este documento de política de privacidade explica de maneira clara e acessível como as suas informações e os seus dados serão coletados, usados, compartilhados e armazenados pelos nossos sistemas. A aceitação da nossa política será feita quando você acessar ou utilizar o nosso website, o nosso aplicativo ou aplicativo ou os nossos serviços. Isso indicará que você está ciente e em total acordo com a forma como utilizaremos as suas informações e os seus dados.",
+  "sections": [
+    { "title": "Quais informações a SigmaCX coleta?", "paragraphs": [
+      "Nós coletamos informações que você nos fornece, como: Dados pessoais – Quando você se cadastra na Sigma CX, você fornece informações como nome, endereço de e-mail, CPF/CNPJ, data de nascimento, estado civil, número de telefone, foto, idade, sexo.",
+      "Dados pessoais sensíveis – Você poderá fornecer dados como orientação sexual, raça e opinião política, que são considerados sensíveis. Seus dados sensíveis serão utilizados para recomendação de produtos. Por meio dessa política, você concorda expressamente com a coleta, o uso e o compartilhamento desses dados nos termos aqui estabelecidos.",
+      "Portanto, em síntese, coletamos todas as informações ativamente disponibilizadas pelo usuário na utilização do nosso website ou da nossa plataforma."
+    ] },
+    { "title": "Como a empresa utiliza seus dados?", "paragraphs": [
+      "Nós, da SigmaCx, prezamos muito pela sua privacidade. Por isso, todos os dados e informações sobre você são tratados como confidenciais, e somente utilizaremos essas informações para os fins aqui descritos e autorizados por você para que você possa utilizar os serviços da SigmaCX de forma plena, visando sempre melhorar a sua experiência como cliente.",
+      "Por meio desta política, a organização fica autorizada a utilizar seus dados para:"
+    ], "list": [
+      "permitir acesso a recursos e funcionalidades do ambiente da SigmaCX;",
+      "enviar mensagens como alertas, notificações e atualizações;",
+      "comunicar sobre produtos, serviços, promoções, notícias, atualizações, eventos e outros assuntos em que você possa ter interesse;",
+      "personalizar serviços para que possam se adequar cada vez mais aos seus gostos e interesses;",
+      "criar serviços, produtos e funcionalidades;",
+      "entender melhor o seu comportamento e construir perfis comportamentais."
+    ], "after": [
+      "Eventualmente, poderemos utilizar dados para finalidades não previstas nesta política de privacidade, mas estas estarão dentro das suas legítimas expectativas. O eventual uso dos seus dados para finalidades que não cumpram com essa prerrogativa será feito mediante sua prévia autorização."
+    ] },
+    { "title": "Exclusão de dados", "paragraphs": [
+      "Todos os dados coletados serão excluídos de nossos servidores quando você assim requisitar, por procedimento gratuito e facilitado, ou quando estes não forem mais necessários ou relevantes para lhe oferecermos os nossos serviços, salvo se houver qualquer outra razão para a sua manutenção, como eventual obrigação legal de retenção de dados ou necessidade de preservação destes para resguardo de direitos da SigmaCX."
+    ] },
+    { "title": "Compartilhamento de informações", "paragraphs": [
+      "A nossa organização pode compartilhar as informações que coleta, inclusive seus dados sensíveis, com parceiros comerciais, anunciantes, patrocinadores e provedores de serviços, sempre que for possível e de forma anônima, visando preservar a sua privacidade. Por meio deste documento, você autoriza expressamente tais compartilhamentos.",
+      "A SigmaCX se reserva o direito de fornecer dados e informações sobre você, incluindo interações suas, caso seja requisitada judicialmente para tanto, ato necessário para que a empresa esteja em conformidade com as leis nacionais, ou caso você autorize expressamente.",
+      "Todos os seus dados são confidenciais e somente as pessoas com as devidas autorizações terão acesso a eles. Qualquer uso desses dados estará de acordo com a presente política. A SigamCX empreenderá todos os esforços razoáveis de mercado para garantir a segurança dos nossos sistemas e dos seus dados.",
+      "Nossos servidores são protegidos e controlados para garantir a segurança e podem ser acessados somente por pessoas previamente autorizadas.",
+      "Todas as suas informações, principalmente os dados sensíveis, serão, sempre que possível, criptografadas, caso isso não inviabilize o seu uso pela plataforma. A qualquer momento você poderá requisitar cópia dos seus dados armazenados em nossos sistemas.",
+      "Manteremos os dados e as informações somente até quando estes forem necessários ou relevantes para as finalidades descritas nesta política, ou em caso de períodos pré-determinados por lei, ou até quando esses dados forem necessários para a manutenção de interesses legítimos da organização.",
+      "Todavia, não temos como garantir completamente que todos os dados e informações sobre você em nossa plataforma estarão livres de acessos não autorizados, principalmente caso haja compartilhamento indevido das credenciais necessárias para acessar o nosso aplicativo, portanto, você é o único responsável por manter sua senha de acesso em local seguro e é vedado o compartilhamento desta com terceiros. Você se compromete a notificar a Equipe de Segurança da SigmaCX imediatamente, por um canal seguro, a respeito de qualquer uso não autorizado de sua conta, bem como o acesso não autorizado por terceiros a esta."
+    ] },
+    { "title": "Atualização da Política de Privacidade e uso de dados pessoais", "paragraphs": [
+      "A SigmaCX se reserva o direito de alterar essa política quantas vezes forem necessárias, visando fornecer a você mais segurança e conveniência e melhorar cada vez mais a sua experiência. E por isso que é muito importante que você acesse nossa política periodicamente. Para facilitar, indicamos no início do documento a data da última atualização. Caso sejam feitas alterações relevantes que ensejem novas autorizações suas, publicaremos uma nova política de privacidade, sujeita novamente ao seu consentimento."
+    ] },
+    { "title": "Lei Aplicável", "paragraphs": [
+      "Este documento é regido e deve ser interpretado de acordo com as leis da República Federativa do Brasil. Fica eleito Foro da Comarca de São Paulo, São Paulo, como o competente para dirimir quaisquer questões porventura oriundas do presente documento, com expressa renúncia a qualquer outro, por mais privilegiado que seja."
+    ] },
+    { "title": "Encarregado pelo tratamento de dados pessoais", "paragraphs": [] }
+  ],
+  "dpo": { "name": "Maria Eduarda Paulino Gonçalves Cheis", "email": "mariaeduarda.cheis@nuveto.com", "phone": "+55 11 97855-5825" },
+  "updated": "Atualizado em 22 de setembro de 2025."
+}

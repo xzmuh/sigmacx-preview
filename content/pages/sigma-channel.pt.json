@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "title": "Sigma Channel - Sigma CX",
+    "description": "A plataforma que integra todos os pontos de contato com o cliente em uma solução única."
+  },
+  "hero": {
+    "badge": "Sigma Channel",
+    "cta": "Conheça nossa plataforma"
+  },
+  "opening": "A plataforma que integra todos os pontos de contato com o cliente em uma *solução única*, combinando *inbound e outbound* com *inteligência, segurança e escalabilidade.*",
+  "intro": {
+    "title": "Sigma Channel",
+    "body": "Desenvolvido para garantir experiência única e consistente em cada passo da jornada, independentemente do canal que escolher para interagir.",
+    "cta": "Conecte seus canais"
+  },
+  "tabs": [
+    {
+      "label": "Monitoramento em tempo real",
+      "body": "Acompanhe volumes, tempos médios de atendimento e níveis de serviço em dashboards atualizados a cada segundo."
+    },
+    {
+      "label": "Relatórios e análises detalhadas",
+      "body": "Identifique oportunidades de melhoria com ferramentas avançadas de relatório e análise."
+    },
+    {
+      "label": "Campanhas omnichannel",
+      "body": "Entregue sua mensagem ao cliente no canal certo e no momento ideal, com confirmações automáticas e campanhas promocionais segmentadas."
+    }
+  ],
+  "flows": {
+    "title": "Fluxos Personalizáveis",
+    "body": "Crie e implemente fluxos de interação sob medida para atingir seus objetivos de negócio.",
+    "steps": [
+      {
+        "title": "Campanha",
+        "body": "Defina o objetivo da ação."
+      },
+      {
+        "title": "Canal",
+        "body": "Configure os envios personalizados e programados para cada público."
+      },
+      {
+        "title": "Disparo automatizado",
+        "body": "Selecione onde a campanha será distribuída (WhatsApp, Instagram, Facebook, etc)."
+      },
+      {
+        "title": "Engajamento",
+        "body": "Monitore respostas e interações em tempo real."
+      },
+      {
+        "title": "Ajustes Dinâmicos",
+        "body": "Otimize o fluxo durante a campanha com base nos resultados."
+      }
+    ]
+  },
+  "automate": {
+    "title": "Automatize o dia a dia do seu cliente",
+    "body": "O Sigma Channel automatiza interações do dia a dia, como lembretes de agendamento, confirmações de compra e campanhas, reforçando o contato com o cliente e garantindo agilidade e proximidade em cada interação.",
+    "cta": "Entenda como funciona"
+  },
+  "benefits": {
+    "title": "Mais eficiência e controle",
+    "items": [
+      {
+        "title": "Experiência consistente",
+        "body": "O agente recebe e gerencia todas as interações em um único lugar."
+      },
+      {
+        "title": "Eficiência operacional",
+        "body": "Redução de retrabalho, centralização da gestão e automação de fluxos."
+      },
+      {
+        "title": "Personalização e proximidade",
+        "body": "Acesso ao histórico, podendo oferecer soluções mais rápidas e contextualizadas."
+      }
+    ]
+  },
+  "actions": {
+    "title": "Ações inteligentes para cada etapa do relacionamento",
+    "items": [
+      {
+        "title": "Lembretes Inteligentes",
+        "body": "Reduza faltas em agendamentos e aumente a pontualidade com notificações automáticas."
+      },
+      {
+        "title": "Confirmações de Compra",
+        "body": "Reforce a confiança do cliente com mensagens automáticas de confirmação."
+      },
+      {
+        "title": "Atualizações de Entrega",
+        "body": "Mantenha o cliente informado em cada etapa do pedido, em tempo real."
+      },
+      {
+        "title": "Avisos de Pagamento",
+        "body": "Envie lembretes personalizados que garantem conveniência e reduzem atrasos."
+      },
+      {
+        "title": "Recuperação de Carrinhos",
+        "body": "Reengaje clientes com lembretes automáticos que incentivam a finalização da compra."
+      },
+      {
+        "title": "Campanhas Proativas",
+        "body": "Crie comunicações segmentadas e inteligentes para aumentar engajamento e fidelização."
+      }
+    ],
+    "cta": "Confira na prática"
+  },
+  "video": {
+    "eyebrow": "Em ação",
+    "title": "Veja o Sigma Channel funcionando"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "Sigma Brain - Sigma CX",
+    "description": "A inteligência por trás das interações digitais: um agente de IA autônomo em voz e texto."
+  },
+  "hero": {
+    "badge": "Sigma Brain",
+    "cta": "Habla con un experto"
+  },
+  "intro": {
+    "title": "O Sigma Brain é a inteligência por trás das interações digitais",
+    "body": "Ele atua tanto em voz quanto em texto, um agente de IA autônomo, capaz de compreender intenções, analisar sentimentos e agir em toda jornada para resolver solicitações de clientes.",
+    "cta": "¿Cuál es la diferencia entre los chatbots y los agentes de IA?"
+  },
+  "pillars": {
+    "title": "Deixe seu atendimento falar por você",
+    "items": [
+      {
+        "eyebrow": "Diálogos naturais e empáticos que resolvem de primeira",
+        "title": "Ofereça conversas fluidas e eficazes 24/7",
+        "body": "Com IA generativa e reconhecimento de linguagem natural, o Sigma Brain entende linguagem natural de forma contextual, elevando a taxa de resolução no primeiro contato e engajamento emocional."
+      },
+      {
+        "eyebrow": "Suporte multilinguístico e contextual global",
+        "title": "Fale o idioma do cliente, em qualquer lugar",
+        "body": "Traduza chamadas em tempo real e e adapte o estilo de comunicação ao perfil cultural. Além disso, personalize a experiência com sotaques configuráveis, tornando a interação mais próxima e natural para cada público."
+      },
+      {
+        "eyebrow": "Entende e responde com emoção",
+        "title": "Atendimento empático em cada chamada",
+        "body": "Identifique o tom de voz e o estado emocional do cliente em tempo real, e ajuste suas respostas para transmitir empatia. Com análise de sentimentos integrada e adaptação de linguagem, crie conversas mais humanas, fortalecendo a confiança e aumentando a satisfação."
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "label": "Estar presente en todos los canales",
+      "body": "Conecte-se por voz, chat, redes sociais e aplicativos de mensagem em uma experiência contínua, sem que o cliente precise repetir informações."
+    },
+    {
+      "label": "Gana eficiencia a escala",
+      "body": "Automatiza los flujos de trabajo sin código y reduce las tareas manuales, liberando a tu equipo para interacciones estratégicas de mayor valor."
+    },
+    {
+      "label": "Ofrecer experiencias más humanas",
+      "body": "Utiliza IA generativa para comprender la intención, analiza el sentimiento y ofrece respuestas contextuales que aumenten la satisfacción del cliente."
+    }
+  ],
+  "configurable": {
+    "title": "Autônomo e totalmente configurável",
+    "adjust": "Faça ajustes quando quiser",
+    "items": [
+      {
+        "title": "Construa bots em minutos",
+        "body": "Crie assistentes inteligentes sem programação e reduza drasticamente o tempo de lançamento."
+      },
+      {
+        "title": "Escale canais com um clique",
+        "body": "Expanda rapidamente para WhatsApp, voz, redes sociais e muito mais, sem complexidade técnica."
+      }
+    ],
+    "cta": "Saber más"
+  },
+  "journeys": {
+    "title": "Construa jornadas flexíveis",
+    "body": "Ofereça menus interativos, direcione clientes para diferentes ações e simplifique cada etapa do atendimento."
+  },
+  "nocode": {
+    "title": "Crie, ajuste e escale jornadas de atendimento sem precisar de código",
+    "body": "O no-code coloca o poder da inovação nas mãos do seu time. Fluxos, campanhas e análises podem ser configurados de forma visual e intuitiva, reduzindo dependência de equipes técnicas e acelerando o tempo de resposta às demandas do negócio.",
+    "cta": "Solicite una demostración"
+  },
+  "benefits": {
+    "title": "Principales beneficios",
+    "items": [
+      {
+        "title": "Automatización inteligente",
+        "body": "Elimina tareas repetitivas, reduciendo costos y tiempo promedio de servicio."
+      },
+      {
+        "title": "Contexto unificado",
+        "body": "Mantén el historial del cliente en todos los canales, lo que garantiza la coherencia y la personalización."
+      },
+      {
+        "title": "Resolución de extremo a extremo",
+        "body": "no sólo responde sino que actúa, ejecuta y completa procesos, como un colaborador digital."
+      },
+      {
+        "title": "Aprendizaje continuo",
+        "body": "Mejora con cada interacción, identificando patrones y anticipándose a las necesidades."
+      }
+    ],
+    "cta": "Pruebe"
+  },
+  "video": {
+    "eyebrow": "En acción",
+    "title": "Mira Sigma Brain en funcionamiento"
+  }
+}

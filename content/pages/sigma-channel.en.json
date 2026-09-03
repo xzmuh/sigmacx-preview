@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "title": "Sigma Channel - Sigma CX",
+    "description": "The platform that integrates all customer touchpoints into a single solution."
+  },
+  "hero": {
+    "badge": "Sigma Channel",
+    "cta": "Talk to an expert"
+  },
+  "opening": "The platform that integrates all customer touchpoints into a *single solution*, combining *inbound and outbound* with *intelligence, security and scalability.*",
+  "intro": {
+    "title": "Sigma Channel",
+    "body": "Sigma Channel was developed to ensure a unique and consistent experience at every step of the journey, regardless of the channel you choose to interact.",
+    "cta": "Connect your channels"
+  },
+  "tabs": [
+    {
+      "label": "Real-Time Monitoring",
+      "body": "Track volumes, average service times, and service levels on dashboards that update every second."
+    },
+    {
+      "label": "Detailed Reports and Analysis",
+      "body": "Identify opportunities for improvement with advanced reporting and analysis tools."
+    },
+    {
+      "label": "Omnichannel Campaigns",
+      "body": "Deliver your message to your customer on the right channel at the right time, with automatic confirmations and targeted promotional campaigns."
+    }
+  ],
+  "flows": {
+    "title": "Customizable Flows",
+    "body": "Create and implement custom interaction flows to achieve your business objectives.",
+    "steps": [
+      {
+        "title": "Campaign",
+        "body": "Define the objective of the action."
+      },
+      {
+        "title": "Channel",
+        "body": "Set up custom and scheduled shipments for each audience."
+      },
+      {
+        "title": "Automated shooting",
+        "body": "Select where the campaign will be distributed (WhatsApp, Instagram, Facebook, etc)."
+      },
+      {
+        "title": "Engagement",
+        "body": "Monitor responses and interactions in real time."
+      },
+      {
+        "title": "Dynamic Adjustments",
+        "body": "Optimize the flow during the campaign based on the results."
+      }
+    ]
+  },
+  "automate": {
+    "title": "Automate your customer's daily routine",
+    "body": "Sigma Channel automates everyday interactions, such as appointment reminders, purchase confirmations, and campaigns, strengthening customer contact and ensuring agility and proximity in every interaction.",
+    "cta": "Understand how it works"
+  },
+  "benefits": {
+    "title": "More efficiency and control",
+    "items": [
+      {
+        "title": "Consistent experience",
+        "body": "The agent receives and manages all interactions in one place."
+      },
+      {
+        "title": "Operational efficiency",
+        "body": "Reduction of rework, centralization of management and automation of flows."
+      },
+      {
+        "title": "Personalization and proximity",
+        "body": "Access to history, allowing for faster and more contextualized solutions."
+      }
+    ]
+  },
+  "actions": {
+    "title": "Smart actions for each stage of the relationship",
+    "items": [
+      {
+        "title": "Smart Reminders",
+        "body": "Reduce missed appointments and increase punctuality with automatic notifications."
+      },
+      {
+        "title": "Purchase Confirmations",
+        "body": "Reinforce customer trust with automatic confirmation messages."
+      },
+      {
+        "title": "Delivery Updates",
+        "body": "Keep the customer informed at every stage of the order, in real time."
+      },
+      {
+        "title": "Payment Notices",
+        "body": "Send personalized reminders that ensure convenience and reduce delays."
+      },
+      {
+        "title": "Cart Recovery",
+        "body": "Re-engage customers with automatic reminders that encourage them to complete their purchase."
+      },
+      {
+        "title": "Proactive Campaigns",
+        "body": "Create targeted and intelligent communications to increase engagement and loyalty."
+      }
+    ],
+    "cta": "Check it out in practice"
+  },
+  "video": {
+    "eyebrow": "In action",
+    "title": "See Sigma Channel at work"
+  }
+}

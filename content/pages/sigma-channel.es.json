@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "title": "Sigma Channel - Sigma CX",
+    "description": "La plataforma que unifica todos los puntos de contacto del cliente en una sola solución."
+  },
+  "hero": {
+    "badge": "Sigma Channel",
+    "cta": "Habla con un experto"
+  },
+  "opening": "La plataforma que unifica todos los puntos de contacto del cliente en *una sola solución*, combinando *interacción entrante y saliente* con *inteligencia, seguridad y escalabilidad.*",
+  "intro": {
+    "title": "Sigma Channel",
+    "body": "Sigma Channel fue creado para ofrecer una experiencia única y consistente en cada etapa del recorrido del cliente, sin importar el canal que elija para interactuar.",
+    "cta": "Conecte sus canales"
+  },
+  "tabs": [
+    {
+      "label": "Monitoreo en tiempo real",
+      "body": "Supervisa en tiempo real volúmenes, tiempos promedio de atención y niveles de servicio con paneles que se actualizan cada segundo."
+    },
+    {
+      "label": "Informes y análisis detallados",
+      "body": "Detecta oportunidades de mejora con análisis e informes avanzados."
+    },
+    {
+      "label": "Campañas omnicanal",
+      "body": "Haz llegar tu mensaje al cliente en el canal adecuado y en el momento oportuno, con confirmaciones automáticas y campañas promocionales dirigidas."
+    }
+  ],
+  "flows": {
+    "title": "Flujos personalizables",
+    "body": "Diseñe e implemente flujos de interacción a medida para alcanzar sus objetivos de negocio.",
+    "steps": [
+      {
+        "title": "Campaña",
+        "body": "Defina el objetivo de la acción."
+      },
+      {
+        "title": "Canal",
+        "body": "Configura los envíos personalizados y programados para cada público."
+      },
+      {
+        "title": "Disparo automatizado",
+        "body": "Seleccione dónde se distribuirá la campaña (WhatsApp, Instagram, Facebook, etc.)."
+      },
+      {
+        "title": "Compromiso",
+        "body": "Monitorea respuestas e interacciones en tiempo real."
+      },
+      {
+        "title": "Ajustes Dinámicos",
+        "body": "Optimice el flujo durante la campaña en función de los resultados."
+      }
+    ]
+  },
+  "automate": {
+    "title": "Automatiza la rutina diaria de tus clientes",
+    "body": "Sigma Channel automatiza interacciones cotidianas como recordatorios de citas, confirmaciones de compra y campañas, fortaleciendo la relación con el cliente y asegurando agilidad y cercanía en cada contacto.",
+    "cta": "Entiende cómo funciona"
+  },
+  "benefits": {
+    "title": "Más eficiencia y control",
+    "items": [
+      {
+        "title": "Experiencia uniforme",
+        "body": "El agente recibe y gestiona todas las interacciones en un solo lugar."
+      },
+      {
+        "title": "Eficiencia operativa",
+        "body": "Reducción de retrabajos, centralización de la gestión y automatización de flujos."
+      },
+      {
+        "title": "Personalización y proximidad",
+        "body": "Acceso al historial, permitiendo soluciones más rápidas y contextualizadas."
+      }
+    ]
+  },
+  "actions": {
+    "title": "Acciones inteligentes en cada etapa de la relación con el cliente",
+    "items": [
+      {
+        "title": "Recordatorios inteligentes",
+        "body": "Reduce las citas perdidas y aumenta la puntualidad con notificaciones automáticas."
+      },
+      {
+        "title": "Confirmaciones de compra",
+        "body": "Refuerza la confianza del cliente con mensajes automáticos de confirmación."
+      },
+      {
+        "title": "Actualizaciones de entrega",
+        "body": "Mantén al cliente informado en cada etapa del pedido, en tiempo real."
+      },
+      {
+        "title": "Avisos de pago",
+        "body": "Envía recordatorios personalizados que garantizan comodidad y reducen los atrasos."
+      },
+      {
+        "title": "Recuperación de carritos",
+        "body": "Vuelve a captar clientes con recordatorios automáticos que incentivan la finalización de la compra."
+      },
+      {
+        "title": "Campañas proactivas",
+        "body": "Crea comunicaciones segmentadas e inteligentes para aumentar la interacción y la fidelización."
+      }
+    ],
+    "cta": "Mira en la práctica"
+  },
+  "video": {
+    "eyebrow": "En acción",
+    "title": "Mira Sigma Channel en funcionamiento"
+  }
+}

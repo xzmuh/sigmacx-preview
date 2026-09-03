@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 1500" fill="none">
+  <defs>
+    <linearGradient id="line" x1="0" y1="0" x2="1800" y2="1500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2457ff"/>
+      <stop offset=".48" stop-color="#09b8ff"/>
+      <stop offset="1" stop-color="#605be5"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <path id="leftWave" d="M-190 -80C360 170-130 510 118 955c175 313 515 210 760 520"/>
+    <path id="bottomWave" d="M260 1390c390-315 675-620 1060-315 270 213 397-34 690 165"/>
+  </defs>
+  <g stroke="url(#line)" stroke-width="2.4" opacity=".62" filter="url(#glow)">
+    <use href="#leftWave"/><use href="#leftWave" transform="translate(14 -5)"/>
+    <use href="#leftWave" transform="translate(28 -10)"/><use href="#leftWave" transform="translate(42 -15)"/>
+    <use href="#leftWave" transform="translate(56 -20)"/><use href="#leftWave" transform="translate(70 -25)"/>
+    <use href="#leftWave" transform="translate(84 -30)"/><use href="#leftWave" transform="translate(98 -35)"/>
+    <use href="#leftWave" transform="translate(112 -40)"/><use href="#leftWave" transform="translate(126 -45)"/>
+    <use href="#leftWave" transform="translate(140 -50)"/><use href="#leftWave" transform="translate(154 -55)"/>
+  </g>
+  <g stroke="url(#line)" stroke-width="2.2" opacity=".5">
+    <use href="#bottomWave"/><use href="#bottomWave" transform="translate(0 13)"/>
+    <use href="#bottomWave" transform="translate(0 26)"/><use href="#bottomWave" transform="translate(0 39)"/>
+    <use href="#bottomWave" transform="translate(0 52)"/><use href="#bottomWave" transform="translate(0 65)"/>
+    <use href="#bottomWave" transform="translate(0 78)"/><use href="#bottomWave" transform="translate(0 91)"/>
+    <use href="#bottomWave" transform="translate(0 104)"/><use href="#bottomWave" transform="translate(0 117)"/>
+  </g>
+</svg>

@@ -3,18 +3,22 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import * as THREE from "three";
+import { useLazyVideo } from "./site/useLazyVideo";
 import {
   MutableRefObject,
-  PointerEvent as ReactPointerEvent,
   useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { SiteHeader } from "./site/SiteHeader";
+import GradientText from "./components/GradientText";
 
 const DEMO_URL =
   "https://api.whatsapp.com/send/?phone=551142008282&text=Ol%C3%A1%2C+gostaria+de+saber+mais+sobre+a+SigmaCX&type=phone_number&app_absent=0";
+
+const HOME_GRADIENT = ["#b9ff9b", "#5da6ff", "#00a9a9", "#b9ff9b"];
 
 const clientLogos = [
   "/media/client-01.png",
@@ -115,6 +119,8 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
   const group = useRef<THREE.Group>(null);
   const points = useRef<THREE.Points>(null);
   const motionTime = useRef(0);
+  // Esfera ja nasce na posicao/escala finais: sem deslocamento ate o centro ao abrir.
+  const settled = useRef(false);
   const surfaceCount = reducedMotion ? 760 : 1120;
   const trailCount = reducedMotion ? 48 : 84;
   const totalCount = surfaceCount + trailCount;
@@ -205,6 +211,11 @@ function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
       state.size.width < 720 ? 0.78 : 0.94,
       1.24,
     );
+    if (!settled.current) {
+      group.current.position.x = targetX;
+      group.current.scale.setScalar(targetScale);
+      settled.current = true;
+    }
     group.current.position.x = THREE.MathUtils.lerp(
       group.current.position.x,
       targetX,
@@ -370,82 +381,29 @@ function ExperienceCanvas(props: ExperienceProps & { onReady: () => void }) {
   );
 }
 
-function Header({
-  menuOpen,
-  setMenuOpen,
-  compact,
-}: {
-  menuOpen: boolean;
-  setMenuOpen: (open: boolean) => void;
-  compact: boolean;
-}) {
-  const setHoverOrigin = (event: ReactPointerEvent<HTMLAnchorElement>) => {
-    const bounds = event.currentTarget.getBoundingClientRect();
-    const origin = event.clientX - bounds.left <= bounds.width / 2 ? "left" : "right";
-    event.currentTarget.style.setProperty("--hover-origin", origin);
-  };
-
-  return (
-    <header className={compact ? "site-header site-header--compact" : "site-header"}>
-      <a className="brand" href="#top" aria-label="SigmaCX — início">
-        <img src="/media/logo-white.png" alt="SigmaCX" />
-      </a>
-      <nav className={menuOpen ? "nav nav--open" : "nav"} aria-label="Navegação principal">
-        <a data-index="01" href="#experience" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Experiência</a>
-        <a data-index="02" href="#platform" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Sigma Suite</a>
-        <a data-index="03" href="#proof" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Resultados</a>
-        <a data-index="04" href="#security" onPointerEnter={setHoverOrigin} onPointerMove={setHoverOrigin} onPointerLeave={setHoverOrigin} onClick={() => setMenuOpen(false)}>Segurança</a>
-      </nav>
-      <div className="header-actions">
-        <span className="language" aria-label="Idioma atual: português">PT</span>
-        <a className="pill pill--small" href={DEMO_URL} target="_blank" rel="noreferrer">
-          Agende uma demo <span aria-hidden="true">↗</span>
-        </a>
-        <button
-          className={menuOpen ? "menu-toggle menu-toggle--open" : "menu-toggle"}
-          type="button"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          <span />
-          <span />
-        </button>
-      </div>
-    </header>
-  );
+/** Video da home: o src so entra a 600px da tela (woman 1.8 MB, brain 2.6 MB). */
+function LazyVideo({ src, label }: { src: string; label: string }) {
+  const ref = useLazyVideo(src);
+  return <video ref={ref} autoPlay muted loop playsInline preload="none" aria-label={label} />;
 }
 
 export function SigmaExperience() {
   const root = useRef<HTMLDivElement>(null);
   const story = useRef<HTMLElement>(null);
-  const progress = useRef(0);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [headerCompact, setHeaderCompact] = useState(false);
+  const progress = useRef(0);
   const [sceneReady, setSceneReady] = useState(false);
   const [introMinElapsed, setIntroMinElapsed] = useState(false);
   const motionEnabled = true;
   const reducedMotion = !motionEnabled;
-  const visualReady = reducedMotion || (sceneReady && introMinElapsed);
+  // Sem espera minima nem dependencia do canvas: texto e nav aparecem de imediato.
+  const visualReady = reducedMotion || introMinElapsed || sceneReady;
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setIntroMinElapsed(true), 950);
+    const timer = window.setTimeout(() => setIntroMinElapsed(true), 0);
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    let frame = 0;
-    const updateHeader = () => {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(() => setHeaderCompact(window.scrollY > 72));
-    };
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", updateHeader);
-    };
-  }, []);
+
 
   useLayoutEffect(() => {
     if (!root.current) return;
@@ -454,7 +412,7 @@ export function SigmaExperience() {
     if (!visualReady) {
       const waitingContext = gsap.context(() => {
         gsap.set(".intro-curtain", { animation: "none" });
-        gsap.set(".site-header, .hero-kicker, .hero-copy, .hero-actions, .hero-meta", { opacity: 0 });
+        gsap.set(".site-header, .hero-kicker, .hero-copy, .hero-actions", { opacity: 0 });
         gsap.set(".hero-title .line", { yPercent: 108 });
       }, root);
       return () => waitingContext.revert();
@@ -483,7 +441,7 @@ export function SigmaExperience() {
           .set(".site-header", { y: -24, opacity: 0 })
           .set(".hero-kicker", { y: 26, opacity: 0 })
           .set(".hero-title .line", { yPercent: 108 })
-          .set(".hero-copy, .hero-actions, .hero-meta", { y: 24, opacity: 0 })
+          .set(".hero-copy, .hero-actions", { y: 24, opacity: 0 })
           .addLabel("heroReveal", 0)
           .to(".intro-curtain", {
             opacity: 0,
@@ -491,20 +449,21 @@ export function SigmaExperience() {
             ease: "power2.inOut",
             onComplete: () => gsap.set(".intro-curtain", { visibility: "hidden" }),
           }, "heroReveal")
-          .to(".site-header", { y: 0, opacity: 1, duration: 0.82 }, "heroReveal+=0.14")
-          .to(".hero-kicker", { y: 0, opacity: 1, duration: 0.62 }, "heroReveal+=0.18")
+          // Entrada curta e simultanea: nada fica congelado esperando a vez.
+          .to(".site-header", { y: 0, opacity: 1, duration: 0.4 }, "heroReveal")
+          .to(".hero-kicker", { y: 0, opacity: 1, duration: 0.4 }, "heroReveal")
           .to(".hero-title .line", {
             yPercent: 0,
-            duration: 0.92,
-            stagger: 0.08,
+            duration: 0.5,
+            stagger: 0.04,
             onComplete: () => gsap.set(".hero-title .line-wrap", { overflow: "visible" }),
-          }, "heroReveal+=0.22")
-          .to(".hero-copy, .hero-actions, .hero-meta", {
+          }, "heroReveal")
+          .to(".hero-copy, .hero-actions", {
             y: 0,
             opacity: 1,
-            duration: 0.68,
-            stagger: 0.07,
-          }, "heroReveal+=0.4");
+            duration: 0.4,
+            stagger: 0.03,
+          }, "heroReveal+=0.05");
 
         gsap.to(".hero-stage", {
           yPercent: 24,
@@ -605,16 +564,8 @@ export function SigmaExperience() {
           );
         });
 
-        const xTo = gsap.quickTo(".cursor-glow", "x", { duration: 0.1, ease: "power1.out" });
-        const yTo = gsap.quickTo(".cursor-glow", "y", { duration: 0.1, ease: "power1.out" });
-        const move = (event: PointerEvent) => {
-          xTo(event.clientX);
-          yTo(event.clientY);
-        };
-        window.addEventListener("pointermove", move);
-
+        // Bola que seguia o mouse (.cursor-glow) removida a pedido (2026-09-03).
         cleanupMotion = () => {
-          window.removeEventListener("pointermove", move);
           gsap.ticker.remove(tick);
           lenis.destroy();
         };
@@ -632,12 +583,7 @@ export function SigmaExperience() {
   return (
     <div ref={root} id="top" className={motionEnabled ? "site-shell motion-on" : "site-shell motion-off"}>
       <a className="skip-link" href="#main">Pular para o conteúdo</a>
-      <div className="cursor-glow" aria-hidden="true" />
-      <Header
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-        compact={headerCompact}
-      />
+      <SiteHeader />
 
       <div className="experience-layer" aria-hidden="true">
         <div className="experience-fallback" />
@@ -645,9 +591,6 @@ export function SigmaExperience() {
           <div className="tech-hud__grid" />
           <div className="tech-hud__aura" />
           <div className="tech-hud__frame">
-            <span className="tech-hud__telemetry tech-hud__telemetry--one"><i /> NEURAL FIELD / ACTIVE</span>
-            <span className="tech-hud__telemetry tech-hud__telemetry--two">SYNC 98.42%</span>
-            <span className="tech-hud__telemetry tech-hud__telemetry--three">LATENCY / 018 MS</span>
             <span className="tech-hud__rail"><i /><i /><i /><i /><i /><i /></span>
           </div>
         </div>
@@ -667,7 +610,7 @@ export function SigmaExperience() {
           </div>
           <h1 id="hero-title" className="hero-title">
             <span className="line-wrap"><span className="line">It’s for</span></span>
-            <span className="line-wrap"><span className="line line--accent">you.</span></span>
+            <span className="line-wrap"><span className="line line--accent"><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={6}>you.</GradientText></span></span>
           </h1>
           <p className="hero-copy">
             Soluções que <strong>escutam</strong>, entendem e melhoram cada conversa entre marcas e pessoas.
@@ -681,10 +624,6 @@ export function SigmaExperience() {
             </a>
           </div>
           </div>
-          <div className="hero-meta" aria-label="Capacidades da plataforma">
-            <span>Voz</span><span>Texto</span><span>Dados</span><span>IA</span>
-          </div>
-          <div className="scroll-cue" aria-hidden="true"><span /> Role para conectar os sinais</div>
         </section>
 
         <section className="manifesto section-dark" aria-labelledby="manifesto-title">
@@ -694,7 +633,7 @@ export function SigmaExperience() {
           <div className="manifesto-copy" data-reveal>
             <span className="section-index">01 / Por que existimos</span>
             <p>Em um mundo com tantos canais, mensagens e demandas, o atendimento virou uma tarefa trabalhosa. A relação entre marcas e clientes se tornou automática demais.</p>
-            <h2 id="manifesto-title">O SigmaCX nasceu<br /><strong>para mudar isso.</strong></h2>
+            <h2 id="manifesto-title">O SigmaCX nasceu<br /><strong><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={7}>para mudar isso.</GradientText></strong></h2>
           </div>
         </section>
 
@@ -792,7 +731,7 @@ export function SigmaExperience() {
         <section className="solution-compare section-dark" aria-labelledby="solutions-title">
           <div className="solution-compare__heading" data-reveal>
             <span className="section-index">04 / Soluções conectadas</span>
-            <h2 id="solutions-title">Duas plataformas.<br /><strong>Uma experiência contínua.</strong></h2>
+            <h2 id="solutions-title">Duas plataformas.<br /><strong><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={7}>Uma experiência contínua.</GradientText></strong></h2>
           </div>
           <div className="solution-compare__grid">
             <article className="solution-card" data-reveal>
@@ -821,7 +760,7 @@ export function SigmaExperience() {
 
         <section className="connection section-dark" aria-labelledby="connection-title">
           <div className="connection-media" data-reveal>
-            <video src="/media/woman.mp4" autoPlay muted loop playsInline preload="metadata" aria-label="Pessoa em uma experiência de atendimento conectada" />
+            <LazyVideo src="/media/woman.mp4" label="Pessoa em uma experiência de atendimento conectada" />
             <div className="video-data"><span>CONNECTION / 01</span><span>LIVE SIGNAL</span></div>
           </div>
           <div className="connection-copy" data-reveal>
@@ -838,13 +777,13 @@ export function SigmaExperience() {
         <section id="platform" className="platform section-dark" aria-labelledby="platform-title">
           <div className="section-heading section-heading--dark" data-reveal>
             <span className="section-index">06 / Sigma Suite</span>
-            <h2 id="platform-title">Inteligência para<br />decisões de CX.</h2>
+            <h2 id="platform-title">Inteligência para<br /><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={7}>decisões de CX.</GradientText></h2>
             <p>O Sigma é uma plataforma completa para gestão da experiência do cliente: integra canais, automatiza interações e gera insights em tempo real.</p>
             <p><strong>Cada módulo trabalha de forma integrada para proporcionar uma jornada contínua, inteligente e orientada a resultados.</strong></p>
           </div>
           <div className="suite-grid">
             <article className="suite-card suite-card--brain" data-reveal>
-              <video src="/media/brain.mp4" autoPlay muted loop playsInline preload="metadata" aria-label="Holograma de cérebro representando a inteligência Sigma Brain" />
+              <LazyVideo src="/media/brain.mp4" label="Holograma de cérebro representando a inteligência Sigma Brain" />
               <div className="suite-overlay" />
               <div className="suite-card-content">
                 <span className="suite-code">01 — GENERATIVE CORE</span>
@@ -895,6 +834,7 @@ export function SigmaExperience() {
           <span /><span /><span />
         </div>
 
+        <div className="security-final-flow">
         <section id="security" className="security section-dark" aria-labelledby="security-title">
           <div className="security-orbit" aria-hidden="true">
             <div className="security-core">
@@ -906,7 +846,7 @@ export function SigmaExperience() {
           </div>
           <div className="security-copy" data-reveal>
             <span className="section-index">07 / Confiança por design</span>
-            <h2 id="security-title">Dados sensíveis.<br /><span>Proteção inegociável.</span></h2>
+            <h2 id="security-title">Dados sensíveis.<br /><span><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={7}>Proteção inegociável.</GradientText></span></h2>
             <p>Cada conversa, troca de informação e registro do cliente carrega dados sensíveis que precisam ser tratados com proteção.</p>
             <p>O SigmaCX foi projetado com protocolos de segurança, criptografia de ponta a ponta e conformidade com normas globais. Do momento em que um cliente envia uma mensagem até a finalização do atendimento, tudo permanece protegido e monitorado.</p>
             <div className="security-flow" aria-label="Fluxo contínuo de proteção de dados">
@@ -929,6 +869,7 @@ export function SigmaExperience() {
             Agende uma demonstração <span aria-hidden="true">↗</span>
           </a>
         </section>
+        </div>
       </main>
 
       <div className="footer-bridge" aria-hidden="true" />

@@ -1016,8 +1016,56 @@ video {
   position: relative;
   z-index: 6;
   height: clamp(110px, 13vw, 210px);
-  margin-block: -1px;
+  margin-block: -3px;
   overflow: hidden;
+}
+
+.home-gradient-text {
+  display: inline-flex;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  font: inherit;
+  line-height: inherit;
+}
+
+.home-gradient-text .text-content {
+  display: inline;
+  /* Dentro do inline-flex o span vira item de flex com altura = line-height
+     (0.92em): o fundo do gradiente (background-clip: text) nao cobre o
+     descendente do "y" e ele some. Padding pinta a area; a margem negativa
+     devolve a geometria (pedido 2026-09-03). */
+  padding-block: 0.12em 0.26em;
+  margin-block: -0.12em -0.26em;
+}
+
+/* Overdraw de poucos pixels para evitar a hairline criada pelo clip-path em
+   alguns níveis de zoom e densidades de tela. */
+.site-shell .section-transition::before {
+  position: absolute;
+  z-index: 5;
+  top: -4px;
+  right: 0;
+  left: 0;
+  height: 10px;
+  content: "";
+  pointer-events: none;
+}
+
+.site-shell .section-transition--light-dark::before { background: var(--mist); }
+.site-shell .section-transition--dark-light::before { background: #071329; }
+.site-shell .section-transition--navy-deep::before { background: var(--navy); }
+
+/* A faixa parte exatamente da cor em que cada bloco termina. Isso evita que
+   a troca de tons desenhe uma linha horizontal antes das diagonais. */
+.signal-story + .section-transition--dark-light::before,
+.signal-story + .section-transition--dark-light span:first-child {
+  background: #050a19;
+}
+
+.platform + .section-transition--dark-light::before,
+.platform + .section-transition--dark-light span:first-child {
+  background: #071126;
 }
 
 .section-transition span {
@@ -1698,11 +1746,16 @@ video {
   inset: 0;
   content: "";
   opacity: 0.34;
-  background-image:
-    linear-gradient(rgba(10, 20, 44, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(10, 20, 44, 0.045) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: linear-gradient(90deg, transparent, black 26%, black 74%, transparent);
+  background-image: linear-gradient(90deg, rgba(10, 20, 44, 0.045) 1px, transparent 1px);
+  background-size: 72px 100%;
+  mask-image:
+    linear-gradient(180deg, transparent, black 24%, black 70%, transparent),
+    linear-gradient(90deg, transparent, black 26%, black 74%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent, black 24%, black 70%, transparent),
+    linear-gradient(90deg, transparent, black 26%, black 74%, transparent);
+  -webkit-mask-composite: source-in;
   pointer-events: none;
 }
 
@@ -1762,6 +1815,18 @@ video {
   writing-mode: vertical-rl;
 }
 
+.security-final-flow {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    #090a22 0%,
+    #0c1733 34%,
+    var(--navy) 54%,
+    var(--navy) 64%,
+    #071126 100%
+  );
+}
+
 .security {
   display: grid;
   grid-template-columns: 0.8fr 1.2fr;
@@ -1769,9 +1834,9 @@ video {
   min-height: 100vh;
   padding: 10rem 7vw;
   background:
+    linear-gradient(180deg, transparent 68%, var(--navy) 100%),
     radial-gradient(circle at 24% 48%, rgba(96, 91, 229, 0.28), transparent 33%),
-    radial-gradient(circle at 82% 18%, rgba(93, 166, 255, 0.09), transparent 28%),
-    linear-gradient(180deg, #090a22 0%, #0c1733 62%, var(--navy) 100%);
+    radial-gradient(circle at 82% 18%, rgba(93, 166, 255, 0.09), transparent 28%);
 }
 
 .security-orbit {
@@ -2013,9 +2078,7 @@ video {
   min-height: 78vh;
   padding: 8rem 5vw 5rem;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 75%, rgba(185, 255, 155, 0.14), transparent 28%),
-    linear-gradient(180deg, var(--navy), #071126);
+  background: radial-gradient(circle at 50% 75%, rgba(185, 255, 155, 0.14), transparent 28%);
   text-align: center;
 }
 
@@ -2413,7 +2476,7 @@ video {
   justify-content: space-between;
   max-width: 1440px;
   margin: clamp(5rem, 8vw, 8rem) auto 0;
-  padding: 1.5rem 0 0.7rem;
+  padding: 1.7rem 0 1.25rem;
   overflow: hidden;
   border-top: 1px solid rgba(255, 255, 255, 0.09);
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
@@ -2422,10 +2485,10 @@ video {
 .footer-wordmark > span {
   margin-left: -0.07em;
   color: rgba(255, 255, 255, 0.055);
-  font-size: clamp(7rem, 19vw, 19rem);
+  font-size: clamp(7rem, 16.8vw, 17rem);
   font-weight: 700;
-  letter-spacing: -0.115em;
-  line-height: 0.7;
+  letter-spacing: -0.062em;
+  line-height: 0.76;
   white-space: nowrap;
   -webkit-text-stroke: 1px rgba(185, 255, 155, 0.13);
 }
@@ -2447,7 +2510,7 @@ video {
   gap: 2rem;
   max-width: 1440px;
   margin: 0 auto;
-  padding-top: 1.4rem;
+  padding-top: 1.7rem;
   color: rgba(255, 255, 255, 0.3);
   font-size: 0.58rem;
 }
@@ -3009,7 +3072,8 @@ video {
   }
 
   .footer-wordmark > span {
-    font-size: clamp(6.5rem, 31vw, 10rem);
+    font-size: clamp(5rem, 24vw, 8.5rem);
+    letter-spacing: -0.055em;
   }
 
   .footer-wordmark small {
@@ -3062,4 +3126,250 @@ video {
   .quote-card {
     border: 1px solid CanvasText;
   }
+}
+
+/* "you." deslocado para a direita: estava colado no canto da coluna.
+   E puxado para cima: o padding que evita cortar os glifos na animacao
+   deixava um vao grande entre as duas linhas (pedido 2026-09-03). */
+.hero-title .line-wrap:nth-child(2) {
+  padding-left: 0.55em;
+  margin-top: -0.24em;
+}
+
+
+
+/* ==========================================================================
+   Proporcoes da home = home do Dialogi (dialogi.ia/src/app/globals.css).
+
+   O Dialogi foi desenhado com dois botoes que a Sigma nao tinha:
+   - `--vs` escala o AR (padding de secao, respiro entre titulo e conteudo);
+   - `--ds` escala o TIPO de display e a altura dos cards.
+   Ambos caem por degraus conforme a ALTURA do viewport (>=1024px de largura):
+   1440x900 -> vs .55 / ds .72; 1080p a 100% -> .62/.76; 1366x768 -> .24/.5.
+   Sem isso a home ficava com o ritmo de um monitor QHD em qualquer tela.
+
+   Medidas copiadas: container 80rem (gutter 1.25/2/2.5rem), hero = 100svh
+   menos o header com o bloco centrado, h1 clamp(3.25rem,6.2vw,6.1rem)/0.94,
+   paragrafo do hero 16-18px/1.8 em 38rem, botao 52px, secao 6rem (mobile) e
+   8rem*vs (desktop), h2 ~3.75rem*ds, cards clamp(18rem, 38rem*ds, 29rem).
+   Nada de layout, grid, cor ou animacao muda aqui: so tamanho e espaco.
+   ========================================================================== */
+:root {
+  --vs: 1;
+  --ds: 1;
+  /* alcance do header flutuante: 20px de topo + 66px de pill */
+  --header-h: 5.4rem;
+  --sx-home-shell: 80rem;
+  --sx-home-gutter: 1.25rem;
+  --sx-sec: 6rem;                 /* padding vertical de secao (py-24) */
+  --sx-sec-gap: 3rem;             /* titulo -> conteudo */
+  /* tipo de display no mobile = piso do Dialogi (h2 2.15-2.7rem) */
+  --sx-h2: 2.4rem;
+  --sx-h2-lg: 2.6rem;
+  --sx-h3: 2.25rem;
+  --sx-h3-card: 1.5rem;
+  --sx-quote: 1.35rem;
+  --sx-num: 4rem;
+  --sx-core: 1.8rem;
+}
+@media (min-width: 768px)  { :root { --sx-home-gutter: 2rem; } }
+@media (min-width: 1280px) { :root { --sx-home-gutter: 2.5rem; } }
+@media (min-width: 1024px) {
+  :root {
+    --sx-sec: max(3.5rem, calc(8rem * var(--vs)));
+    --sx-sec-gap: max(2rem, calc(4rem * var(--vs)));
+    /* desktop: rem fixo * ds, como no Dialogi (nao vw) */
+    --sx-h2: max(2.15rem, calc(3.75rem * var(--ds)));
+    --sx-h2-lg: max(2.5rem, calc(4.5rem * var(--ds)));
+    --sx-h3: max(2.5rem, calc(4.6rem * var(--ds)));   /* passos da historia */
+    --sx-h3-card: max(1.45rem, calc(2.3rem * var(--ds)));
+    --sx-quote: max(1.35rem, calc(1.9rem * var(--ds)));
+    --sx-num: max(3.5rem, calc(6rem * var(--ds)));
+    --sx-core: max(1.8rem, calc(2.6rem * var(--ds)));
+  }
+}
+@media (min-width: 1024px) and (max-height: 1200px) { :root { --vs: 0.93; --ds: 0.95; } }
+@media (min-width: 1024px) and (max-height: 1140px) { :root { --vs: 0.85; --ds: 0.9; } }
+@media (min-width: 1024px) and (max-height: 1080px) { :root { --vs: 0.78; --ds: 0.86; } }
+@media (min-width: 1024px) and (max-height: 1020px) { :root { --vs: 0.7;  --ds: 0.81; } }
+@media (min-width: 1024px) and (max-height: 960px)  { :root { --vs: 0.62; --ds: 0.76; } }
+@media (min-width: 1024px) and (max-height: 900px)  { :root { --vs: 0.55; --ds: 0.72; } }
+@media (min-width: 1024px) and (max-height: 840px)  { :root { --vs: 0.48; --ds: 0.67; } }
+@media (min-width: 1024px) and (max-height: 780px)  { :root { --vs: 0.4;  --ds: 0.62; } }
+@media (min-width: 1024px) and (max-height: 720px)  { :root { --vs: 0.28; --ds: 0.54; } }
+@media (min-width: 1024px) and (max-height: 660px)  { :root { --vs: 0.24; --ds: 0.5; } }
+
+/* ---- container: mesmo eixo do Dialogi (80rem + gutter) em todas as secoes */
+.site-shell .hero,
+.site-shell .manifesto,
+.site-shell .signal-story,
+.site-shell .proof,
+.site-shell .solution-compare,
+.site-shell .platform,
+.site-shell .trust-interlude,
+.site-shell .security,
+.site-shell .final-cta {
+  padding-left: max(var(--sx-home-gutter), calc((100% - var(--sx-home-shell)) / 2 + var(--sx-home-gutter)));
+  padding-right: max(var(--sx-home-gutter), calc((100% - var(--sx-home-shell)) / 2 + var(--sx-home-gutter)));
+}
+.site-shell .section-heading,
+.site-shell .section-heading--dark,
+.site-shell .client-rail,
+.site-shell .testimonials,
+.site-shell .solution-compare__heading,
+.site-shell .solution-compare__grid,
+.site-shell .suite-grid,
+.site-shell .trust-metric,
+.site-shell .story-track { max-width: calc(var(--sx-home-shell) - 2 * var(--sx-home-gutter)); }
+/* A secao Dialogi (video) segue o mesmo container. */
+.site-shell .connection {
+  width: min(calc(var(--sx-home-shell) - 2 * var(--sx-home-gutter)), calc(100% - 2 * var(--sx-home-gutter)));
+  margin-inline: auto;
+  padding-left: 0;
+  padding-right: 0;
+  gap: clamp(3rem, 5vw, 6rem);
+}
+
+/* ---- hero: primeira tela = 100svh - header, bloco centrado nela */
+.site-shell .hero {
+  min-height: 100svh;
+  padding-top: calc(var(--header-h) + clamp(2rem, 5vh, 3rem));
+  padding-bottom: clamp(4rem, 9vh, 7rem);
+}
+.site-shell .hero-stage { width: auto; max-width: 50rem; }
+/* Hero sem enfeite: meta VOZ/TEXTO/DADOS/IA, scroll cue e telemetria sairam
+   do JSX; o traco do canto inferior direito sai aqui. */
+.site-shell .hero::after { display: none; }
+.site-shell .hero-kicker { margin-bottom: 2rem; font-size: 0.8125rem; }
+.site-shell .hero-title {
+  /* Maior que o h1 do Dialogi (6.2vw/6.1rem): la sao 4 linhas, aqui sao 2,
+     e com o mesmo corpo o bloco ficava pequeno na dobra (pedido 2026-09-03). */
+  font-size: clamp(4rem, 8.6vw, 9.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+}
+.site-shell .hero-copy {
+  max-width: 40rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  letter-spacing: normal;
+}
+@media (min-width: 640px) { .site-shell .hero-copy { font-size: 1.1875rem; } }
+.site-shell .hero-actions { margin-top: 2.5rem; gap: 1rem; }
+.site-shell .hero-actions .pill--large { min-height: 52px; padding-inline: 1.75rem; font-size: 0.9375rem; }
+.site-shell .hero-actions .text-link { font-size: 0.9375rem; }
+
+/* ---- ar das secoes: 6rem no mobile, 8rem*vs no desktop */
+.site-shell .proof,
+.site-shell .platform,
+.site-shell .security,
+.site-shell .solution-compare,
+.site-shell .trust-interlude,
+.site-shell .final-cta { padding-top: var(--sx-sec); padding-bottom: var(--sx-sec); }
+.site-shell .connection { padding-top: var(--sx-sec); padding-bottom: var(--sx-sec); }
+.site-shell .manifesto {
+  min-height: 0;
+  padding-top: var(--sx-sec);
+  padding-bottom: calc(var(--sx-sec) + 170px);
+}
+/* Os 170px sao a sobreposicao do manifesto (margin-bottom: -170px); o que
+   sobra de ar e so o respiro titulo->conteudo, nao um padding de secao. */
+.site-shell .signal-story { min-height: 0; padding-top: calc(var(--sx-sec-gap) + 170px); }
+.site-shell .story-intro { margin-bottom: var(--sx-sec-gap); }
+/* Passos da historia: no Dialogi o bloco equivalente (Mechanic) cabe numa
+   tela; aqui cada passo ocupava 88vh de escuro quase vazio. */
+.site-shell .story-step { min-height: clamp(18rem, 50vh, 30rem); }
+@media (max-width: 720px) { .site-shell .story-step { min-height: 0; } }
+.site-shell .security { min-height: 0; }
+.site-shell .final-cta { min-height: 0; }
+.site-shell .section-heading,
+.site-shell .section-heading--dark { margin-bottom: var(--sx-sec-gap); }
+.site-shell .solution-compare__heading { margin-bottom: var(--sx-sec-gap); }
+.site-shell .manifesto-copy > p { margin-bottom: max(1.75rem, calc(3rem * var(--vs))); }
+
+/* ---- tipo de display (valores nas variaveis --sx-h2... acima) */
+.site-shell .manifesto-copy h2,
+.site-shell .story-intro h2,
+.site-shell .connection-copy h2,
+.site-shell .section-heading--dark h2,
+.site-shell .security-copy h2,
+.site-shell .section-heading h2,
+.site-shell .solution-compare__heading h2 {
+  font-size: var(--sx-h2);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+.site-shell .manifesto-copy h2 { font-weight: 500; }
+.site-shell .final-cta h2 { font-size: var(--sx-h2-lg); line-height: 0.98; letter-spacing: -0.03em; }
+.site-shell .story-intro h2 { font-size: var(--sx-h2-lg); }
+/* Cada passo fica na sua metade da trilha, com folga ate a linha central
+   (o texto estava passando por cima do "laser"). */
+.site-shell .story-step {
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  column-gap: 1rem;
+  width: min(calc(50% - 3rem), 36rem);
+}
+.site-shell .story-step h3 { overflow-wrap: anywhere; }
+.site-shell .story-step h3 { font-size: var(--sx-h3); line-height: 1; }
+.site-shell .story-step > div > p:last-child { max-width: 28rem; margin-top: 1.5rem; font-size: 1.125rem; line-height: 1.65; }
+.site-shell .step-number { font-size: 0.8125rem; }
+.site-shell .suite-card h3 { font-size: var(--sx-h3-card); line-height: 1.06; }
+.site-shell .solution-card h3 { font-size: var(--sx-h3-card); line-height: 1.06; }
+.site-shell .quote-card blockquote { font-size: var(--sx-quote); line-height: 1.2; }
+.site-shell .trust-metric > span { font-size: var(--sx-num); }
+.site-shell .trust-metric p { font-size: clamp(1.05rem, 1.2vw, 1.3rem); }
+.site-shell .security-core strong { font-size: var(--sx-core); }
+/* Texto de apoio do manifesto: corpo grande do Dialogi (17-19px), nao titulo. */
+.site-shell .manifesto-copy > p { font-size: clamp(1.0625rem, 1.15vw, 1.1875rem); line-height: 1.7; }
+.site-shell .section-heading--dark > p,
+.site-shell .connection-copy > p,
+.site-shell .security-copy > p { font-size: clamp(0.9375rem, 1vw, 1.0625rem); line-height: 1.7; }
+/* Etiquetas: piso de 11-13px do Dialogi (estavam em 8-10px). */
+.site-shell .section-index,
+.site-shell .eyebrow,
+.site-shell .suite-code { font-size: 0.8125rem; }
+.site-shell .solution-card__code,
+.site-shell .video-data,
+.site-shell .manifesto-signal span,
+.site-shell .channel-core,
+.site-shell .step-number { font-size: 0.6875rem; }
+
+/* ---- cards: clamp(18rem, ~38rem*ds, 29rem) do Dialogi */
+.site-shell .suite-card { min-height: clamp(26rem, calc(44rem * var(--ds)), 34rem); }
+/* O visual (orbitas/nos) ocupa so o topo do card para nao invadir o texto,
+   que fica ancorado embaixo. */
+.site-shell .channel-visual,
+.site-shell .insight-visual { inset: 0 0 30% 0; }
+.site-shell .suite-card--brain { min-height: clamp(22rem, calc(46rem * var(--ds)), 36rem); }
+.site-shell .quote-card { min-height: clamp(16rem, calc(30rem * var(--ds)), 24rem); }
+.site-shell .solution-card { min-height: clamp(18rem, calc(36rem * var(--ds)), 28rem); }
+.site-shell .connection-media { min-height: clamp(18rem, calc(44rem * var(--ds)), 34rem); }
+.site-shell .security-orbit { min-height: clamp(18rem, calc(34rem * var(--ds)), 30rem); }
+
+/* ==========================================================================
+   Header e footer no mesmo eixo das secoes (pedido 2026-09-03: a home nao
+   seguia a reta do nav bar). O pill do header tem 20px de padding a esquerda,
+   entao ele comeca 20px antes do container para o logo cair na margem.
+   ========================================================================== */
+.site-shell .site-header {
+  width: min(
+    calc(var(--sx-home-shell) - 2 * var(--sx-home-gutter) + 40px),
+    calc(100% - 2 * var(--sx-home-gutter) + 40px),
+    calc(100% - 24px)
+  );
+}
+.site-shell .footer {
+  padding-left: max(var(--sx-home-gutter), calc((100% - var(--sx-home-shell)) / 2 + var(--sx-home-gutter)));
+  padding-right: max(var(--sx-home-gutter), calc((100% - var(--sx-home-shell)) / 2 + var(--sx-home-gutter)));
+}
+.sx-page .site-header {
+  width: min(calc(var(--sx-shell) + 40px), calc(100% - 2 * var(--sx-gutter) + 40px), calc(100% - 24px));
+}
+.sx-page .footer {
+  padding-left: max(var(--sx-gutter), calc((100% - var(--sx-shell)) / 2));
+  padding-right: max(var(--sx-gutter), calc((100% - var(--sx-shell)) / 2));
+}
+@media (max-width: 980px) {
+  .site-shell .site-header, .sx-page .site-header { width: calc(100% - 24px); }
 }

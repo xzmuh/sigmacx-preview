@@ -1,0 +1,141 @@
+{
+ "title": "Como criar fluxos de campanhas inteligentes usando o Sigma Suite",
+ "lang": "pt",
+ "date": "2025-12-18T16:36:39+00:00",
+ "description": "",
+ "cover": "/media/blog/blog-sigma_Prancheta-1.webp",
+ "blocks": [
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Como criar fluxos de campanhas inteligentes usando o Sigma Suite"
+  },
+  {
+   "t": "html",
+   "html": "<p>Toda campanha outbound nasce de uma intenção simples: falar com pessoas.<br>O problema começa quando tentamos fazer isso manualmente em um mundo onde ninguém responde do mesmo jeito, no mesmo canal, no mesmo tempo.</p><p>É aí que entra o Sigma Suite — não como um robô que aperta botões sem critério, mas como um copiloto que entende comportamento, organiza caminhos e deixa o humano no comando das decisões importantes.</p><p>Vamos descer da metáfora por um momento e entrar na cabine.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/2143.webp",
+   "alt": ""
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Tudo começa com uma lista. E isso é libertador."
+  },
+  {
+   "t": "html",
+   "html": "<p>No Sigma, criar uma campanha não exige planilhas mirabolantes nem integrações traumáticas.<br>Você envia uma lista de contatos — simples assim.</p><p>Essa lista pode conter campos como:</p><ul><li>nome</li><li>telefone</li><li>email</li><li>cidade</li><li>produto</li><li>status</li></ul><p><strong>Qualquer dado que faça sentido para sua estratégia.</strong></p><p>A partir daí, o Sigma transforma dados em possibilidades.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Filtrar é decidir antes de falar."
+  },
+  {
+   "t": "html",
+   "html": "<p>Antes do primeiro envio, você pode segmentar a lista usando os próprios campos:</p><ul><li>clientes ativos vs. inativos</li><li>região</li><li>tipo de produto</li><li>histórico de contato</li></ul><p><strong>Ou qualquer critério que reduza ruído.</strong></p><p>Aqui já acontece algo importante: outbound deixa de ser “disparo” e vira <strong>intenção direcionada</strong>.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "O primeiro contato: escolha o canal inicial."
+  },
+  {
+   "t": "html",
+   "html": "<p>Suponha que sua campanha comece com WhatsApp.<br>Você define a mensagem, o tom, o horário e dispara.</p><p>Até aqui, nada muito diferente do que o mercado já faz.<br>A diferença aparece no próximo passo.</p><p><strong>O Sigma observa. E reage.</strong></p><p>O Sigma Suite acompanha o comportamento do cliente em tempo real.</p><p>Ele sabe:</p><ul><li>se a mensagem foi entregue</li><li>se foi lida</li><li>se houve resposta</li><li>se foi ignorada</li></ul><p>E, com base nesses sinais, decide o próximo movimento — exatamente como você configurou.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Encadeamento inteligente de canais (o coração da campanha)."
+  },
+  {
+   "t": "html",
+   "html": "<p>Agora entra a parte realmente poderosa.</p><p>Imagine o fluxo:</p><ol><li>Envia WhatsApp</li><li>Se o cliente responder → encerra ou segue para outro passo</li><li>Se não responder → envia um email</li><li>Se o email for aberto → aguarda ou dispara nova ação</li><li>Se não for aberto → o Sigma realiza uma chamada de voz</li></ol><p>Nada disso é improviso.<br>Tudo é desenhado antes, com clareza.</p><p>Você cria uma campanha que <strong>pensa em alternativas</strong>, não em insistência cega.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Voz entra quando faz sentido. E com contexto."
+  },
+  {
+   "t": "html",
+   "html": "<p>Quando o Sigma chega ao passo de chamada de voz, ele não liga no escuro.</p><p>Ele já sabe:</p><ul><li>quem é o cliente</li><li>por quais canais ele passou</li><li>o que foi enviado</li><li>o que foi ignorado</li><li>o que despertou interesse</li></ul><p>Isso muda completamente a qualidade da interação — seja com um agente humano ou com um agente de voz automatizado.</p><p><strong>O humano continua no comando. Sempre.</strong></p><p>Durante toda a campanha, o time acompanha dashboards, eventos e respostas.<br>Pode pausar fluxos.<br>Ajustar mensagens.<br>Mudar regras.<br>Intervir quando necessário.</p><p><strong>O Sigma sugere. Executa. Orquestra.</strong><br><strong>Mas a estratégia continua humana.</strong></p><p><strong>No fim, não é sobre enviar mensagens. É sobre conduzir conversas.</strong></p><p>Uma campanha bem desenhada no Sigma Suite não tenta ganhar pela força.<br>Ela navega pelos canais com inteligência, respeito e timing.</p><p>Outbound assistido é isso:</p><ul><li>listas entram</li><li>fluxos ganham vida</li><li>o sistema reage</li><li>o humano decide</li></ul><p>E, juntos, campanha e time chegam mais longe do que qualquer disparo isolado jamais chegaria.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/murilo.webp",
+   "alt": ""
+  },
+  {
+   "t": "html",
+   "html": "<p>Autor</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>Murillo Melo</strong></p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>CEO</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "FAQ"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>1.O Sigma substitui o time humano?</strong><br>Não. Ele automatiza a execução, mas a estratégia e as decisões continuam humanas.</p><p><strong>2.Quais canais podem ser orquestrados no Sigma?</strong><br>WhatsApp, e-mail e voz, de forma encadeada e inteligente.</p><p><strong>3.Qual o principal ganho do outbound assistido?  </strong>Mais contexto, melhor timing e conversas mais relevantes.</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>SigmaCX é o hub que unifica canais, automatiza interações e gera insights estratégicos para jornadas consistentes e personalizadas.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Conheça mais"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Sobre nós"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dialogi AI"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Links"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Trabalhe conosco"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Política de Privavidade"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Contato"
+  },
+  {
+   "t": "html",
+   "html": "<p>(11) 4200-8282<br>R. Luiz Seráphico Júnior, 511, 13º andar – Cj. 132 Jardim Caravelas, São Paulo – SP, 04729-080</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>© 2025 Created by <a href=\"http://www.linkedin.com/in/dafny-bittencourt\" target=\"_blank\" rel=\"noreferrer\">Dafny B.</a></p>"
+  }
+ ]
+}

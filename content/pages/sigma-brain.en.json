@@ -1,0 +1,99 @@
+{
+  "meta": {
+    "title": "Sigma Brain - Sigma CX",
+    "description": "The intelligence behind digital interactions: an autonomous AI agent in voice and text."
+  },
+  "hero": {
+    "badge": "Sigma Brain",
+    "cta": "Get to know our platform"
+  },
+  "intro": {
+    "title": "**Sigma Brain** is the intelligence behind digital interactions",
+    "body": "It works in both voice and text, an autonomous AI agent capable of understanding intentions, analyzing sentiment, and acting throughout the journey to resolve customer requests.",
+    "cta": "What is the difference between Chatbots and AI Agents?"
+  },
+  "pillars": {
+    "title": "Let your service **speak for you**",
+    "items": [
+      {
+        "eyebrow": "Natural and empathetic dialogues that resolve issues the first time",
+        "title": "Deliver fluid and effective conversations 24/7",
+        "body": "With generative AI and natural language recognition, Sigma Brain understands natural language contextually, increasing first-touch resolution and emotional engagement."
+      },
+      {
+        "eyebrow": "Multilingual and global contextual support",
+        "title": "Speak your customer's language, anywhere",
+        "body": "Translate calls in real time and adapt your communication style to their cultural profile. Additionally, personalize the experience with customizable accents, making the interaction more intimate and natural for each audience."
+      },
+      {
+        "eyebrow": "Understand and respond with emotion",
+        "title": "Empathetic service in every call",
+        "body": "Identify the customer's tone of voice and emotional state in real time, and adjust your responses to convey empathy. With integrated sentiment analysis and language adaptation, create more human conversations, strengthening trust and increasing satisfaction."
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "label": "Be present on all channels",
+      "body": "Connect via voice, chat, social media, and messaging apps in a seamless experience, without customers having to repeat information."
+    },
+    {
+      "label": "Gain efficiency at scale",
+      "body": "Automate codeless workflows and reduce manual tasks, freeing your team for strategic, higher-value interactions."
+    },
+    {
+      "label": "Deliver more human experiences",
+      "body": "Use generative AI to understand intent, analyze sentiment, and deliver contextual responses that increase customer satisfaction."
+    }
+  ],
+  "configurable": {
+    "title": "Autonomous and fully **configurable**",
+    "adjust": "Make adjustments whenever you want",
+    "items": [
+      {
+        "title": "Build bots in minutes",
+        "body": "Build intelligent assistants without coding and dramatically reduce time to market."
+      },
+      {
+        "title": "Scale channels with one click",
+        "body": "Quickly expand to WhatsApp, voice, social media, and more, without technical complexity."
+      }
+    ],
+    "cta": "Learn more"
+  },
+  "journeys": {
+    "title": "Build flexible journeys",
+    "body": "Offer interactive menus, direct customers to different actions, and simplify every step of the service process."
+  },
+  "nocode": {
+    "title": "Create, adjust, and scale customer journeys without coding",
+    "body": "No-code puts the power of innovation in the hands of your team. Flows, campaigns, and analytics can be configured visually and intuitively, reducing reliance on technical teams and accelerating response time to business demands.",
+    "cta": "Request a demonstration"
+  },
+  "benefits": {
+    "title": "Main benefits",
+    "items": [
+      {
+        "title": "Intelligent automation",
+        "body": "Eliminates repetitive tasks, reducing costs and average service time."
+      },
+      {
+        "title": "Unified context",
+        "body": "Maintains customer history across all channels, ensuring consistency and personalization."
+      },
+      {
+        "title": "End-to-end resolution",
+        "body": "Not only responds but acts, executes and completes processes, like a digital collaborator."
+      },
+      {
+        "title": "Continuous learning",
+        "body": "Improves with every interaction, identifying patterns and anticipating needs."
+      }
+    ],
+    "cta": "Try it"
+  },
+  "video": {
+    "eyebrow": "In action",
+    "title": "See Sigma Brain at work"
+  }
+}

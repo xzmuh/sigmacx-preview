@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "title": "Producto - Sigma CX",
+    "description": "Unificamos canales, automatizamos procesos y transformamos cada interacción en resultados tangibles."
+  },
+  "hero": {
+    "title": "Conectamos cada punto del **recorrido del cliente**",
+    "lead": "Unificamos canales, automatizamos procesos y transformamos cada interacción en resultados tangibles. Con SigmaCX, cada etapa de la experiencia del cliente se vuelve más consistente, inteligente y fluida.",
+    "cta": "Habla con un experto"
+  },
+  "cases": {
+    "title": "Soluciones que construimos juntos",
+    "fractaliaLead": "Sigma Insights transforma las operaciones de servicio con mayor **estabilidad, eficiencia y centralización**. El resultado: equipos más productivos, una percepción de calidad superior y clientes más satisfechos, mientras se abre el camino hacia la evolución con inteligencia artificial.",
+    "fractaliaResults": [
+      {
+        "title": "Reducción de quejas",
+        "body": "-20% en reclamos relacionados con calidad de llamadas y desconexiones, gracias a la mayor estabilidad de la plataforma."
+      },
+      {
+        "title": "Mejora en la percepción de calidad",
+        "body": "La satisfacción del cliente alcanzó un 87% de percepción positiva, con una mejora de +3 puntos porcentuales en la calidad percibida."
+      },
+      {
+        "title": "Aumento de la productividad",
+        "body": "La expansión de canales digitales sin incrementar recursos humanos impulsó un +15% en productividad de los equipos."
+      },
+      {
+        "title": "Servicio multilingüe eficiente",
+        "body": "La traducción automática en canales de texto permitió atender en varios idiomas sin contratar más agentes, logrando un +10% en productividad."
+      }
+    ],
+    "fractaliaQuote": "Cuando la calidad y la tecnología se encuentran, nacen resultados increíbles.",
+    "caseCta": "Acceda al caso completo",
+    "tecbanLead": "Con análisis automatizados, Sigma Insights revolucionó la gestión de llamadas, logrando mayor eficiencia operativa y un crecimiento notable en la satisfacción del cliente.",
+    "tecbanResults": [
+      {
+        "title": "Evolución del sentimiento positivo",
+        "body": "La satisfacción pasó de 4% en 2023 a 46% en 2025: un incremento de +1.000% en sentimiento positivo. Las interacciones neutrales se redujeron de 90% a 22%."
+      },
+      {
+        "title": "Reducir los silencios en las llamadas",
+        "body": "Los silencios en las llamadas bajaron del 29% al 25%, logrando conversaciones más objetivas y dinámicas."
+      },
+      {
+        "title": "Mayor eficiencia operativa",
+        "body": "Los ajustes detectados por el análisis redujeron hasta 23 segundos el TMO en ciertos flujos de servicio."
+      },
+      {
+        "title": "Menos devoluciones de llamadas",
+        "body": "La optimización de los guiones redujo contactos repetidos, mejorando la claridad y experiencia del cliente."
+      }
+    ],
+    "tecbanQuote": "Cuando escuchar al cliente se convierte en resultado de negocio."
+  },
+  "brain": {
+    "title": "Sigma Brain responde, se adapta y resuelve por ti.",
+    "body": "No es un producto independiente, sino el motor inteligente del ecosistema SigmaCX. Funciona en todos los canales, ejecutando acciones que resuelven demandas de forma integral, combinando contexto, automatización y personalización.",
+    "cta": "Conoce a Sigma Brain"
+  },
+  "channel": {
+    "title": "Todas tus conexiones facilitadas en *Sigma Channel*",
+    "body": "Todos tus canales en una sola plataforma, con una visión integrada de tus interacciones.",
+    "cta": "Conócelo"
+  },
+  "intelligence": {
+    "title": "Transformamos cada interacción en **inteligencia estratégica**",
+    "lead": "Con SigmaCX, tus conversaciones dejan de ser simples registros: se transforman en inteligencia para elevar el servicio al cliente:",
+    "items": [
+      {
+        "title": "De la conversación al insight",
+        "body": "Transcribimos y analizamos interacciones en tiempo real, aplicando análisis de sentimiento, categorización automática e identificación de tendencias."
+      },
+      {
+        "title": "Datos que generan acción",
+        "body": "Paneles intuitivos e informes estratégicos revelan cuellos de botella, anticipan problemas y guían mejoras operativas."
+      },
+      {
+        "title": "Eficiencia en evolución",
+        "body": "Al automatizar flujos de trabajo y reducir tareas manuales, potenciamos la productividad del equipo y elevamos la satisfacción del cliente."
+      }
+    ],
+    "cta": "Mira en la práctica",
+    "quote": "Las empresas que utilizan **análisis** logran hasta un **23% más de crecimiento de ingresos y un 12% más de retención de clientes.**",
+    "source": "Fuente: Folio 3"
+  },
+  "video": {
+    "eyebrow": "En acción",
+    "title": "Mira Sigma Suite en funcionamiento"
+  }
+}

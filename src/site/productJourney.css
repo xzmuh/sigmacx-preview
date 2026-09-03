@@ -1,0 +1,288 @@
+.product-journey-announcer {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+html.product-journey-lock,
+html.product-journey-lock body {
+  overflow: hidden !important;
+}
+
+@property --tunnel-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --tunnel-radius {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 61vmax;
+}
+
+/* Remove a transição cruzada padrão: a home fica nítida sobre o destino. */
+html.product-journey-running::view-transition-group(root) {
+  animation: none;
+}
+
+html.product-journey-running::view-transition-image-pair(root) {
+  isolation: auto;
+}
+
+html.product-journey-running::view-transition-old(root),
+html.product-journey-running::view-transition-new(root) {
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: normal;
+  object-fit: cover;
+}
+
+/* A página de destino fica estática e em escala real atrás da abertura. */
+html.product-journey-running::view-transition-new(root) {
+  z-index: 1;
+  animation: none;
+  transform: none;
+  filter: none;
+}
+
+/*
+ * O snapshot verdadeiro da home ocupa quatro máscaras circulares. Elas saem
+ * do centro em espiral; o espaço negativo crescente revela a rota de destino.
+ * Não há overlay de cor, ilustração intermediária ou troca brusca de conteúdo.
+ */
+html.product-journey-running::view-transition-old(root) {
+  --tunnel-angle: 0deg;
+  --tunnel-radius: 61vmax;
+  z-index: 2;
+  -webkit-mask-image:
+    radial-gradient(circle closest-side, #000 99%, transparent 100%),
+    radial-gradient(circle closest-side, #000 99%, transparent 100%),
+    radial-gradient(circle closest-side, #000 99%, transparent 100%),
+    radial-gradient(circle closest-side, #000 99%, transparent 100%);
+  mask-image:
+    radial-gradient(circle closest-side, #000 99%, transparent 100%),
+    radial-gradient(circle closest-side, #000 99%, transparent 100%),
+    radial-gradient(circle closest-side, #000 99%, transparent 100%),
+    radial-gradient(circle closest-side, #000 99%, transparent 100%);
+  -webkit-mask-size: 120vmax 120vmax;
+  mask-size: 120vmax 120vmax;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position:
+    calc(50vw - 60vmax + sin(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax - cos(var(--tunnel-angle)) * var(--tunnel-radius)),
+    calc(50vw - 60vmax + cos(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax + sin(var(--tunnel-angle)) * var(--tunnel-radius)),
+    calc(50vw - 60vmax - sin(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax + cos(var(--tunnel-angle)) * var(--tunnel-radius)),
+    calc(50vw - 60vmax - cos(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax - sin(var(--tunnel-angle)) * var(--tunnel-radius));
+  mask-position:
+    calc(50vw - 60vmax + sin(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax - cos(var(--tunnel-angle)) * var(--tunnel-radius)),
+    calc(50vw - 60vmax + cos(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax + sin(var(--tunnel-angle)) * var(--tunnel-radius)),
+    calc(50vw - 60vmax - sin(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax + cos(var(--tunnel-angle)) * var(--tunnel-radius)),
+    calc(50vw - 60vmax - cos(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax - sin(var(--tunnel-angle)) * var(--tunnel-radius));
+  animation: sigma-home-tunnel-fluid 1500ms cubic-bezier(0.45, 0, 0.18, 1) both;
+  will-change: mask-position, -webkit-mask-position;
+}
+
+/* Na volta, a espiral abre no sentido oposto e a home recua até o seu lugar. */
+html.product-journey-back::view-transition-old(root) {
+  animation-name: sigma-suite-tunnel-back-fluid;
+}
+
+@keyframes sigma-destination-zoom {
+  0% {
+    transform: scale(0.72);
+    filter: blur(12px);
+  }
+  24% { filter: blur(7px); }
+  100% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes sigma-home-return-zoom {
+  0% {
+    transform: scale(1.22);
+    filter: blur(10px);
+  }
+  24% { filter: blur(6px); }
+  100% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/*
+ * Cada valor é o canto superior esquerdo de uma máscara de 120vmax.
+ * Os quatro centros descrevem uma espiral crescente em torno do viewport.
+ */
+@keyframes sigma-home-tunnel {
+  0% {
+    -webkit-mask-position:
+      calc(50vw - 60vmax) calc(50vh - 121vmax),
+      calc(50vw + 1vmax) calc(50vh - 60vmax),
+      calc(50vw - 60vmax) calc(50vh + 1vmax),
+      calc(50vw - 121vmax) calc(50vh - 60vmax);
+    mask-position:
+      calc(50vw - 60vmax) calc(50vh - 121vmax),
+      calc(50vw + 1vmax) calc(50vh - 60vmax),
+      calc(50vw - 60vmax) calc(50vh + 1vmax),
+      calc(50vw - 121vmax) calc(50vh - 60vmax);
+  }
+  25% {
+    -webkit-mask-position:
+      calc(50vw - 14.1vmax) calc(50vh - 125.5vmax),
+      calc(50vw + 5.5vmax) calc(50vh - 14.1vmax),
+      calc(50vw - 105.9vmax) calc(50vh + 5.5vmax),
+      calc(50vw - 125.5vmax) calc(50vh - 105.9vmax);
+    mask-position:
+      calc(50vw - 14.1vmax) calc(50vh - 125.5vmax),
+      calc(50vw + 5.5vmax) calc(50vh - 14.1vmax),
+      calc(50vw - 105.9vmax) calc(50vh + 5.5vmax),
+      calc(50vw - 125.5vmax) calc(50vh - 105.9vmax);
+  }
+  55% {
+    -webkit-mask-position:
+      calc(50vw + 53.3vmax) calc(50vh - 80vmax),
+      calc(50vw - 40vmax) calc(50vh + 53.3vmax),
+      calc(50vw - 173.3vmax) calc(50vh - 40vmax),
+      calc(50vw - 80vmax) calc(50vh - 173.3vmax);
+    mask-position:
+      calc(50vw + 53.3vmax) calc(50vh - 80vmax),
+      calc(50vw - 40vmax) calc(50vh + 53.3vmax),
+      calc(50vw - 173.3vmax) calc(50vh - 40vmax),
+      calc(50vw - 80vmax) calc(50vh - 173.3vmax);
+  }
+  78% {
+    -webkit-mask-position:
+      calc(50vw + 75.9vmax) calc(50vh + 3.4vmax),
+      calc(50vw - 123.4vmax) calc(50vh + 75.9vmax),
+      calc(50vw - 195.9vmax) calc(50vh - 123.4vmax),
+      calc(50vw + 3.4vmax) calc(50vh - 195.9vmax);
+    mask-position:
+      calc(50vw + 75.9vmax) calc(50vh + 3.4vmax),
+      calc(50vw - 123.4vmax) calc(50vh + 75.9vmax),
+      calc(50vw - 195.9vmax) calc(50vh - 123.4vmax),
+      calc(50vw + 3.4vmax) calc(50vh - 195.9vmax);
+  }
+  100% {
+    -webkit-mask-position:
+      calc(50vw + 35vmax) calc(50vh + 104.5vmax),
+      calc(50vw - 224.5vmax) calc(50vh + 35vmax),
+      calc(50vw - 155vmax) calc(50vh - 224.5vmax),
+      calc(50vw + 104.5vmax) calc(50vh - 155vmax);
+    mask-position:
+      calc(50vw + 35vmax) calc(50vh + 104.5vmax),
+      calc(50vw - 224.5vmax) calc(50vh + 35vmax),
+      calc(50vw - 155vmax) calc(50vh - 224.5vmax),
+      calc(50vw + 104.5vmax) calc(50vh - 155vmax);
+  }
+}
+
+@keyframes sigma-suite-tunnel-back {
+  0% {
+    -webkit-mask-position:
+      calc(50vw - 60vmax) calc(50vh - 121vmax),
+      calc(50vw + 1vmax) calc(50vh - 60vmax),
+      calc(50vw - 60vmax) calc(50vh + 1vmax),
+      calc(50vw - 121vmax) calc(50vh - 60vmax);
+    mask-position:
+      calc(50vw - 60vmax) calc(50vh - 121vmax),
+      calc(50vw + 1vmax) calc(50vh - 60vmax),
+      calc(50vw - 60vmax) calc(50vh + 1vmax),
+      calc(50vw - 121vmax) calc(50vh - 60vmax);
+  }
+  25% {
+    -webkit-mask-position:
+      calc(50vw - 105.9vmax) calc(50vh - 125.5vmax),
+      calc(50vw + 5.5vmax) calc(50vh - 105.9vmax),
+      calc(50vw - 14.1vmax) calc(50vh + 5.5vmax),
+      calc(50vw - 125.5vmax) calc(50vh - 14.1vmax);
+    mask-position:
+      calc(50vw - 105.9vmax) calc(50vh - 125.5vmax),
+      calc(50vw + 5.5vmax) calc(50vh - 105.9vmax),
+      calc(50vw - 14.1vmax) calc(50vh + 5.5vmax),
+      calc(50vw - 125.5vmax) calc(50vh - 14.1vmax);
+  }
+  55% {
+    -webkit-mask-position:
+      calc(50vw - 173.3vmax) calc(50vh - 80vmax),
+      calc(50vw - 40vmax) calc(50vh - 173.3vmax),
+      calc(50vw + 53.3vmax) calc(50vh - 40vmax),
+      calc(50vw - 80vmax) calc(50vh + 53.3vmax);
+    mask-position:
+      calc(50vw - 173.3vmax) calc(50vh - 80vmax),
+      calc(50vw - 40vmax) calc(50vh - 173.3vmax),
+      calc(50vw + 53.3vmax) calc(50vh - 40vmax),
+      calc(50vw - 80vmax) calc(50vh + 53.3vmax);
+  }
+  78% {
+    -webkit-mask-position:
+      calc(50vw - 195.9vmax) calc(50vh + 3.4vmax),
+      calc(50vw - 123.4vmax) calc(50vh - 195.9vmax),
+      calc(50vw + 75.9vmax) calc(50vh - 123.4vmax),
+      calc(50vw + 3.4vmax) calc(50vh + 75.9vmax);
+    mask-position:
+      calc(50vw - 195.9vmax) calc(50vh + 3.4vmax),
+      calc(50vw - 123.4vmax) calc(50vh - 195.9vmax),
+      calc(50vw + 75.9vmax) calc(50vh - 123.4vmax),
+      calc(50vw + 3.4vmax) calc(50vh + 75.9vmax);
+  }
+  100% {
+    -webkit-mask-position:
+      calc(50vw - 155vmax) calc(50vh + 104.5vmax),
+      calc(50vw - 224.5vmax) calc(50vh - 155vmax),
+      calc(50vw + 35vmax) calc(50vh - 224.5vmax),
+      calc(50vw + 104.5vmax) calc(50vh + 35vmax);
+    mask-position:
+      calc(50vw - 155vmax) calc(50vh + 104.5vmax),
+      calc(50vw - 224.5vmax) calc(50vh - 155vmax),
+      calc(50vw + 35vmax) calc(50vh - 224.5vmax),
+      calc(50vw + 104.5vmax) calc(50vh + 35vmax);
+  }
+}
+
+@keyframes sigma-home-tunnel-fluid {
+  from {
+    --tunnel-angle: 0deg;
+    --tunnel-radius: 61vmax;
+  }
+  to {
+    --tunnel-angle: 150deg;
+    --tunnel-radius: 190vmax;
+  }
+}
+
+@keyframes sigma-suite-tunnel-back-fluid {
+  from {
+    --tunnel-angle: 0deg;
+    --tunnel-radius: 61vmax;
+  }
+  to {
+    --tunnel-angle: -150deg;
+    --tunnel-radius: 190vmax;
+  }
+}
+
+@keyframes sigma-destination-zoom-fluid {
+  from { transform: scale(0.78); }
+  to { transform: scale(1); }
+}
+
+@keyframes sigma-home-return-zoom-fluid {
+  from { transform: scale(1.18); }
+  to { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.product-journey-running::view-transition-old(root) {
+    animation-duration: 180ms;
+  }
+  html.product-journey-running::view-transition-new(root) {
+    animation: none;
+  }
+}

@@ -1,0 +1,141 @@
+{
+ "title": "How to Create Intelligent Campaign Flows Using Sigma Suite",
+ "lang": "en",
+ "date": "2025-12-18T16:42:34+00:00",
+ "description": "",
+ "cover": "/media/blog/blog-sigma_Prancheta-1.webp",
+ "blocks": [
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "How to Create Intelligent Campaign Flows Using Sigma Suite"
+  },
+  {
+   "t": "html",
+   "html": "<p>Every outbound campaign starts with a simple intention: talking to people.</p><p>The problem begins when we try to do this manually in a world where no one responds in the same way, through the same channel, or at the same time.</p><p>That’s where Sigma Suite comes in — not as a robot that blindly presses buttons, but as a copilot that understands behavior, organizes paths, and keeps humans in control of the most important decisions.</p><p>Let’s step away from the metaphor for a moment and enter the cockpit.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/2143.webp",
+   "alt": ""
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Everything starts with a list. And that is liberating."
+  },
+  {
+   "t": "html",
+   "html": "<p>In Sigma, creating a campaign doesn’t require complex spreadsheets or painful integrations.</p><p>You upload a contact list — that’s it.</p><p>This list may include fields such as:</p><ul><li>name</li><li>phone</li><li>email</li><li>city</li><li>product</li><li>status</li><li>any data that makes sense for your strategy</li></ul><p>From there, Sigma turns data into possibilities.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Filtering is deciding before speaking"
+  },
+  {
+   "t": "html",
+   "html": "<p>Before the first outreach, you can segment the list using those same fields:</p><ul><li>active vs. inactive customers</li><li>region</li><li>product type</li><li>contact history</li><li>or any criteria that reduces noise</li></ul><p>At this point, something important already happens: outbound stops being “blast” and becomes intentional outreach.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "The first contact: choosing the initial channel"
+  },
+  {
+   "t": "html",
+   "html": "<p>Let’s say your campaign starts on WhatsApp.</p><p>You define the message, tone, timing, and send it.</p><p>So far, nothing very different from what the market already does.</p><p>The difference appears in the next step.</p><p>Sigma observes. And reacts.</p><p><strong>Sigma Suite tracks customer behavior in real time</strong></p><p>It knows:</p><ul><li>whether the message was delivered</li><li>whether it was read</li><li>whether there was a response</li><li>whether it was ignored</li></ul><p>And based on those signals, it decides the next move — exactly as you configured.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Intelligent channel orchestration (the heart of the campaign)"
+  },
+  {
+   "t": "html",
+   "html": "<p>Now comes the truly powerful part.</p><p>Imagine the flow:</p><ul><li>WhatsApp is sent</li><li>If the customer replies → end or move to the next step</li><li>If not → send an email</li><li>If the email is opened → wait or trigger a new action</li><li>If not opened → Sigma places a voice call</li></ul><p>None of this is improvised.</p><p>Everything is designed in advance, with clarity.</p><p>You build a campaign that thinks in alternatives, not blind persistence.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Voice comes in when it makes sense. And with context"
+  },
+  {
+   "t": "html",
+   "html": "<p>When Sigma reaches the voice call step, it doesn’t call blindly.</p><p>It already knows:</p><ul><li>who the customer is</li><li>which channels they went through</li><li>what was sent</li><li>what was ignored</li><li>what triggered interest</li></ul><p>This completely changes the quality of the interaction — whether with a human agent or an automated voice agent.</p><p><strong>The human stays in control. Always</strong></p><p>Throughout the campaign, the team monitors dashboards, events, and responses.</p><p>They can:</p><ul><li>pause flows</li><li>adjust messages</li><li>change rules</li><li>intervene when needed</li></ul><p>Sigma suggests. Executes. Orchestrates.</p><p>But the strategy remains human.</p><p>In the end, it’s not about sending messages. It’s about guiding conversations.</p><p>A well-designed campaign in Sigma Suite doesn’t try to win by force.</p><p>It navigates channels with intelligence, respect, and timing.</p><p>Assisted outbound is this:</p><ul><li>lists come in</li><li>flows come to life</li><li>the system reacts</li><li>the human decides</li></ul><p>And together, campaign and team go further than any isolated blast ever could.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/murilo.webp",
+   "alt": ""
+  },
+  {
+   "t": "html",
+   "html": "<p>Author</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Murillo Melo</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>CEO</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "FAQ"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>1.Does Sigma replace the human team?</strong><br>No. It automates execution, but strategy and decisions remain human.</p><p><strong>2.Which channels can be orchestrated in Sigma?</strong><br>WhatsApp, email, and voice, in an intelligent sequence.</p><p><strong>3.What is the main benefit of assisted outbound?</strong><br>Better context, proper timing, and more relevant conversations.</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>SigmaCX is the hub that unifies channels, automates interactions, and generates strategic insights for consistent and personalized journeys.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Learn more"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "About us"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dialogi AI"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Links"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Work with us"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Privacy Policy"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Contact"
+  },
+  {
+   "t": "html",
+   "html": "<p>(11) 4200-8282<br>R. Luiz Seráphico Júnior, 511, 13º andar – Cj. 132 Jardim Caravelas, São Paulo – SP, 04729-080</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>© 2025 Created by <a href=\"http://www.linkedin.com/in/dafny-bittencourt\" target=\"_blank\" rel=\"noreferrer\">Dafny B.</a></p>"
+  }
+ ]
+}

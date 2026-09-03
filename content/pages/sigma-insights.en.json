@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Sigma Insights - Sigma CX",
+    "description": "Análise avançada de interações e gestão de qualidade inteligente em um só lugar."
+  },
+  "hero": {
+    "badge": "Sigma Insights",
+    "title": "Increase the efficiency of your operation by up to 80% with the power of insights",
+    "lead": "O Sigma Insights é a plataforma que une análise avançada de interações e gestão de qualidade inteligente em um só lugar. Ele transforma voz, chat e tela em insights acionáveis, revelando emoções, padrões e oportunidades que normalmente passam despercebidos.",
+    "cta": "Talk to an expert"
+  },
+  "dashboards": {
+    "title": "Com dashboards intuitivos, automação de avaliações e relatórios em tempo real, sua empresa ganha clareza, confiança e eficiência.",
+    "items": [
+      {
+        "title": "Veja tudo em tempo real",
+        "body": "Centralize métricas de voz, chat e tela em painéis interativos e tenha uma visão clara da operação em segundos."
+      },
+      {
+        "title": "Decida com confiança",
+        "body": "Acompanhe KPIs, métricas de qualidade e tendências em um só painel, simplificando análises e reduzindo incertezas."
+      },
+      {
+        "title": "Personalize do seu jeito",
+        "body": "Crie relatórios e visualizações sob medida, adaptando o dashboard às metas e prioridades da sua operação."
+      }
+    ],
+    "cta": "Check out 3 business strategy tips"
+  },
+  "voice": {
+    "title": "Transforme voz em estratégia",
+    "items": [
+      {
+        "title": "Ganhe agilidade com transcrição inteligente",
+        "body": "Organizações que convertem chamadas em dado pesquisáveis reduzem o tempo médio de atendimento em até 30% e os custos operacionais em até 25% (Market Research Future / Polaris)."
+      },
+      {
+        "title": "Decifre emoções com precisão",
+        "body": "Com Speech Analytics, você identifica sentimentos e intenções em cada chamada, alcançando até 20% mais satisfação do cliente e reduzindo falhas no atendimento (Mordor Intelligence)."
+      }
+    ],
+    "cta": "Try it"
+  },
+  "emotions": {
+    "title": "Decifre emoções com precisão",
+    "items": [
+      {
+        "title": "Encontre padrões invisíveis",
+        "body": "Descubra concorrentes citados, objeções recorrentes e gatilhos de negociação em segundos, e transforme conversas em inteligência de mercado."
+      },
+      {
+        "title": "Controle qualidade com indicadores reais",
+        "body": "Monitore silêncio, interrupções e tags de sentimento para avaliar a performance dos agentes e elevar a experiência do cliente."
+      }
+    ],
+    "cta": "Check out Tecban's report"
+  },
+  "benefits": {
+    "title": "Main benefits",
+    "items": [
+      {
+        "title": "We transcribe and analyze interactions in real time, applying sentiment analysis, automatic categorization, and trend identification.",
+        "body": "Identifique emoções e intenções nas conversas e melhore a experiência do cliente com feedback acionável."
+      },
+      {
+        "title": "Detecção de palavras e temas",
+        "body": "Encontre menções críticas como concorrência, preço ou insatisfação e aja antes que virem problemas."
+      },
+      {
+        "title": "Dashboards personalizados",
+        "body": "Visualize métricas de performance em painéis claros, sob medida para sua operação."
+      },
+      {
+        "title": "Compliance automático",
+        "body": "Monitore aderência a scripts e protocolos, reduzindo riscos e falhas de conformidade."
+      },
+      {
+        "title": "Gestão de qualidade inteligente",
+        "body": "Automatize avaliações de agentes, distribua feedback de forma contínua e aumente a produtividade."
+      }
+    ],
+    "quote": "Transforme voz, chat e tela em dados que reduzem até 25% dos custos e aceleram a tomada de decisão.",
+    "cta": "Check it out in practice"
+  },
+  "video": {
+    "eyebrow": "In action",
+    "title": "See Sigma Insights at work"
+  }
+}

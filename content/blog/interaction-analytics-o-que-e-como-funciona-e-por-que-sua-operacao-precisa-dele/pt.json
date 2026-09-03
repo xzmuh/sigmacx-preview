@@ -1,0 +1,136 @@
+{
+ "title": "Interaction Analytics: o que é, como funciona e por que sua operação precisa dele",
+ "lang": "pt",
+ "date": "2025-11-25T16:26:20+00:00",
+ "description": "",
+ "cover": "/media/blog/blog-sigma_Prancheta-1.webp",
+ "blocks": [
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Interaction Analytics: o que é, como funciona e por que sua operação precisa dele"
+  },
+  {
+   "t": "html",
+   "html": "<p>Tem uma coisa que a maioria das empresas ainda não percebeu: os dados mais ricos sobre o cliente <strong>não estão nos relatórios, estão nas conversas</strong>.<br>Aquelas ligações do dia a dia, os chats no WhatsApp, as mensagens de e-mail e redes sociais… tudo isso carrega um volume enorme de informações sobre comportamento, emoções, objeções e até oportunidades de negócio.</p><p>E é justamente isso que o <strong>Interaction Analytics</strong> faz: ele transforma cada conversa em insight.</p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/649.webp",
+   "alt": ""
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Afinal, o que é Interaction Analytics?"
+  },
+  {
+   "t": "html",
+   "html": "<p>Em resumo, é uma tecnologia que analisa as interações entre cliente e empresa — sejam elas de voz, chat, e-mail, WhatsApp ou redes sociais — e extrai inteligência a partir disso.</p><p>Com ajuda de inteligência artificial e processamento de linguagem natural (NLP), a ferramenta consegue entender o conteúdo, o tom, as emoções e até o silêncio nas conversas.<br>Ela vai muito além do “o que foi dito”: entende o <em>porquê</em> e o <em>como</em> aquilo foi dito.</p><p>No fim das contas, é como se você tivesse um time de analistas ouvindo e lendo 100% das interações, 24 horas por dia — só que de forma automatizada, inteligente e com muito mais precisão.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Como isso acontece na prática"
+  },
+  {
+   "t": "html",
+   "html": "<p>O processo é bem direto:</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Mas o ponto mais importante é que não se trata só de “mais dados”. É sobre entender o contexto por trás dos números.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Por que sua operação precisa disso"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>1.Porque relatórios mostram o que, mas não o porquê</strong></p><p>Os relatórios tradicionais dizem quantas ligações foram atendidas ou quanto tempo cada uma durou. Mas o <strong>Interaction Analytics mostra o motivo</strong> das ligações, o sentimento do cliente e até se o agente foi empático, assertivo ou confuso.<br>Isso muda tudo. Você deixa de enxergar o atendimento como volume e passa a entender comportamento.</p><p><strong>2.Porque melhora a performance do time</strong></p><p>Com o Interaction Analytics, dá para identificar o que os melhores agentes fazem de diferente — o tom de voz, a escolha de palavras, a forma de conduzir a conversa.<br>Esses padrões ajudam a criar treinamentos muito mais direcionados e eficientes.<br>E o melhor: com dados concretos, não com percepções.</p><p><strong>3.Porque aumenta a eficiência da operação</strong></p><p>Ao descobrir os principais motivos de contato, a empresa pode automatizar tarefas repetitivas, ajustar fluxos e simplificar processos.<br>Resultado: menos chamadas desnecessárias, menor custo e uma experiência mais fluida para o cliente.</p><p><strong>4.Porque garante qualidade e compliance de verdade</strong></p><p>Não dá mais para auditar 1% das ligações e achar que tem controle.<br>Com o Interaction Analytics, você monitora 100% das interações, detecta palavras de risco, identifica desvios de processo e garante aderência às políticas de qualidade — tudo de forma automática.</p><p><strong>5.Porque ajuda a decidir com base em fatos, não achismos</strong></p><p>A partir do momento em que você cruza a análise de sentimento, o motivo de contato e os indicadores de resultado (como conversão ou NPS), começa a enxergar o impacto real das conversas no negócio.</p><p>É aqui que a operação deixa de “reagir” e passa a <strong>agir com clareza</strong>.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "O impacto real na experiência"
+  },
+  {
+   "t": "html",
+   "html": "<p>Antes, as empresas diziam que queriam “ouvir o cliente”.<br>Hoje, com o Interaction Analytics, <strong>elas realmente conseguem</strong>.</p><p>Cada conversa se torna um ativo estratégico — capaz de mostrar o que está funcionando, o que precisa mudar e onde estão as maiores oportunidades de evolução.<br>É como transformar a operação de atendimento em uma central de inteligência viva, alimentada pela voz do cliente.</p><p>No fim das contas, o Interaction Analytics é muito mais do que uma tecnologia de monitoramento.<br>É uma nova forma de enxergar o relacionamento entre empresa e cliente — com base em fatos, emoções e contextos reais.</p><p>Quando você analisa as conversas de verdade, o dado deixa de ser um número frio.<br>Ele passa a contar histórias, revelar padrões e guiar decisões estratégicas que geram impacto direto na experiência, na eficiência e nos resultados.</p><p><strong>Entender o cliente nunca foi tão possível, e tão urgente.</strong></p>"
+  },
+  {
+   "t": "img",
+   "src": "/media/blog/Wendell-Maranhao-Perfil.jpeg-1.webp",
+   "alt": ""
+  },
+  {
+   "t": "html",
+   "html": "<p>Autor</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Wendell Maranhão</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>Gerente Global de Novos Negócios</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "FAQ"
+  },
+  {
+   "t": "html",
+   "html": "<p><strong>1.O que o Interaction Analytics faz na prática?</strong><br>Ele analisa 100% das conversas e transforma cada interação em insights acionáveis.</p><p><strong>2.Como isso melhora a operação?</strong> <br>Ao revelar motivos reais de contato, sentimentos e padrões, permitindo ajustes mais precisos.</p><p><strong>2.Por que é mais eficiente que auditoria manual?</strong> <br>Porque monitora tudo automaticamente, sem depender de amostragem.</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>SigmaCX é o hub que unifica canais, automatiza interações e gera insights estratégicos para jornadas consistentes e personalizadas.</p>"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Conheça mais"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Sobre nós"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Dialogi AI"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Links"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Trabalhe conosco"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Política de Privavidade"
+  },
+  {
+   "t": "h",
+   "lvl": 2,
+   "text": "Contato"
+  },
+  {
+   "t": "html",
+   "html": "<p>(11) 4200-8282<br>R. Luiz Seráphico Júnior, 511, 13º andar – Cj. 132 Jardim Caravelas, São Paulo – SP, 04729-080</p>"
+  },
+  {
+   "t": "html",
+   "html": "<p>© 2025 Created by <a href=\"http://www.linkedin.com/in/dafny-bittencourt\" target=\"_blank\" rel=\"noreferrer\">Dafny B.</a></p>"
+  }
+ ]
+}

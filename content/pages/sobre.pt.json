@@ -1,0 +1,42 @@
+{
+  "meta": { "title": "Sobre nós - Sigma CX", "description": "Somos uma força em tecnologia, dedicada a inovar radicalmente a forma como empresas e clientes se conectam." },
+  "hero": { "title": "Somos uma força em tecnologia, dedicada a inovar radicalmente a forma como empresas e clientes se conectam" },
+  "beliefs": {
+    "title": "No que acreditamos",
+    "items": [
+      { "title": "Transformamos a forma de se conectar", "body": "Nossas inovações nascem do entendimento profundo das necessidades dos clientes. Assim, medimos nosso sucesso pela melhoria de indicadores de negócio e satisfação de quem usa nossas soluções." },
+      { "title": "Inovamos com coragem, entregamos com precisão", "body": "Assumimos riscos calculados, desafiamos o status quo e não aceitamos o medíocre, sempre com disciplina, qualidade e atenção aos detalhes." },
+      { "title": "A comunicação é nossa maior força", "body": "Praticamos a comunicação clara, honesta e constante, valorizando tanto a escuta quanto a expressão para fortalecer relações e equipes." }
+    ],
+    "plain": [
+      { "title": "Autonomia com responsabilidade", "body": "Todos tem liberdade para decidir e agir alinhado à nossa visão estratégica, respeitando processos sem deixar de contribuir proativamente." },
+      { "title": "Valorizamos o trabalho em equipe", "body": "Apoiamos uns aos outros nos momentos críticos, porque acreditamos que o sucesso coletivo está acima de qualquer conquista individual." }
+    ]
+  },
+  "principles": [
+    { "title": "Porque inovar é caminhar no desconhecido", "body": "Reconhecemos falhas, refletimos sobre elas e seguimos mais fortes, cultivando uma cultura de aprendizado contínuo e inovação." },
+    { "title": "Entregamos excelência como padrão", "body": "Estamos preparados para lidar com pressão, mudanças e incertezas, desde o planejamento até a execução, cada detalhe importa." },
+    { "title": "Agimos com propósito", "body": "Nossos produtos surpreendem, encantam e elevam padrões, unindo estética, usabilidade e inovação em cada entrega." },
+    { "title": "Acreditamos no poder da singularidade", "body": "Nossa visão ultrapassa fronteiras, mas respeitamos culturas locais para gerar impacto real em cada região." },
+    { "title": "Buscamos impacto duradouro", "body": "Somos uma equipe em constante movimento, que aprende, experimenta e se transforma para continuar crescendo e inovando." }
+  ],
+  "manifesto": "Existimos para inovar com coragem, comunicar com clareza e criar soluções que inspiram e transformam realidades, sempre evoluindo para além do possível.",
+  "history": {
+    "intro": "A história do SigmaCX teve início em 2020, marcada pela visão de ampliar e modernizar o universo de Contact Centers. Desde então, a empresa vem impulsionando a transformação da experiência do cliente, com foco em eficiência, humanização e inovação.",
+    "timeline": [
+      { "year": "2021", "body": "O primeiro produto desenvolvido integrou todos os canais de atendimento em uma única plataforma, centralizando a gestão e tornando cada interação mais simples, ágil e eficiente." },
+      { "year": "2022", "body": "Com tecnologia do Speech Analytics, o Sigma Insights integra ao catálogo com a análise de voz, tornando capaz a compreensão das interações de empresa com seus clientes." },
+      { "year": "2024", "body": "Uma plataforma de inteligência artificial que integra múltiplos canais para humanizar interações digitais, tornando a comunicação entre empresas e clientes mais empática, personalizada e eficiente. Uma conquista enorme para o SigmaCX." },
+      { "year": "2024", "body": "O Sigma Brain surge como resposta à necessidade de criar mensagens personalizadas em escala, oferecendo experiências personalizadas, acompanhamento em tempo real e eficiência na fidelização e na retomada de conexões com clientes." }
+    ],
+    "band2020": "A Nuveto Labs se tornou uma fábrica de produtos do Grupo Nuveto e passa a ser uma empresa independente. Assim, surge uma nova oportunidade, que foi capaz de fazer a SigmaCX ganhar vida.",
+    "continues": "A nossa história continua sendo construída e podemos contar com muitas pessoas dispostas a tornar o impossível, um de nossos lugares. Evaristo Canete embarca no time, e assume o cargo de chefe de operações da SigmaCX."
+  },
+  "team": {
+    "title": "Conheça nossa equipe",
+    "members": [
+      { "name": "Murillo Melo", "role": "CTO", "cta": "Conheça o Murillo", "bio": "Técnico em formação e criativo por convicção, Murillo já se envolveu no empreendedorismo e acumula mais de 15 anos de experiência em arquitetura de TI, incluindo a gestão de centros de dados e a transformação digital. Hoje, lidera a Sigma CX com paixão por resolver, transformar e criar experiências que realmente façam sentido." },
+      { "name": "Evaristo Canete", "role": "COO", "cta": "Conheça o Evaristo", "bio": "Desde o conselho de administração até as operações, Evaristo tem uma grande experiência e continua em constante movimento. Com experiência em mais de cinco países, ele liderou operações com mais de 68.000 postos e receitas superiores a 2 bilhões de dólares. Hoje, aplica essa experiência na Sigma CX com a facilidade de quem entende que a liderança se concentra, acima de tudo, nas pessoas." }
+    ]
+  }
+}

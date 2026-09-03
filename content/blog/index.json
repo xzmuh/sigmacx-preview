@@ -1,0 +1,46 @@
+[
+ {
+  "slug": "qual-a-diferenca-entre-chatbots-e-agentes-de-ia",
+  "category": "agentes-de-ia",
+  "date": "2025-10-02T16:36:47+00:00",
+  "cover": "/media/blog/blog_Prancheta-1.webp",
+  "titles": {
+   "pt": "Qual a diferença entre Chatbots e Agentes de IA?",
+   "en": "What is the difference between Chatbots and AI Agents?",
+   "es": "¿Cuál es la diferencia entre los chatbots y los agentes de IA?"
+  }
+ },
+ {
+  "slug": "dados-muito-alem-dos-relatorios-o-que-realmente-faz-diferenca",
+  "category": "dados-e-insights",
+  "date": "2025-10-02T17:51:27+00:00",
+  "cover": "/media/blog/blog-sigma-2_Prancheta-1.webp",
+  "titles": {
+   "pt": "Dados: muito além dos relatórios, o que realmente faz diferença",
+   "en": "Data: beyond reports, what really makes the difference",
+   "es": "Datos: mucho más allá de los reportes, lo que realmente hace la diferencia"
+  }
+ },
+ {
+  "slug": "interaction-analytics-o-que-e-como-funciona-e-por-que-sua-operacao-precisa-dele",
+  "category": "dados-e-insights",
+  "date": "2025-11-25T16:26:20+00:00",
+  "cover": "/media/blog/blog-sigma_Prancheta-1.webp",
+  "titles": {
+   "pt": "Interaction Analytics: o que é, como funciona e por que sua operação precisa dele",
+   "en": "Interaction Analytics: what it is, how it works, and why your operation needs it",
+   "es": "Interaction Analytics: qué es, cómo funciona y por qué tu operación lo necesita"
+  }
+ },
+ {
+  "slug": "como-criar-fluxos-de-campanhas-inteligentes-usando-o-sigma-suite",
+  "category": "produtos",
+  "date": "2025-12-18T16:36:39+00:00",
+  "cover": "/media/blog/blog-sigma_Prancheta-1.webp",
+  "titles": {
+   "pt": "Como criar fluxos de campanhas inteligentes usando o Sigma Suite",
+   "en": "How to Create Intelligent Campaign Flows Using Sigma Suite",
+   "es": "Cómo crear flujos de campañas inteligentes usando Sigma Suite"
+  }
+ }
+]
