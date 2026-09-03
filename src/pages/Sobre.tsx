@@ -1,139 +1,135 @@
 import { PageShell, useReveal } from "../site/PageShell";
-import { SectionTransition } from "../site/SectionTransition";
-import {BandVideo, Carousel, Icon, Vimeo, SplitText } from "../site/ui";
-import { BG, LINKEDIN_URL, VIDEO, VIMEO } from "../site/site-data";
-import { pick, rich, useLang } from "../lib/i18n";
+import { Vimeo } from "../site/ui";
+import { LINKEDIN_URL, VIMEO } from "../site/site-data";
+import { pick, useLang } from "../lib/i18n";
 import pt from "../../content/pages/sobre.pt.json";
 import en from "../../content/pages/sobre.en.json";
 import es from "../../content/pages/sobre.es.json";
+import "../site/sobre.css";
 
-const beliefImages = ["2151561973.webp", "126854.webp", null];
-const plainIcons = ["target", "users"];
 const timelineLogos = ["SigmaChannel-Default.png", "SigmaInsights-Default.png", "DIALOGI-08.png", "SigmaBrain-Default.png"];
 const team = [
   { photo: "1566506294844.webp", href: "https://www.linkedin.com/in/murillomelo/" },
-  // O site de origem nao traz link para o Evaristo; usa o LinkedIn da empresa ate termos o perfil.
   { photo: "Design-sem-nome.webp", href: LINKEDIN_URL },
 ];
+
+const labels = {
+  pt: { title: ["SOBRE", "NÓS"], about: "Sobre a SigmaCX", philosophy: "Nossa filosofia", leaders: ["CONHEÇA A", "LIDERANÇA"], leadership: "Liderança", beliefs: "No que acreditamos", history: "Nossa história", watch: "Assista à nossa história", linkedin: "SigmaCX no LinkedIn", heroAlt: "Pessoa interagindo com tecnologia", peopleAlt: "Pessoas conectadas" },
+  en: { title: ["ABOUT", "US"], about: "About SigmaCX", philosophy: "Our philosophy", leaders: ["MEET OUR", "LEADERS"], leadership: "Leadership", beliefs: "What we believe", history: "Our history", watch: "Watch our story", linkedin: "SigmaCX on LinkedIn", heroAlt: "Person interacting with technology", peopleAlt: "Connected people" },
+  es: { title: ["SOBRE", "NOSOTROS"], about: "Sobre SigmaCX", philosophy: "Nuestra filosofía", leaders: ["CONOZCA EL", "LIDERAZGO"], leadership: "Liderazgo", beliefs: "En qué creemos", history: "Nuestra historia", watch: "Vea nuestra historia", linkedin: "SigmaCX en LinkedIn", heroAlt: "Persona interactuando con tecnología", peopleAlt: "Personas conectadas" },
+};
 
 export default function Sobre() {
   useReveal();
   const lang = useLang();
   const t = pick({ pt, en, es }, lang);
+  const l = pick(labels, lang);
+  const beliefs = [...t.beliefs.items, ...t.beliefs.plain];
 
   return (
     <PageShell title={t.meta.title} description={t.meta.description}>
-      {/* 1. Hero com foto */}
-      <section className="sx-hero sx-hero--photo sx-dark">
-        <img className="sx-hero__bg" src={BG.sobreHero} alt="" aria-hidden="true" style={{ opacity: 1 }} fetchPriority="high" decoding="async" width={1536} height={1024} />
-        <div className="sx-hero__aura" aria-hidden="true" />
-        <div className="sx-shell sx-hero__inner sx-hero__inner--left">
-          <h1 className="sx-h1" style={{ maxWidth: "24ch", fontSize: "clamp(1.8rem, 3.4vw, 2.6rem)" }}><SplitText text={t.hero.title} /></h1>
-        </div>
-      </section>
+      <div className="ab-page">
+        <section className="ab-hero">
+          <img className="ab-hero__mark" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
+          <div className="sx-shell ab-hero__layout">
+            <header className="ab-hero__title">
+              <p className="ab-label">{l.about}</p>
+              <h1><span>{l.title[0]}</span><span>{l.title[1]}</span></h1>
+              <p className="ab-hero__intro">{t.hero.title}</p>
+            </header>
 
-      <SectionTransition to="light" />
+            <figure className="ab-hero__image ab-image">
+              <img src="/media/site/2151561973.webp" alt={l.peopleAlt} fetchPriority="high" decoding="async" />
+            </figure>
 
-      {/* 2. No que acreditamos */}
-      <section className="sx-section" data-reveal>
-        <div className="sx-shell sx-stack">
-          <h2 className="sx-h2" style={{ fontWeight: 600 }}><SplitText text={t.beliefs.title} /></h2>
-          <div className="sx-grid sx-grid--3">
-            {t.beliefs.items.map((item, i) => (
-              <article className={`sx-card ${beliefImages[i] ? "sx-card--photo" : "sx-card--navy sx-card--photo"}`} key={item.title}>
-                {beliefImages[i] ? <img src={`/media/site/${beliefImages[i]}`} alt="" loading="lazy" /> : null}
-                <div className="sx-card__body"><h3 className="sx-h3">{item.title}</h3><p>{item.body}</p></div>
+            <aside className="ab-hero__philosophy">
+              <figure className="ab-image"><img src="/media/site/sobre-hero.webp" alt={l.heroAlt} /></figure>
+              <h2>{l.philosophy}</h2>
+              <p>{t.manifesto}</p>
+            </aside>
+          </div>
+        </section>
+
+        <section className="ab-leadership" data-reveal>
+          <div className="sx-shell">
+            <div className="ab-leadership__panel">
+              <article className="ab-leader ab-leader--first">
+                <a href={team[0].href} target="_blank" rel="noreferrer"><img src={`/media/site/${team[0].photo}`} alt={t.team.members[0].name} /></a>
+                <h3>{t.team.members[0].name}</h3><p>{t.team.members[0].role}</p>
               </article>
-            ))}
-          </div>
-          <div className="sx-grid sx-grid--2">
-            {t.beliefs.plain.map((item, i) => (
-              <div className="sx-item" key={item.title}>
-                <Icon name={plainIcons[i]} />
-                <div><h3>{item.title}</h3><p>{item.body}</p></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* 3. Bloco com video de fundo: principios */}
-      <section className="sx-section sx-section--flush" data-reveal>
-        <div className="sx-shell">
-          <div className="sx-block sx-dark sx-band" style={{ padding: "clamp(32px, 4vw, 56px)" }}>
-            <img className="sx-band__bg" src="/media/site/home-1.webp" alt="" aria-hidden="true" />
-            <BandVideo src={VIDEO.people} opacity={0.35} />
-            <div className="sx-grid sx-grid--3" style={{ position: "relative" }}>
-              {t.principles.map((item) => (
-                <article className="sx-card sx-card--glass" key={item.title}><h3 className="sx-h3">{item.title}</h3><p>{item.body}</p></article>
+              <div className="ab-leadership__center">
+                <p className="ab-label">{l.leadership}</p>
+                <h2><span>{l.leaders[0]}</span><span>{l.leaders[1]}</span></h2>
+                <p>{t.history.continues}</p>
+              </div>
+
+              <article className="ab-leader ab-leader--second">
+                <a href={team[1].href} target="_blank" rel="noreferrer"><img src={`/media/site/${team[1].photo}`} alt={t.team.members[1].name} /></a>
+                <h3>{t.team.members[1].name}</h3><p>{t.team.members[1].role}</p>
+              </article>
+            </div>
+
+            <div className="ab-leadership__bios">
+              {t.team.members.map((person, index) => (
+                <article key={person.name}>
+                  <p>{person.bio}</p>
+                  <a href={team[index].href} target="_blank" rel="noreferrer">{person.cta} <span aria-hidden="true">↗</span></a>
+                </article>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 4. Manifesto */}
-      <section className="sx-section sx-section--tight" data-reveal>
-        <div className="sx-shell sx-quote" style={{ maxWidth: 900 }}><p>{t.manifesto}</p></div>
-      </section>
+        <section className="ab-beliefs" data-reveal>
+          <div className="sx-shell ab-beliefs__layout">
+            <div className="ab-beliefs__intro">
+              <p className="ab-label">SigmaCX</p>
+              <h2>{l.beliefs}</h2>
+              <p>{t.beliefs.items[0].body}</p>
+              <figure className="ab-image"><img src="/media/site/126854.webp" alt="" loading="lazy" /></figure>
+            </div>
 
-      {/* 5. Video da historia */}
-      <section className="sx-section sx-section--tight" data-reveal>
-        <div className="sx-shell"><Vimeo id={VIMEO.sobreHistoria} className="sx-video--dark" title="SigmaCX" /></div>
-      </section>
+            <div className="ab-beliefs__list">
+              {beliefs.map((item, index) => (
+                <article className="ab-belief" key={item.title}>
+                  <span>0{index + 1}</span>
+                  <div><h3>{item.title}</h3><p>{item.body}</p></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
 
-      {/* 6. Timeline */}
-      <section className="sx-section" data-reveal>
-        <div className="sx-shell sx-stack">
-          <p className="sx-lead" style={{ margin: 0, maxWidth: "none" }}>{t.history.intro}</p>
-          <div className="sx-timeline">
-            <Carousel label="Timeline">
+        <section className="ab-history" data-reveal>
+          <div className="sx-shell">
+            <header className="ab-history__head">
+              <div><p className="ab-label">2020 — 2024</p><h2>{l.history}</h2></div>
+              <p>{t.history.intro}</p>
+            </header>
+
+            <div className="ab-history__origin">
+              <strong>2020</strong><p>{t.history.band2020}</p>
+            </div>
+
+            <div className="ab-history__timeline">
               {t.history.timeline.map((item, index) => (
-                <article className="sx-card sx-timeline__item" key={index}>
-                  <span className="sx-timeline__year">{item.year}</span>
-                  <img className="sx-timeline__logo" src={`/media/site/${timelineLogos[index]}`} alt="" loading="lazy" />
+                <article key={`${item.year}-${index}`}>
+                  <div><span>{item.year}</span><img src={`/media/site/${timelineLogos[index]}`} alt="" loading="lazy" /></div>
                   <p>{item.body}</p>
                 </article>
               ))}
-            </Carousel>
+            </div>
+
+            <div className="ab-history__video">
+              <p className="ab-label">{l.watch}</p>
+              <Vimeo id={VIMEO.sobreHistoria} className="sx-video--dark" title="História da SigmaCX" />
+            </div>
+
+            <a className="ab-link" href={LINKEDIN_URL} target="_blank" rel="noreferrer">{l.linkedin} <span aria-hidden="true">↗</span></a>
           </div>
-        </div>
-      </section>
-
-      <SectionTransition to="dark" />
-
-      {/* 7. Faixa 2020 */}
-      <section className="sx-band sx-dark sx-band-2020" data-reveal>
-        <div className="sx-shell sx-feature" style={{ alignItems: "start" }}>
-          <p className="sx-year-big">2020</p>
-          <article className="sx-card"><p>{t.history.band2020}</p></article>
-        </div>
-      </section>
-
-      <SectionTransition to="light" />
-
-      {/* 8. Equipe */}
-      <section className="sx-section" data-reveal>
-        <div className="sx-shell sx-stack">
-          <p className="sx-lead" style={{ margin: 0, maxWidth: "none" }}>{t.history.continues}</p>
-          <h2 className="sx-h2" style={{ fontWeight: 600 }}><SplitText text={t.team.title} /></h2>
-          <div className="sx-grid sx-grid--2">
-            {t.team.members.map((person, i) => (
-              <article className="sx-card sx-person" key={person.name}>
-                <img className="sx-person__photo" src={`/media/site/${team[i].photo}`} alt={person.name} loading="lazy" />
-                <div>
-                  <h3 className="sx-h3">{person.name}</h3>
-                  <p className="sx-person__role">{person.role}</p>
-                  <p>{person.bio}</p>
-                  <p style={{ marginTop: 16 }}>
-                    <a className="sx-cta sx-cta--outline sx-cta--sm" href={team[i].href} target="_blank" rel="noreferrer">{person.cta} <span aria-hidden="true">→</span></a>
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </PageShell>
   );
 }
