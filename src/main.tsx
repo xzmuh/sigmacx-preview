@@ -6,6 +6,7 @@ import "./site/site.css";
 import "./site/suite.css";
 import "./site/blog.css";
 import "./site/productJourney.css";
+import "./site/scale.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

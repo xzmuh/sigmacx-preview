@@ -626,7 +626,7 @@ video {
 
 .hero-title {
   margin: 0;
-  font-size: clamp(5rem, 11.5vw, 11.6rem);
+  font-size: clamp(4.1rem, 8.05vw, 8.35rem);
   font-weight: 450;
   letter-spacing: -0.085em;
   line-height: 0.72;
@@ -799,7 +799,7 @@ video {
 
 .manifesto-copy h2 {
   margin: 0;
-  font-size: clamp(3.6rem, 7vw, 8rem);
+  font-size: clamp(2.95rem, 4.9vw, 5.76rem);
   font-weight: 440;
   letter-spacing: -0.078em;
   line-height: 0.93;
@@ -841,7 +841,7 @@ video {
 .security-copy h2,
 .final-cta h2 {
   margin: 0;
-  font-size: clamp(3.2rem, 8vw, 8.4rem);
+  font-size: clamp(2.62rem, 5.6vw, 6.05rem);
   font-weight: 430;
   letter-spacing: -0.075em;
   line-height: 0.93;
@@ -1007,7 +1007,7 @@ video {
 
 .story-step h3 {
   margin: 0;
-  font-size: clamp(2.5rem, 5.7vw, 5.7rem);
+  font-size: clamp(2.05rem, 3.99vw, 4.1rem);
   font-weight: 440;
   letter-spacing: -0.068em;
   line-height: 0.98;
@@ -1160,7 +1160,7 @@ video {
 }
 
 .section-heading h2 {
-  font-size: clamp(3.2rem, 6.8vw, 7rem);
+  font-size: clamp(2.62rem, 4.76vw, 5.04rem);
 }
 
 .section-heading h2 strong {
@@ -1298,7 +1298,7 @@ video {
 
 .solution-compare__heading h2 {
   margin: 0;
-  font-size: clamp(3.2rem, 6.8vw, 7.2rem);
+  font-size: clamp(2.62rem, 4.76vw, 5.18rem);
   font-weight: 430;
   letter-spacing: -0.075em;
   line-height: 0.94;
@@ -1522,7 +1522,7 @@ video {
 }
 
 .connection-copy h2 {
-  font-size: clamp(3.2rem, 5.8vw, 6.4rem);
+  font-size: clamp(2.62rem, 4.06vw, 4.61rem);
 }
 
 .connection-copy > p {
@@ -1552,7 +1552,7 @@ video {
 }
 
 .section-heading--dark h2 {
-  font-size: clamp(3.3rem, 7.6vw, 8rem);
+  font-size: clamp(2.71rem, 5.32vw, 5.76rem);
 }
 
 .section-heading--dark > p {
@@ -1623,7 +1623,7 @@ video {
 
 .suite-card h3 {
   margin: 0;
-  font-size: clamp(2.5rem, 5vw, 5.2rem);
+  font-size: clamp(2.05rem, 3.5vw, 3.74rem);
   font-weight: 440;
   letter-spacing: -0.065em;
 }
@@ -1791,7 +1791,7 @@ video {
   display: inline-block;
   padding-block: 0.03em 0.09em;
   color: #397a59;
-  font-size: clamp(5rem, 11vw, 10rem);
+  font-size: clamp(4.1rem, 7.7vw, 7.2rem);
   font-weight: 650;
   letter-spacing: -0.09em;
   line-height: 0.9;
@@ -2043,7 +2043,7 @@ video {
 }
 
 .security-copy h2 {
-  font-size: clamp(3.2rem, 6.4vw, 7.2rem);
+  font-size: clamp(2.62rem, 4.48vw, 5.18rem);
 }
 
 .security-copy h2 span {
@@ -2157,7 +2157,7 @@ video {
 .final-cta h2 {
   position: relative;
   z-index: 2;
-  font-size: clamp(3.4rem, 8vw, 8.6rem);
+  font-size: clamp(2.79rem, 5.6vw, 6.19rem);
 }
 
 .final-cta .pill {
@@ -2544,7 +2544,7 @@ video {
 .footer-wordmark > span {
   margin-left: -0.07em;
   color: rgba(255, 255, 255, 0.055);
-  font-size: clamp(7rem, 16.8vw, 17rem);
+  font-size: clamp(5.74rem, 11.76vw, 12.24rem);
   font-weight: 700;
   letter-spacing: -0.062em;
   line-height: 0.76;
@@ -2882,7 +2882,7 @@ video {
   }
 
   .hero-title {
-    font-size: clamp(4.5rem, 25vw, 7rem);
+    font-size: clamp(3.69rem, 17.5vw, 5.04rem);
     line-height: 0.78;
   }
 
@@ -3151,7 +3151,7 @@ video {
   }
 
   .footer-wordmark > span {
-    font-size: clamp(5rem, 24vw, 8.5rem);
+    font-size: clamp(4.1rem, 16.8vw, 6.12rem);
     letter-spacing: -0.055em;
   }
 
@@ -3322,7 +3322,7 @@ video {
 .site-shell .hero-title {
   /* Maior que o h1 do Dialogi (6.2vw/6.1rem): la sao 4 linhas, aqui sao 2,
      e com o mesmo corpo o bloco ficava pequeno na dobra (pedido 2026-09-03). */
-  font-size: clamp(4rem, 8.6vw, 9.25rem);
+  font-size: clamp(3.28rem, 6.02vw, 6.66rem);
   line-height: 0.92;
   letter-spacing: -0.065em;
 }

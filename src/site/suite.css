@@ -584,7 +584,7 @@
 .sx-page--suite .sx-hero .sx-h1 {
   max-width: 17ch;
   margin-inline: auto;
-  font-size: clamp(3rem, 5.8vw, 5.8rem);
+  font-size: clamp(2.46rem, 4.06vw, 4.18rem);
   line-height: 1.01;
   letter-spacing: -0.055em;
 }
@@ -775,7 +775,7 @@
 
 @media (max-width: 900px) {
   .sx-page--suite .sx-hero { min-height: auto; padding-block: 132px 112px; }
-  .sx-page--suite .sx-hero .sx-h1 { font-size: clamp(2.7rem, 9vw, 4.8rem); }
+  .sx-page--suite .sx-hero .sx-h1 { font-size: clamp(2.21rem, 6.3vw, 3.46rem); }
   .sx-page--suite .sx-hero::before { right: -46%; opacity: 0.72; }
   .sx-page--suite .sx-hero--insights::before { left: 68%; width: 980px; }
 }
@@ -1075,7 +1075,7 @@
     padding-block: calc(var(--sx-seam) + 54px) calc(var(--sx-seam) + 66px);
   }
   .sx-page--suite .sx-suite-immersive .sx-suite-stage__panel .sx-h2 {
-    font-size: clamp(2.35rem, 11vw, 3.7rem);
+    font-size: clamp(1.93rem, 7.7vw, 2.66rem);
   }
   .sx-page--suite .sx-suite-immersive .sx-suite-stage__media {
     width: 118%;
@@ -1102,7 +1102,7 @@
   letter-spacing: -0.045em;
 }
 @media (max-width: 900px) {
-  .sx-page--suite .sx-hero--channel .sx-h1 { font-size: clamp(2.2rem, 7vw, 3.6rem); max-width: 18ch; }
+  .sx-page--suite .sx-hero--channel .sx-h1 { font-size: clamp(1.8rem, 4.9vw, 2.59rem); max-width: 18ch; }
 }
 
 
@@ -1604,7 +1604,7 @@
 
 .sx-page--suite .sx-stat strong {
   display: block;
-  font-size: clamp(3.2rem, 6.6vw, 5.6rem);
+  font-size: clamp(2.62rem, 4.62vw, 4.03rem);
   font-weight: 720;
   line-height: 1;
   letter-spacing: -0.05em;
@@ -2237,13 +2237,13 @@
 .sx-page--suite .sx-hero--ecosystem .sx-h1 {
   width: min(1120px, 94vw);
   max-width: none;
-  font-size: clamp(3.6rem, 6.6vw, 6.8rem);
+  font-size: clamp(2.95rem, 4.62vw, 4.9rem);
   line-height: 0.98;
   letter-spacing: -0.06em;
 }
 .sx-page--suite .sx-hero--brain .sx-h1 {
   max-width: 13ch;
-  font-size: clamp(3.25rem, 5.4vw, 5.7rem);
+  font-size: clamp(2.67rem, 3.78vw, 4.1rem);
 }
 .sx-page--suite .sx-hero--channel .sx-h1 { font-size: clamp(2.35rem, 3.8vw, 3.8rem); }
 .sx-page--suite .sx-hero--insights .sx-h1 { font-size: clamp(2.6rem, 4.2vw, 4.35rem); }
@@ -2252,14 +2252,14 @@
   .sx-page--suite .sx-hero { min-height: auto; padding-block: 126px 104px; }
   .sx-page--suite .sx-hero--ecosystem .sx-h1 {
     width: min(94vw, 800px);
-    font-size: clamp(3rem, 8.4vw, 5.2rem);
+    font-size: clamp(2.46rem, 5.88vw, 3.74rem);
   }
 }
 
 @media (max-width: 640px) {
   .sx-page--suite .sx-hero--ecosystem .sx-h1 {
     width: 100%;
-    font-size: clamp(2.75rem, 13vw, 4.25rem);
+    font-size: clamp(2.26rem, 9.1vw, 3.06rem);
     line-height: 1.01;
   }
 }

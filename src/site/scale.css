@@ -1,0 +1,77 @@
+/* ==========================================================================
+   Escala global (2026-09-04)
+   O layout foi desenhado em monitor grande: em Full HD e telas menores as
+   faixas verticais e os titulos de display ficavam grandes demais (secoes de
+   120-270px de padding, h1 de 90px em 1366). Este arquivo reduz a escala
+   mantendo as mesmas proporcoes: coeficientes vw menores e tetos mais baixos.
+   Importado por ultimo; o prefixo `body` garante a precedencia.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Ritmo vertical das secoes
+   -------------------------------------------------------------------------- */
+body .sx-section { padding-block: clamp(44px, 5vw, 76px); }
+body .sx-page--suite .sx-section { padding-block: clamp(44px, 5vw, 76px); }
+body .sx-section--tight { padding-block: clamp(30px, 3.4vw, 52px); }
+body .sx-section--story { padding-block: clamp(48px, 5.6vw, 88px); }
+body .sx-band { padding-block: clamp(56px, 6.4vw, 104px); }
+body .sx-final { padding: clamp(60px, 6.6vw, 100px) 0 clamp(36px, 3.8vw, 56px); }
+body .footer { padding-top: clamp(56px, 6vw, 92px); }
+
+/* Heroes: o topo so precisa liberar o header fixo (74px + folga). */
+body .sx-hero { padding: clamp(108px, 9vw, 138px) 0 clamp(44px, 4.6vw, 72px); }
+body .sx-suite-immersive { padding-block: clamp(72px, 8vw, 128px); }
+body .sx-suite-stage__panel { padding-top: clamp(28px, 3vw, 44px); }
+body .sx-section--flush { padding-block: 0 clamp(72px, 8vw, 124px); }
+body .sx-emotion-stage { padding: clamp(28px, 3.4vw, 48px); }
+
+/* Home */
+body .hero.section-dark { padding-block: clamp(92px, 8vw, 124px) clamp(40px, 4.4vw, 64px); }
+body .manifesto { padding-block: clamp(40px, 4.4vw, 64px) clamp(84px, 10vw, 160px); }
+body .signal-story { padding-top: clamp(84px, 9.5vw, 150px); }
+body .security-frame { padding-block: clamp(40px, 4.4vw, 62px); }
+
+/* Sobre */
+body .ab-hero { padding-block: clamp(104px, 9vw, 134px) clamp(48px, 5.2vw, 82px); }
+body .ab-leadership { padding: clamp(44px, 5vw, 68px) 0 clamp(60px, 6.6vw, 100px); }
+body .ab-beliefs { padding-block: clamp(60px, 6.6vw, 100px); }
+body .ab-history { padding-block: clamp(64px, 7vw, 104px); }
+
+/* --------------------------------------------------------------------------
+   2. Tipografia de display
+   -------------------------------------------------------------------------- */
+body .sx-h1 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); }
+body .sx-h2 { font-size: clamp(1.5rem, 2.5vw, 2.1rem); }
+body .sx-page--suite .sx-hero .sx-h1,
+body .sx-page--suite .sx-hero--channel .sx-h1,
+body .sx-page--suite .sx-hero--brain .sx-h1,
+body .sx-page--suite .sx-hero--insights .sx-h1,
+body .sx-page--suite .sx-hero--ecosystem .sx-h1 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+body .sx-page--suite .sx-editorial-head .sx-h2 { font-size: clamp(1.7rem, 3.1vw, 3rem); }
+body .sx-final h2 { font-size: clamp(1.7rem, 3.1vw, 2.6rem); }
+body .sx-lead { font-size: clamp(0.98rem, 1.15vw, 1.06rem); }
+
+/* Marca d'agua e numerais gigantes: proporcionais, so que menores. */
+body .sx-watermark span,
+body .sx-watermark { font-size: clamp(4rem, 11vw, 9rem); }
+
+/* --------------------------------------------------------------------------
+   3. Faixas que trazem padding proprio em regras mais especificas.
+   O `!important` e proposital: esta e a camada de escala, a ultima palavra
+   sobre ritmo vertical.
+   -------------------------------------------------------------------------- */
+body .sx-hero { padding-block: clamp(104px, 8.4vw, 132px) clamp(44px, 4.6vw, 72px) !important; }
+body .sx-section { padding-block: clamp(44px, 5vw, 76px) !important; }
+body .sx-section--tight { padding-block: clamp(30px, 3.4vw, 52px) !important; }
+body .sx-section--flush { padding-block: 0 clamp(64px, 7vw, 110px) !important; }
+body .sx-suite-immersive { padding-block: clamp(76px, 8.4vw, 132px) !important; }
+body .sx-band { padding-block: clamp(60px, 6.6vw, 108px) !important; }
+body .sx-final { padding-bottom: clamp(36px, 3.8vw, 56px) !important; }
+body .section-transition--light-dark + .sx-footer-wrap .sx-final { padding-top: calc(var(--sx-seam) + 24px) !important; }
+body .site-shell .signal-story { padding-top: calc(var(--sx-sec-gap) + 90px) !important; }
+body .manifesto { padding-block: clamp(40px, 4.4vw, 64px) clamp(76px, 8.4vw, 132px) !important; }
+body .ab-hero { padding-block: clamp(104px, 8.4vw, 132px) clamp(44px, 4.8vw, 74px) !important; }
+body .ab-history { padding-block: clamp(60px, 6.6vw, 96px) !important; }
+
+/* A emenda diagonal entre faixas tambem encolhe junto. */
+body:root, :root { --sx-seam: clamp(80px, 8.4vw, 140px); }
