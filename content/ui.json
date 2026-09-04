@@ -1,6 +1,6 @@
 {
   "pt": {
-    "nav": { "products": "Produtos", "dialogi": "Dialogi AI", "about": "Sobre nós", "blog": "Blog", "demo": "Agende uma demo", "menuOpen": "Abrir menu", "menuClose": "Fechar menu", "skip": "Pular para o conteúdo",
+    "nav": { "products": "Sigma Suite", "platforms": "Plataformas", "dialogi": "Dialogi AI", "company": "Empresa", "about": "Sobre nós", "aboutNote": "Conheça a SigmaCX", "blog": "Blog", "demo": "Agende uma demo", "menuOpen": "Abrir menu", "menuClose": "Fechar menu", "skip": "Pular para o conteúdo",
       "productNotes": { "suite": "A plataforma completa", "channel": "Todos os canais em um só lugar", "brain": "Agentes de IA que resolvem", "insights": "Análise de interações e qualidade" } },
     "cta": { "title": "Confira o que o SigmaCX pode fazer por você.", "button": "Converse com um especialista" },
     "footer": {
@@ -34,7 +34,7 @@
     "notFound": { "eyebrow": "Erro 404", "title": "Essa página saiu da conversa", "body": "O endereço que você procurou não existe ou foi movido. Volte para o início e continue a jornada.", "home": "Voltar para a home", "suite": "Conhecer a Sigma Suite" }
   },
   "en": {
-    "nav": { "products": "Products", "dialogi": "Dialogi AI", "about": "About us", "blog": "Blog", "demo": "Schedule a demo", "menuOpen": "Open menu", "menuClose": "Close menu", "skip": "Skip to content",
+    "nav": { "products": "Sigma Suite", "platforms": "Platforms", "dialogi": "Dialogi AI", "company": "Company", "about": "About us", "aboutNote": "Get to know SigmaCX", "blog": "Blog", "demo": "Schedule a demo", "menuOpen": "Open menu", "menuClose": "Close menu", "skip": "Skip to content",
       "productNotes": { "suite": "The complete platform", "channel": "Every channel in one place", "brain": "AI agents that resolve", "insights": "Interaction and quality analytics" } },
     "cta": { "title": "Check out what SigmaCX can do for you.", "button": "Talk to a specialist" },
     "footer": {
@@ -68,7 +68,7 @@
     "notFound": { "eyebrow": "Error 404", "title": "This page left the conversation", "body": "The address you looked for does not exist or was moved. Go back to the start and continue the journey.", "home": "Back to home", "suite": "Discover Sigma Suite" }
   },
   "es": {
-    "nav": { "products": "Productos", "dialogi": "Dialogi AI", "about": "Sobre nosotros", "blog": "Blog", "demo": "Agende una demo", "menuOpen": "Abrir menú", "menuClose": "Cerrar menú", "skip": "Ir al contenido",
+    "nav": { "products": "Sigma Suite", "platforms": "Plataformas", "dialogi": "Dialogi AI", "company": "Empresa", "about": "Sobre nosotros", "aboutNote": "Conoce a SigmaCX", "blog": "Blog", "demo": "Agende una demo", "menuOpen": "Abrir menú", "menuClose": "Cerrar menú", "skip": "Ir al contenido",
       "productNotes": { "suite": "La plataforma completa", "channel": "Todos los canales en un solo lugar", "brain": "Agentes de IA que resuelven", "insights": "Análisis de interacciones y calidad" } },
     "cta": { "title": "Descubre lo que SigmaCX puede hacer por ti.", "button": "Habla con un especialista" },
     "footer": {

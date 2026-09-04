@@ -88,7 +88,7 @@ function SoundButton({ muted, onToggle }: { muted: boolean; onToggle: () => void
  *  O player (320 KB de JS + segmentos) so e montado depois do load da pagina
  *  e quando o quadro esta a menos de 600px da tela, para nao disputar rede e
  *  CPU com o texto/LCP; o quadro ja reserva o espaco (sem salto de layout). */
-export function Vimeo({ id, className = "", title = "Vídeo" }: { id: string; className?: string; title?: string }) {
+export function Vimeo({ id, className = "", title = "Vídeo", preloadMargin = 600 }: { id: string; className?: string; title?: string; preloadMargin?: number }) {
   const src = `https://player.vimeo.com/video/${id}?autoplay=1&muted=1&loop=1&background=1&playsinline=1&title=0&byline=0&portrait=0`;
   const box = useRef<HTMLDivElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
@@ -113,7 +113,7 @@ export function Vimeo({ id, className = "", title = "Vídeo" }: { id: string; cl
         if (!entries.some((e) => e.isIntersecting)) return;
         io?.disconnect();
         setReady(true);
-      }, { rootMargin: "600px 0px" });
+      }, { rootMargin: `${preloadMargin}px 0px` });
       io.observe(el);
     };
     const afterLoad = () => { idle = window.setTimeout(arm, 250); };
@@ -204,6 +204,8 @@ const PATHS: Record<string, string> = {
   check: "M4 12l5 5L20 7",
   spark: "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z",
   compass: "M12 21a9 9 0 100-18 9 9 0 000 18zm3-12l-2 5-5 2 2-5 5-2z",
+  bars: "M5 20v-8M12 20V5M19 20v-11",
+  gear: "M12 15a3 3 0 100-6 3 3 0 000 6zM12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1",
   globe: "M12 21a9 9 0 100-18 9 9 0 000 18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18",
 };
 

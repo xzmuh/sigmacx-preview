@@ -54,11 +54,14 @@
     ]
   },
   "automate": {
+    "badge": "Automation that brings you closer",
+    "floats": { "package": "Package on the way", "order": "Order #115124", "messages": "Messages", "schedule": "Scheduling", "action": "Automation in action" },
     "title": "Automate your customer's daily routine",
     "body": "Sigma Channel automates everyday interactions, such as appointment reminders, purchase confirmations, and campaigns, strengthening customer contact and ensuring agility and proximity in every interaction.",
     "cta": "Understand how it works"
   },
   "benefits": {
+    "eyebrow": "Results that drive impact",
     "title": "More efficiency and control",
     "items": [
       {

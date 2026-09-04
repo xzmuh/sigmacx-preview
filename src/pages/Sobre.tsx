@@ -33,8 +33,8 @@ export default function Sobre() {
           <img className="ab-hero__mark" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
           <div className="sx-shell ab-hero__layout">
             <header className="ab-hero__title">
-              <p className="ab-label">{l.about}</p>
               <h1><span>{l.title[0]}</span><span>{l.title[1]}</span></h1>
+              <p className="ab-label">{l.about}</p>
               <p className="ab-hero__intro">{t.hero.title}</p>
             </header>
 
@@ -50,24 +50,30 @@ export default function Sobre() {
           </div>
         </section>
 
-        <section className="ab-leadership" data-reveal>
+        <section id="lideranca" className="ab-leadership" data-reveal>
           <div className="sx-shell">
             <div className="ab-leadership__panel">
               <article className="ab-leader ab-leader--first">
                 <a href={team[0].href} target="_blank" rel="noreferrer"><img src={`/media/site/${team[0].photo}`} alt={t.team.members[0].name} /></a>
-                <h3>{t.team.members[0].name}</h3><p>{t.team.members[0].role}</p>
               </article>
 
               <div className="ab-leadership__center">
-                <p className="ab-label">{l.leadership}</p>
                 <h2><span>{l.leaders[0]}</span><span>{l.leaders[1]}</span></h2>
                 <p>{t.history.continues}</p>
               </div>
 
               <article className="ab-leader ab-leader--second">
                 <a href={team[1].href} target="_blank" rel="noreferrer"><img src={`/media/site/${team[1].photo}`} alt={t.team.members[1].name} /></a>
-                <h3>{t.team.members[1].name}</h3><p>{t.team.members[1].role}</p>
               </article>
+            </div>
+
+            <div className="ab-leadership__names">
+              <div>
+                <h3>{t.team.members[0].name}</h3><p>{t.team.members[0].role}</p>
+              </div>
+              <div>
+                <h3>{t.team.members[1].name}</h3><p>{t.team.members[1].role}</p>
+              </div>
             </div>
 
             <div className="ab-leadership__bios">

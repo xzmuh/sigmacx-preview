@@ -390,7 +390,7 @@ function LazyVideo({ src, label }: { src: string; label: string }) {
 export function SigmaExperience() {
   const root = useRef<HTMLDivElement>(null);
   const story = useRef<HTMLElement>(null);
-  const progress = useRef(0);
+  const progress = useRef(0);
   const [sceneReady, setSceneReady] = useState(false);
   const [introMinElapsed, setIntroMinElapsed] = useState(false);
   const motionEnabled = true;
@@ -836,6 +836,11 @@ export function SigmaExperience() {
 
         <div className="security-final-flow">
         <section id="security" className="security section-dark" aria-labelledby="security-title">
+          <div className="security-frame">
+          <div className="security-frame__meta" aria-hidden="true">
+            <span>SECURE ENVIRONMENT</span>
+            <span>ACTIVE / MONITORED</span>
+          </div>
           <div className="security-orbit" aria-hidden="true">
             <div className="security-core">
               <span className="security-core__code">PRIVACY CORE</span>
@@ -859,6 +864,7 @@ export function SigmaExperience() {
             <div className="cert-row">
               <span>LGPD</span><span>GDPR</span><span>PCI</span><span>ISO 27001</span>
             </div>
+          </div>
           </div>
         </section>
 

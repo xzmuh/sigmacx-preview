@@ -22,8 +22,9 @@ export default function SigmaChannel() {
   return (
     <PageShell title={t.meta.title} description={t.meta.description} theme="suite" endsLight={false}>
       {/* 1. Hero: frase de abertura como titulo, CTA (o video vem logo abaixo) */}
-      <section className="sx-hero sx-hero--channel sx-dark">
+      <section className="sx-hero sx-hero--channel sx-dark sx-hero--live">
         <div className="sx-hero__aura" aria-hidden="true" />
+        <TechLines variant="channel" />
         <div className="sx-shell sx-hero__inner sx-hero__inner--left">
           <p className="sx-eyebrow">{t.hero.badge}</p>
           <h1 className="sx-h1"><SplitText text={t.opening} /></h1>
@@ -77,50 +78,66 @@ export default function SigmaChannel() {
 
       <SectionTransition to="light" />
 
-      {/* 5. Fluxos personalizaveis: passos + gif */}
-      <section className="sx-section sx-section--wm" data-reveal>
+      {/* 5. Fluxos personalizaveis: passos com a linha viva (como a secao
+          "Transformamos" do Produto) e a animacao solta no fundo, sem card */}
+      <section className="sx-section sx-section--wm sx-flows" data-reveal>
         <Watermark side="left" />
         <div className="sx-shell">
           <h2 className="sx-h2"><SplitText text={t.flows.title} /></h2>
           <p className="sx-body">{t.flows.body}</p>
-          <div className="sx-feature sx-feature--framed" style={{ marginTop: 36 }}>
-            <ol className="sx-steps">
-              {t.flows.steps.map((step, i) => (
-                <li key={step.title}>
-                  <Icon name={stepIcons[i]} fill />
-                  <div><h3>{step.title}</h3><p>{step.body}</p></div>
-                </li>
-              ))}
-            </ol>
-            <div className="sx-feature__media"><img src="/media/site/Fluxo.webp" alt="" loading="lazy" /></div>
+          <div className="sx-flows__grid">
+            <div className="sx-flows__steps">
+              <svg className="sx-flows__path" viewBox="0 0 64 900" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M32 0 C 58 120, 8 220, 32 360 C 54 480, 10 600, 32 740 C 50 830, 20 870, 32 900" />
+              </svg>
+              <ol>
+                {t.flows.steps.map((step, i) => (
+                  <li key={step.title}>
+                    <span className="sx-flows__node"><Icon name={stepIcons[i]} /></span>
+                    <div><h3>{step.title}</h3><p>{step.body}</p></div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <div className="sx-flows__media" aria-hidden="true">
+              <img src="/media/site/Fluxo.gif" alt="" loading="lazy" />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 6. Automatize o dia a dia: texto a esquerda, video a direita, sem moldura */}
-      <section className="sx-section sx-section--atmosphere" data-reveal>
-        <div className="sx-shell sx-feature">
-          <div>
+      {/* 6. Automatize o dia a dia: badge, CTA solido e o video cercado de
+          cards flutuantes de notificacao, como na referencia */}
+      <section className="sx-section sx-section--atmosphere sx-automate" data-reveal>
+        <div className="sx-shell sx-automate__grid">
+          <div className="sx-automate__copy">
+            <p className="sx-automate__badge"><Icon name="bell" /> {t.automate.badge}</p>
             <h2 className="sx-h2"><SplitText text={t.automate.title} /></h2>
             <p className="sx-body">{t.automate.body}</p>
             <p style={{ marginTop: 26 }}>
               <a className="sx-cta sx-cta--grad" href={DEMO_URL} target="_blank" rel="noreferrer">{t.automate.cta} <span aria-hidden="true">→</span></a>
             </p>
           </div>
-          <SuiteGlow radius={22}><Video src={VIDEO.msgBR} className="sx-video--dark" sound /></SuiteGlow>
+          <div className="sx-automate__stage">
+            <Video src={VIDEO.msgBR} className="sx-video--bare" sound />
+          </div>
         </div>
       </section>
 
-      {/* 7. Mais eficiencia e controle: 3 cards com icone */}
-      <section className="sx-section" data-reveal>
+      {/* 7. Mais eficiencia e controle: cards conectados por linha com nos */}
+      <section className="sx-section sx-results" data-reveal>
         <div className="sx-shell">
-          <h2 className="sx-h2 sx-center" style={{ marginBottom: 30 }}><SplitText text={t.benefits.title} /></h2>
-          <div className="sx-grid sx-grid--3">
+          <p className="sx-eyebrow sx-center sx-results__eyebrow">✦ {t.benefits.eyebrow}</p>
+          <h2 className="sx-h2 sx-center" style={{ marginBottom: 40 }}><SplitText text={t.benefits.title} /></h2>
+          <div className="sx-results__grid">
             {t.benefits.items.map((item, i) => (
-              <article className="sx-card sx-card--icon" key={item.title}>
-                <h3 className="sx-h3">{item.title}</h3>
-                <Icon name={benefitIcons[i]} />
-                <p>{item.body}</p>
+              <article className="sx-result-card" key={item.title}>
+                <span className="sx-result-card__blob"><Icon name={benefitIcons[i]} /></span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                  <i className="sx-result-card__dash" aria-hidden="true" />
+                </div>
               </article>
             ))}
           </div>

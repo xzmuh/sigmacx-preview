@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
 import { SectionTransition } from "../site/SectionTransition";
-import { FeatureAccordion, Video, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
+import { FeatureAccordion, TechLines, Video, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
 import { CASE_TECBAN_PDF, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
 import { href, pick, rich, useLang } from "../lib/i18n";
 import { Link } from "react-router-dom";
@@ -24,8 +24,9 @@ export default function SigmaInsights() {
   return (
     <PageShell title={t.meta.title} description={t.meta.description} theme="suite">
       {/* 1. Hero: titulo, apoio e CTA (o video vem logo abaixo) */}
-      <section className="sx-hero sx-hero--insights sx-dark">
+      <section className="sx-hero sx-hero--insights sx-dark sx-hero--live">
         <div className="sx-hero__aura" aria-hidden="true" />
+        <TechLines variant="suite" />
         <div className="sx-shell sx-hero__inner">
           <p className="sx-eyebrow">{t.hero.badge}</p>
           <div className="sx-center">
@@ -57,10 +58,6 @@ export default function SigmaInsights() {
           <div className="sx-insights-console">
             <div className="sx-insights-console__media">
               <SuiteGlow dark radius={18}><Video src={VIDEO.dashboard} className="sx-video--bare" sound /></SuiteGlow>
-              <div className="sx-insights-console__status" key={activeDashboard}>
-                <span aria-hidden="true" />
-                <p>{t.dashboards.items[activeDashboard].title}</p>
-              </div>
             </div>
             <div className="sx-insights-console__controls">
               <FeatureAccordion items={t.dashboards.items} icons={dashboardIcons} active={activeDashboard}

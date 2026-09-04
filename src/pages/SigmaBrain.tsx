@@ -25,8 +25,9 @@ export default function SigmaBrain() {
   return (
     <PageShell title={t.meta.title} description={t.meta.description} theme="suite">
       {/* 1. Hero */}
-      <section className="sx-hero sx-hero--brain sx-dark">
+      <section className="sx-hero sx-hero--brain sx-dark sx-hero--live">
         <div className="sx-hero__aura" aria-hidden="true" />
+        <TechLines variant="brain" />
         <div className="sx-shell sx-hero__inner sx-hero__inner--left">
           <p className="sx-eyebrow">{t.hero.badge}</p>
           <div>
@@ -103,25 +104,29 @@ export default function SigmaBrain() {
 
       <SectionTransition to="light" />
 
-      {/* 5. Autonomo e configuravel + faca ajustes: uma secao so, em duas colunas */}
-      <section className="sx-section sx-section--tint" data-reveal>
-        <div className="sx-shell sx-feature sx-feature--framed">
-          <div>
+      {/* 5. Autonomo e configuravel: editor de fluxo desenhado em codigo,
+          seguindo o mockup de referencia (nos, conexoes teal, canais, donut) */}
+      <section className="sx-section sx-section--tint sx-builder-scene" data-reveal>
+        <div className="sx-shell sx-builder">
+          <div className="sx-builder__copy">
             <p className="sx-eyebrow">{t.configurable.adjust}</p>
             <h2 className="sx-h2"><SplitText text={t.configurable.title} /></h2>
-            <div className="sx-list">
+            <div className="sx-builder__items">
               {t.configurable.items.map((item, i) => (
-                <div className="sx-item" key={item.title}>
-                  <Icon name={configIcons[i]} />
+                <div className="sx-builder__item" key={item.title}>
+                  <span className="sx-builder__badge"><Icon name={configIcons[i]} /></span>
                   <div><h3>{item.title}</h3><p>{item.body}</p></div>
                 </div>
               ))}
             </div>
-            <p style={{ marginTop: 28 }}>
-              <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.configurable.cta} <span aria-hidden="true">→</span></a>
+            <p className="sx-builder__action">
+              <a className="sx-cta sx-cta--solid" href={DEMO_URL} target="_blank" rel="noreferrer">{t.configurable.cta} <span aria-hidden="true">→</span></a>
             </p>
           </div>
-          <div className="sx-figure"><img src="/media/site/G2-BR.webp" alt="" loading="lazy" /></div>
+
+          <div className="sx-builder__stage" aria-hidden="true">
+            <img src="/media/site/G2-BR.webp" alt="" loading="lazy" />
+          </div>
         </div>
       </section>
 

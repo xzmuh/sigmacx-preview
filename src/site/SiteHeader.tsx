@@ -13,15 +13,17 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [compact, setCompact] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
+  const [companyOpen, setCompanyOpen] = useState(false);
   const location = useLocation();
   const lang = langFromPath(location.pathname);
-  const t = pick(ui as Record<Lang, typeof ui.pt>, lang).nav;
+  const dict = pick(ui as Record<Lang, typeof ui.pt>, lang);
+  const t = dict.nav;
   const base = stripLang(location.pathname);
   // Dropdown de produtos so dentro da area de produtos; na home e demais paginas, link simples.
   const showDrop = base.startsWith("/produto") || base.startsWith("/sigma-");
 
   const products = [
-    { to: "/produto", label: "Sigma Suite", note: t.productNotes.suite },
+    { to: "/produto", label: t.platforms, note: t.productNotes.suite },
     { to: "/sigma-channel", label: "Sigma Channel", note: t.productNotes.channel },
     { to: "/sigma-brain", label: "Sigma Brain", note: t.productNotes.brain },
     { to: "/sigma-insights", label: "Sigma Insights", note: t.productNotes.insights },
@@ -45,6 +47,7 @@ export function SiteHeader() {
   useEffect(() => {
     setMenuOpen(false);
     setDropOpen(false);
+    setCompanyOpen(false);
   }, [location.pathname]);
 
   const setHoverOrigin = (event: ReactPointerEvent<HTMLAnchorElement>) => {
@@ -53,7 +56,7 @@ export function SiteHeader() {
     event.currentTarget.style.setProperty("--hover-origin", origin);
   };
   const hover = { onPointerEnter: setHoverOrigin, onPointerMove: setHoverOrigin, onPointerLeave: setHoverOrigin };
-  const close = () => { setMenuOpen(false); setDropOpen(false); };
+  const close = () => { setMenuOpen(false); setDropOpen(false); setCompanyOpen(false); };
   const openProducts = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     close();
     // Nova aba, atalhos do navegador e navegacoes fora da home continuam nativos.
@@ -97,7 +100,22 @@ export function SiteHeader() {
           <Link data-index="02" to={href("/produto", lang)} {...hover} onClick={openProducts}>{t.products}</Link>
         )}
         <a data-index="03" href={DIALOGI_URL} target="_blank" rel="noreferrer" {...hover} onClick={close}>{t.dialogi}</a>
-        <Link data-index="04" to={href("/sobre", lang)} {...hover} onClick={close}>{t.about}</Link>
+        <div
+          className={companyOpen ? "nav-drop nav-drop--open" : "nav-drop"}
+          onMouseEnter={() => setCompanyOpen(true)}
+          onMouseLeave={() => setCompanyOpen(false)}
+        >
+          <Link data-index="04" to={href("/sobre", lang)} {...hover} onClick={close} aria-haspopup="true" aria-expanded={companyOpen}
+            onFocus={() => setCompanyOpen(true)}>
+            {t.company} <i className="nav-drop__caret" aria-hidden="true" />
+          </Link>
+          <div className="nav-drop__panel" role="group" aria-label={t.company}>
+            <Link to={href("/sobre", lang)} onClick={close}>
+              <strong>{t.about}</strong>
+              <small>{t.aboutNote}</small>
+            </Link>
+          </div>
+        </div>
         <Link data-index="05" to={href("/blog", lang)} {...hover} onClick={close}>{t.blog}</Link>
       </nav>
       <div className="header-actions">

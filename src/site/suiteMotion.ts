@@ -173,8 +173,10 @@ export function useSuiteMotion(enabled: boolean) {
       if (!fine) return;
 
       /* ---------------------------------------------------- tilt 3D com brilho */
+      /* .sx-story-media fora da lista: o brilho que seguia o mouse sobre o
+         video da esfera foi removido a pedido (2026-09-04). */
       const tiltables = root.querySelectorAll<HTMLElement>(
-        ".sx-card, .sx-benefits-bento__item, .sx-benefits-bento__statement, .sx-suite-stage__media, .sx-insights-split__media, .sx-figure, .sx-case-switcher__tabs button, .sx-story-media",
+        ".sx-card, .sx-benefits-bento__item, .sx-benefits-bento__statement, .sx-suite-stage__media, .sx-insights-split__media, .sx-figure, .sx-case-switcher__tabs button",
       );
       tiltables.forEach((el) => {
         el.classList.add("sx-tilt");

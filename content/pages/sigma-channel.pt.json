@@ -54,11 +54,14 @@
     ]
   },
   "automate": {
+    "badge": "Automação que aproxima",
+    "floats": { "package": "Pacote a caminho", "order": "Pedido #115124", "messages": "Mensagens", "schedule": "Agendamento", "action": "Automação em ação" },
     "title": "Automatize o dia a dia do seu cliente",
     "body": "O Sigma Channel automatiza interações do dia a dia, como lembretes de agendamento, confirmações de compra e campanhas, reforçando o contato com o cliente e garantindo agilidade e proximidade em cada interação.",
     "cta": "Entenda como funciona"
   },
   "benefits": {
+    "eyebrow": "Resultados que impulsionam",
     "title": "Mais eficiência e controle",
     "items": [
       {

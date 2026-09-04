@@ -10,21 +10,26 @@
   },
   "cases": {
     "title": "Soluções que construímos juntos",
+    "highlight": "Cliente em destaque",
     "fractaliaLead": "O Sigma Insights moderniza operações de atendimento ao oferecer mais **estabilidade, eficiência e centralização**, resultando em produtividade maior, melhor percepção de qualidade e clientes mais satisfeitos, além de abrir espaço para a evolução com inteligência artificial.",
     "fractaliaResults": [
       {
+        "value": "-20%",
         "title": "Redução de reclamações",
         "body": "Diminuição de 20% em reclamações relacionadas à qualidade das chamadas e desconexões, graças à maior estabilidade da plataforma."
       },
       {
+        "value": "87%",
         "title": "Melhora da percepção de qualidade",
         "body": "A satisfação do cliente cresceu, atingindo 87% de percepção positiva e refletindo uma melhoria de 3 pontos percentuais na qualidade percebida"
       },
       {
+        "value": "+15%",
         "title": "Aumento da produtividade",
         "body": "Expansão de canais digitais sem aumento proporcional de recursos humanos gerou +15% de produtividade da equipe."
       },
       {
+        "value": "Multilíngue",
         "title": "Atendimento multilingue eficiente",
         "body": "Tradução automática nos canais de texto permitiu atender em múltiplos idiomas sem necessidade de contratar agentes adicionais, o que resultou em +10% de produtividade."
       }
@@ -34,18 +39,22 @@
     "tecbanLead": "O Sigma Insights transformou a gestão de chamadas com análises automatizadas, trazendo eficiência operacional e aumento expressivo da satisfação dos clientes.",
     "tecbanResults": [
       {
+        "value": "+1.000%",
         "title": "Evolução do sentimento positivo do cliente",
         "body": "A satisfação cresceu de apenas 4% em 2023 para 46% em 2025, uma alta de mais de 1.000% em sentimento positivo, enquanto interações neutras caíram de 90% para 22%."
       },
       {
+        "value": "-4 p.p.",
         "title": "Redução de silêncios em chamadas",
         "body": "O percentual de silêncio caiu de 29% para 25%, tornando as interações mais objetivas e fluidas."
       },
       {
+        "value": "-23s",
         "title": "Mais eficiência operacional",
         "body": "Ajustes identificados pelas análises reduziram, por exemplo, 23 segundos no TMO em fluxos de atendimento específicos."
       },
       {
+        "value": "↓ Volume",
         "title": "Menos rechamadas",
         "body": "Alterações em scripts de atendimento reduziram o volume de contatos repetidos, melhorando a experiência e a clareza para o cliente."
       }
@@ -80,7 +89,18 @@
       }
     ],
     "cta": "Confira na prática",
+    "viz": {
+      "messages": "Mensagens",
+      "timeTotal": "Tempo total de interação",
+      "yearAll": "Ano todo",
+      "step": "Passo"
+    },
     "quote": "Empresas que utilizam **analytics** alcançam até **23% mais crescimento de receita e 12% maior retenção de clientes.**",
+    "statLead": "Empresas que utilizam **analytics** alcançam resultados mensuráveis.",
+    "stats": [
+      { "value": "+23%", "label": "mais crescimento de receita" },
+      { "value": "+12%", "label": "maior retenção de clientes" }
+    ],
     "source": "Source: Folio 3"
   },
   "video": {

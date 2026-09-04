@@ -387,6 +387,10 @@ video {
 .experience-layer canvas {
   position: relative;
   z-index: 2;
+  /* Particulas se dissolvem em toda a volta: elipse unica, sem corte seco
+     em nenhuma borda (topo, base, esquerda, direita). */
+  -webkit-mask-image: radial-gradient(ellipse 72% 66% at 50% 46%, #000 46%, rgba(0, 0, 0, 0.75) 64%, transparent 94%);
+  mask-image: radial-gradient(ellipse 72% 66% at 50% 46%, #000 46%, rgba(0, 0, 0, 0.75) 64%, transparent 94%);
 }
 
 .tech-hud {
@@ -429,8 +433,10 @@ video {
     radial-gradient(ellipse at 65% 58%, rgba(185, 255, 155, 0.09), transparent 38%),
     radial-gradient(ellipse at 38% 62%, rgba(255, 255, 255, 0.065), transparent 52%);
   overflow: visible;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 80%, transparent 100%);
+  /* Mascara radial: o brilho se dissolve em todas as direcoes antes de
+     encostar na borda da div — sem corte reto embaixo/em cima. */
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 46%, transparent 96%);
+  mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 46%, transparent 96%);
 }
 
 .tech-hud__aura::before,
@@ -535,9 +541,10 @@ video {
 .experience-fallback {
   position: absolute;
   inset: 0;
+  /* Halos com cauda longa: o brilho morre gradualmente, sem anel visivel. */
   background:
-    radial-gradient(circle at 50% 45%, rgba(44, 95, 124, 0.28), transparent 27%),
-    radial-gradient(circle at 28% 30%, rgba(185, 255, 155, 0.12), transparent 31%),
+    radial-gradient(circle at 50% 45%, rgba(44, 95, 124, 0.28), rgba(44, 95, 124, 0.1) 19%, transparent 42%),
+    radial-gradient(circle at 28% 30%, rgba(185, 255, 155, 0.12), rgba(185, 255, 155, 0.05) 20%, transparent 46%),
     var(--navy-deep);
 }
 
@@ -1828,15 +1835,67 @@ video {
 }
 
 .security {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  align-items: center;
   min-height: 100vh;
   padding: 10rem 7vw;
   background:
     linear-gradient(180deg, transparent 68%, var(--navy) 100%),
     radial-gradient(circle at 24% 48%, rgba(96, 91, 229, 0.28), transparent 33%),
     radial-gradient(circle at 82% 18%, rgba(93, 166, 255, 0.09), transparent 28%);
+}
+
+.security-frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  align-items: center;
+  width: min(100%, 1160px);
+  margin-inline: auto;
+  padding: clamp(3rem, 5vw, 5rem);
+  overflow: hidden;
+  border: 1px solid rgba(93, 166, 255, 0.34);
+  border-radius: 30px;
+  background:
+    linear-gradient(115deg, rgba(93, 166, 255, 0.055), transparent 42%),
+    rgba(5, 11, 25, 0.32);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.security-frame::before {
+  position: absolute;
+  inset: 14px;
+  content: "";
+  pointer-events: none;
+  border: 1px solid rgba(185, 255, 155, 0.1);
+  border-radius: 20px;
+}
+
+.security-frame::after {
+  position: absolute;
+  right: clamp(2rem, 4vw, 4rem);
+  bottom: 0;
+  left: clamp(2rem, 4vw, 4rem);
+  height: 1px;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(185, 255, 155, 0.72), transparent);
+}
+
+.security-frame__meta {
+  position: absolute;
+  z-index: 3;
+  top: 22px;
+  right: clamp(2rem, 4vw, 4rem);
+  left: clamp(2rem, 4vw, 4rem);
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.36);
+  font-family: monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+}
+
+.security-frame__meta span:last-child {
+  color: rgba(185, 255, 155, 0.68);
 }
 
 .security-orbit {
@@ -2744,7 +2803,7 @@ video {
   }
 
   .connection,
-  .security {
+  .security-frame {
     grid-template-columns: 1fr;
   }
 
@@ -2997,6 +3056,26 @@ video {
     padding: 7rem 1.2rem;
   }
 
+  .security-frame {
+    padding: 4.5rem 1.5rem 2rem;
+    border-radius: 22px;
+  }
+
+  .security-frame::before {
+    inset: 9px;
+    border-radius: 15px;
+  }
+
+  .security-frame__meta {
+    top: 20px;
+    right: 1.5rem;
+    left: 1.5rem;
+  }
+
+  .security-frame__meta span:last-child {
+    display: none;
+  }
+
   .security-orbit {
     min-height: 340px;
   }
@@ -3215,7 +3294,6 @@ video {
 .site-shell .section-heading,
 .site-shell .section-heading--dark,
 .site-shell .client-rail,
-.site-shell .testimonials,
 .site-shell .solution-compare__heading,
 .site-shell .solution-compare__grid,
 .site-shell .suite-grid,
