@@ -293,7 +293,24 @@
 .sx-page--suite .sx-emotion-stage__pulse span { animation-name: sx-pulse-suite; }
 /* O unico bloco forte da pagina: gradiente das cores secundarias da marca. */
 .sx-page--suite .sx-benefits-bento__statement { background: linear-gradient(135deg, var(--sg-petrol), var(--sg-blue)); }
-.sx-page--suite .sx-benefits-bento__statement > span { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+.sx-page--suite .sx-benefits-bento__statement > span:not(.edge-light),
+.sx-page--suite .sx-benefits-bento__statement > .border-glow-inner > span { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+.sx-page--suite .sx-benefits-bento__statement.border-glow-card { padding: 0; }
+.sx-page--suite .sx-benefits-bento__statement.border-glow-card > .border-glow-inner {
+  min-height: inherit;
+  display: grid;
+  align-content: space-between;
+  justify-items: start;
+  gap: 28px;
+  padding: clamp(30px, 4vw, 52px);
+  border-radius: inherit;
+}
+.sx-page--suite .sx-benefits-bento__statement.border-glow-card > .edge-light {
+  width: auto;
+  height: auto;
+  display: block;
+  border: 0;
+}
 .sx-page--suite .sx-benefits-bento__item { background: #fff; }
 .sx-page--suite .sx-benefits-bento__item:hover { border-color: rgba(0, 169, 169, 0.5); }
 
@@ -348,6 +365,7 @@
 .sx-page--suite .menu-toggle span { background: var(--sg-ink); }
 /* dropdown Produtos e menu mobile */
 .sx-page--suite .site-header .nav-drop__panel { border-color: rgba(31, 41, 57, 0.1); background: #fff; box-shadow: 0 30px 70px rgba(31, 41, 57, 0.18); }
+.sx-page--suite .site-header .nav-drop__panel::after { border-color: rgba(31, 41, 57, .1); background: #fff; }
 .sx-page--suite .site-header .nav-drop__panel a { color: var(--sg-ink); }
 .sx-page--suite .site-header .nav-drop__panel a:hover { background: var(--sg-l100); }
 .sx-page--suite .site-header .nav-drop__panel small { color: var(--sg-g700); }
@@ -377,6 +395,13 @@
 .sx-page em .sx-title-gradient .text-content {
   padding-inline: 0.14em 0.42em;
   margin-inline: -0.14em -0.42em;
+  /* `background-clip: text` so pinta dentro da caixa do fragmento de linha, e
+     num span inline o padding acima cai apenas no primeiro e no ultimo
+     fragmento. Sem isto, a ultima palavra de CADA linha quebrada perde a
+     inclinacao do italico e le como letra cortada ("soluca", "inboun").
+     `clone` da a cada fragmento a sua propria caixa, com o padding junto. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* .sx-word usa overflow:hidden para a palavra subir; o italico e os acentos
@@ -697,9 +722,12 @@
   border-color: rgba(255, 255, 255, 0.13);
   background: rgba(255, 255, 255, 0.035);
 }
+/* O item aberto era um retangulo visivelmente mais claro que parava seco no
+   meio do painel. Agora o teal e mais baixo e o degrade morre antes da borda
+   direita, entao o realce le como luz e nao como outra caixa por cima. */
 .sx-page--suite .sx-insights-story .sx-accordion__item.is-open {
-  border-color: rgba(127, 231, 227, 0.34);
-  background: linear-gradient(90deg, rgba(0, 169, 169, 0.12), rgba(255, 255, 255, 0.035));
+  border-color: rgba(127, 231, 227, 0.2);
+  background: linear-gradient(100deg, rgba(0, 169, 169, 0.07) 0%, rgba(0, 169, 169, 0.03) 46%, transparent 88%);
 }
 .sx-page--suite .sx-insights-story .sx-accordion__trigger { color: #ffffff; }
 .sx-page--suite .sx-insights-story .sx-accordion__panel p { color: rgba(219, 229, 236, 0.7); }
@@ -711,10 +739,25 @@
 }
 .sx-page--suite .sx-insights-story .sx-emotion-stage__pulse p { color: #ffffff; }
 
+/* `overflow-x: auto` no trilho torna o eixo Y `auto` junto, e o trilho passa a
+   recortar tambem para baixo. Com 6px de folga, a sombra dos cards
+   (0 26px 64px -42px) era cortada numa reta cinza. O padding abre espaco para
+   ela e a margem negativa devolve a altura, para o ritmo da secao nao mudar. */
+.sx-page--suite .sx-carousel__track {
+  padding-bottom: 56px;
+  margin-bottom: -50px;
+}
+
 /* Planos diagonais da home, agora na paleta teal/petroleo. Sem blur e sem
    mascaras que acabavam como retangulos no meio da pagina. */
+.sx-page--suite {
+  /* A altura real da emenda, num token: o padding de baixo dos heroes reserva
+     exatamente este valor. Enquanto era um clamp solto aqui e outro em
+     `--sx-seam`, os dois divergiam e a diagonal comia o ultimo bloco do hero. */
+  --sx-seam-suite: clamp(104px, 12vw, 184px);
+}
 .sx-page--suite .section-transition {
-  height: clamp(104px, 12vw, 184px);
+  height: var(--sx-seam-suite);
   isolation: isolate;
   background: transparent;
 }
@@ -1307,7 +1350,7 @@
 .sx-page--suite .sx-case-switcher__intro {
   grid-template-columns: minmax(170px, 0.32fr) minmax(0, 1fr) clamp(84px, 9vw, 140px);
   align-items: center;
-  padding: clamp(26px, 3.4vw, 46px) clamp(24px, 3.4vw, 48px);
+  padding: clamp(20px, 2.4vw, 32px) clamp(24px, 3.4vw, 48px);
   margin-bottom: 0;
   border-bottom: 0;
   background:
@@ -1348,13 +1391,17 @@
 }
 
 /* Metricas: 4 colunas com divisorias, icone em selo e numero grande. */
+/* Compactado (pedido 2026-09-08): o painel do case somava 771px de altura e
+   mais da metade era respiro. Os quatro recuos abaixo cairam junto — cabecalho,
+   faixa de metricas, cada metrica e o rodape — mantendo a mesma proporcao
+   entre eles, entao o bloco encolhe sem mudar de ritmo. */
 .sx-page--suite .sx-case-results {
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding: clamp(18px, 2.4vw, 30px) clamp(12px, 1.8vw, 24px);
+  padding: clamp(12px, 1.5vw, 18px) clamp(12px, 1.8vw, 24px);
 }
 .sx-page--suite .sx-case-result {
   display: block;
-  padding: clamp(20px, 2.4vw, 30px);
+  padding: clamp(16px, 1.7vw, 22px);
   border-bottom: 0;
   border-right: 0;
 }
@@ -1528,8 +1575,8 @@
 /* Rodape: citacao escura e CTA solido petroleo. */
 .sx-page--suite .sx-case-switcher__footer {
   margin: 0 clamp(24px, 3.4vw, 48px);
-  padding-top: clamp(22px, 3vw, 34px);
-  padding-bottom: clamp(26px, 3.4vw, 42px);
+  padding-top: clamp(18px, 2vw, 24px);
+  padding-bottom: clamp(20px, 2.4vw, 30px);
   border-top: 1px solid rgba(31, 41, 57, 0.09);
 }
 .sx-page--suite .sx-case-switcher__footer > p { color: var(--sg-ink); }
@@ -1616,6 +1663,38 @@
   color: rgba(31, 41, 57, 0.66);
   font-size: 0.95rem;
   line-height: 1.45;
+}
+
+/* ==========================================================================
+   A mesma estatistica, agora sobre faixa escura: a moldura de cartao sai e a
+   propria faixa vira a superficie, como a faixa de porcentagem da home. So as
+   cores mudam — grade, medidas e hierarquia continuam as de cima.
+   ========================================================================== */
+.sx-page--suite .sx-stat-band { position: relative; isolation: isolate; overflow: hidden; }
+.sx-page--suite .sx-stat-band::before {
+  position: absolute;
+  z-index: -1;
+  inset: -40% -10%;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(38% 60% at 82% 12%, rgba(0, 169, 169, 0.16), transparent 66%),
+    radial-gradient(42% 66% at 10% 96%, rgba(24, 90, 125, 0.2), transparent 70%);
+}
+.sx-page--suite .sx-stat-band .sx-stat-banner {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+.sx-page--suite .sx-stat-band .sx-stat-banner__copy p { color: #ffffff; }
+.sx-page--suite .sx-stat-band .sx-stat-banner__copy strong { color: #7fe7e3; }
+.sx-page--suite .sx-stat-band .sx-stat-banner__copy cite { color: rgba(255, 255, 255, 0.45); }
+.sx-page--suite .sx-stat-band .sx-stat + .sx-stat { border-left-color: rgba(255, 255, 255, 0.16); }
+.sx-page--suite .sx-stat-band .sx-stat > p { color: rgba(219, 229, 236, 0.72); }
+@media (max-width: 940px) {
+  .sx-page--suite .sx-stat-band .sx-stat + .sx-stat { border-top-color: rgba(255, 255, 255, 0.16); }
 }
 
 @media (max-width: 940px) {
@@ -2386,10 +2465,63 @@
   .sx-page--suite .sx-flows__grid { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ==========================================================================
-   Automatize o dia a dia (Channel): video cercado de cards flutuantes de
-   notificacao, fio tracejado e selo "automacao em acao" — como o mockup.
+/* ===========================================================================
+   Automatize + resultados (Channel): uma cena imersiva unica. O video branco
+   vira uma tela luminosa sobre o fundo ink, em vez de desaparecer numa pagina
+   igualmente branca; os resultados continuam a cena em vidro escuro.
    ========================================================================== */
+.sx-page--suite main > .sx-automate.sx-dark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(86px, 9vw, 138px) clamp(78px, 8vw, 124px);
+  background:
+    linear-gradient(180deg, transparent 58%, rgba(7, 26, 42, 0.58) 82%, #071a2a 100%),
+    radial-gradient(ellipse 44% 72% at 77% 47%, rgba(0, 200, 196, 0.22), transparent 68%),
+    radial-gradient(ellipse 36% 65% at 7% 14%, rgba(36, 119, 184, 0.24), transparent 72%),
+    linear-gradient(128deg, #061123 0%, #082235 45%, #07313c 72%, #071a2a 100%);
+}
+/* A secao nao recorta: o brilho do mockup (box-shadow de 72px) e o da orbita
+   (64px) passavam da borda de baixo e eram decepados numa reta. As duas
+   camadas decorativas desta secao ja se apagam sozinhas — a `::before` por
+   mascara radial e a `::after` por `blur(72px)` — entao nao dependiam do
+   recorte para nao vazar. */
+.sx-page--suite main > .sx-automate.sx-dark {
+  overflow: visible;
+  /* Acima da emenda seguinte (z-index 3). Sem isto o brilho ate escapava da
+     secao, mas a emenda pintava por cima dele com a propria tinta chapada e o
+     corte reto so mudava de lugar: parava na borda e virava azul escuro. */
+  z-index: 4;
+}
+
+.sx-page--suite main > .sx-automate.sx-dark::before {
+  display: block;
+  position: absolute;
+  z-index: -1;
+  inset: -35% 38% -38% -24%;
+  content: "";
+  pointer-events: none;
+  border: 1px solid rgba(127, 231, 227, 0.12);
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle at 50% 50%, transparent 0 74px, rgba(127, 231, 227, 0.07) 75px 76px, transparent 77px 132px);
+  opacity: 0.72;
+  transform: rotate(-14deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 70%);
+  mask-image: radial-gradient(circle, #000 0%, transparent 70%);
+}
+.sx-page--suite main > .sx-automate.sx-dark::after {
+  position: absolute;
+  z-index: -1;
+  right: -8%;
+  bottom: -28%;
+  width: 56%;
+  aspect-ratio: 1.7;
+  content: "";
+  pointer-events: none;
+  border-radius: 50%;
+  background: rgba(0, 169, 169, 0.13);
+  filter: blur(72px);
+}
 .sx-page--suite .sx-automate__grid {
   display: grid;
   grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.08fr);
@@ -2402,39 +2534,185 @@
   gap: 8px;
   margin: 0 0 18px;
   padding: 8px 16px;
-  border: 1px solid rgba(0, 169, 169, 0.35);
+  border: 1px solid rgba(127, 231, 227, 0.42);
   border-radius: 999px;
-  color: var(--sg-petrol);
+  color: #a9f3ee;
+  background: rgba(0, 169, 169, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 0 28px rgba(0, 169, 169, 0.08);
   font-size: 0.72rem;
   font-weight: 750;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.sx-automate__badge .sx-icon { width: 18px; height: 18px; border: 0; color: var(--sg-teal); }
+.sx-automate__badge .sx-icon { width: 18px; height: 18px; border: 0; color: #7fe7e3; }
 .sx-automate__badge .sx-icon svg { width: 14px; height: 14px; }
+.sx-page--suite main .sx-automate.sx-dark .sx-h2 {
+  max-width: 12ch;
+  font-size: clamp(2.35rem, 4.1vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+.sx-page--suite main .sx-automate.sx-dark .sx-body {
+  max-width: 54ch;
+  margin-top: 20px;
+  color: rgba(225, 239, 245, 0.72);
+  font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+  line-height: 1.72;
+}
+.sx-page--suite main .sx-automate.sx-dark .sx-cta--grad {
+  color: #05202b;
+  background: linear-gradient(105deg, #7fe7e3, #40d7cb 55%, #8ff0bd);
+  box-shadow: 0 18px 46px -18px rgba(64, 215, 203, 0.68);
+}
+.sx-page--suite main .sx-automate.sx-dark .sx-cta--grad:hover {
+  box-shadow: 0 22px 56px -17px rgba(64, 215, 203, 0.86);
+}
 
-/* O video ja e a composicao completa (cards e ilustracoes no proprio
-   arquivo, fundo branco). Secao em branco puro para ele ficar solto. */
-.sx-page--suite .sx-section--atmosphere.sx-automate { background: #ffffff; }
-.sx-page--suite .sx-section--atmosphere.sx-automate::before { display: none; }
+/* O arquivo traz a composicao e o fundo branco. A moldura assume esse branco
+   como uma tela de produto e cria contraste deliberado com a cena escura. */
+.sx-automate__stage {
+  position: relative;
+  z-index: 1;
+  padding: clamp(7px, 0.8vw, 11px);
+  border: 1px solid rgba(151, 227, 231, 0.3);
+  border-radius: clamp(22px, 2.4vw, 34px);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 42px 100px -42px rgba(0, 0, 0, 0.92),
+    0 0 0 7px rgba(255, 255, 255, 0.035),
+    0 0 72px rgba(0, 169, 169, 0.15),
+    inset 0 1px 0 #ffffff;
+  transform: perspective(1100px) rotateY(-2.5deg) rotateX(1deg);
+  transition: transform 0.7s var(--ease-sigma), box-shadow 0.7s var(--ease-sigma);
+}
+/* O video e 1:1 (600x600) e a moldura e 1.76:1. Com `cover` ele era ampliado e
+   tinha ~43% da altura cortada — sumiam o balao de notificacao no topo e os
+   botoes Cancelar/Confirmar embaixo. Com `contain` o quadro inteiro aparece, e
+   como a arte ja e reduzida em vez de ampliada, tambem fica mais nitida. O
+   fundo e o mesmo #1f2838 do proprio video, entao as laterais nao aparecem. */
+.sx-automate__stage .sx-video video { object-fit: contain; }
+
+.sx-automate__stage:hover {
+  transform: perspective(1100px) rotateY(0) rotateX(0) translateY(-5px);
+  box-shadow: 0 52px 120px -42px rgba(0, 0, 0, 0.96), 0 0 0 7px rgba(255, 255, 255, 0.05), 0 0 90px rgba(0, 169, 169, 0.22);
+}
+.sx-automate__stage-orbit {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 118%;
+  height: 136%;
+  border: 1px solid rgba(127, 231, 227, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  box-shadow: 0 0 64px rgba(0, 169, 169, 0.08);
+  animation: sx-automate-orbit 7s ease-in-out infinite alternate;
+}
+.sx-automate__stage-orbit::before,
+.sx-automate__stage-orbit::after {
+  position: absolute;
+  content: "";
+  border-radius: 50%;
+  background: #7fe7e3;
+  box-shadow: 0 0 0 7px rgba(127, 231, 227, 0.08), 0 0 24px rgba(127, 231, 227, 0.7);
+}
+.sx-automate__stage-orbit::before { top: 14%; left: 9%; width: 7px; height: 7px; }
+.sx-automate__stage-orbit::after { right: 8%; bottom: 18%; width: 5px; height: 5px; }
+@keyframes sx-automate-orbit {
+  from { transform: translate(-50%, -50%) rotate(-8deg) scale(0.98); opacity: 0.62; }
+  to { transform: translate(-50%, -50%) rotate(-4deg) scale(1.025); opacity: 1; }
+}
 .sx-automate__stage .sx-video {
-  width: 106%;
+  width: 100%;
   max-width: none;
-  margin-inline: -3%;
+  margin-inline: 0;
   border: 0;
-  background: transparent;
+  border-radius: clamp(16px, 1.8vw, 25px);
+  /* O mesmo #1f2838 do fundo do proprio video: com `contain` sobra faixa dos
+     dois lados, e transparente ela mostrava o branco da moldura. */
+  background: #1f2838;
 }
 
 @media (max-width: 980px) {
   .sx-page--suite .sx-automate__grid { grid-template-columns: minmax(0, 1fr); }
+  .sx-page--suite main .sx-automate.sx-dark .sx-h2 { max-width: 15ch; }
+  .sx-automate__stage { margin-top: 12px; transform: none; }
+  .sx-automate__stage:hover { transform: translateY(-4px); }
   .sx-automate__stage .sx-video { width: 100%; margin-inline: 0; }
 }
 
-/* ==========================================================================
-   Mais eficiencia e controle (Channel): tres cards brancos conectados por
-   uma linha com nos, icone em mancha teal e traco na base.
+/* Emenda organica: a curva substitui o risco horizontal entre as duas cenas.
+   A base clara e exatamente a primeira cor de `.sx-results`. */
+.sx-channel-seam {
+  position: relative;
+  z-index: 3;
+  height: clamp(92px, 9vw, 142px);
+  margin-block: -1px;
+  overflow: hidden;
+  background: #e6f6f5;
+}
+.sx-channel-seam svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Sem blur na forma: o `filter` desfoca a propria silhueta da curva e a
+   emenda saia borrada, como foto fora de foco. Quem deve ser difuso e o
+   traco de luz logo abaixo (`__glow`), que e brilho e nao borda. */
+.sx-channel-seam__fill { fill: #071a2a; }
+.sx-channel-seam__glow {
+  fill: none;
+  stroke: url(#sx-channel-seam-glow);
+  stroke-width: 24px;
+  stroke-linecap: round;
+  opacity: 0.72;
+  filter: blur(7px);
+  animation: sx-channel-seam-breathe 7s ease-in-out infinite alternate;
+}
+@keyframes sx-channel-seam-breathe {
+  from { opacity: 0.48; transform: translateY(2px); }
+  to { opacity: 0.88; transform: translateY(-3px); }
+}
+
+/* ===========================================================================
+   Mais eficiencia e controle (Channel): respiro claro depois da cena escura,
+   ainda com bastante cor para nao voltar ao branco lavado.
    ========================================================================== */
-.sx-results__eyebrow { color: var(--sg-teal); margin-bottom: 12px; }
+/* A secao era branca sobre branco: chao branco, cards brancos, e so a linha
+   teal entre eles dando sinal de vida. Ganha o mesmo chao das outras faixas
+   claras da suite (radiais teal/petroleo sobre o veu sky), um arco de linhas
+   ao fundo e cards com borda, topo colorido e icone em gradiente — o mesmo
+   vocabulario de `--atmosphere`, sem inventar uma linguagem nova. */
+.sx-page--suite main > .sx-results.sx-dark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(72px, 8vw, 118px) clamp(96px, 10vw, 148px);
+  background:
+    radial-gradient(ellipse 45% 76% at 8% 54%, rgba(0, 169, 169, 0.22), transparent 72%),
+    radial-gradient(ellipse 40% 70% at 94% 48%, rgba(46, 117, 187, 0.2), transparent 72%),
+    linear-gradient(180deg, #071a2a 0%, #092a39 52%, #061123 100%);
+}
+.sx-page--suite main > .sx-results.sx-dark::before {
+  position: absolute;
+  z-index: -1;
+  inset: -30% -8%;
+  content: "";
+  pointer-events: none;
+  opacity: 0.52;
+  background: repeating-radial-gradient(
+    ellipse at 50% 58%,
+    transparent 0 104px,
+    rgba(127, 231, 227, 0.075) 105px 106px,
+    transparent 107px 190px
+  );
+  -webkit-mask-image: radial-gradient(ellipse at 50% 52%, #000, transparent 72%);
+  mask-image: radial-gradient(ellipse at 50% 52%, #000, transparent 72%);
+}
+
+.sx-page--suite main .sx-results.sx-dark .sx-results__eyebrow { color: #7fe7e3; margin-bottom: 14px; }
+.sx-page--suite main .sx-results.sx-dark > .sx-shell > .sx-h2 {
+  color: #ffffff;
+  font-size: clamp(2.1rem, 3.8vw, 3.7rem);
+  letter-spacing: -0.045em;
+}
 .sx-results__grid {
   position: relative;
   display: grid;
@@ -2448,8 +2726,9 @@
   right: 4%;
   left: 4%;
   z-index: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(0, 169, 169, 0.5) 12%, rgba(0, 169, 169, 0.5) 88%, transparent);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(127, 231, 227, 0.16) 8%, rgba(64, 215, 203, 0.86) 50%, rgba(127, 231, 227, 0.16) 92%, transparent);
+  box-shadow: 0 0 18px rgba(64, 215, 203, 0.34);
 }
 .sx-result-card {
   position: relative;
@@ -2460,13 +2739,46 @@
   align-items: start;
   padding: clamp(22px, 2.6vw, 32px);
   border-radius: 18px;
-  background: #ffffff;
-  box-shadow: 0 6px 20px rgba(24, 90, 125, 0.06), 0 30px 70px -36px rgba(24, 90, 125, 0.35);
+  min-height: 218px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 28px 70px -38px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
   transition: transform 0.4s var(--ease-sigma), box-shadow 0.4s var(--ease-sigma);
 }
 .sx-result-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 10px 26px rgba(24, 90, 125, 0.1), 0 40px 90px -40px rgba(24, 90, 125, 0.5);
+  box-shadow: 0 36px 90px -38px rgba(0, 0, 0, 0.88), 0 0 48px rgba(0, 169, 169, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.11);
+}
+/* Borda e fio de cor no topo: sobre o chao tingido, o cartao branco chapado
+   sumia. O fio acende no hover, junto com a subida. */
+.sx-page--suite .sx-results.sx-dark .sx-result-card {
+  border: 1px solid rgba(127, 231, 227, 0.16);
+  background:
+    radial-gradient(circle at 0 0, rgba(0, 169, 169, 0.13), transparent 48%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
+}
+/* Sem `overflow: hidden` no cartao: o no da linha que liga um cartao ao outro
+   e o `::after`, e ele fica fora da caixa — recortar o cartao apagava os nos.
+   O fio do topo entao arredonda as proprias pontas. */
+.sx-page--suite .sx-results.sx-dark .sx-result-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, transparent, #40d7cb 28%, #7fe7e3 68%, transparent);
+  opacity: 0.42;
+  transition: opacity 0.4s var(--ease-sigma);
+}
+.sx-page--suite .sx-results.sx-dark .sx-result-card:hover { border-color: rgba(127, 231, 227, 0.44); }
+.sx-page--suite .sx-results.sx-dark .sx-result-card:hover::before { opacity: 1; }
+.sx-page--suite .sx-results.sx-dark .sx-result-card__blob {
+  background: linear-gradient(140deg, rgba(64, 215, 203, 0.22), rgba(24, 90, 125, 0.2));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 12px 30px -18px rgba(64, 215, 203, 0.7);
+  color: #8ceae5;
 }
 .sx-result-card::after {
   content: "";
@@ -2476,7 +2788,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--sg-teal);
+  background: #7fe7e3;
+  box-shadow: 0 0 0 7px rgba(127, 231, 227, 0.08), 0 0 20px rgba(127, 231, 227, 0.7);
   transform: translateY(-50%);
 }
 .sx-result-card:last-child::after { display: none; }
@@ -2490,20 +2803,205 @@
   color: var(--sg-petrol);
 }
 .sx-result-card__blob .sx-icon { border: 0; color: inherit; }
-.sx-result-card h3 { margin: 4px 0 8px; font-size: 1.05rem; font-weight: 700; color: var(--sg-ink); }
-.sx-result-card p { margin: 0; color: rgba(31, 41, 57, 0.6); font-size: 0.92rem; line-height: 1.55; }
+.sx-result-card__index {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  color: rgba(127, 231, 227, 0.16);
+  font-size: 2.8rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -0.08em;
+}
+.sx-page--suite .sx-results.sx-dark .sx-result-card h3 { position: relative; margin: 4px 0 8px; padding-right: 28px; font-size: 1.05rem; font-weight: 700; color: #ffffff; }
+.sx-page--suite .sx-results.sx-dark .sx-result-card p { position: relative; margin: 0; color: rgba(221, 237, 242, 0.65); font-size: 0.92rem; line-height: 1.62; }
 .sx-result-card__dash {
   display: block;
   width: 64px;
   height: 3px;
   margin-top: 16px;
   border-radius: 2px;
+  background: linear-gradient(90deg, #40d7cb, #7fe7e3);
+  box-shadow: 0 0 12px rgba(64, 215, 203, 0.4);
+}
+
+/* Variante clara ativa no Channel. As regras `.sx-dark` acima ficam isoladas
+   caso este componente volte a ser usado dentro de uma cena escura. */
+.sx-page--suite .sx-channel-light-run {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 44% 48% at 2% 22%, rgba(0, 169, 169, 0.18), transparent 72%),
+    radial-gradient(ellipse 42% 52% at 98% 64%, rgba(67, 143, 201, 0.16), transparent 74%),
+    linear-gradient(180deg, #e6f6f5 0%, #edf6fa 40%, #eef6f8 68%, #ffffff 100%);
+}
+.sx-page--suite .sx-channel-light-run::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 62% 22% at 50% 54%, rgba(255, 255, 255, 0.48), transparent 76%),
+    linear-gradient(180deg, transparent 78%, rgba(255, 255, 255, 0.58) 90%, #ffffff 100%);
+}
+.sx-page--suite .sx-channel-light-run > .sx-results:not(.sx-dark) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(52px, 6vw, 88px) clamp(88px, 9vw, 132px);
+  background: transparent !important;
+}
+.sx-page--suite .sx-channel-light-run > .sx-results:not(.sx-dark)::before {
+  position: absolute;
+  z-index: -1;
+  inset: -34% -10%;
+  content: "";
+  pointer-events: none;
+  opacity: 0.58;
+  background: repeating-radial-gradient(ellipse at 50% 42%, transparent 0 104px, rgba(19, 109, 135, 0.1) 105px 106px, transparent 107px 190px);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 48%, #000, transparent 70%);
+  mask-image: radial-gradient(ellipse at 50% 48%, #000, transparent 70%);
+}
+.sx-page--suite main .sx-results:not(.sx-dark) .sx-results__eyebrow { color: var(--sg-petrol); }
+.sx-page--suite main .sx-results:not(.sx-dark) > .sx-shell > .sx-h2 {
+  color: var(--sg-ink);
+  font-size: clamp(2.1rem, 3.8vw, 3.7rem);
+  letter-spacing: -0.045em;
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-results__grid::before {
+  background: linear-gradient(90deg, transparent, rgba(0, 169, 169, 0.22) 8%, rgba(0, 169, 169, 0.9) 50%, rgba(24, 90, 125, 0.24) 92%, transparent);
+  box-shadow: 0 0 18px rgba(0, 169, 169, 0.18);
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card {
+  border: 1px solid rgba(19, 109, 135, 0.16);
+  background:
+    radial-gradient(circle at 0 0, rgba(0, 169, 169, 0.12), transparent 46%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(240, 248, 250, 0.9));
+  box-shadow: 0 28px 70px -42px rgba(24, 90, 125, 0.55), inset 0 1px 0 #ffffff;
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card:hover {
+  border-color: rgba(0, 169, 169, 0.48);
+  box-shadow: 0 34px 80px -38px rgba(24, 90, 125, 0.6), 0 0 42px rgba(0, 169, 169, 0.08), inset 0 1px 0 #ffffff;
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 18px 18px 0 0;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--sg-teal) 28%, #49cfc5 68%, transparent);
+  opacity: 0.68;
+  transition: opacity 0.4s var(--ease-sigma);
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card::after {
   background: var(--sg-teal);
+  box-shadow: 0 0 0 7px rgba(0, 169, 169, 0.09), 0 0 18px rgba(0, 169, 169, 0.45);
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card__blob {
+  background: linear-gradient(140deg, rgba(0, 169, 169, 0.2), rgba(24, 90, 125, 0.11));
+  color: var(--sg-petrol);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 30px -22px rgba(19, 109, 135, 0.65);
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card__index { color: rgba(19, 109, 135, 0.13); }
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card h3 {
+  position: relative;
+  margin: 4px 0 8px;
+  padding-right: 28px;
+  color: var(--sg-ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card p {
+  position: relative;
+  margin: 0;
+  color: rgba(31, 41, 57, 0.66);
+  font-size: 0.92rem;
+  line-height: 1.62;
+}
+.sx-page--suite .sx-results:not(.sx-dark) .sx-result-card__dash {
+  background: linear-gradient(90deg, var(--sg-teal), #49cfc5);
+  box-shadow: 0 0 10px rgba(0, 169, 169, 0.2);
 }
 
 @media (max-width: 940px) {
   .sx-results__grid { grid-template-columns: minmax(0, 1fr); }
   .sx-results__grid::before, .sx-result-card::after { display: none; }
+  .sx-result-card { min-height: 0; }
+}
+
+/* Acoes em superficie clara: quebra a sequencia de quatro blocos escuros e
+   entrega a pagina clara para a emenda final do PageShell. */
+.sx-page--suite .sx-channel-light-run > .sx-channel-actions {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: -2px;
+  padding-block: clamp(82px, 9vw, 132px) clamp(96px, 10vw, 148px);
+  background: transparent !important;
+}
+.sx-page--suite .sx-channel-light-run > .sx-channel-actions::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 0 46%, rgba(0, 169, 169, 0.055) 46.1% 53%, transparent 53.1%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+.sx-page--suite .sx-channel-actions .sx-eyebrow { color: var(--sg-teal); }
+.sx-page--suite .sx-channel-actions .sx-h2 { color: var(--sg-ink); }
+.sx-page--suite .sx-channel-actions .sx-card {
+  border-color: rgba(19, 109, 135, 0.13);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 26px 64px -42px rgba(24, 90, 125, 0.55), inset 0 1px 0 #ffffff;
+}
+.sx-page--suite .sx-channel-actions .sx-card::after {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 3px;
+  content: "";
+  background: linear-gradient(90deg, var(--sg-teal), var(--sg-petrol));
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-sigma);
+}
+.sx-page--suite .sx-channel-actions .sx-card:hover::after { opacity: 1; }
+.sx-page--suite .sx-channel-actions .sx-card p { color: var(--sg-g700); }
+.sx-page--suite .sx-channel-actions .sx-cta--outline {
+  color: var(--sg-petrol);
+  border-color: rgba(19, 109, 135, 0.24);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-automate__stage-orbit, .sx-channel-seam__glow,
+  .sx-channel-footer-seam__glow { animation: none; }
+}
+
+/* Ultima emenda do Channel: branco uniforme no topo, ink do CTA no fundo.
+   Substitui a transicao generica para nenhuma cor reiniciar no meio do caminho. */
+.sx-channel-footer-seam {
+  position: relative;
+  z-index: 3;
+  height: clamp(104px, 10vw, 154px);
+  margin-block: -1px;
+  overflow: hidden;
+  background: var(--sg-ink-900);
+}
+.sx-channel-footer-seam svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.sx-channel-footer-seam__fill { fill: #ffffff; }
+.sx-channel-footer-seam__glow {
+  fill: none;
+  stroke: url(#sx-channel-footer-glow);
+  stroke-width: 22px;
+  stroke-linecap: round;
+  opacity: 0.62;
+  filter: blur(8px);
+  animation: sx-channel-seam-breathe 7s ease-in-out infinite alternate-reverse;
 }
 
 /* ==========================================================================
@@ -2558,6 +3056,12 @@
   background: #ffffff;
 }
 
+/* O `border-top` da regra base fecha uma lista de linhas separadas por regua.
+   Nas quatro variantes da suite o item ja e um cartao com borda propria (ou
+   ganha cantos arredondados ao abrir), entao aquele traco sobrava solto acima
+   do primeiro item — sem encostar em nada. */
+.sx-page--suite .sx-accordion { border-top: 0; }
+
 /* Accordion: tiles de icone; ativo em gradiente teal com fundo tintado */
 .sx-page--suite .sx-insights-console .sx-accordion__item {
   border: 0;
@@ -2585,5 +3089,303 @@
 .sx-page--suite .sx-insights-console .sx-accordion__plus {
   border-color: rgba(31, 41, 57, 0.2);
   color: var(--sg-ink);
+}
+
+/* ===========================================================================
+   Sigma Brain — sentimento vetorial e jornada valorizada
+   ========================================================================== */
+.sx-page--suite .sx-sentiment-viz {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 980px);
+  overflow: hidden;
+  padding: clamp(18px, 2.8vw, 32px);
+  border: 1px solid rgba(127, 231, 227, 0.2);
+  border-radius: clamp(22px, 2.5vw, 32px);
+  background:
+    radial-gradient(circle at 82% 12%, rgba(0, 169, 169, 0.2), transparent 34%),
+    radial-gradient(circle at 4% 94%, rgba(62, 113, 185, 0.18), transparent 38%),
+    linear-gradient(145deg, rgba(13, 39, 55, 0.96), rgba(5, 20, 36, 0.98));
+  box-shadow: 0 42px 100px -42px rgba(0, 0, 0, 0.86), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.sx-sentiment-viz::before {
+  position: absolute;
+  z-index: -1;
+  inset: -50% 28% 8% -18%;
+  content: "";
+  border: 1px solid rgba(127, 231, 227, 0.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 52px rgba(127, 231, 227, 0.025), 0 0 0 104px rgba(127, 231, 227, 0.018);
+}
+.sx-sentiment-viz__top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sx-sentiment-viz__brand,
+.sx-sentiment-viz__live { display: inline-flex; align-items: center; gap: 8px; color: rgba(224, 240, 245, 0.7); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.sx-sentiment-viz__brand i { width: 8px; height: 8px; border-radius: 50%; background: #40d7cb; box-shadow: 0 0 14px rgba(64, 215, 203, 0.8); }
+.sx-sentiment-viz__live { padding: 7px 11px; border: 1px solid rgba(127, 231, 227, 0.18); border-radius: 999px; background: rgba(127, 231, 227, 0.06); }
+.sx-sentiment-viz__live i { width: 5px; height: 5px; border-radius: 50%; background: #7fe7e3; }
+.sx-sentiment-viz__metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: clamp(18px, 2vw, 26px) 0 10px; }
+.sx-sentiment-viz__metrics > span { display: grid; gap: 10px; padding: 13px 15px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; background: rgba(255, 255, 255, 0.04); }
+.sx-sentiment-viz__metrics strong { color: #ffffff; font-size: clamp(1rem, 1.8vw, 1.35rem); font-weight: 650; }
+.sx-sentiment-viz__metrics i { position: relative; height: 3px; overflow: hidden; border-radius: 999px; background: rgba(255, 255, 255, 0.09); }
+.sx-sentiment-viz__metrics i::after { position: absolute; inset: 0 auto 0 0; width: var(--fill); content: ""; border-radius: inherit; background: linear-gradient(90deg, #1aa9bd, #7fe7e3); box-shadow: 0 0 12px rgba(64, 215, 203, 0.5); }
+.sx-sentiment-viz__chart { position: relative; padding: 8px 10px 2px; border-radius: 18px; background: rgba(2, 13, 29, 0.3); }
+.sx-sentiment-viz__chart svg { display: block; width: 100%; height: clamp(220px, 30vw, 330px); overflow: visible; }
+.sx-sentiment-viz__gridline { stroke: rgba(205, 230, 238, 0.1); stroke-width: 1; stroke-dasharray: 4 8; }
+.sx-sentiment-viz__path { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; animation: sx-sentiment-draw 1.2s var(--ease-sigma) both; }
+.sx-sentiment-viz__path--a { stroke: #40d7cb; }
+.sx-sentiment-viz__path--b { stroke: rgba(222, 235, 244, 0.78); animation-delay: 0.16s; }
+.sx-sentiment-viz__path--glow { stroke: rgba(64, 215, 203, 0.5); stroke-width: 10; opacity: 0.44; }
+.sx-sentiment-viz__dot { stroke: #092333; stroke-width: 3; }
+.sx-sentiment-viz__dot--a { fill: #7fe7e3; }
+.sx-sentiment-viz__dot--b { fill: #dceaf0; }
+.sx-sentiment-viz__legend { position: absolute; right: 24px; bottom: 18px; display: flex; gap: 14px; padding: 7px 10px; border-radius: 999px; background: rgba(5, 20, 36, 0.72); color: rgba(232, 243, 247, 0.72); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; }
+.sx-sentiment-viz__legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sx-sentiment-viz__legend i { width: 7px; height: 7px; border-radius: 50%; background: #40d7cb; }
+.sx-sentiment-viz__legend span:last-child i { background: #dceaf0; }
+@keyframes sx-sentiment-draw { from { stroke-dasharray: 900; stroke-dashoffset: 900; opacity: 0; } to { stroke-dasharray: 900; stroke-dashoffset: 0; opacity: 1; } }
+
+.sx-page--suite main > .sx-journeys {
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 46% 76% at 4% 48%, rgba(0, 169, 169, 0.15), transparent 72%),
+    radial-gradient(ellipse 42% 70% at 96% 28%, rgba(67, 143, 201, 0.13), transparent 72%),
+    linear-gradient(180deg, #ffffff 0%, #edf7f8 48%, #ffffff 100%);
+}
+.sx-page--suite .sx-journeys__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: center;
+  min-height: clamp(430px, 46vw, 590px);
+  overflow: hidden;
+  border: 1px solid rgba(19, 109, 135, 0.13);
+  border-radius: clamp(24px, 3vw, 38px);
+  background:
+    radial-gradient(circle at 12% 80%, rgba(0, 169, 169, 0.13), transparent 38%),
+    linear-gradient(128deg, #f3f5f6 0%, #eef5f6 58%, #e7f3f4 100%);
+  box-shadow: 0 38px 90px -58px rgba(24, 90, 125, 0.58), inset 0 1px 0 #ffffff;
+}
+.sx-journeys__visual { position: relative; min-width: 0; }
+.sx-journeys__visual img {
+  display: block;
+  width: 112%;
+  max-width: none;
+  margin-left: -7%;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 94%, transparent 100%);
+}
+.sx-journeys__orbit { position: absolute; inset: 8% -8% 5% 12%; border: 1px solid rgba(0, 169, 169, 0.15); border-radius: 50%; transform: rotate(-8deg); box-shadow: 0 0 0 40px rgba(0, 169, 169, 0.025), 0 0 70px rgba(0, 169, 169, 0.08); }
+.sx-journeys__copy { position: relative; z-index: 2; max-width: 34rem; padding: clamp(30px, 5vw, 68px) clamp(28px, 5vw, 64px) clamp(30px, 5vw, 68px) clamp(12px, 2vw, 28px); }
+.sx-journeys__copy .sx-h2 { max-width: 12ch; font-size: clamp(2rem, 3.4vw, 3.35rem); line-height: 1.04; letter-spacing: -0.045em; }
+.sx-journeys__copy .sx-body { max-width: 44ch; margin-top: 20px; font-size: clamp(0.98rem, 1.15vw, 1.08rem); line-height: 1.7; }
+.sx-journeys__signals { display: flex; align-items: center; gap: 8px; margin-top: 28px; }
+.sx-journeys__signals i { width: 9px; height: 9px; border-radius: 50%; background: var(--sg-teal); box-shadow: 0 0 0 6px rgba(0, 169, 169, 0.08); }
+.sx-journeys__signals i:nth-child(2) { width: 64px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--sg-teal), rgba(0, 169, 169, 0.12)); box-shadow: none; }
+.sx-journeys__signals i:nth-child(3) { width: 6px; height: 6px; opacity: 0.45; box-shadow: none; }
+
+/* ===========================================================================
+   Sigma Insights — a interface e os emojis ficam livres no campo escuro
+   ========================================================================== */
+.sx-page--suite .sx-insights-story .sx-emotions-free {
+  position: relative;
+  isolation: isolate;
+  padding-block: clamp(72px, 8vw, 118px) !important;
+  background:
+    radial-gradient(ellipse 48% 62% at 14% 48%, rgba(0, 169, 169, 0.13), transparent 72%),
+    radial-gradient(ellipse 42% 58% at 88% 32%, rgba(46, 103, 173, 0.12), transparent 72%),
+    transparent;
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: repeating-radial-gradient(ellipse at 48% 54%, transparent 0 112px, rgba(127, 231, 227, 0.055) 113px 114px, transparent 115px 194px);
+  -webkit-mask-image: radial-gradient(ellipse, #000, transparent 72%);
+  mask-image: radial-gradient(ellipse, #000, transparent 72%);
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage {
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__head { max-width: 760px; }
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual::before {
+  position: absolute;
+  z-index: -1;
+  inset: 12% 5%;
+  content: "";
+  border-radius: 50%;
+  background: rgba(0, 169, 169, 0.11);
+  filter: blur(54px);
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual > img {
+  width: 112%;
+  max-width: none;
+  margin-left: -7%;
+  filter: drop-shadow(0 32px 44px rgba(0, 0, 0, 0.26));
+  -webkit-mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 72%, transparent 100%);
+  mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 72%, transparent 100%);
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__pulse {
+  left: 2%;
+  bottom: 5%;
+  border-color: rgba(127, 231, 227, 0.18);
+  background: rgba(5, 20, 36, 0.86);
+  box-shadow: 0 18px 48px -24px rgba(0, 0, 0, 0.8);
+}
+
+/* Alinhamento das duas colunas: `center` deixava o topo do painel branco da
+   foto 54px acima da linha do titulo. Com `start` as duas comecam na mesma
+   linha e o deslocamento fica explicito — a foto desce ate a altura do texto,
+   nao do icone (que e mais alto que a linha de texto). */
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__body { align-items: start; }
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual { margin-top: 30px; }
+
+@media (max-width: 900px) {
+  .sx-page--suite .sx-journeys__panel { grid-template-columns: minmax(0, 1fr); }
+  .sx-journeys__visual { padding-top: 20px; }
+  .sx-journeys__visual img { width: 104%; margin-left: -2%; }
+  .sx-journeys__copy { padding: 12px clamp(24px, 6vw, 42px) clamp(36px, 7vw, 54px); }
+  .sx-journeys__copy .sx-h2 { max-width: 16ch; }
+  .sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual > img { width: 104%; margin-left: -2%; }
+}
+@media (max-width: 600px) {
+  .sx-sentiment-viz__metrics { grid-template-columns: 1fr; }
+  .sx-sentiment-viz__chart svg { height: 210px; }
+  .sx-sentiment-viz__legend { right: 16px; bottom: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-sentiment-viz__path { animation: none; }
+}
+
+/* Direcao final do Brain: pagina clara e assets no tamanho util, usando o
+   branco como parte da imagem em vez de criar outro painel ao redor dela. */
+.sx-page--suite main > .sx-brain-tabs-air {
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(72px, 8vw, 116px) !important;
+  background:
+    radial-gradient(ellipse 40% 60% at 5% 52%, rgba(0, 169, 169, 0.09), transparent 72%),
+    radial-gradient(ellipse 38% 58% at 95% 34%, rgba(67, 143, 201, 0.08), transparent 72%),
+    #ffffff;
+}
+.sx-page--suite .sx-brain-tabs-air .sx-tabs { gap: clamp(28px, 4vw, 48px); }
+.sx-page--suite .sx-brain-tabs-air .sx-tabs__button {
+  color: var(--sg-g700);
+  border-color: rgba(19, 109, 135, 0.14);
+  background: rgba(255, 255, 255, 0.84);
+}
+.sx-page--suite .sx-brain-tabs-air .sx-tabs__button.is-active {
+  color: #ffffff;
+  border-color: var(--sg-petrol);
+  background: linear-gradient(110deg, var(--sg-petrol), var(--sg-teal));
+  box-shadow: 0 16px 34px -20px rgba(0, 169, 169, 0.72);
+}
+.sx-page--suite .sx-brain-tabs-air .sx-tabs__panel .sx-h2 {
+  max-width: 34ch;
+  color: var(--sg-ink);
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  line-height: 1.32;
+}
+.sx-brain-tab-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(76vw, 780px);
+  min-height: clamp(280px, 34vw, 430px);
+  margin-inline: auto;
+}
+.sx-brain-tab-media__orbit {
+  position: absolute;
+  z-index: -1;
+  width: 86%;
+  aspect-ratio: 1.9;
+  border: 1px solid rgba(0, 169, 169, 0.12);
+  border-radius: 50%;
+  box-shadow: 0 0 0 38px rgba(0, 169, 169, 0.025), 0 0 70px rgba(19, 109, 135, 0.08);
+  transform: rotate(-5deg);
+}
+.sx-page--suite .sx-brain-tabs-air .sx-brain-tab-media img {
+  position: relative;
+  display: block;
+  width: auto;
+  max-width: min(100%, 720px);
+  max-height: 420px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 30px rgba(24, 90, 125, 0.11));
+  -webkit-mask-image: radial-gradient(ellipse 94% 94% at 50% 50%, #000 78%, transparent 100%);
+  mask-image: radial-gradient(ellipse 94% 94% at 50% 50%, #000 78%, transparent 100%);
+}
+.sx-page--suite .sx-brain-tabs-air .sx-brain-tab-media--2 {
+  width: min(72vw, 520px);
+  min-height: 330px;
+}
+.sx-page--suite .sx-brain-tabs-air .sx-brain-tab-media--2 img {
+  width: min(100%, 368px);
+  max-height: 265px;
+  border-radius: 16px;
+  filter: drop-shadow(0 24px 34px rgba(24, 90, 125, 0.14));
+}
+
+.sx-page--suite main > .sx-journeys {
+  background:
+    radial-gradient(ellipse 40% 68% at 5% 48%, rgba(0, 169, 169, 0.08), transparent 74%),
+    radial-gradient(ellipse 38% 62% at 95% 42%, rgba(67, 143, 201, 0.07), transparent 74%),
+    #ffffff;
+}
+.sx-page--suite .sx-journeys__panel {
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  min-height: clamp(390px, 42vw, 520px);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.sx-page--suite .sx-journeys__visual { display: grid; place-items: center; }
+.sx-page--suite .sx-journeys__visual img {
+  width: min(94%, 670px);
+  margin-left: 0;
+  mix-blend-mode: normal;
+  filter: brightness(1.035) saturate(0.92) drop-shadow(0 24px 28px rgba(24, 90, 125, 0.1));
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+}
+.sx-page--suite .sx-journeys__orbit { inset: 16% 4% 14% 8%; opacity: 0.68; }
+
+/* O WebP dos emojis ja possui transparencia. Menor e sem container, ele usa
+   diretamente o azul da historia e passa a ler como UI solta no ambiente. */
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual {
+  display: grid;
+  place-items: center;
+}
+.sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual > img {
+  width: min(90%, 760px);
+  max-width: 100%;
+  margin-inline: auto;
+  filter: drop-shadow(0 26px 36px rgba(0, 0, 0, 0.2));
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@media (max-width: 900px) {
+  .sx-brain-tab-media { width: 100%; min-height: 280px; }
+  .sx-page--suite .sx-journeys__panel { grid-template-columns: minmax(0, 1fr); }
+  .sx-page--suite .sx-journeys__visual img { width: min(92%, 670px); }
 }
 

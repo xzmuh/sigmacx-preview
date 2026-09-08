@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
+import { FlowBuilder } from "../site/FlowBuilder";
+import { FlowAnalytics } from "../site/FlowAnalytics";
 import { SectionTransition } from "../site/SectionTransition";
 import { FeatureAccordion, Icon, Video, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient, TechLines } from "../site/ui";
 import { BOT_VS_AGENT_URL, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
@@ -80,11 +82,10 @@ export default function SigmaBrain() {
         </div>
       </section>
 
-      <SectionTransition to="dark" />
+      <SectionTransition to="light" />
 
-      {/* 4. Faixa escura: abas */}
-      <section className="sx-band sx-dark sx-tech-scene" data-reveal>
-        <TechLines variant="brain" />
+      {/* 4. Abas em campo claro: os mockups ficam soltos, sem ampliacao. */}
+      <section className="sx-section sx-brain-tabs-air" data-reveal>
         <div className="sx-shell sx-tabs">
           <div className="sx-tabs__buttons" role="tablist" aria-label="Sigma Brain">
             {t.tabs.map((item, index) => (
@@ -96,13 +97,14 @@ export default function SigmaBrain() {
             ))}
           </div>
           <div className="sx-tabs__panel" key={active} role="tabpanel" id={`brain-panel-${active}`} aria-labelledby={`brain-tab-${active}`}>
-            <h3 className="sx-h2"><SuiteGradient onDark>{t.tabs[active].body}</SuiteGradient></h3>
-            <SuiteGlow radius={22} animated><img src={`/media/site/${tabImages[active]}`} alt={t.tabs[active].label} loading="lazy" /></SuiteGlow>
+            <h3 className="sx-h2"><SuiteGradient>{t.tabs[active].body}</SuiteGradient></h3>
+            <div className={`sx-brain-tab-media sx-brain-tab-media--${active}`}>
+              <span className="sx-brain-tab-media__orbit" aria-hidden="true" />
+              <img src={`/media/site/${tabImages[active]}`} alt={t.tabs[active].label} loading="lazy" />
+            </div>
           </div>
         </div>
       </section>
-
-      <SectionTransition to="light" />
 
       {/* 5. Autonomo e configuravel: editor de fluxo desenhado em codigo,
           seguindo o mockup de referencia (nos, conexoes teal, canais, donut) */}
@@ -124,36 +126,53 @@ export default function SigmaBrain() {
             </p>
           </div>
 
-          <div className="sx-builder__stage" aria-hidden="true">
-            <img src="/media/site/G2-BR.webp" alt="" loading="lazy" />
+          {/* A leitura jogavel entra no lugar de `G2-BR.webp`, que era o print
+              desta mesma tela: a secao fala em configurar e acompanhar, e um
+              print nao deixa o visitante seguir um caminho com o cursor. */}
+          <div className="sx-builder__stage sx-builder__stage--live">
+            <FlowAnalytics copy={t.configurable.canvas} />
           </div>
         </div>
       </section>
 
-      {/* 6. Construa jornadas flexiveis: imagem a esquerda, texto a direita, sem moldura */}
-      <section className="sx-section sx-section--atmosphere" data-reveal>
-        <div className="sx-shell sx-feature sx-feature--flip">
-          <div>
-            <h2 className="sx-h2"><SplitText text={t.journeys.title} /></h2>
-            <p className="sx-body">{t.journeys.body}</p>
+      {/* 6. Construa jornadas flexiveis: o fluxo se dissolve no proprio palco. */}
+      <section className="sx-section sx-journeys" data-reveal>
+        <div className="sx-shell">
+          <div className="sx-journeys__panel">
+            <div className="sx-journeys__visual" aria-hidden="true">
+              <span className="sx-journeys__orbit" />
+              <img src="/media/site/G1-BR.webp" alt="" loading="lazy" />
+            </div>
+            <div className="sx-journeys__copy">
+              <p className="sx-eyebrow">Sigma Brain</p>
+              <h2 className="sx-h2"><SplitText text={t.journeys.title} /></h2>
+              <p className="sx-body">{t.journeys.body}</p>
+              <div className="sx-journeys__signals" aria-hidden="true"><i /><i /><i /></div>
+            </div>
           </div>
-          <div className="sx-figure"><img src="/media/site/G1-BR.webp" alt="" loading="lazy" /></div>
         </div>
       </section>
 
       <SectionTransition to="dark" />
 
       {/* 7. Faixa escura: no-code */}
-      <section className="sx-band sx-dark" data-reveal>
+      <section className="sx-band sx-dark sx-nocode" data-reveal>
+        {/* Mesmo efeito do hero, na variante azul escura: a metade esquerda
+            estava vazia atras do texto. */}
+        <TechLines variant="nocode" />
         <div className="sx-shell sx-feature">
           <div>
+            <p className="sx-eyebrow">Sigma Brain</p>
             <h2 className="sx-h2"><SplitText text={t.nocode.title} /></h2>
             <p className="sx-body">{t.nocode.body}</p>
             <p style={{ marginTop: 26 }}>
               <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.nocode.cta} <span aria-hidden="true">→</span></a>
             </p>
           </div>
-          <div className="sx-feature__media"><img src="/media/site/Sigma-Bot.webp" alt="Sigma Brain" loading="lazy" /></div>
+          {/* A tela jogavel entra no lugar do print do builder: a secao diz
+              "configure de forma visual, sem codigo", e um print pede que o
+              visitante acredite nisso em vez de experimentar. */}
+          <div className="sx-feature__media sx-feature__media--flow"><FlowBuilder copy={t.nocode.builder} /></div>
         </div>
       </section>
 

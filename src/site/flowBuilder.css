@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Builder no-code jogavel (Sigma Brain)
+   Substitui o print `Sigma-Bot.webp`. Vive sobre a faixa escura da pagina,
+   entao a maquete e navy com acento teal — a mesma paleta do brand kit da
+   suite, so que na versao de produto.
+   ========================================================================== */
+
+.fb {
+  --fb-ink: #0b1626;
+  --fb-ink-2: #101f33;
+  --fb-line: rgba(255, 255, 255, .1);
+  --fb-teal: #00a9a9;
+  --fb-text: rgba(233, 242, 247, .92);
+  --fb-mute: rgba(197, 214, 226, .58);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 14px;
+  background: #060d16;
+  box-shadow: 0 30px 80px -36px rgba(0, 0, 0, .75), inset 0 1px 0 rgba(255, 255, 255, .06);
+  color: var(--fb-text);
+  font-size: 11px;
+  line-height: 1.35;
+  user-select: none;
+}
+
+/* `.sx-icon` do site e uma caixa de 40px com borda e raio de 12px. Aqui os
+   icones sao glifos soltos: forcar a caixa para 12-15px deixava o `svg` de
+   18px vazando por fora dela, o que dava aquele aspecto de icone cortado.
+   A caixa some e quem passa a ter tamanho e o proprio glifo. */
+.fb .sx-icon {
+  display: inline-grid;
+  place-items: center;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+.fb__rail .sx-icon svg { width: 17px; height: 17px; }
+.fb__chip .sx-icon svg { width: 13px; height: 13px; }
+.fb__node-head .sx-icon svg { width: 12px; height: 12px; }
+
+/* --- Moldura do navegador ----------------------------------------------- */
+.fb__chrome { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #0a1420; border-bottom: 1px solid var(--fb-line); }
+.fb__dots { display: inline-flex; gap: 6px; }
+.fb__dots i { width: 9px; height: 9px; border-radius: 50%; background: #2b3a4d; }
+.fb__dots i:first-child { background: #e05a58; }
+.fb__dots i:nth-child(2) { background: #e0b34f; }
+.fb__dots i:nth-child(3) { background: #4fbf6b; }
+.fb__url { flex: 1; padding: 4px 10px; border-radius: 999px; background: #08101b; color: var(--fb-mute); font-size: 10.5px; }
+
+/* --- Aplicacao ----------------------------------------------------------- */
+.fb__app { display: grid; grid-template-columns: 40px minmax(0, 1fr); background: var(--fb-ink); }
+.fb__rail { display: flex; flex-direction: column; gap: 14px; align-items: center; padding: 14px 0; border-right: 1px solid var(--fb-line); background: #08111d; color: var(--fb-mute); }
+
+.fb__rail span:first-child { color: var(--fb-teal); }
+
+.fb__main { min-width: 0; padding: 10px 12px 12px; }
+.fb__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--fb-line); }
+.fb__crumb { color: var(--fb-mute); font-size: 10.5px; letter-spacing: .01em; }
+.fb__actions { display: inline-flex; gap: 6px; }
+.fb__ghost, .fb__solid { padding: 4px 10px; border-radius: 6px; font-size: 10px; font-weight: 600; }
+.fb__ghost { border: 1px solid var(--fb-line); color: var(--fb-mute); }
+.fb__solid { background: var(--fb-teal); color: #04222a; }
+
+/* --- Paleta: cada chip adiciona um bloco --------------------------------- */
+.fb__palette { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 0; }
+.fb__chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border: 1px solid var(--fb-line); border-radius: 7px;
+  background: var(--fb-ink-2); color: var(--fb-text);
+  font: inherit; font-size: 10.5px; font-weight: 500; cursor: pointer;
+  transition: border-color .2s, background-color .2s, transform .2s;
+}
+.fb__chip .sx-icon { color: var(--fb-teal); }
+.fb__chip:hover { border-color: rgba(0, 169, 169, .55); background: #16293d; transform: translateY(-1px); }
+.fb__chip:focus-visible { outline: 2px solid var(--fb-teal); outline-offset: 2px; }
+.fb__chip--reset { margin-left: auto; color: var(--fb-mute); }
+
+/* --- Prancheta ----------------------------------------------------------- */
+.fb__surface {
+  position: relative;
+  aspect-ratio: 660 / 300;
+  border: 1px solid var(--fb-line);
+  border-radius: 10px;
+  background:
+    radial-gradient(60% 70% at 20% 20%, rgba(0, 169, 169, .07), transparent 70%),
+    linear-gradient(180deg, #0c1a2b, #091421);
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .035) 1px, transparent 1px),
+    radial-gradient(60% 70% at 20% 20%, rgba(0, 169, 169, .07), transparent 70%),
+    linear-gradient(180deg, #0c1a2b, #091421);
+  background-size: 22px 22px, 22px 22px, auto, auto;
+  container-type: inline-size;
+}
+.fb__canvas { overflow-x: auto; overscroll-behavior-x: contain; }
+.fb__wires { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+.fb__node {
+  position: absolute;
+  overflow: hidden; /* nenhum conteudo do bloco vaza da caixa que as linhas medem */
+  touch-action: none; /* o arrasto do bloco e nosso; o fundo continua rolando */
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 7px 8px;
+  border: 1px solid rgba(255, 255, 255, .14); border-radius: 8px;
+  background: linear-gradient(180deg, #16293d, #112133);
+  box-shadow: 0 8px 20px -10px rgba(0, 0, 0, .8);
+  cursor: grab;
+  transition: border-color .2s, box-shadow .2s;
+}
+.fb__node:hover { border-color: rgba(0, 169, 169, .5); }
+.fb__node:focus-visible { outline: 2px solid var(--fb-teal); outline-offset: 2px; }
+.fb__node.is-selected { border-color: var(--fb-teal); box-shadow: 0 0 0 1px rgba(0, 169, 169, .35), 0 10px 26px -12px rgba(0, 169, 169, .5); }
+.fb__node.is-dragging { cursor: grabbing; box-shadow: 0 18px 34px -14px rgba(0, 0, 0, .9); }
+.fb__node-head { display: flex; align-items: center; gap: 6px; font-size: max(9px, 1.7cqw); font-weight: 600; white-space: nowrap; overflow: hidden; }
+.fb__node-head .sx-icon { flex: 0 0 auto; color: var(--fb-teal); }
+.fb__node--end .fb__node-head .sx-icon { color: #7fe0a8; }
+.fb__node--transaction .fb__node-head .sx-icon { color: #8fc6ff; }
+.fb__node-body { flex: 1; overflow: hidden; padding: 5px 6px; border-radius: 5px; background: rgba(0, 0, 0, .28); color: var(--fb-mute); font-size: max(8.5px, 1.5cqw); line-height: 1.4; }
+.fb__node-list { display: flex; flex-direction: column; gap: 3px; }
+.fb__node-list i { padding: 3px 6px; border-radius: 4px; background: rgba(255, 255, 255, .05); color: var(--fb-mute); font-size: max(8.5px, 1.5cqw); font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.fb__hint { margin: 10px 0 0; color: var(--fb-mute); font-size: 11px; }
+.fb__status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (max-width: 760px) {
+  /* Abaixo disto a prancheta rola na horizontal em vez de encolher. */
+  .fb__surface { min-width: 560px; }
+}
+
+@media (max-width: 620px) {
+  .fb__app { grid-template-columns: 1fr; }
+  .fb__rail { flex-direction: row; justify-content: center; border-right: 0; border-bottom: 1px solid var(--fb-line); padding: 8px 0; }
+  .fb__chip--reset { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb *, .fb *::before, .fb *::after { transition: none !important; animation: none !important; }
+}
+
+/* ==========================================================================
+   A faixa no-code do Sigma Brain com o builder no lugar do print.
+   A tela e o argumento da secao, entao ela leva a coluna maior; o texto passa
+   a ser a legenda dela, nao o contrario.
+   ========================================================================== */
+/* A tela e o foco: ela leva a coluna larga e a secao abre um eixo mais largo
+   que o do resto da pagina, so aqui. */
+.sx-page--suite .sx-nocode .sx-shell { width: min(1440px, 100% - var(--sx-gutter) * 2); }
+.sx-page--suite .sx-nocode .sx-feature {
+  grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+  gap: clamp(32px, 4vw, 64px);
+  align-items: center;
+}
+.sx-page--suite .sx-nocode .sx-feature__media--flow { overflow: visible; border-radius: 0; background: none; border: 0; }
+
+/* Fundo escuro: a secao herdava o "bloco forte da marca" (degrade petroleo ->
+   azul), claro demais para uma tela de produto escura viver em cima dele. Agora
+   e ink profundo com um bloom teal atras justamente da tela, mais uma malha
+   fina mascarada no mesmo ponto — o olho cai onde esta a coisa jogavel. */
+.sx-page--suite main .sx-band.sx-nocode.sx-dark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  --sx-accent: #7fe7e3;
+  background:
+    radial-gradient(56% 76% at 71% 42%, rgba(0, 169, 169, 0.22), transparent 62%),
+    radial-gradient(48% 72% at 6% 88%, rgba(24, 90, 125, 0.26), transparent 68%),
+    linear-gradient(162deg, #06121f 0%, #081c2b 46%, #050f1c 100%);
+}
+/* As linhas ficam na metade esquerda, atras do texto — a direita e da tela, e
+   duas coisas em movimento no mesmo ponto brigariam pelo olho. */
+.sx-page--suite .sx-tech-lines--nocode {
+  inset: -14% 40% -14% -8%;
+  opacity: 0.62;
+  /* Sem a dessaturacao da regra base: nesta variante o azul e o assunto. */
+  filter: saturate(1.05) contrast(1);
+  -webkit-mask-image: radial-gradient(72% 78% at 38% 50%, #000 8%, transparent 82%);
+  mask-image: radial-gradient(72% 78% at 38% 50%, #000 8%, transparent 82%);
+}
+@media (max-width: 900px) {
+  .sx-page--suite .sx-tech-lines--nocode { inset: -10% -6%; opacity: 0.26; }
+}
+
+.sx-page--suite main .sx-band.sx-nocode.sx-dark::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 68px 68px;
+  -webkit-mask-image: radial-gradient(66% 78% at 71% 45%, #000, transparent 76%);
+  mask-image: radial-gradient(66% 78% at 71% 45%, #000, transparent 76%);
+}
+.sx-page--suite main .sx-band.sx-nocode.sx-dark::after {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: -8%;
+  width: min(62vw, 920px);
+  aspect-ratio: 1.3;
+  content: "";
+  pointer-events: none;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 169, 169, 0.18), transparent 64%);
+  filter: blur(38px);
+}
+
+@media (max-width: 900px) {
+  .sx-page--suite .sx-nocode .sx-feature { grid-template-columns: minmax(0, 1fr); }
+}

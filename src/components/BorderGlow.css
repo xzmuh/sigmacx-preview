@@ -24,6 +24,22 @@
     rgba(0, 0, 0, 0.1) 0px 32px 64px;
 }
 
+@property --cursor-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 45deg;
+}
+
+.border-glow-card--always {
+  --edge-proximity: 100;
+  border-color: transparent;
+  animation: border-glow-orbit 7s linear infinite;
+}
+
+@keyframes border-glow-orbit {
+  to { --cursor-angle: 405deg; }
+}
+
 .border-glow-card--light {
   border-color: rgb(24 24 27 / 12%);
   box-shadow:
@@ -47,9 +63,9 @@
   z-index: -1;
 }
 
-.border-glow-card:not(:hover):not(.sweep-active)::before,
-.border-glow-card:not(:hover):not(.sweep-active)::after,
-.border-glow-card:not(:hover):not(.sweep-active) > .edge-light {
+.border-glow-card:not(:hover):not(.sweep-active):not(.border-glow-card--always)::before,
+.border-glow-card:not(:hover):not(.sweep-active):not(.border-glow-card--always)::after,
+.border-glow-card:not(:hover):not(.sweep-active):not(.border-glow-card--always) > .edge-light {
   opacity: 0;
   transition: opacity 0.75s ease-in-out;
 }
@@ -148,6 +164,14 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   z-index: 1;
+}
+
+.border-glow-card--always.border-glow-card--light {
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .border-glow-card--always { animation: none; }
 }

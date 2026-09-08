@@ -55,7 +55,13 @@
   },
   "automate": {
     "badge": "Automatización que acerca",
-    "floats": { "package": "Paquete en camino", "order": "Pedido #115124", "messages": "Mensajes", "schedule": "Agendamiento", "action": "Automatización en acción" },
+    "floats": {
+      "package": "Paquete en camino",
+      "order": "Pedido #115124",
+      "messages": "Mensajes",
+      "schedule": "Agendamiento",
+      "action": "Automatización en acción"
+    },
     "title": "Automatiza la rutina diaria de tus clientes",
     "body": "Sigma Channel automatiza interacciones cotidianas como recordatorios de citas, confirmaciones de compra y campañas, fortaleciendo la relación con el cliente y asegurando agilidad y cercanía en cada contacto.",
     "cta": "Entiende cómo funciona"

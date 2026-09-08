@@ -4,6 +4,13 @@ export const DEMO_URL =
 export const PARTNER_MAIL = "mailto:canais@nuveto.com.br";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/sigma-cx/";
 export const DIALOGI_URL = "https://dialogiai.com/";
+/* Home do site proprio do Dialogi por idioma: e para la que a pagina /dialogi
+   manda o visitante (planos, demonstracao e central de ajuda ficam no produto). */
+export const DIALOGI_SITE: Record<"pt" | "en" | "es", string> = {
+  pt: "https://dialogiai.com/pt/",
+  en: "https://dialogiai.com/en/",
+  es: "https://dialogiai.com/es/",
+};
 export const CAREERS_URL =
   "https://www.glassdoor.com.br/Vis%C3%A3o-geral/Trabalhar-na-Nuveto-EI_IE5463946.13,19.htm";
 
@@ -51,7 +58,7 @@ export const NAV: NavGroup[] = [
     columns: [
       {
         title: "Plataforma",
-        links: [{ label: "Dialogi AI", href: DIALOGI_URL, note: "Inteligência artificial conversacional" }],
+        links: [{ label: "Dialogi AI", to: "/dialogi", note: "Inteligência artificial conversacional" }],
       },
     ],
   },

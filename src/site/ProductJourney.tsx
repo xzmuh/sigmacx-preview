@@ -8,7 +8,7 @@ const PRODUCT_JOURNEY_EVENT = "sigmacx:product-journey";
 type JourneyDetail = {
   to: string;
   lang: Lang;
-  direction: "forward" | "back";
+  direction: "forward" | "back" | "dialogi";
 };
 
 type BrowserViewTransition = {
@@ -19,10 +19,10 @@ type ViewTransitionDocument = Document & {
   startViewTransition?: (update: () => void) => BrowserViewTransition;
 };
 
-const copy: Record<Lang, string> = {
-  pt: "Entrando na Sigma Suite",
-  en: "Entering Sigma Suite",
-  es: "Entrando en Sigma Suite",
+const copy: Record<Lang, Record<JourneyDetail["direction"], string>> = {
+  pt: { forward: "Entrando na Sigma Suite", back: "Voltando para a Home", dialogi: "Entrando no Dialogi" },
+  en: { forward: "Entering Sigma Suite", back: "Returning Home", dialogi: "Entering Dialogi" },
+  es: { forward: "Entrando en Sigma Suite", back: "Volviendo al inicio", dialogi: "Entrando en Dialogi" },
 };
 
 export function startProductJourney(to: string, lang: Lang) {
@@ -34,6 +34,12 @@ export function startProductJourney(to: string, lang: Lang) {
 export function startHomeJourney(to: string, lang: Lang) {
   window.dispatchEvent(new CustomEvent<JourneyDetail>(PRODUCT_JOURNEY_EVENT, {
     detail: { to, lang, direction: "back" },
+  }));
+}
+
+export function startDialogiJourney(to: string, lang: Lang) {
+  window.dispatchEvent(new CustomEvent<JourneyDetail>(PRODUCT_JOURNEY_EVENT, {
+    detail: { to, lang, direction: "dialogi" },
   }));
 }
 
@@ -59,6 +65,7 @@ export function ProductJourney() {
         "product-journey-lock",
         "product-journey-forward",
         "product-journey-back",
+        "product-journey-dialogi",
       );
       running.current = false;
       setAnnouncement("");
@@ -69,7 +76,7 @@ export function ProductJourney() {
       if (!event.detail || running.current) return;
 
       running.current = true;
-      setAnnouncement(copy[event.detail.lang]);
+      setAnnouncement(copy[event.detail.lang][event.detail.direction]);
       const viewDocument = document as ViewTransitionDocument;
 
       if (!viewDocument.startViewTransition) {
@@ -82,7 +89,11 @@ export function ProductJourney() {
       document.documentElement.classList.add(
         "product-journey-running",
         "product-journey-lock",
-        event.detail.direction === "back" ? "product-journey-back" : "product-journey-forward",
+        event.detail.direction === "back"
+          ? "product-journey-back"
+          : event.detail.direction === "dialogi"
+            ? "product-journey-dialogi"
+            : "product-journey-forward",
       );
 
       try {
@@ -106,6 +117,7 @@ export function ProductJourney() {
         "product-journey-lock",
         "product-journey-forward",
         "product-journey-back",
+        "product-journey-dialogi",
       );
       running.current = false;
     };

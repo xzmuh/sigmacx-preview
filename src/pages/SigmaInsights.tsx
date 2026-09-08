@@ -5,6 +5,7 @@ import { FeatureAccordion, TechLines, Video, Vimeo, Watermark, SplitText, SuiteG
 import { CASE_TECBAN_PDF, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
 import { href, pick, rich, useLang } from "../lib/i18n";
 import { Link } from "react-router-dom";
+import BorderGlow from "../components/BorderGlow";
 import pt from "../../content/pages/sigma-insights.pt.json";
 import en from "../../content/pages/sigma-insights.en.json";
 import es from "../../content/pages/sigma-insights.es.json";
@@ -92,7 +93,7 @@ export default function SigmaInsights() {
       </section>
 
       {/* 6. Leitura emocional imersiva */}
-      <section className="sx-section sx-section--flush" data-reveal>
+      <section className="sx-section sx-section--flush sx-emotions-free" data-reveal>
         <div className="sx-shell">
           <div className="sx-emotion-stage sx-dark">
             <div className="sx-emotion-stage__head">
@@ -102,10 +103,6 @@ export default function SigmaInsights() {
             <div className="sx-emotion-stage__body">
               <div className="sx-emotion-stage__visual">
                 <img src="/media/site/ssss-01.webp" alt="" loading="lazy" />
-                <div className="sx-emotion-stage__pulse" key={activeEmotion}>
-                  <span aria-hidden="true" />
-                  <p>{t.emotions.items[activeEmotion].title}</p>
-                </div>
               </div>
               <div>
                 <FeatureAccordion items={t.emotions.items} icons={patternIcons} active={activeEmotion}
@@ -130,11 +127,22 @@ export default function SigmaInsights() {
             <h2 className="sx-h2"><SplitText text={t.benefits.title} /></h2>
           </div>
           <div className="sx-benefits-bento">
-            <article className="sx-benefits-bento__statement sx-dark">
+            <BorderGlow
+              alwaysOn
+              className="sx-benefits-bento__statement sx-dark"
+              backgroundColor="#061c30"
+              borderRadius={32}
+              glowRadius={44}
+              glowColor="176 100 50"
+              glowIntensity={1.15}
+              coneSpread={22}
+              colors={["#6ee7db", "#00a9a9", "#39bce5"]}
+              fillOpacity={0.22}
+            >
               <span aria-hidden="true">↗</span>
               <p><SuiteGradient onDark>{t.benefits.quote}</SuiteGradient></p>
               <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.benefits.cta} <span aria-hidden="true">→</span></a>
-            </article>
+            </BorderGlow>
             {t.benefits.items.map((item, index) => (
               <article className="sx-benefits-bento__item" key={item.title}>
                 <span>0{index + 1}</span>

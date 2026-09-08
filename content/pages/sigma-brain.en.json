@@ -59,7 +59,22 @@
         "body": "Quickly expand to WhatsApp, voice, social media, and more, without technical complexity."
       }
     ],
-    "cta": "Learn more"
+    "cta": "Learn more",
+    "canvas": {
+      "palette": {
+        "message": "Message",
+        "menu": "Menu",
+        "transaction": "Transaction",
+        "end": "End"
+      },
+      "option": "Option number",
+      "messageBody": "Hi! I am the SigmaCX assistant. How can I help you today?",
+      "canvasLabel": "Service flow read-out, with the volume on each path",
+      "hint": "Drag the blocks to rearrange the read-out, or the canvas to move the scene. Hover a block to follow its path. Percentages are illustrative.",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "fit": "Fit"
+    }
   },
   "journeys": {
     "title": "Build flexible journeys",
@@ -68,7 +83,28 @@
   "nocode": {
     "title": "Create, adjust, and scale customer journeys without coding",
     "body": "No-code puts the power of innovation in the hands of your team. Flows, campaigns, and analytics can be configured visually and intuitively, reducing reliance on technical teams and accelerating response time to business demands.",
-    "cta": "Request a demonstration"
+    "cta": "Request a demonstration",
+    "builder": {
+      "windowTitle": "Builder / Campaign · Vehicle auto check",
+      "preview": "Preview",
+      "save": "Save",
+      "hint": "Drag the blocks to rearrange the flow. Click the palette to add a block wired to the selected one — and Delete to remove it.",
+      "reset": "Start over",
+      "palette": {
+        "message": "Message",
+        "menu": "Menu",
+        "transfer": "Transfer",
+        "condition": "Condition",
+        "transaction": "Transaction",
+        "end": "End"
+      },
+      "messageBody": "Hi! I am the SigmaCX assistant. How can I help you today?",
+      "option": "Option number",
+      "canvasLabel": "Service flow canvas",
+      "nodeHint": "Drag to move, or use the arrow keys. Delete removes the block.",
+      "added": "added to the flow",
+      "removed": "Block removed from the flow"
+    }
   },
   "benefits": {
     "title": "Main benefits",

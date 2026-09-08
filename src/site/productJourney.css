@@ -92,6 +92,12 @@ html.product-journey-back::view-transition-old(root) {
   animation-name: sigma-suite-tunnel-back-fluid;
 }
 
+/* O Dialogi usa a mesma passagem contínua, mas gira para o outro lado da
+   composição para o destino ter uma assinatura própria. */
+html.product-journey-dialogi::view-transition-old(root) {
+  animation-name: sigma-dialogi-tunnel-fluid;
+}
+
 @keyframes sigma-destination-zoom {
   0% {
     transform: scale(0.72);
@@ -264,6 +270,17 @@ html.product-journey-back::view-transition-old(root) {
   }
   to {
     --tunnel-angle: -150deg;
+    --tunnel-radius: 190vmax;
+  }
+}
+
+@keyframes sigma-dialogi-tunnel-fluid {
+  from {
+    --tunnel-angle: 0deg;
+    --tunnel-radius: 61vmax;
+  }
+  to {
+    --tunnel-angle: 210deg;
     --tunnel-radius: 190vmax;
   }
 }

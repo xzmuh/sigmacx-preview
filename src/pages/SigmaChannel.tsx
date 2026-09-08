@@ -106,9 +106,11 @@ export default function SigmaChannel() {
         </div>
       </section>
 
+      <SectionTransition to="dark" />
+
       {/* 6. Automatize o dia a dia: badge, CTA solido e o video cercado de
           cards flutuantes de notificacao, como na referencia */}
-      <section className="sx-section sx-section--atmosphere sx-automate" data-reveal>
+      <section className="sx-section sx-section--atmosphere sx-automate sx-dark" data-reveal>
         <div className="sx-shell sx-automate__grid">
           <div className="sx-automate__copy">
             <p className="sx-automate__badge"><Icon name="bell" /> {t.automate.badge}</p>
@@ -119,54 +121,83 @@ export default function SigmaChannel() {
             </p>
           </div>
           <div className="sx-automate__stage">
+            <span className="sx-automate__stage-orbit" aria-hidden="true" />
             <Video src={VIDEO.msgBR} className="sx-video--bare" sound />
           </div>
         </div>
       </section>
 
-      {/* 7. Mais eficiencia e controle: cards conectados por linha com nos */}
-      <section className="sx-section sx-results" data-reveal>
-        <div className="sx-shell">
-          <p className="sx-eyebrow sx-center sx-results__eyebrow">✦ {t.benefits.eyebrow}</p>
-          <h2 className="sx-h2 sx-center" style={{ marginBottom: 40 }}><SplitText text={t.benefits.title} /></h2>
-          <div className="sx-results__grid">
-            {t.benefits.items.map((item, i) => (
-              <article className="sx-result-card" key={item.title}>
-                <span className="sx-result-card__blob"><Icon name={benefitIcons[i]} /></span>
-                <div>
-                  <h3>{item.title}</h3>
-                  <p>{item.body}</p>
-                  <i className="sx-result-card__dash" aria-hidden="true" />
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <div className="sx-channel-seam" aria-hidden="true">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sx-channel-seam-glow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#185a7d" stopOpacity="0.15" />
+              <stop offset="48%" stopColor="#40d7cb" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#7fe7e3" stopOpacity="0.24" />
+            </linearGradient>
+          </defs>
+          <path className="sx-channel-seam__glow" d="M-40 3C350 92 1090 88 1480 2" />
+          <path className="sx-channel-seam__fill" d="M-40 -24H1480V-4C1090 88 350 92 -40 3Z" />
+        </svg>
+      </div>
 
-      <SectionTransition to="dark" />
-
-      {/* 8. Faixa escura: acoes inteligentes (carrossel, 2 por tela) */}
-      <section className="sx-band sx-dark sx-tech-scene" data-reveal>
-        <TechLines variant="channel" />
-        <div className="sx-shell">
-          <div className="sx-center" style={{ marginBottom: 36 }}>
-            <p className="sx-eyebrow">Sigma Channel</p>
-            <h2 className="sx-h2"><SplitText text={t.actions.title} /></h2>
+      <div className="sx-channel-light-run">
+        {/* 7. Mais eficiencia e controle: cards conectados por linha com nos */}
+        <section className="sx-section sx-results" data-reveal>
+          <div className="sx-shell">
+            <p className="sx-eyebrow sx-center sx-results__eyebrow">✦ {t.benefits.eyebrow}</p>
+            <h2 className="sx-h2 sx-center" style={{ marginBottom: 40 }}><SplitText text={t.benefits.title} /></h2>
+            <div className="sx-results__grid">
+              {t.benefits.items.map((item, i) => (
+                <article className="sx-result-card" key={item.title}>
+                  <span className="sx-result-card__index" aria-hidden="true">0{i + 1}</span>
+                  <span className="sx-result-card__blob"><Icon name={benefitIcons[i]} /></span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                    <i className="sx-result-card__dash" aria-hidden="true" />
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-          <Carousel label={t.actions.title}>
-            {t.actions.items.map((item, i) => (
-              <article className="sx-card sx-card--media" key={item.title}>
-                <div className="sx-card__media"><img src={`/media/site/${actionImages[i]}`} alt="" loading="lazy" /></div>
-                <div className="sx-card__body"><h3 className="sx-h3">{item.title}</h3><p>{item.body}</p></div>
-              </article>
-            ))}
-          </Carousel>
-          <p className="sx-center" style={{ marginTop: 40 }}>
-            <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.actions.cta} <span aria-hidden="true">→</span></a>
-          </p>
-        </div>
-      </section>
+        </section>
+
+        {/* 8. Acoes inteligentes: respiro claro antes do CTA final escuro */}
+        <section className="sx-section sx-channel-actions" data-reveal>
+          <div className="sx-shell">
+            <div className="sx-center" style={{ marginBottom: 36 }}>
+              <p className="sx-eyebrow">Sigma Channel</p>
+              <h2 className="sx-h2"><SplitText text={t.actions.title} /></h2>
+            </div>
+            <Carousel label={t.actions.title}>
+              {t.actions.items.map((item, i) => (
+                <article className="sx-card sx-card--media" key={item.title}>
+                  <div className="sx-card__media"><img src={`/media/site/${actionImages[i]}`} alt="" loading="lazy" /></div>
+                  <div className="sx-card__body"><h3 className="sx-h3">{item.title}</h3><p>{item.body}</p></div>
+                </article>
+              ))}
+            </Carousel>
+            <p className="sx-center" style={{ marginTop: 40 }}>
+              <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.actions.cta} <span aria-hidden="true">→</span></a>
+            </p>
+          </div>
+        </section>
+      </div>
+
+      <div className="sx-channel-footer-seam" aria-hidden="true">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sx-channel-footer-glow" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#185a7d" stopOpacity="0.2" />
+              <stop offset="52%" stopColor="#40d7cb" stopOpacity="0.76" />
+              <stop offset="100%" stopColor="#7fe7e3" stopOpacity="0.16" />
+            </linearGradient>
+          </defs>
+          <path className="sx-channel-footer-seam__glow" d="M-40 3C350 82 1090 88 1480 3" />
+          <path className="sx-channel-footer-seam__fill" d="M-40 -24H1480V-4C1090 88 350 82 -40 3Z" />
+        </svg>
+      </div>
     </PageShell>
   );
 }

@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "title": "Dialogi AI - Sigma CX",
+    "description": "O Dialogi é a plataforma de IA empática da SigmaCX para atendimento em WhatsApp, chat, redes sociais e voz: todas as interações digitais em um só lugar."
+  },
+  "hero": {
+    "from": "Uma plataforma **SigmaCX**",
+    "titleLead": "Conversas digitais",
+    "titleHi": "que soam humanas.",
+    "lead": "O Dialogi é a plataforma de IA empática da SigmaCX para atendimento em WhatsApp, chat, redes sociais e voz: todas as interações digitais em um só lugar, com leitura de intenção e de emoção em cada conversa.",
+    "ctaPrimary": "Conhecer o Dialogi",
+    "ctaSecondary": "Ver os recursos"
+  },
+  "voice": {
+    "alt": "Exemplo ilustrativo de uma chamada de voz no WhatsApp com análise de sentimento em tempo real",
+    "name": "Diana · assistente Dialogi",
+    "channel": "Chamada de voz · WhatsApp",
+    "tags": [
+      "empat.ia",
+      "Transcrição",
+      "Tradução",
+      "Análise de sentimento"
+    ]
+  },
+  "why": {
+    "kicker": "Por que o Dialogi",
+    "title": "Atendimento digital sem trocar de tela, de app ou de canal.",
+    "body": "Boa parte da reputação de uma marca nasce na conexão com o cliente. O Dialogi coloca essa conexão em um fluxo único e devolve, em cada conversa, contexto e leitura de intenção para o time de atendimento.",
+    "pillars": [
+      {
+        "title": "Todos os canais em um só lugar",
+        "body": "WhatsApp, chat no site, redes sociais e voz em uma fila só, com o histórico do cliente preservado na troca de canal."
+      },
+      {
+        "title": "Voz nativa no WhatsApp",
+        "body": "Chamada de voz, mensagem de áudio e vídeo chamada dentro do mesmo fluxo da conversa. O cliente não sai do WhatsApp."
+      },
+      {
+        "title": "Empatia como camada da plataforma",
+        "body": "A empat.ia interpreta emoção, idioma e intenção durante o atendimento e evolui a cada interação, em vez de repetir respostas fixas."
+      }
+    ]
+  },
+  "features": {
+    "kicker": "Recursos",
+    "title": "O que a **plataforma** faz",
+    "body": "Da chamada de voz à validação de identidade: os recursos que sustentam a conversa de ponta a ponta.",
+    "items": [
+      {
+        "cat": "Voz",
+        "title": "Chamada de voz no WhatsApp",
+        "body": "Atendimento que vai além do chat: falar com o cliente por chamada, no mesmo fluxo da conversa."
+      },
+      {
+        "cat": "Voz",
+        "title": "Mensagem de áudio",
+        "body": "Mais prático para quem fala e mais claro para quem atende. Áudio no chat é agilidade e contexto."
+      },
+      {
+        "cat": "empat.ia",
+        "title": "Transcrição e tradução",
+        "body": "Áudio vira texto pesquisável, e a tradução instantânea elimina barreiras de idioma na hora."
+      },
+      {
+        "cat": "empat.ia",
+        "title": "Análise de sentimento",
+        "body": "Ler além das palavras: o Dialogi interpreta a emoção da conversa e sinaliza o que precisa de atenção."
+      },
+      {
+        "cat": "Operação",
+        "title": "Multi Agents",
+        "body": "Várias conexões e atendentes em paralelo, sem perder o toque humano em nenhuma delas."
+      },
+      {
+        "cat": "Segurança",
+        "title": "Biometria vocal",
+        "body": "Validação de identidade pela voz: autenticação rápida e segura, sem questionário de verificação."
+      }
+    ],
+    "more": "Também na plataforma: **vídeo chamada**, **assistentes virtuais**, **campanhas de disparo**, **painéis de análise** e **machine learning contínuo**."
+  },
+  "sectors": {
+    "kicker": "Setores",
+    "title": "Feito para qualquer operação de **atendimento digital**",
+    "body": "Abaixo, alguns setores em que o Dialogi já opera. Como fluxos, integrações e automações são configurados por operação, a plataforma não se limita a essa lista: atende empresas de todos os portes.",
+    "items": [
+      {
+        "title": "Educação",
+        "body": "Matrícula, secretaria e comunicação com responsáveis."
+      },
+      {
+        "title": "Financeiro",
+        "body": "Biometria vocal, atendimento personalizado e análise de sentimento."
+      },
+      {
+        "title": "Saúde",
+        "body": "Atendimento 24/7, acessibilidade e tradução, gestão de dados sensíveis."
+      },
+      {
+        "title": "Serviços públicos",
+        "body": "Alto volume de protocolos com fila única e rastreabilidade."
+      },
+      {
+        "title": "Varejo",
+        "body": "Omnicanalidade, recuperação de carrinho e campanhas segmentadas."
+      }
+    ],
+    "open": {
+      "title": "E o seu setor",
+      "body": "Se a operação atende por WhatsApp, chat, redes sociais ou voz, o Dialogi se adapta ao processo que já existe."
+    }
+  },
+  "final": {
+    "titleLead": "O ",
+    "titleBrand": "Dialogi",
+    "titleTrail": " tem site próprio, e é lá que a jornada continua.",
+    "body": "Demonstração da plataforma, recursos em detalhe, planos por porte de operação e a central de ajuda ficam todos no site do Dialogi.",
+    "cta": "Acessar o site do Dialogi",
+    "url": "dialogiai.com · contato@dialogiai.com"
+  }
+}

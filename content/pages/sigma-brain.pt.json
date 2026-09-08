@@ -59,7 +59,22 @@
         "body": "Expanda rapidamente para WhatsApp, voz, redes sociais e muito mais, sem complexidade técnica."
       }
     ],
-    "cta": "Saiba mais"
+    "cta": "Saiba mais",
+    "canvas": {
+      "palette": {
+        "message": "Mensagem",
+        "menu": "Menu",
+        "transaction": "Transação",
+        "end": "Finalizar"
+      },
+      "option": "Opção número",
+      "messageBody": "Olá! Sou o assistente da SigmaCX. Como posso ajudar você hoje?",
+      "canvasLabel": "Leitura do fluxo de atendimento, com o volume de cada caminho",
+      "hint": "Arraste os blocos para reorganizar a leitura, ou a prancheta para mover a cena. Passe o cursor por um bloco para acompanhar o caminho dele. Percentuais ilustrativos.",
+      "zoomIn": "Aproximar",
+      "zoomOut": "Afastar",
+      "fit": "Enquadrar"
+    }
   },
   "journeys": {
     "title": "Construa jornadas flexíveis",
@@ -68,7 +83,28 @@
   "nocode": {
     "title": "Crie, ajuste e escale jornadas de atendimento sem precisar de código",
     "body": "O no-code coloca o poder da inovação nas mãos do seu time. Fluxos, campanhas e análises podem ser configurados de forma visual e intuitiva, reduzindo dependência de equipes técnicas e acelerando o tempo de resposta às demandas do negócio.",
-    "cta": "Solicite uma demonstração"
+    "cta": "Solicite uma demonstração",
+    "builder": {
+      "windowTitle": "Builder / Campanha · Auto Checagem de veículo",
+      "preview": "Preview",
+      "save": "Salvar",
+      "hint": "Arraste os blocos para reorganizar o fluxo. Clique na paleta para adicionar um bloco ligado ao selecionado — e Delete para remover.",
+      "reset": "Recomeçar",
+      "palette": {
+        "message": "Mensagem",
+        "menu": "Menu",
+        "transfer": "Transferência",
+        "condition": "Condição",
+        "transaction": "Transação",
+        "end": "Finalizar"
+      },
+      "messageBody": "Olá! Sou o assistente da SigmaCX. Como posso ajudar você hoje?",
+      "option": "Opção número",
+      "canvasLabel": "Prancheta do fluxo de atendimento",
+      "nodeHint": "Arraste para mover, ou use as setas do teclado. Delete remove o bloco.",
+      "added": "adicionado ao fluxo",
+      "removed": "Bloco removido do fluxo"
+    }
   },
   "benefits": {
     "title": "Principais benefícios",

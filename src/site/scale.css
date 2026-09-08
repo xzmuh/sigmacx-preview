@@ -22,6 +22,16 @@ body .footer { padding-top: clamp(56px, 6vw, 92px); }
 body .sx-hero { padding: clamp(108px, 9vw, 138px) 0 clamp(44px, 4.6vw, 72px); }
 body .sx-suite-immersive { padding-block: clamp(72px, 8vw, 128px); }
 body .sx-suite-stage__panel { padding-top: clamp(28px, 3vw, 44px); }
+/* A cena da faixa imersiva terminava baixa demais: o painel abria com 96px de
+   respiro no topo contra 42px embaixo, e acima dele ainda vem a barra de abas
+   (84px). Medido em 1589x900: 225px de ar acima da cena contra 86px abaixo.
+   Equilibrar o painel sobe a cena ~44px sem esticar a secao. A regra de origem
+   e `.sx-page--suite .sx-suite-immersive .sx-suite-stage__panel` (suite.css),
+   por isso a especificidade aqui precisa acompanha-la. */
+body .sx-page--suite .sx-suite-immersive .sx-suite-stage__panel {
+  padding-top: clamp(30px, 3.4vw, 52px);
+  padding-bottom: clamp(28px, 3.2vw, 48px);
+}
 body .sx-section--flush { padding-block: 0 clamp(72px, 8vw, 124px); }
 body .sx-emotion-stage { padding: clamp(28px, 3.4vw, 48px); }
 
@@ -47,6 +57,12 @@ body .sx-page--suite .sx-hero--channel .sx-h1,
 body .sx-page--suite .sx-hero--brain .sx-h1,
 body .sx-page--suite .sx-hero--insights .sx-h1,
 body .sx-page--suite .sx-hero--ecosystem .sx-h1 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+/* O hero do Channel nao tem um titulo curto: e a frase de abertura inteira.
+   Na escala acima ela ocupava seis linhas e esticava o hero para ~850px, bem
+   alem da tela util de um 1080p a 125%. Um degrau menor e uma medida maior
+   (13ch cabia menos de duas palavras por linha) devolvem quatro linhas. */
+body .sx-page--suite .sx-hero--channel .sx-h1 { font-size: clamp(2rem, 3.3vw, 2.9rem); }
+body .sx-page--suite .sx-hero--channel .sx-hero__inner--left .sx-h1 { max-width: 24ch; }
 body .sx-page--suite .sx-editorial-head .sx-h2 { font-size: clamp(1.7rem, 3.1vw, 3rem); }
 body .sx-final h2 { font-size: clamp(1.7rem, 3.1vw, 2.6rem); }
 body .sx-lead { font-size: clamp(0.98rem, 1.15vw, 1.06rem); }
@@ -61,6 +77,14 @@ body .sx-watermark { font-size: clamp(4rem, 11vw, 9rem); }
    sobre ritmo vertical.
    -------------------------------------------------------------------------- */
 body .sx-hero { padding-block: clamp(104px, 8.4vw, 132px) clamp(44px, 4.6vw, 72px) !important; }
+/* Heroes da suite: a emenda diagonal e irma do hero, mas sobe por cima dele
+   (z-index 6). O padding de baixo tem de reservar a altura dela, senao o
+   ultimo bloco do hero — o CTA, ou a faixa de logos do /produto — fica
+   coberto pela diagonal. suite.css ja fazia isso; esta camada de escala
+   sobrescrevia com `!important` e derrubava a reserva junto. */
+body .sx-page--suite .sx-hero {
+  padding-block: clamp(96px, 7.8vw, 126px) calc(var(--sx-seam-suite) + clamp(28px, 3vw, 52px)) !important;
+}
 body .sx-section { padding-block: clamp(44px, 5vw, 76px) !important; }
 body .sx-section--tight { padding-block: clamp(30px, 3.4vw, 52px) !important; }
 body .sx-section--flush { padding-block: 0 clamp(64px, 7vw, 110px) !important; }
@@ -68,6 +92,37 @@ body .sx-suite-immersive { padding-block: clamp(76px, 8.4vw, 132px) !important; 
 body .sx-band { padding-block: clamp(60px, 6.6vw, 108px) !important; }
 body .sx-final { padding-bottom: clamp(36px, 3.8vw, 56px) !important; }
 body .section-transition--light-dark + .sx-footer-wrap .sx-final { padding-top: calc(var(--sx-seam) + 24px) !important; }
+
+/* --------------------------------------------------------------------------
+   3b. Reserva das emendas diagonais
+
+   As emendas nao ocupam espaco proprio: `site.css` puxa a diagonal por cima
+   da secao vizinha com margem negativa de `--sx-seam` (para cima na emenda
+   escuro->claro, para baixo na claro->escuro). Quem abre espaco para ela e o
+   padding da secao vizinha, tambem em `site.css`.
+
+   Esta camada de escala reescreve `padding-block` de .sx-section / .sx-band /
+   .sx-suite-immersive com `!important`, e junto derrubava aquelas reservas —
+   a diagonal passava a comer o primeiro (ou o ultimo) bloco da secao. Medido
+   em 1440x900: de 52 a 101px de conteudo coberto em /produto, /sigma-channel,
+   /sigma-brain e /sigma-insights.
+
+   Aqui a reserva volta, ja na escala reduzida. Sempre `calc(var(--sx-seam)
+   + folga)`: `--sx-seam` e o mesmo token que desenha a margem negativa, entao
+   os dois nao podem divergir.
+   -------------------------------------------------------------------------- */
+body .section-transition--light-dark + .sx-band,
+body .section-transition--light-dark + .sx-section,
+body .section-transition--light-dark + .sx-suite-immersive,
+body .section-transition--light-dark + .sx-insights-story > .sx-section:first-of-type {
+  padding-top: calc(var(--sx-seam) + clamp(26px, 2.8vw, 48px)) !important;
+}
+body .sx-band:has(+ .section-transition--dark-light),
+body .sx-section:has(+ .section-transition--dark-light),
+body .sx-suite-immersive:has(+ .section-transition--dark-light),
+body .sx-insights-story:has(+ .section-transition--dark-light) > .sx-section:last-of-type {
+  padding-bottom: calc(var(--sx-seam) + clamp(26px, 2.8vw, 48px)) !important;
+}
 body .site-shell .signal-story { padding-top: calc(var(--sx-sec-gap) + 90px) !important; }
 body .manifesto { padding-block: clamp(40px, 4.4vw, 64px) clamp(76px, 8.4vw, 132px) !important; }
 body .ab-hero { padding-block: clamp(104px, 8.4vw, 132px) clamp(44px, 4.8vw, 74px) !important; }

@@ -28,6 +28,14 @@ const TECH_LINES = {
     count: [3, 5],
     distance: [15, 10],
   },
+  /* Azul escuro, para a faixa no-code do Brain: o mesmo efeito do hero, so que
+     na familia azul profunda, para nao competir com a tela do builder ao lado. */
+  nocode: {
+    colors: ["#0f3355", "#1c6bab", "#3b93d8"],
+    waves: ["middle", "bottom"],
+    count: [4, 3],
+    distance: [12, 16],
+  },
 } as const;
 
 /** Efeito decorativo: se o WebGL ou o chunk falharem, some em silencio em

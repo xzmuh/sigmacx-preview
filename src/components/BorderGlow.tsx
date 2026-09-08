@@ -12,6 +12,7 @@ interface BorderGlowProps {
   glowIntensity?: number;
   coneSpread?: number;
   animated?: boolean;
+  alwaysOn?: boolean;
   colors?: string[];
   fillOpacity?: number;
 }
@@ -89,6 +90,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   glowIntensity = 1.0,
   coneSpread = 25,
   animated = false,
+  alwaysOn = false,
   colors = ['#c084fc', '#f472b6', '#38bdf8'],
   fillOpacity = 0.5,
 }) => {
@@ -163,8 +165,8 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   return (
     <div
       ref={cardRef}
-      onPointerMove={handlePointerMove}
-      className={`border-glow-card${lightSurface ? ' border-glow-card--light' : ''} ${className}`}
+      onPointerMove={alwaysOn ? undefined : handlePointerMove}
+      className={`border-glow-card${lightSurface ? ' border-glow-card--light' : ''}${alwaysOn ? ' border-glow-card--always' : ''} ${className}`}
       style={{
         '--card-bg': backgroundColor,
         '--edge-sensitivity': edgeSensitivity,

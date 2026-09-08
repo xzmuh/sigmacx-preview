@@ -13,6 +13,8 @@ import {
   useState,
 } from "react";
 import { SiteHeader } from "./site/SiteHeader";
+import { startDialogiJourney } from "./site/ProductJourney";
+import { href, langFromPath } from "./lib/i18n";
 import GradientText from "./components/GradientText";
 
 const DEMO_URL =
@@ -390,6 +392,12 @@ function LazyVideo({ src, label }: { src: string; label: string }) {
 export function SigmaExperience() {
   const root = useRef<HTMLDivElement>(null);
   const story = useRef<HTMLElement>(null);
+  const lang = langFromPath(window.location.pathname);
+  const openDialogi = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    startDialogiJourney(href("/dialogi", lang), lang);
+  };
   const progress = useRef(0);
   const [sceneReady, setSceneReady] = useState(false);
   const [introMinElapsed, setIntroMinElapsed] = useState(false);
@@ -753,7 +761,7 @@ export function SigmaExperience() {
               <div className="solution-card__brand">
                 <img src="/media/dialogi.png" alt="Dialogi AI" />
               </div>
-              <a className="solution-card__link" href="https://dialogiai.com/pt/home-4/" target="_blank" rel="noreferrer">Conheça o Dialogi AI <span aria-hidden="true">↗</span></a>
+              <a className="solution-card__link" href={href("/dialogi", lang)} onClick={openDialogi}>Conheça o Dialogi AI <span aria-hidden="true">→</span></a>
             </article>
           </div>
         </section>
@@ -837,13 +845,8 @@ export function SigmaExperience() {
         <div className="security-final-flow">
         <section id="security" className="security section-dark" aria-labelledby="security-title">
           <div className="security-frame">
-          <div className="security-frame__meta" aria-hidden="true">
-            <span>SECURE ENVIRONMENT</span>
-            <span>ACTIVE / MONITORED</span>
-          </div>
           <div className="security-orbit" aria-hidden="true">
             <div className="security-core">
-              <span className="security-core__code">PRIVACY CORE</span>
               <span className="security-core__lock"><i /></span>
               <strong>LGPD</strong>
               <small>DATA / SECURE</small>

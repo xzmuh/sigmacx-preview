@@ -59,7 +59,22 @@
         "body": "Expanda rapidamente para WhatsApp, voz, redes sociais e muito mais, sem complexidade técnica."
       }
     ],
-    "cta": "Saber más"
+    "cta": "Saber más",
+    "canvas": {
+      "palette": {
+        "message": "Mensaje",
+        "menu": "Menú",
+        "transaction": "Transacción",
+        "end": "Finalizar"
+      },
+      "option": "Opción número",
+      "messageBody": "¡Hola! Soy el asistente de SigmaCX. ¿Cómo puedo ayudarle hoy?",
+      "canvasLabel": "Lectura del flujo de atención, con el volumen de cada camino",
+      "hint": "Arrastre los bloques para reorganizar la lectura, o el lienzo para mover la escena. Pase el cursor por un bloque para seguir su camino. Porcentajes ilustrativos.",
+      "zoomIn": "Acercar",
+      "zoomOut": "Alejar",
+      "fit": "Encuadrar"
+    }
   },
   "journeys": {
     "title": "Construa jornadas flexíveis",
@@ -68,7 +83,28 @@
   "nocode": {
     "title": "Crie, ajuste e escale jornadas de atendimento sem precisar de código",
     "body": "O no-code coloca o poder da inovação nas mãos do seu time. Fluxos, campanhas e análises podem ser configurados de forma visual e intuitiva, reduzindo dependência de equipes técnicas e acelerando o tempo de resposta às demandas do negócio.",
-    "cta": "Solicite una demostración"
+    "cta": "Solicite una demostración",
+    "builder": {
+      "windowTitle": "Builder / Campaña · Auto chequeo de vehículo",
+      "preview": "Preview",
+      "save": "Guardar",
+      "hint": "Arrastre los bloques para reorganizar el flujo. Haga clic en la paleta para añadir un bloque conectado al seleccionado — y Suprimir para quitarlo.",
+      "reset": "Empezar de nuevo",
+      "palette": {
+        "message": "Mensaje",
+        "menu": "Menú",
+        "transfer": "Transferencia",
+        "condition": "Condición",
+        "transaction": "Transacción",
+        "end": "Finalizar"
+      },
+      "messageBody": "¡Hola! Soy el asistente de SigmaCX. ¿Cómo puedo ayudarle hoy?",
+      "option": "Opción número",
+      "canvasLabel": "Lienzo del flujo de atención",
+      "nodeHint": "Arrastre para mover, o use las flechas del teclado. Suprimir quita el bloque.",
+      "added": "añadido al flujo",
+      "removed": "Bloque quitado del flujo"
+    }
   },
   "benefits": {
     "title": "Principales beneficios",

@@ -1,0 +1,624 @@
+/* ==========================================================================
+   Pagina Dialogi AI
+
+   A referencia e a HOME do Dialogi (C:/Projects/Nuvetto/dialogi.ia), nao as
+   paginas internas nem a LP solta em HTML — aquela era so a fonte do texto.
+   Portado de la, em CSS puro porque este site nao usa as utilitarias Tailwind
+   do Dialogi, e sem a camada gamificada (nenhum PNG de jogo):
+
+   - `hero-signal`: o campo de luz da primeira tela — fundo em camadas, riscos
+     diagonais, bloom conico e a sombra que fecha por cima;
+   - `hero-signal__deck`: o cartao grande que responde "o que e o Dialogi",
+     com barra de rotulo, titulo, arte e a grade de tres provas;
+   - `SectionBreak`: a onda entre secoes, com a faixa de luz brand->mint que
+     respira. E o que da a leveza e a redondeza da home;
+   - alternancia de fundo: escuro quando o produto fala, claro quando o leitor
+     pensa (ordem da home);
+   - botoes `rounded-xl` com a seta que desliza (ui/Button);
+   - titulos revelados palavra a palavra, cada uma na sua mascara (SplitText).
+
+   Tudo escopado em `.dlg`: e a unica pagina do site que sai da paleta Sigma.
+   ========================================================================== */
+
+.dlg {
+  /* Tokens do @theme do projeto do Dialogi. */
+  --ink-950: #060c1c;
+  --ink-900: #0b152c;
+  --ink-500: #3a5a9e;
+  --ink-400: #6b83b5;
+  --ink-300: #a3b3d0;
+  --ink-200: #ccd6e8;
+  --ink-50: #f4f7fc;
+  --brand-500: #2c40f5;
+  --brand-400: #6f78fb;
+  --brand-300: #9ba3ff;
+  --brand-50: #eef0ff;
+  --mint-500: #0bd75c;
+  --mint-400: #15ef6d;
+  --mint-300: #5cf39f;
+  /* Superficies exatas dos dois lados de cada onda, como em page.tsx da home. */
+  --hero-surface: #050b1d;
+  --page: #fff;
+  --feat-surface: #081329;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+  color: var(--ink-900);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+.dlg *, .dlg *::before, .dlg *::after { box-sizing: border-box; }
+/* `:where()` para o reset nao vencer as regras de espacamento de classe unica. */
+.dlg :where(p, h1, h2, h3, h4, ul, li, figure, figcaption) { margin: 0; padding: 0; }
+.dlg img { display: block; max-width: 100%; }
+
+/* Mesmo eixo horizontal do header e do rodape do site. */
+.dlg-x { position: relative; width: min(var(--sx-shell), 100% - var(--sx-gutter) * 2); margin-inline: auto; }
+
+.dlg-sec { position: relative; padding-block: clamp(64px, 7vw, 108px); }
+.dlg-sec--dark { isolation: isolate; color: #fff; }
+.dlg-sec[id] { scroll-margin-top: 96px; } /* o header do site e fixo (74px) */
+
+/* ==========================================================================
+   Onda entre secoes (SectionBreak)
+   Um caminho continuo que alcanca as duas bordas — caixas arredondadas
+   sobrepostas deixavam uma tira reta na ponta. A faixa de luz por baixo e o
+   que faz a emenda ler como leve, e nao como um corte.
+   ========================================================================== */
+.dlg-break { position: relative; width: 100%; overflow: hidden; margin-block: -1px; height: clamp(72px, 8vw, 124px); }
+.dlg-break svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.dlg-break__band { opacity: .8; filter: blur(8px); animation: dlg-band-breathe 9s ease-in-out infinite alternate; }
+@keyframes dlg-band-breathe {
+  from { opacity: .55; transform: translateY(2px); }
+  to { opacity: .9; transform: translateY(-3px); }
+}
+/* Passagem entre dois escuros: curta o suficiente para manter o fluxo entre
+   o deck e os recursos, sem criar uma terceira tela vazia. */
+.dlg-break--dd { height: clamp(28px, 3vw, 48px); }
+.dlg-break--dd::before, .dlg-break--dd::after { content: ""; position: absolute; inset-inline: 0; }
+.dlg-break--dd::before { top: 0; height: 28%; background: linear-gradient(to bottom, var(--from), transparent); }
+.dlg-break--dd::after { bottom: 0; height: 32%; background: linear-gradient(to top, var(--to), transparent); }
+
+/* ==========================================================================
+   Hero: o campo de luz da primeira tela
+   ========================================================================== */
+.dlg-signal {
+  position: relative; isolation: isolate; overflow: hidden; color: #fff;
+  background:
+    linear-gradient(180deg, transparent 58%, var(--hero-surface) 95%),
+    radial-gradient(ellipse 52% 48% at 8% 30%, rgb(25 72 190 / .24), transparent 72%),
+    radial-gradient(ellipse 44% 42% at 62% 56%, rgb(16 101 215 / .14), transparent 73%),
+    radial-gradient(ellipse 30% 30% at 83% 34%, rgb(21 239 109 / .07), transparent 76%),
+    radial-gradient(circle at 92% 8%, rgb(17 67 190 / .32), transparent 34%),
+    linear-gradient(122deg, #020713 0%, #07173a 48%, #03091d 100%);
+}
+/* As camadas pertencem a primeira tela e se dissolvem na descida — por isso
+   sao medidas em svh e absolutas a secao, nao recortadas na caixa do stage. */
+.dlg-signal__base, .dlg-signal__bloom, .dlg-signal__shade {
+  position: absolute; top: 0; left: 0; width: 100%;
+  height: min(calc(100svh - 74px), 820px); pointer-events: none;
+}
+.dlg-signal__base {
+  background-image:
+    linear-gradient(126deg, transparent 0 31%, rgb(78 132 255 / .055) 31.1%, transparent 31.3%),
+    linear-gradient(142deg, transparent 0 58%, rgb(85 143 255 / .045) 58.1%, transparent 58.3%),
+    linear-gradient(158deg, transparent 0 72%, rgb(21 239 109 / .03) 72.1%, transparent 72.25%);
+  -webkit-mask-image: radial-gradient(ellipse 92% 70% at 58% 42%, #000 0%, rgb(0 0 0 / .92) 50%, transparent 88%);
+  mask-image: radial-gradient(ellipse 92% 70% at 58% 42%, #000 0%, rgb(0 0 0 / .92) 50%, transparent 88%);
+}
+.dlg-signal__bloom {
+  z-index: 0;
+  background:
+    conic-gradient(from 202deg at 71% 57%, transparent 0deg, rgb(22 89 255 / .09) 12deg, transparent 26deg),
+    radial-gradient(ellipse 46% 20% at 54% 66%, rgb(0 174 255 / .22), transparent 72%),
+    radial-gradient(ellipse 30% 16% at 77% 54%, rgb(21 239 109 / .09), transparent 74%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 70%, transparent 100%);
+}
+.dlg-signal__shade {
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgb(6 12 28 / .26) 0%, transparent 46%, rgb(6 12 28 / .04) 100%),
+    linear-gradient(180deg, rgb(6 12 28 / .08), transparent 38%, rgb(6 12 28 / .12) 66%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%);
+}
+
+/* --- Campo de fios de luz (Strands, WebGL) ------------------------------
+   Duas coisas aqui carregam peso, e as duas existem para que a ponta do arco
+   sempre morra logo abaixo da borda de cima do deck:
+
+   - a caixa e ancorada na base do stage, que e justamente essa borda. Em
+     porcentagem da secao inteira a referencia andava com o texto e com o
+     breakpoint, e a ponta variava centenas de pixels entre uma janela e outra;
+   - a caixa e dimensionada so pela largura da viewport, entao a proporcao dela
+     nunca muda. O shader desenha o afunilamento numa altura diferente quando a
+     caixa muda de forma, e com a proporcao variavel nao havia deslocamento
+     unico que segurasse a ponta no lugar.
+
+   Com a forma fixa, a ponta fica a um `--field-tip-drop` constante da caixa
+   acima da base dela, e `--field-tuck` vira so a distancia que esse ponto cai
+   por baixo do cartao. */
+.dlg-strands {
+  --field-w: 130vw;
+  --field-ratio: 1.33;
+  --field-h: calc(var(--field-w) / var(--field-ratio));
+  --field-tip-drop: 0.477;
+  --field-tuck: 28px;
+  position: absolute; z-index: 1;
+  top: auto; left: auto; right: calc(var(--field-w) * -0.423);
+  bottom: calc(-1 * (var(--field-tuck) + var(--field-tip-drop) * var(--field-h)));
+  width: var(--field-w); height: var(--field-h);
+  pointer-events: none; opacity: .86;
+  transform: rotate(-6deg); transform-origin: 50% 50%;
+  -webkit-mask-image: radial-gradient(ellipse 88% 62% at 50% 50%, #000 0%, #000 60%, rgb(0 0 0 / .72) 78%, transparent 100%);
+  mask-image: radial-gradient(ellipse 88% 62% at 50% 50%, #000 0%, #000 60%, rgb(0 0 0 / .72) 78%, transparent 100%);
+}
+.dlg-strands .strands-container { position: relative; width: 100%; height: 100%; background: transparent; animation: dlg-strands-enter 1.35s cubic-bezier(.22, .72, .28, 1) 120ms both; }
+.dlg-strands canvas { display: block; width: 100%; height: 100%; }
+@keyframes dlg-strands-enter { from { opacity: 0; } to { opacity: 1; } }
+
+.dlg-stage {
+  position: relative; z-index: 3; display: flex; align-items: center;
+  min-height: min(calc(100svh - 74px), 780px); padding-block: clamp(6rem, 12vh, 8.5rem) clamp(3rem, 6vh, 5rem);
+}
+.dlg-stage__grid { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
+@media (min-width: 1024px) { .dlg-stage__grid { grid-template-columns: minmax(0, 1fr) minmax(20rem, 25rem); } }
+.dlg-stage__copy { max-width: 44rem; }
+.dlg-logo { width: auto; height: 30px; }
+.dlg-stage__from { margin-top: 1.6rem; }
+.dlg-stage__from strong { font-weight: 700; color: #fff; }
+
+/* Titulo da home: pesado, colado, com a linha de acento em mint. */
+.dlg-h1 {
+  margin-top: 1.5rem;
+  font-size: clamp(2.6rem, 5vw, 4.35rem); font-weight: 600; line-height: .95; letter-spacing: -.065em;
+}
+.dlg-h1__accent { display: block; margin-top: .5rem; padding-bottom: .12em; color: var(--mint-400); text-shadow: 0 0 42px rgb(21 239 109 / .16); }
+.dlg-stage__lead { max-width: 38rem; margin-top: 1.8rem; font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.8; color: rgb(255 255 255 / .68); }
+.dlg-stage__actions { margin-top: 2.25rem; }
+
+/* ==========================================================================
+   Deck: o cartao grande que responde "o que e o Dialogi".
+   O brilho e `radial-gradient`, nao disco borrado: o cartao tem overflow
+   hidden e um blur que alcanca a borda vira uma faixa dura ali.
+   ========================================================================== */
+.dlg-deck-wrap { position: relative; z-index: 3; padding-bottom: clamp(2.5rem, 4vw, 4rem); }
+.dlg-deck {
+  position: relative; overflow: hidden;
+  border: 1px solid rgb(255 255 255 / .08); border-radius: clamp(1.25rem, 2.4vw, 1.9rem);
+  background: linear-gradient(168deg, rgb(9 21 52 / .94), rgb(4 9 26 / .97));
+  box-shadow: 0 40px 120px rgb(0 3 15 / .5), inset 0 1px 0 rgb(255 255 255 / .05);
+}
+.dlg-deck__glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 44% 56% at 38% 22%, rgb(44 64 245 / .3), transparent 68%),
+    radial-gradient(ellipse 28% 40% at 72% 8%, rgb(0 174 255 / .16), transparent 70%);
+}
+.dlg-deck__bar { position: relative; padding: .9rem clamp(1.25rem, 3vw, 2.6rem); border-bottom: 1px solid rgb(255 255 255 / .07); background: rgb(255 255 255 / .022); }
+.dlg-deck__eyebrow { font-size: .66rem; font-weight: 600; letter-spacing: .3em; line-height: 1; text-transform: uppercase; color: rgb(255 255 255 / .42); }
+.dlg-deck__body { position: relative; padding: clamp(2.25rem, 4.5vw, 3.5rem) clamp(1.25rem, 3vw, 2.6rem) clamp(1.5rem, 3vw, 2.6rem); }
+.dlg-deck__head { display: grid; gap: 1.75rem; padding-bottom: clamp(2.5rem, 5vw, 4rem); }
+.dlg-deck__copy { display: grid; min-width: 0; gap: 1.5rem; align-content: start; }
+.dlg-deck__art { position: relative; justify-self: center; width: 100%; max-width: 34rem; }
+@media (min-width: 1024px) {
+  .dlg-deck__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); align-items: center; gap: clamp(2rem, 5vw, 4rem); }
+  .dlg-deck__copy { align-content: center; }
+  .dlg-deck__art { justify-self: end; max-width: 38rem; }
+}
+.dlg-deck__title { max-width: 16ch; font-size: clamp(1.9rem, 3.4vw, 3rem); font-weight: 500; line-height: 1.08; letter-spacing: -.035em; color: #fff; }
+.dlg-deck__lead { max-width: 34rem; font-size: clamp(.95rem, 1.15vw, 1.0625rem); line-height: 1.66; color: rgb(255 255 255 / .72); }
+.dlg-deck__grid { display: grid; gap: .9rem; }
+@media (min-width: 768px) { .dlg-deck__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.05rem; } }
+.dlg-deck__card {
+  display: flex; flex-direction: column; height: 100%; padding: clamp(1.4rem, 2.1vw, 1.9rem);
+  border: 1px solid rgb(255 255 255 / .07); border-radius: 1.1rem;
+  background: linear-gradient(160deg, rgb(10 17 42 / .66), rgb(4 8 24 / .78));
+  transition: border-color .4s var(--ease-out-expo), background .4s var(--ease-out-expo);
+}
+.dlg-deck__card:hover { border-color: rgb(13 131 255 / .4); background: linear-gradient(160deg, rgb(13 24 62 / .74), rgb(5 10 30 / .84)); }
+.dlg-deck__card h3 { font-size: .7rem; font-weight: 600; letter-spacing: .16em; line-height: 1.35; text-transform: uppercase; color: rgb(255 255 255 / .45); }
+.dlg-deck__card p { margin-top: 1.5rem; font-size: .9375rem; line-height: 1.7; color: rgb(255 255 255 / .74); }
+
+/* --- Cartao de voz: a superficie real do produto dentro do deck ---------- */
+.dlg-voice {
+  position: relative; isolation: isolate; overflow: hidden; padding: clamp(1.15rem, 2vw, 1.5rem); border-radius: 1.4rem;
+  background:
+    radial-gradient(ellipse 48% 88% at 51% 52%, rgb(12 127 255 / .22), transparent 68%),
+    radial-gradient(ellipse 42% 64% at 72% 58%, rgb(21 239 109 / .08), transparent 74%),
+    linear-gradient(145deg, rgb(8 29 77 / .82), rgb(3 13 43 / .9));
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgb(80 146 255 / .3);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .1), inset 0 0 42px rgb(14 79 210 / .08), 0 24px 70px rgb(0 4 24 / .32);
+}
+.dlg-voice::before { content: ""; position: absolute; z-index: -1; inset-inline: 4%; top: 0; height: 1px; background: linear-gradient(to right, transparent, rgb(83 174 255 / .9), rgb(21 239 109 / .5), transparent); }
+.dlg-voice::after { content: ""; position: absolute; z-index: -1; width: 12rem; height: 12rem; top: -8.5rem; right: -3rem; border-radius: 50%; background: rgb(19 94 255 / .18); filter: blur(28px); }
+.dlg-voice__top { position: relative; z-index: 4; display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.dlg-voice__who { display: flex; align-items: center; gap: .75rem; }
+.dlg-voice__av { flex: 0 0 2.5rem; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border: 1px solid rgb(93 177 255 / .34); border-radius: 50%; background: linear-gradient(140deg, #1958ff, #08a9dd); box-shadow: 0 0 24px rgb(13 126 255 / .42), inset 0 1px 0 rgb(255 255 255 / .24); color: #fff; font-size: 14px; font-weight: 700; }
+.dlg-voice__name { font-size: 14.5px; font-weight: 600; color: #fff; }
+.dlg-voice__ch { margin-top: 2px; font-size: 11.5px; color: rgb(185 211 255 / .62); }
+.dlg-voice__visual { position: relative; display: grid; place-items: center; height: clamp(7.5rem, 14vw, 9.5rem); margin: .35rem -.3rem .15rem; }
+.dlg-wave { position: absolute; inset-inline: 0; top: 50%; display: flex; align-items: center; gap: clamp(2px, .45vw, 4px); height: 68%; translate: 0 -50%; filter: drop-shadow(0 0 7px rgb(29 128 255 / .72)); }
+.dlg-wave::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: linear-gradient(to right, transparent, rgb(62 137 255 / .34) 18%, rgb(21 239 109 / .42) 50%, rgb(62 137 255 / .34) 82%, transparent); }
+.dlg-wave span { z-index: 1; flex: 1 1 auto; min-width: 2px; height: 18%; border-radius: 999px; background: linear-gradient(to bottom, #16f29b, #15ef6d); box-shadow: 0 0 8px rgb(21 239 109 / .62); transform-origin: center; animation: dlg-pulse 1.25s ease-in-out infinite alternate; }
+.dlg-wave span:nth-child(4n), .dlg-wave span:nth-child(4n+1) { background: linear-gradient(to bottom, #2cdcff, #2879ff); box-shadow: 0 0 8px rgb(31 118 255 / .72); }
+.dlg-wave span:nth-child(5n) { animation-duration: 1.55s; }
+/* A respiracao e proporcional ao pico de cada barra. Com valores fixos (12% e
+   24%) as barras do centro, que agora sao as mais baixas, ficavam MAIS altas no
+   fim do ciclo do que no proprio pico — o vale sumia na metade da animacao. */
+@keyframes dlg-pulse {
+  0% { height: max(6%, calc(var(--peak) * .2)); opacity: .62; }
+  48% { height: var(--peak); opacity: 1; }
+  100% { height: max(8%, calc(var(--peak) * .36)); opacity: .78; }
+}
+.dlg-voice__rings { position: absolute; z-index: 2; display: grid; place-items: center; width: 8.75rem; height: 8.75rem; }
+.dlg-voice__rings i { position: absolute; width: 4.7rem; height: 4.7rem; border: 1px solid rgb(38 143 255 / .34); border-radius: 50%; box-shadow: 0 0 18px rgb(21 112 255 / .14), inset 0 0 18px rgb(21 112 255 / .1); animation: dlg-ring 2.8s ease-out infinite; }
+.dlg-voice__rings i:nth-child(2) { animation-delay: -.9s; }
+.dlg-voice__rings i:nth-child(3) { animation-delay: -1.8s; }
+@keyframes dlg-ring { 0% { scale: .65; opacity: 0; } 18% { opacity: .85; } 100% { scale: 1.8; opacity: 0; } }
+.dlg-voice__mic { position: relative; z-index: 3; display: grid; place-items: center; width: 4.45rem; height: 4.45rem; border: 1px solid rgb(62 205 255 / .58); border-radius: 50%; background: radial-gradient(circle at 38% 30%, #167cf0, #0751c1 58%, #062f7d); box-shadow: 0 0 0 7px rgb(15 113 255 / .12), 0 0 34px rgb(6 126 255 / .72), 0 0 60px rgb(21 239 109 / .14), inset 0 1px 8px rgb(255 255 255 / .22); color: #8affcf; }
+.dlg-voice__mic svg { width: 1.75rem; height: 1.75rem; filter: drop-shadow(0 0 7px rgb(21 239 109 / .72)); }
+.dlg-voice__meta { position: relative; z-index: 4; display: flex; flex-wrap: wrap; gap: .5rem; padding-top: 1rem; border-top: 1px solid rgb(96 151 255 / .16); }
+.dlg-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .7rem; border: 1px solid rgb(105 158 255 / .2); border-radius: .625rem; background: rgb(5 18 54 / .34); font-size: 11.5px; color: rgb(211 225 255 / .72); }
+.dlg-chip svg { width: .8rem; height: .8rem; opacity: .76; }
+.dlg-chip--accent { border-color: rgb(21 239 109 / .42); background: rgb(21 239 109 / .08); box-shadow: inset 0 0 14px rgb(21 239 109 / .05), 0 0 18px rgb(21 239 109 / .08); color: var(--mint-300); }
+
+/* ==========================================================================
+   Tipografia das secoes
+   ========================================================================== */
+.dlg-h2 { font-size: clamp(1.9rem, 3.3vw, 2.85rem); font-weight: 500; line-height: 1.08; letter-spacing: -.035em; text-wrap: balance; }
+.dlg-h3 { font-size: 1.0625rem; font-weight: 600; line-height: 1.35; letter-spacing: -.02em; }
+.dlg-body { max-width: 44rem; font-size: clamp(.95rem, 1.15vw, 1.0625rem); line-height: 1.7; }
+.dlg-sec--light .dlg-body { color: var(--ink-500); }
+.dlg-sec--dark .dlg-body { color: rgb(255 255 255 / .7); }
+
+/* Etiqueta: sem traco decorativo — o peso e o espacamento das maiusculas ja
+   dizem que e etiqueta (regra do projeto do Dialogi). */
+.dlg-eyebrow { display: inline-block; font-size: .66rem; font-weight: 600; letter-spacing: .3em; line-height: 1; text-transform: uppercase; }
+.dlg-sec--dark .dlg-eyebrow { color: rgb(255 255 255 / .42); }
+.dlg-sec--light .dlg-eyebrow { color: var(--ink-400); }
+.dlg-stage__from { display: inline-block; font-size: .72rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: rgb(255 255 255 / .5); }
+
+.dlg-head .dlg-h2 { margin-top: 1.1rem; max-width: 20ch; }
+.dlg-head p { margin-top: 1.4rem; }
+
+/* Recursos: a superficie ganha profundidade e ja aponta para a pagina clara
+   seguinte. O conteudo ocupa a largura, evitando o grande vazio visto entre
+   o deck e o titulo da secao. */
+.dlg-sec--features {
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(46px, 5vw, 76px) clamp(72px, 7vw, 108px);
+  background:
+    radial-gradient(ellipse 62% 62% at 92% 18%, rgb(44 64 245 / .2), transparent 68%),
+    radial-gradient(ellipse 48% 46% at 6% 88%, rgb(21 239 109 / .075), transparent 72%),
+    linear-gradient(145deg, #071126 0%, var(--feat-surface) 52%, #0a1831 100%);
+}
+.dlg-sec--features::before {
+  position: absolute;
+  z-index: -1;
+  top: -18%;
+  right: -10%;
+  width: min(72vw, 960px);
+  aspect-ratio: 1.65;
+  content: "";
+  border: 1px solid rgb(112 154 255 / .11);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 72px rgb(79 124 255 / .026),
+    0 0 0 144px rgb(21 239 109 / .018);
+  transform: rotate(-8deg);
+}
+.dlg-sec--features::after {
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  height: 46%;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(112deg, transparent 18%, rgb(88 134 255 / .055) 18.1%, transparent 18.3%),
+    linear-gradient(180deg, transparent, rgb(3 10 27 / .26));
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000);
+  mask-image: linear-gradient(to bottom, transparent, #000);
+}
+.dlg-sec--features > .dlg-x { z-index: 1; }
+.dlg-sec--features .dlg-head {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+  column-gap: clamp(52px, 9vw, 138px);
+  align-items: end;
+}
+.dlg-sec--features .dlg-eyebrow { grid-column: 1; grid-row: 1; }
+.dlg-sec--features .dlg-h2 { grid-column: 1; grid-row: 2; }
+.dlg-sec--features .dlg-body { grid-column: 2; grid-row: 1 / 3; margin-top: 0; padding-bottom: .25rem; }
+.dlg-sec--features .dlg-split__grad {
+  background-image: linear-gradient(100deg, #7fa2ff 0%, #55e8c4 42%, var(--mint-400) 68%, #b4ffd1 100%);
+  background-size: 240% 100%;
+  text-shadow: 0 0 38px rgb(21 239 109 / .14);
+}
+.dlg-sec--features .dlg-tile {
+  border-color: rgb(112 154 255 / .13);
+  background: linear-gradient(150deg, rgb(14 28 62 / .8), rgb(5 12 31 / .82));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .025), 0 28px 55px -48px rgb(0 0 0 / .9);
+}
+.dlg-sec--features .dlg-tile:hover {
+  border-color: rgb(58 136 255 / .48);
+  background: linear-gradient(150deg, rgb(17 37 81 / .88), rgb(6 15 38 / .9));
+}
+
+/* Carrossel de recursos: o item em foco ocupa o palco; os vizinhos recuam
+   em perspectiva para deixar evidente que existe uma sequencia navegavel. */
+.dlg-feature-carousel {
+  --feature-width: clamp(310px, 43vw, 510px);
+  position: relative;
+  margin-top: clamp(2rem, 3.5vw, 3rem);
+}
+.dlg-feature-carousel__track {
+  display: flex;
+  gap: clamp(12px, 2vw, 24px);
+  margin-inline: calc(var(--sx-gutter) * -.45);
+  padding: clamp(52px, 5vw, 72px) calc((100% - var(--feature-width)) / 2 + var(--sx-gutter) * .45) clamp(82px, 8vw, 112px);
+  overflow-x: auto;
+  overflow-y: visible;
+  perspective: 1200px;
+  scroll-padding-inline: calc((100% - var(--feature-width)) / 2);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+}
+.dlg-feature-carousel__track::-webkit-scrollbar { display: none; }
+.dlg-feature-slide {
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 var(--feature-width);
+  min-width: 0;
+  scroll-snap-align: center;
+  transform: scale(.8) rotateY(8deg) translateX(18px);
+  transform-origin: center;
+  opacity: .52;
+  filter: saturate(.72) brightness(.78);
+  transition:
+    transform .58s var(--ease-out-expo),
+    opacity .48s ease,
+    filter .48s ease;
+  transform-style: preserve-3d;
+}
+.dlg-feature-slide::before {
+  position: absolute;
+  z-index: -1;
+  inset: 16% 8% -8%;
+  content: "";
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(29 102 255 / .38), rgb(21 239 109 / .09) 44%, transparent 74%);
+  filter: blur(42px);
+  opacity: 0;
+  transform: scale(.8);
+  transition: opacity .5s ease, transform .6s var(--ease-out-expo);
+}
+.dlg-feature-slide.is-after { transform: scale(.8) rotateY(-8deg) translateX(-18px); }
+.dlg-feature-slide.is-active {
+  z-index: 2;
+  transform: scale(1) rotateY(0) translateX(0);
+  opacity: 1;
+  filter: none;
+}
+.dlg-feature-slide.is-active::before { opacity: 1; transform: scale(1.2); }
+.dlg-feature-slide.is-far { transform: scale(.69) rotateY(12deg) translateX(34px); opacity: .2; filter: saturate(.5) brightness(.58); }
+.dlg-feature-slide.is-far.is-after { transform: scale(.69) rotateY(-12deg) translateX(-34px); }
+.dlg-feature-slide .dlg-tile {
+  min-height: clamp(225px, 24vw, 275px);
+  padding: clamp(1.7rem, 3vw, 2.35rem);
+  border-radius: 1.45rem;
+}
+.dlg-feature-slide.is-active .dlg-tile {
+  border-color: rgb(78 151 255 / .46);
+  background:
+    radial-gradient(circle at 88% 12%, rgb(21 239 109 / .1), transparent 34%),
+    linear-gradient(145deg, rgb(18 40 87 / .95), rgb(6 15 38 / .96));
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / .055),
+    0 34px 94px -30px rgb(21 85 255 / .64),
+    0 24px 82px -42px rgb(21 239 109 / .32),
+    0 0 58px rgb(21 239 109 / .075);
+}
+.dlg-feature-slide .dlg-h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
+.dlg-feature-slide .dlg-tile p { max-width: 39ch; }
+.dlg-feature-carousel__controls { display: flex; align-items: center; justify-content: space-between; max-width: var(--feature-width); margin: 0 auto; padding-inline: 2px; }
+.dlg-feature-carousel__controls > span { color: rgb(255 255 255 / .42); font-size: .68rem; font-weight: 650; letter-spacing: .14em; }
+.dlg-feature-carousel__controls > div { display: flex; gap: 9px; }
+.dlg-feature-carousel__controls button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / .16);
+  border-radius: 50%;
+  color: #fff;
+  background: rgb(255 255 255 / .035);
+  cursor: pointer;
+  transition: border-color .3s, background .3s, color .3s, transform .3s;
+}
+.dlg-feature-carousel__controls button:hover:not(:disabled) { border-color: var(--mint-400); color: var(--mint-300); background: rgb(21 239 109 / .07); transform: translateY(-2px); }
+
+/* Palavra em degrade. O padding estende a caixa de pintura para o descendente
+   nao sair cortado; a margem negativa devolve o espaco. */
+.dlg-grad {
+  background-image: linear-gradient(100deg, var(--brand-500), var(--brand-400) 45%, var(--mint-400));
+  background-clip: text; -webkit-background-clip: text; color: transparent;
+  font-weight: 700; padding-bottom: .22em; margin-bottom: -.22em;
+}
+
+/* ==========================================================================
+   Botoes
+   ========================================================================== */
+.dlg-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  height: 3.25rem; padding-inline: 1.75rem; border: 1px solid transparent; border-radius: .75rem;
+  font-size: 15px; font-weight: 600; white-space: nowrap; text-decoration: none; cursor: pointer;
+  transition: background-color .3s, border-color .3s, color .3s, box-shadow .3s;
+}
+.dlg-btn--light { background: #fff; color: var(--ink-900); box-shadow: 0 24px 60px -24px rgb(11 21 44 / .35); }
+.dlg-btn--light:hover { background: var(--ink-50); color: var(--ink-900); }
+.dlg-btn--primary { background: var(--brand-500); color: #fff; box-shadow: 0 10px 30px -12px rgb(44 64 245 / .7); }
+.dlg-btn--primary:hover { background: #2231d4; color: #fff; }
+.dlg-btn--outline { border-color: rgb(255 255 255 / .25); color: #fff; }
+.dlg-btn--outline:hover { border-color: rgb(255 255 255 / .6); background: rgb(255 255 255 / .05); }
+.dlg-sec--light .dlg-btn--outline { border-color: rgb(11 21 44 / .22); color: var(--ink-900); }
+.dlg-sec--light .dlg-btn--outline:hover { border-color: rgb(11 21 44 / .55); background: rgb(11 21 44 / .04); }
+.dlg-btn svg { flex: 0 0 auto; width: 1rem; height: 1rem; transition: transform .3s; }
+.dlg-btn:hover svg { transform: translateX(4px); }
+.dlg-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+/* ==========================================================================
+   Cartoes das secoes
+   ========================================================================== */
+.dlg-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.05rem; margin-top: clamp(2.5rem, 4vw, 3.5rem); }
+.dlg-cards > * { transition-delay: calc(var(--i, 0) * 70ms); }
+
+/* Escuros (o produto falando). */
+.dlg-tile {
+  display: flex; flex-direction: column; height: 100%; padding: clamp(1.4rem, 2.1vw, 1.9rem);
+  border: 1px solid rgb(255 255 255 / .07); border-radius: 1.1rem;
+  background: linear-gradient(160deg, rgb(10 17 42 / .66), rgb(4 8 24 / .78));
+  transition: border-color .4s var(--ease-out-expo), background .4s var(--ease-out-expo);
+}
+.dlg-tile:hover { border-color: rgb(13 131 255 / .4); background: linear-gradient(160deg, rgb(13 24 62 / .74), rgb(5 10 30 / .84)); }
+.dlg-tile__cat { font-size: .66rem; font-weight: 600; letter-spacing: .24em; line-height: 1; text-transform: uppercase; color: var(--mint-400); }
+.dlg-tile h3 { margin-top: 1.25rem; color: #fff; }
+.dlg-tile p { margin-top: .65rem; font-size: .9375rem; line-height: 1.7; color: rgb(255 255 255 / .74); }
+.dlg-more { margin-top: 2rem; font-size: .9375rem; color: rgb(255 255 255 / .55); }
+.dlg-more strong { font-weight: 600; color: #fff; }
+
+/* Claros (o leitor pensando). */
+.dlg-card {
+  display: flex; flex-direction: column; height: 100%; padding: clamp(1.4rem, 2.1vw, 1.9rem);
+  border: 1px solid rgb(11 21 44 / .08); border-radius: 1.1rem; background: var(--ink-50);
+  transition: transform .5s var(--ease-out-expo), border-color .4s, box-shadow .5s;
+}
+.dlg-card:hover { transform: translateY(-4px); border-color: rgb(44 64 245 / .3); box-shadow: 0 28px 60px -38px rgb(11 21 44 / .45); }
+.dlg-card h3 { color: var(--ink-900); }
+.dlg-card p { margin-top: .65rem; font-size: .9375rem; line-height: 1.7; color: var(--ink-500); }
+.dlg-card--open { border-color: rgb(44 64 245 / .28); background: linear-gradient(160deg, var(--brand-50), #fff); }
+.dlg-card--open h3 { color: var(--brand-500); }
+
+/* ==========================================================================
+   Fechamento
+   ========================================================================== */
+.dlg-sec--close { padding-block: clamp(16px, 2vw, 32px) clamp(56px, 6vw, 88px); }
+.dlg-final-glow {
+  width: 100%;
+  --border-radius: clamp(1.5rem, 2.6vw, 2.5rem) !important;
+}
+.dlg-final-glow > .border-glow-inner { border-radius: inherit; }
+.dlg-final-glow > .edge-light { filter: saturate(1.35); }
+.dlg-final-glow .dlg-final {
+  min-height: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+}
+.dlg-final {
+  position: relative; overflow: hidden; text-align: center;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem);
+  border: 1px solid rgb(44 64 245 / .22); border-radius: clamp(1.5rem, 2.6vw, 2.5rem); background: #fff;
+  transition: box-shadow .5s;
+}
+.dlg-final:hover { box-shadow: 0 30px 80px -40px rgb(44 64 245 / .45); }
+.dlg-final::before {
+  content: ""; position: absolute; inset-inline: 0; top: -8rem; margin-inline: auto;
+  width: 36rem; height: 36rem; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgb(44 64 245 / .1), transparent 68%);
+  opacity: .75; transition: opacity .7s;
+}
+.dlg-final:hover::before { opacity: 1; }
+.dlg-final > * { position: relative; }
+.dlg-final__logo { width: auto; height: 24px; margin-inline: auto; }
+.dlg-final .dlg-h2 { max-width: 22ch; margin: 1.6rem auto 0; }
+.dlg-final p { max-width: 42rem; margin: 1.35rem auto 0; font-size: clamp(.95rem, 1.15vw, 1.0625rem); line-height: 1.7; color: var(--ink-500); }
+.dlg-final .dlg-actions { justify-content: center; margin-top: 2rem; }
+.dlg-final__url { margin-top: 1.4rem; font-size: 13px; color: var(--ink-400); }
+
+/* ==========================================================================
+   Revelacao
+   ========================================================================== */
+/* Titulos: palavra a palavra, cada uma na sua mascara. */
+.dlg-split { display: inline; }
+/* A mascara de cada palavra precisa liberar os descendentes: os titulos tem
+   leading apertado, entao g, j, p e c-cedilha passam da caixa de linha e uma
+   mascara rente a ela decapita a letra. A folga e em `em` para acompanhar o
+   corpo do texto, e a margem negativa devolve a altura da caixa de margem —
+   `vertical-align: bottom` mede a caixa de margem, e sem isso cada palavra
+   engordaria a linha e um titulo quebrado em duas se afastaria. */
+.dlg-split__w { display: inline-block; overflow: hidden; padding-bottom: .22em; margin-bottom: -.22em; vertical-align: bottom; }
+/* Degrade que corre por dentro dos glifos, no espirito do titulo em degrade
+   do /produto. `box-decoration-break: clone` da a cada fragmento de linha a
+   propria caixa de pintura — sem ele a ultima palavra de uma linha quebrada
+   fica sem tinta, porque `background-clip: text` so pinta dentro da caixa do
+   fragmento. A rampa vai e volta devagar, entao le como brilho, nao como GIF. */
+.dlg-split__grad {
+  background-image: linear-gradient(100deg, var(--brand-500), #079db8 38%, var(--mint-500) 62%, var(--brand-500));
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  animation: dlg-sheen 9s ease-in-out infinite alternate;
+}
+.dlg-sec--dark .dlg-split__grad {
+  background-image: linear-gradient(100deg, var(--brand-300), #7fe0ff 38%, var(--mint-400) 62%, var(--brand-300));
+}
+@keyframes dlg-sheen {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+.dlg-split__w > span {
+  display: inline-block; opacity: 0; translate: 0 110%;
+  transition: translate .75s var(--ease-out-expo), opacity .75s var(--ease-out-expo);
+  transition-delay: calc(var(--i) * 45ms);
+}
+[data-reveal].is-visible .dlg-split__w > span { opacity: 1; translate: 0 0; }
+
+.dlg [data-reveal] { opacity: 0; transition: opacity .9s var(--ease-out-expo), translate .9s var(--ease-out-expo); }
+.dlg [data-reveal="up"] { translate: 0 32px; }
+.dlg [data-reveal="left"] { translate: -28px 0; }
+.dlg [data-reveal="right"] { translate: 28px 0; }
+.dlg [data-reveal].is-visible { opacity: 1; translate: 0 0; }
+
+/* ==========================================================================
+   Responsivo
+   ========================================================================== */
+@media (max-width: 1000px) { .dlg-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) {
+  .dlg-cards { grid-template-columns: 1fr; }
+  .dlg-btn { width: 100%; }
+  .dlg-actions { flex-direction: column; align-items: stretch; }
+  .dlg-head .dlg-h2 { max-width: none; }
+  .dlg-stage { min-height: 0; }
+  .dlg-sec--features .dlg-head { grid-template-columns: 1fr; }
+  .dlg-sec--features .dlg-eyebrow,
+  .dlg-sec--features .dlg-h2,
+  .dlg-sec--features .dlg-body { grid-column: 1; grid-row: auto; }
+  .dlg-sec--features .dlg-body { margin-top: 1.2rem; }
+  .dlg-feature-carousel { --feature-width: min(78vw, 340px); }
+  .dlg-feature-carousel__track { margin-inline: calc(var(--sx-gutter) * -1); padding-inline: calc((100% - var(--feature-width)) / 2 + var(--sx-gutter)); }
+  .dlg-feature-slide { transform: scale(.88) rotateY(5deg); opacity: .48; }
+  .dlg-feature-slide.is-after { transform: scale(.88) rotateY(-5deg); }
+  .dlg-feature-slide.is-far,
+  .dlg-feature-slide.is-far.is-after { transform: scale(.8); opacity: .18; }
+  .dlg-feature-slide.is-active { transform: none; opacity: 1; }
+  .dlg-feature-slide .dlg-tile { min-height: 245px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dlg *, .dlg [data-reveal] { animation: none !important; transition: none !important; }
+  .dlg [data-reveal] { opacity: 1; translate: none; }
+  .dlg-split__w > span { translate: 0 0; }
+  .dlg-split__grad { animation: none; background-position: 30% 50%; }
+  .dlg-wave span { height: var(--peak); }
+}

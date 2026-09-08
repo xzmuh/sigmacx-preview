@@ -1,9 +1,9 @@
 import { useEffect, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { DEMO_URL, DIALOGI_URL } from "./site-data";
+import { DEMO_URL } from "./site-data";
 import { LANGS, href, langFromPath, pick, stripLang, type Lang } from "../lib/i18n";
 import ui from "../../content/ui.json";
-import { startHomeJourney, startProductJourney } from "./ProductJourney";
+import { startDialogiJourney, startHomeJourney, startProductJourney } from "./ProductJourney";
 
 /**
  * Header unico do site (o da home): mesmas classes .site-header / .nav / .pill
@@ -60,15 +60,21 @@ export function SiteHeader() {
   const openProducts = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     close();
     // Nova aba, atalhos do navegador e navegacoes fora da home continuam nativos.
-    if (base !== "/" || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if ((base !== "/" && base !== "/dialogi") || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     startProductJourney(href("/produto", lang), lang);
   };
   const openHome = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     close();
-    if (!productRoutes.includes(base) || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if ((!productRoutes.includes(base) && base !== "/dialogi") || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     startHomeJourney(href("/", lang), lang);
+  };
+  const openDialogi = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    close();
+    if (base === "/dialogi" || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    startDialogiJourney(href("/dialogi", lang), lang);
   };
 
   return (
@@ -79,7 +85,7 @@ export function SiteHeader() {
       <nav className={menuOpen ? "nav nav--open" : "nav"} aria-label="Navegação principal">
         <Link data-index="01" to={href("/", lang)} {...hover} onClick={openHome}>Home</Link>
         {showDrop ? (<div
-          className={dropOpen ? "nav-drop nav-drop--open" : "nav-drop"}
+          className={dropOpen ? "nav-drop nav-drop--products nav-drop--open" : "nav-drop nav-drop--products"}
           onMouseEnter={() => setDropOpen(true)}
           onMouseLeave={() => setDropOpen(false)}
         >
@@ -99,9 +105,9 @@ export function SiteHeader() {
         ) : (
           <Link data-index="02" to={href("/produto", lang)} {...hover} onClick={openProducts}>{t.products}</Link>
         )}
-        <a data-index="03" href={DIALOGI_URL} target="_blank" rel="noreferrer" {...hover} onClick={close}>{t.dialogi}</a>
+        <Link data-index="03" to={href("/dialogi", lang)} {...hover} onClick={openDialogi}>{t.dialogi}</Link>
         <div
-          className={companyOpen ? "nav-drop nav-drop--open" : "nav-drop"}
+          className={companyOpen ? "nav-drop nav-drop--company nav-drop--open" : "nav-drop nav-drop--company"}
           onMouseEnter={() => setCompanyOpen(true)}
           onMouseLeave={() => setCompanyOpen(false)}
         >

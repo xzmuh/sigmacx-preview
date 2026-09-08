@@ -389,8 +389,10 @@
 
 .sx-benefits-bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: dense; gap: 18px; }
 .sx-benefits-bento__statement { grid-column: span 2; grid-row: span 2; min-height: 390px; display: grid; align-content: space-between; justify-items: start; gap: 28px; padding: clamp(30px, 4vw, 52px); border-radius: var(--sx-radius-lg); background: radial-gradient(circle at 90% 10%, rgba(185, 255, 155, 0.13), transparent 45%), var(--sx-navy); }
-.sx-benefits-bento__statement > span { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--sx-line-strong); border-radius: 50%; color: var(--green); }
-.sx-benefits-bento__statement > p { max-width: 20ch; margin: 0; color: #fff; font-size: clamp(1.45rem, 2.8vw, 2.25rem); line-height: 1.2; letter-spacing: -0.035em; }
+.sx-benefits-bento__statement > span:not(.edge-light),
+.sx-benefits-bento__statement > .border-glow-inner > span { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--sx-line-strong); border-radius: 50%; color: var(--green); }
+.sx-benefits-bento__statement > p,
+.sx-benefits-bento__statement > .border-glow-inner > p { max-width: 20ch; margin: 0; color: #fff; font-size: clamp(1.45rem, 2.8vw, 2.25rem); line-height: 1.2; letter-spacing: -0.035em; }
 .sx-benefits-bento__item { position: relative; min-height: 186px; padding: 24px; overflow: hidden; border: 1px solid var(--sx-line); border-radius: var(--sx-radius); background: #f5f7fa; transition: transform 0.35s var(--ease-sigma), border-color 0.35s; }
 .sx-benefits-bento__item:hover { transform: translateY(-4px); border-color: rgba(47, 125, 63, 0.36); }
 .sx-benefits-bento__item > span { display: block; margin-bottom: 24px; color: var(--sx-accent); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; }
@@ -584,16 +586,22 @@
 .site-header .nav-drop { position: relative; display: inline-flex; }
 .site-header .nav-drop__caret { display: inline-block; width: 6px; height: 6px; margin-left: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); opacity: 0.7; transition: transform 0.3s var(--ease-sigma); }
 .site-header .nav-drop--open .nav-drop__caret { transform: translateY(1px) rotate(225deg); }
-.site-header .nav-drop__panel { position: absolute; top: calc(100% + 14px); left: 50%; transform: translate(-50%, -6px); min-width: 280px; display: grid; gap: 2px; padding: 12px; border-radius: 18px; border: 1px solid rgba(185, 255, 155, 0.16); background: linear-gradient(160deg, rgba(17, 29, 56, 0.98), rgba(5, 11, 25, 0.98)); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.25s var(--ease-sigma), transform 0.25s var(--ease-sigma), visibility 0.25s; }
-.site-header .nav-drop__panel::before { content: ""; position: absolute; inset: -14px 0 auto 0; height: 14px; }
-.site-header .nav-drop--open .nav-drop__panel, .site-header .nav-drop:focus-within .nav-drop__panel { opacity: 1; visibility: visible; pointer-events: auto; transform: translate(-50%, 0); }
-.site-header .nav-drop__panel a { display: grid; gap: 2px; padding: 10px 12px; border-radius: 12px; color: #fff; font-size: 0.9rem; transition: background 0.2s; }
-.site-header .nav-drop__panel a:hover { background: rgba(185, 255, 155, 0.08); }
+.site-header .nav-drop__panel { position: absolute; top: calc(100% + 22px); left: -18px; transform: translateY(-6px) scale(.985); transform-origin: 36px top; width: 268px; display: grid; gap: 1px; padding: 8px; border-radius: 16px; border: 1px solid rgba(185, 255, 155, 0.1); background: linear-gradient(155deg, rgba(15, 30, 52, 0.96), rgba(5, 13, 27, 0.97)); box-shadow: 0 20px 46px -20px rgba(0, 0, 0, 0.58), inset 0 1px 0 rgba(255, 255, 255, .045); backdrop-filter: blur(18px) saturate(125%); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s var(--ease-sigma), transform 0.22s var(--ease-sigma), visibility 0.22s; }
+.site-header .nav-drop--company .nav-drop__panel { right: -18px; left: auto; transform-origin: calc(100% - 36px) top; }
+.site-header .nav-drop__panel::before { content: ""; position: absolute; inset: -22px 0 auto 0; height: 22px; }
+.site-header .nav-drop__panel::after { content: ""; position: absolute; top: -5px; left: 31px; width: 10px; height: 10px; rotate: 45deg; border-top: 1px solid rgba(185, 255, 155, .1); border-left: 1px solid rgba(185, 255, 155, .1); background: #0d1b31; }
+.site-header .nav-drop--company .nav-drop__panel::after { right: 31px; left: auto; }
+.site-header .nav-drop--open .nav-drop__panel, .site-header .nav-drop:focus-within .nav-drop__panel { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0) scale(1); }
+.site-header .nav-drop__panel a { display: grid; gap: 3px; min-height: 54px; padding: 10px 12px; border-radius: 11px; color: #fff; font-size: 0.84rem; transition: background 0.2s, color .2s; }
+.site-header .nav-drop__panel a::after { content: none; }
+.site-header .nav-drop__panel a:hover { background: rgba(185, 255, 155, 0.055); }
 .site-header .nav-drop__panel strong { font-weight: 600; }
-.site-header .nav-drop__panel small { color: #9ea9bd; font-size: 0.76rem; }
+.site-header .nav-drop__panel small { overflow: hidden; color: #9ea9bd; font-size: 0.72rem; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
 /* no menu mobile, o painel vira lista inline */
 .site-header .nav--open .nav-drop { flex-direction: column; }
-.site-header .nav--open .nav-drop__panel { position: static; transform: none; opacity: 1; visibility: visible; pointer-events: auto; box-shadow: none; border: 0; background: transparent; padding: 0 0 8px 14px; }
+.site-header .nav--open .nav-drop__panel { position: static; width: auto; transform: none; opacity: 1; visibility: visible; pointer-events: auto; box-shadow: none; border: 0; background: transparent; padding: 0 0 8px 14px; }
+.site-header .nav--open .nav-drop__panel::before,
+.site-header .nav--open .nav-drop__panel::after { display: none; }
 /* seletor de idioma no header (mesmo lugar do "PT" da home) */
 .site-header .lang-switch { display: inline-flex; gap: 8px; }
 .site-header .lang-switch a { opacity: 0.5; transition: opacity 0.2s; }

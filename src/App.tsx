@@ -9,6 +9,7 @@ const Produto = lazy(() => import("./pages/Produto"));
 const SigmaChannel = lazy(() => import("./pages/SigmaChannel"));
 const SigmaBrain = lazy(() => import("./pages/SigmaBrain"));
 const SigmaInsights = lazy(() => import("./pages/SigmaInsights"));
+const Dialogi = lazy(() => import("./pages/Dialogi"));
 const Sobre = lazy(() => import("./pages/Sobre"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -31,6 +32,7 @@ export function App() {
               <Route path="sigma-channel" element={<SigmaChannel />} />
               <Route path="sigma-brain" element={<SigmaBrain />} />
               <Route path="sigma-insights" element={<SigmaInsights />} />
+              <Route path="dialogi" element={<Dialogi />} />
               <Route path="sobre" element={<Sobre />} />
               <Route path="blog" element={<Blog />} />
               <Route path="blog/:slug" element={<BlogPost />} />

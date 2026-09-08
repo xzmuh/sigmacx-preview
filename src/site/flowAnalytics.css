@@ -1,0 +1,206 @@
+/* ==========================================================================
+   Leitura de fluxo (Sigma Channel) — a versao clara e jogavel do `Fluxo.gif`.
+   Mesma familia do builder do Brain, so que sobre superficie clara: aqui o
+   assunto e o VOLUME que passou por cada caminho, nao a montagem do fluxo.
+   ========================================================================== */
+
+.fa {
+  --fa-ink: #1f2939;
+  --fa-mute: rgba(31, 41, 57, .52);
+  --fa-line: rgba(19, 109, 135, .16);
+  --fa-teal: #00a9a9;
+  --fa-petrol: #136d87;
+  color: var(--fa-ink);
+  font-size: 11px;
+  line-height: 1.35;
+  user-select: none;
+}
+
+.fa__surface {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 820 / 430;
+  border: 1px solid var(--fa-line);
+  border-radius: 18px;
+  background:
+    radial-gradient(60% 70% at 18% 16%, rgba(0, 169, 169, .05), transparent 70%),
+    #fbfdfe;
+  background-image:
+    radial-gradient(rgba(19, 109, 135, .14) 1px, transparent 1px),
+    radial-gradient(60% 70% at 18% 16%, rgba(0, 169, 169, .05), transparent 70%),
+    linear-gradient(#fbfdfe, #fbfdfe);
+  background-size: 17px 17px, auto, auto;
+  box-shadow: 0 26px 60px -44px rgba(24, 90, 125, .5);
+  container-type: inline-size;
+  cursor: grab;
+  touch-action: none;
+}
+.fa__surface.is-dragging { cursor: grabbing; }
+
+/* O zoom e o arrasto movem a cena inteira; a prancheta continua parada. */
+.fa__scene { position: absolute; inset: 0; transform-origin: 50% 50%; transition: scale .25s ease; }
+.fa__surface.is-dragging .fa__scene { transition: none; }
+.fa__ribbons { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+/* --- Faixas: espessura = volume ----------------------------------------- */
+.fa__ribbon {
+  fill: url(#fa-grad);
+  fill: rgba(0, 169, 169, .38);
+  transition: opacity .3s ease, fill .3s ease;
+}
+.fa__ribbon--muted { fill: rgba(19, 109, 135, .12); }
+.fa__ribbon.is-dim { opacity: .22; }
+
+.fa__share {
+  position: absolute;
+  translate: -50% -50%;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 2px 8px -2px rgba(24, 90, 125, .4);
+  color: var(--fa-petrol);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  transition: opacity .3s ease;
+}
+.fa__share--muted { color: var(--fa-mute); }
+.fa__share.is-dim { opacity: .3; }
+
+/* --- Blocos -------------------------------------------------------------- */
+.fa__node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+  padding: 4px 6px;
+  border: 1px solid var(--fa-line);
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 0 6px 16px -10px rgba(24, 90, 125, .5);
+  transition: opacity .3s ease, border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.fa__node:hover, .fa__node:focus-visible {
+  border-color: rgba(0, 169, 169, .55);
+  box-shadow: 0 12px 26px -12px rgba(0, 169, 169, .5);
+  transform: translateY(-1px);
+}
+.fa__node:focus-visible { outline: 2px solid var(--fa-teal); outline-offset: 2px; }
+.fa__node { cursor: grab; touch-action: none; }
+.fa__node.is-moving {
+  cursor: grabbing;
+  border-color: var(--fa-teal);
+  box-shadow: 0 16px 32px -14px rgba(0, 169, 169, .6);
+  transition: none;
+}
+/* Caminho sem volume: presente, mas claramente fora da rota principal. */
+.fa__node.is-muted { opacity: .46; box-shadow: none; }
+.fa__node.is-dim { opacity: .24; }
+.fa__node.is-muted.is-dim { opacity: .16; }
+
+.fa__node-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  font-size: max(8.5px, 1.35cqw);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.fa .sx-icon {
+  display: inline-grid;
+  place-items: center;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--fa-petrol);
+}
+.fa__node-head .sx-icon svg { width: 11px; height: 11px; }
+.fa__node-more {
+  margin-left: auto;
+  width: 10px;
+  height: 10px;
+  background:
+    radial-gradient(circle, var(--fa-mute) 42%, transparent 43%) 0 50% / 3px 3px no-repeat,
+    radial-gradient(circle, var(--fa-mute) 42%, transparent 43%) 50% 50% / 3px 3px no-repeat,
+    radial-gradient(circle, var(--fa-mute) 42%, transparent 43%) 100% 50% / 3px 3px no-repeat;
+}
+.fa__node-body {
+  flex: 1;
+  overflow: hidden;
+  color: var(--fa-mute);
+  font-size: max(7.5px, 1.15cqw);
+  line-height: 1.4;
+}
+.fa__node-list { display: flex; flex-direction: column; gap: 2px; }
+.fa__node-list i {
+  overflow: hidden;
+  padding: 2px 5px;
+  border: 1px solid rgba(19, 109, 135, .12);
+  border-radius: 4px;
+  color: var(--fa-mute);
+  font-size: max(7.5px, 1.15cqw);
+  font-style: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* --- Controles de zoom --------------------------------------------------- */
+.fa__zoom {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fa__zoom button {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--fa-line);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--fa-petrol);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 10px -6px rgba(24, 90, 125, .5);
+  transition: border-color .2s, color .2s, transform .2s;
+}
+.fa__zoom button:hover { border-color: rgba(0, 169, 169, .55); transform: translateY(-1px); }
+.fa__zoom button:focus-visible { outline: 2px solid var(--fa-teal); outline-offset: 2px; }
+.fa__zoom .sx-icon svg { width: 13px; height: 13px; }
+
+.fa__hint { margin: 12px 0 0; color: var(--fa-mute); font-size: 12px; line-height: 1.5; }
+
+@media (max-width: 760px) {
+  /* Em vez de espremer os blocos ate o texto sumir, a cena rola na horizontal. */
+  .fa__surface { min-width: 620px; }
+  .fa { overflow-x: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa *, .fa *::before, .fa *::after { transition: none !important; }
+}
+
+/* ==========================================================================
+   No lugar do print `G2-BR.webp` (Sigma Brain): a moldura herdava as regras do
+   `<img>` — 110% de largura e margem negativa, para o print sangrar. A tela
+   jogavel nao sangra: ela precisa caber inteira, senao os controles de zoom
+   ficam fora da area clicavel.
+   ========================================================================== */
+.sx-page--suite .sx-builder__stage--live { width: 106%; margin-inline: -3%; }
+.sx-page--suite .sx-builder__stage--live .fa__surface {
+  border-radius: 20px;
+  box-shadow: 0 30px 56px -30px rgba(24, 90, 125, .34);
+}
+@media (max-width: 980px) {
+  .sx-page--suite .sx-builder__stage--live { width: 100%; margin-inline: 0; }
+}

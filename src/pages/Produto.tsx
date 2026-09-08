@@ -58,57 +58,6 @@ export default function Produto() {
         </div>
       </section>
 
-      {/* Cases navegáveis: duas histórias sem repetir a mesma composição. */}
-      <section className="sx-section sx-section--wm" data-reveal>
-        <Watermark side="right" />
-        <div className="sx-shell">
-          <div className="sx-editorial-head">
-            <p className="sx-eyebrow">SigmaCX</p>
-            <h2 className="sx-h2"><SplitText text={t.cases.title} /></h2>
-          </div>
-          <div className="sx-case-switcher">
-            <div className="sx-case-switcher__tabs" role="tablist" aria-label={t.cases.title}>
-              {cases.map((item, index) => (
-                <button key={item.name} type="button" role="tab" id={`case-tab-${index}`}
-                  aria-selected={activeCase === index} aria-controls={`case-panel-${index}`}
-                  className={activeCase === index ? "is-active" : ""} onClick={() => setActiveCase(index)}>
-                  <span>0{index + 1}</span>
-                  <em>{item.name}</em>
-                  <i aria-hidden="true" />
-                </button>
-              ))}
-            </div>
-            <div className="sx-case-switcher__stage" key={activeCase} role="tabpanel"
-              id={`case-panel-${activeCase}`} aria-labelledby={`case-tab-${activeCase}`}>
-              <div className="sx-case-switcher__intro">
-                <div className="sx-case-switcher__client">
-                  <span className="sx-eyebrow">{t.cases.highlight}</span>
-                  <img src={`/media/site/${selectedCase.logo}`} alt={selectedCase.name} />
-                </div>
-                <p>{rich(selectedCase.lead)}</p>
-                <img className="sx-case-switcher__art" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
-              </div>
-              <div className="sx-case-results">
-                {selectedCase.results.map((item, index) => (
-                  <article className="sx-case-result" key={item.title}>
-                    <Icon name={caseResultIcons[activeCase][index]} fill />
-                    <strong>{item.value}</strong>
-                    <h3>{item.title}</h3>
-                    <p>{item.body}</p>
-                  </article>
-                ))}
-              </div>
-              <div className="sx-case-switcher__footer">
-                <p><SuiteGradient>{selectedCase.quote}</SuiteGradient></p>
-                <a className="sx-cta sx-cta--outline" href={CASE_TECBAN_PDF} target="_blank" rel="noreferrer">
-                  {t.cases.caseCta} <span aria-hidden="true">→</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <SectionTransition to="dark" />
 
       {/* Os módulos dividem uma cena azul; a mídia se dissolve no próprio fundo. */}
@@ -223,8 +172,12 @@ export default function Produto() {
         </div>
       </section>
 
-      {/* 9. Estatistica em destaque: numeros grandes, como o 81% da home */}
-      <section className="sx-section" data-reveal>
+      <SectionTransition to="dark" />
+
+      {/* 9. Estatistica em destaque: faixa escura full-bleed (pedido 2026-09-08).
+          Depois que os cases foram para o fim, a pagina emendava quatro cenas
+          claras seguidas ate o rodape; esta faixa quebra essa corrida. */}
+      <section className="sx-band sx-dark sx-stat-band" data-reveal>
         <div className="sx-shell sx-stat-banner">
           <div className="sx-stat-banner__copy">
             <p>{rich(t.intelligence.statLead)}</p>
@@ -233,10 +186,65 @@ export default function Produto() {
           <div className="sx-stat-banner__grid">
             {t.intelligence.stats.map((stat) => (
               <div className="sx-stat" key={stat.label}>
-                <strong><SuiteGradient>{stat.value}</SuiteGradient></strong>
+                <strong><SuiteGradient onDark>{stat.value}</SuiteGradient></strong>
                 <p>{stat.label}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <SectionTransition to="light" />
+
+      {/* Cases: fecham a pagina, logo antes do rodape (pedido 2026-09-08).
+          Vizinhos claros dos dois lados, entao nao precisa de emenda: a
+          passagem para o escuro e a do proprio PageShell. */}
+      <section className="sx-section sx-section--wm" data-reveal>
+        <Watermark side="right" />
+        <div className="sx-shell">
+          <div className="sx-editorial-head">
+            <p className="sx-eyebrow">SigmaCX</p>
+            <h2 className="sx-h2"><SplitText text={t.cases.title} /></h2>
+          </div>
+          <div className="sx-case-switcher">
+            <div className="sx-case-switcher__tabs" role="tablist" aria-label={t.cases.title}>
+              {cases.map((item, index) => (
+                <button key={item.name} type="button" role="tab" id={`case-tab-${index}`}
+                  aria-selected={activeCase === index} aria-controls={`case-panel-${index}`}
+                  className={activeCase === index ? "is-active" : ""} onClick={() => setActiveCase(index)}>
+                  <span>0{index + 1}</span>
+                  <em>{item.name}</em>
+                  <i aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+            <div className="sx-case-switcher__stage" key={activeCase} role="tabpanel"
+              id={`case-panel-${activeCase}`} aria-labelledby={`case-tab-${activeCase}`}>
+              <div className="sx-case-switcher__intro">
+                <div className="sx-case-switcher__client">
+                  <span className="sx-eyebrow">{t.cases.highlight}</span>
+                  <img src={`/media/site/${selectedCase.logo}`} alt={selectedCase.name} />
+                </div>
+                <p>{rich(selectedCase.lead)}</p>
+                <img className="sx-case-switcher__art" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
+              </div>
+              <div className="sx-case-results">
+                {selectedCase.results.map((item, index) => (
+                  <article className="sx-case-result" key={item.title}>
+                    <Icon name={caseResultIcons[activeCase][index]} fill />
+                    <strong>{item.value}</strong>
+                    <h3>{item.title}</h3>
+                    <p>{item.body}</p>
+                  </article>
+                ))}
+              </div>
+              <div className="sx-case-switcher__footer">
+                <p><SuiteGradient>{selectedCase.quote}</SuiteGradient></p>
+                <a className="sx-cta sx-cta--outline" href={CASE_TECBAN_PDF} target="_blank" rel="noreferrer">
+                  {t.cases.caseCta} <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
