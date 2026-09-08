@@ -143,12 +143,16 @@ export default function SigmaInsights() {
               <p><SuiteGradient onDark>{t.benefits.quote}</SuiteGradient></p>
               <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.benefits.cta} <span aria-hidden="true">→</span></a>
             </BorderGlow>
+            {/* So os cartoes brancos ganham a moldura reativa; o bloco azul ao
+                lado ja tem a dele em `alwaysOn` e fica como esta. */}
             {t.benefits.items.map((item, index) => (
-              <article className="sx-benefits-bento__item" key={item.title}>
-                <span>0{index + 1}</span>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-              </article>
+              <SuiteGlow radius={20} className="sx-glow--card sx-glow--bento" key={item.title}>
+                <article className="sx-benefits-bento__item sx-card--bare">
+                  <span>0{index + 1}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              </SuiteGlow>
             ))}
           </div>
         </div>

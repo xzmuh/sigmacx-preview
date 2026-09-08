@@ -289,11 +289,12 @@
 .dlg-sec--features {
   isolation: isolate;
   overflow: hidden;
-  padding-block: clamp(46px, 5vw, 76px) clamp(72px, 7vw, 108px);
+  padding-block: clamp(42px, 4vw, 64px) clamp(82px, 8vw, 124px);
   background:
-    radial-gradient(ellipse 62% 62% at 92% 18%, rgb(44 64 245 / .2), transparent 68%),
-    radial-gradient(ellipse 48% 46% at 6% 88%, rgb(21 239 109 / .075), transparent 72%),
-    linear-gradient(145deg, #071126 0%, var(--feat-surface) 52%, #0a1831 100%);
+    linear-gradient(180deg, transparent 66%, rgb(8 19 41 / .16) 78%, rgb(8 19 41 / .72) 92%, #081329 100%),
+    radial-gradient(ellipse 72% 64% at 50% 105%, rgb(35 72 220 / .32), transparent 68%),
+    radial-gradient(ellipse 48% 42% at 100% 4%, rgb(21 239 189 / .13), transparent 70%),
+    linear-gradient(145deg, #071126 0%, #0a1734 54%, #081329 100%);
 }
 .dlg-sec--features::before {
   position: absolute;
@@ -323,6 +324,36 @@
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000);
   mask-image: linear-gradient(to bottom, transparent, #000);
 }
+.dlg-features-field {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.dlg-features-field__dots {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  opacity: .54;
+  background-image: radial-gradient(circle, rgb(67 131 255 / .34) 1px, transparent 1.4px);
+  background-size: 12px 12px;
+  -webkit-mask-image: radial-gradient(circle, #000 5%, transparent 70%);
+  mask-image: radial-gradient(circle, #000 5%, transparent 70%);
+}
+.dlg-features-field__dots--left { top: 27%; left: -68px; }
+.dlg-features-field__dots--right { right: -62px; bottom: 4%; }
+.dlg-features-field > i {
+  position: absolute;
+  right: -16%;
+  top: 9%;
+  width: min(78vw, 1020px);
+  aspect-ratio: 1.8;
+  border: 1px solid rgb(82 142 255 / .14);
+  border-radius: 50%;
+  box-shadow: 0 0 0 92px rgb(40 101 255 / .026), 0 0 0 184px rgb(21 239 189 / .016);
+  rotate: 8deg;
+}
 .dlg-sec--features > .dlg-x { z-index: 1; }
 .dlg-sec--features .dlg-head {
   display: grid;
@@ -351,9 +382,9 @@
 /* Carrossel de recursos: o item em foco ocupa o palco; os vizinhos recuam
    em perspectiva para deixar evidente que existe uma sequencia navegavel. */
 .dlg-feature-carousel {
-  --feature-width: clamp(310px, 43vw, 510px);
+  --feature-width: clamp(310px, 30vw, 430px);
   position: relative;
-  margin-top: clamp(2rem, 3.5vw, 3rem);
+  margin-top: clamp(1rem, 2.5vw, 2rem);
 }
 .dlg-feature-carousel__track {
   display: flex;
@@ -377,10 +408,10 @@
   flex: 0 0 var(--feature-width);
   min-width: 0;
   scroll-snap-align: center;
-  transform: scale(.8) rotateY(8deg) translateX(18px);
+  transform: scale(.86) rotateY(7deg) translateX(13px);
   transform-origin: center;
-  opacity: .52;
-  filter: saturate(.72) brightness(.78);
+  opacity: .74;
+  filter: saturate(.82) brightness(.84);
   transition:
     transform .58s var(--ease-out-expo),
     opacity .48s ease,
@@ -399,31 +430,61 @@
   transform: scale(.8);
   transition: opacity .5s ease, transform .6s var(--ease-out-expo);
 }
-.dlg-feature-slide.is-after { transform: scale(.8) rotateY(-8deg) translateX(-18px); }
+.dlg-feature-slide.is-after { transform: scale(.86) rotateY(-7deg) translateX(-13px); }
 .dlg-feature-slide.is-active {
   z-index: 2;
   transform: scale(1) rotateY(0) translateX(0);
   opacity: 1;
   filter: none;
 }
-.dlg-feature-slide.is-active::before { opacity: 1; transform: scale(1.2); }
+.dlg-feature-slide.is-active::before { opacity: 1; transform: scale(1.2); animation: dlg-feature-aura 3.8s ease-in-out infinite alternate; }
 .dlg-feature-slide.is-far { transform: scale(.69) rotateY(12deg) translateX(34px); opacity: .2; filter: saturate(.5) brightness(.58); }
 .dlg-feature-slide.is-far.is-after { transform: scale(.69) rotateY(-12deg) translateX(-34px); }
 .dlg-feature-slide .dlg-tile {
-  min-height: clamp(225px, 24vw, 275px);
+  min-height: clamp(260px, 23vw, 310px);
   padding: clamp(1.7rem, 3vw, 2.35rem);
   border-radius: 1.45rem;
 }
 .dlg-feature-slide.is-active .dlg-tile {
-  border-color: rgb(78 151 255 / .46);
+  border-color: transparent;
   background:
-    radial-gradient(circle at 88% 12%, rgb(21 239 109 / .1), transparent 34%),
-    linear-gradient(145deg, rgb(18 40 87 / .95), rgb(6 15 38 / .96));
+    radial-gradient(circle at 88% 12%, rgb(21 239 109 / .12), transparent 34%) padding-box,
+    linear-gradient(145deg, rgb(18 40 87 / .97), rgb(6 15 38 / .98)) padding-box,
+    linear-gradient(105deg, #3977ff, #2bd9ef 42%, #15ef8a 68%, #3977ff) border-box;
+  background-size: auto, auto, 240% 100%;
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / .055),
     0 34px 94px -30px rgb(21 85 255 / .64),
     0 24px 82px -42px rgb(21 239 109 / .32),
     0 0 58px rgb(21 239 109 / .075);
+  animation: dlg-feature-edge 5s linear infinite;
+}
+.dlg-tile__icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 18px;
+  border: 1px solid rgb(75 139 255 / .44);
+  border-radius: 50%;
+  color: #71a8ff;
+  background: radial-gradient(circle at 40% 32%, rgb(43 112 240 / .28), rgb(8 23 57 / .72));
+  box-shadow: inset 0 0 20px rgb(49 118 255 / .12), 0 0 24px rgb(29 92 255 / .08);
+  transition: color .45s, border-color .45s, box-shadow .45s, transform .55s var(--ease-out-expo);
+}
+.dlg-tile__icon svg { width: 27px; height: 27px; }
+.dlg-feature-slide.is-active .dlg-tile__icon {
+  color: #72f1db;
+  border-color: rgb(53 222 220 / .55);
+  box-shadow: inset 0 0 22px rgb(21 162 239 / .19), 0 0 30px rgb(21 126 239 / .18);
+  transform: translateY(-3px) scale(1.04);
+}
+@keyframes dlg-feature-edge {
+  to { background-position: 0 0, 0 0, 240% 0; }
+}
+@keyframes dlg-feature-aura {
+  from { opacity: .64; transform: scale(1.04); }
+  to { opacity: 1; transform: scale(1.28); }
 }
 .dlg-feature-slide .dlg-h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
 .dlg-feature-slide .dlg-tile p { max-width: 39ch; }
@@ -622,3 +683,14 @@
   .dlg-split__grad { animation: none; background-position: 30% 50%; }
   .dlg-wave span { height: var(--peak); }
 }
+
+/* ==========================================================================
+   Respiro claro entre o hero e os recursos (opcao B, escolhida em 2026-09-08).
+   A faixa e curta de proposito: existe para o olho descansar entre duas cenas
+   escuras, nao para virar mais uma secao. Por isso ela so carrega a abertura
+   — o cabecalho que antes ficava dentro do escuro — e nada mais.
+   ========================================================================== */
+.dlg-sec--intro { padding-block: clamp(44px, 5vw, 76px); }
+.dlg-sec--intro .dlg-head .dlg-h2 { max-width: 24ch; }
+/* Sem o cabecalho por dentro, a faixa escura abre direto nos cartoes. */
+.dlg-sec--features { padding-top: clamp(52px, 6vw, 88px); }

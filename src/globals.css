@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Arrastar imagem some do site inteiro. O navegador trata `<img>` como
+   arrastavel por padrao e mostra a miniatura fantasma; num site de produto
+   isso so serve para o visitante arrancar a arte da pagina sem querer, e
+   atrapalha as telas onde o arrasto e nosso (builder e leitura de fluxo).
+   `-webkit-user-drag` cobre Chrome e Safari; o Firefox ignora a propriedade e
+   e atendido pelo listener de `dragstart` em main.tsx. */
+img,
+picture,
+svg,
+video {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 @font-face {
   font-family: "Plus Jakarta Sans";
   src: url("/media/plus-jakarta.woff2") format("woff2");
@@ -857,7 +871,9 @@ video {
 
 .story-track {
   position: relative;
-  max-width: 1240px;
+  /* Deriva do eixo do site em vez de um 1240 cravado. Dentro da home quem
+     manda e `.site-shell .story-track`, que usa o eixo proprio dela. */
+  max-width: var(--sx-shell);
   margin: 0 auto;
 }
 
@@ -3201,7 +3217,10 @@ video {
   --ds: 1;
   /* alcance do header flutuante: 20px de topo + 66px de pill */
   --header-h: 5.4rem;
-  --sx-home-shell: 80rem;
+  /* 95rem = 1520px. A home usa `shell - 2*gutter` como largura util, entao
+     1520 - 80 = 1440: o mesmo eixo do resto do site (`--sx-shell`), e as
+     paginas param de brigar por 120px de margem. Ajustado em 2026-09-08. */
+  --sx-home-shell: 95rem;
   --sx-home-gutter: 1.25rem;
   --sx-sec: 6rem;                 /* padding vertical de secao (py-24) */
   --sx-sec-gap: 3rem;             /* titulo -> conteudo */

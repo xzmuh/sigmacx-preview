@@ -172,9 +172,9 @@ export function useSuiteMotion(enabled: boolean) {
 
       if (!fine) return;
 
-      /* ---------------------------------------------------- tilt 3D com brilho */
-      /* .sx-story-media fora da lista: o brilho que seguia o mouse sobre o
-         video da esfera foi removido a pedido (2026-09-04). */
+      /* ------------------------------------------------------------ tilt 3D */
+      /* So a inclinacao: o brilho que seguia o cursor dentro do elemento saiu
+         em 2026-09-08 (e do `.sx-story-media` ja tinha saido em 2026-09-04). */
       const tiltables = root.querySelectorAll<HTMLElement>(
         ".sx-card, .sx-benefits-bento__item, .sx-benefits-bento__statement:not(.border-glow-card), .sx-suite-stage__media, .sx-insights-split__media, .sx-figure, .sx-case-switcher__tabs button",
       );
@@ -186,8 +186,6 @@ export function useSuiteMotion(enabled: boolean) {
           const b = el.getBoundingClientRect();
           const px = (e.clientX - b.left) / b.width;
           const py = (e.clientY - b.top) / b.height;
-          el.style.setProperty("--mx", `${(px * 100).toFixed(1)}%`);
-          el.style.setProperty("--my", `${(py * 100).toFixed(1)}%`);
           const amp = Math.min(7, 900 / Math.max(b.width, 200));
           rx(-(py - 0.5) * amp * 2);
           ry((px - 0.5) * amp * 2);

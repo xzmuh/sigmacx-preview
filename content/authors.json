@@ -1,0 +1,32 @@
+{
+  "_leia": "Elenco de autores do blog. Nome novo na equipe entra aqui ANTES do primeiro artigo dele, com a foto ja convertida em public/media/blog/. O cargo tem uma versao por idioma porque o cartao de autor e escrito em cada lingua. A skill publicar-post nunca inventa autor: se o texto nao trouxer assinatura e o nome nao estiver nesta lista, ela pergunta.",
+  "authors": [
+    {
+      "id": "murillo-melo",
+      "name": "Murillo Melo",
+      "photo": "/media/blog/murilo.webp",
+      "role": { "pt": "CEO", "en": "CEO", "es": "CEO" }
+    },
+    {
+      "id": "wendell-maranhao",
+      "name": "Wendell Maranhão",
+      "photo": "/media/blog/Wendell-Maranhao-Perfil.jpeg-1.webp",
+      "role": {
+        "pt": "Gerente Global de Novos Negócios",
+        "en": "Global New Business Manager",
+        "es": "Gerente Global de Nuevos Negocios"
+      }
+    },
+    {
+      "id": "igor-araujo",
+      "name": "Igor Araújo",
+      "photo": "/media/blog/Igor-Araudo-Perfil.jpeg.webp",
+      "role": { "pt": "Desenvolvedor", "en": "Developer", "es": "Desarrollador" }
+    }
+  ],
+  "categories": [
+    { "slug": "agentes-de-ia", "label": "Agentes de IA" },
+    { "slug": "dados-e-insights", "label": "Dados e Insights" },
+    { "slug": "produtos", "label": "Produtos" }
+  ]
+}

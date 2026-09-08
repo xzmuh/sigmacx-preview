@@ -257,7 +257,10 @@
 .sx-page--suite .sx-case-switcher__tabs button.is-active { background: var(--sg-l100); border-color: var(--sx-line); color: var(--sg-ink); }
 .sx-page--suite .sx-case-switcher__stage { border: 1px solid var(--sx-line); background: var(--sg-l100); }
 .sx-page--suite .sx-case-switcher__stage .sx-block__overlay { opacity: 1; }
-.sx-page--suite .sx-case-switcher__intro > img { background: #fff; border: 1px solid var(--sx-line); }
+/* A arte do canto NAO leva cartao branco (pedido 2026-09-08). Esta regra
+   pintava fundo e borda em qualquer `img` filha direta da faixa, e como e mais
+   especifica que `.sx-case-switcher__art` (que ja pede `transparent`), vencia:
+   o icone aparecia dentro de um retangulo branco. */
 .sx-page--suite .sx-case-result:hover { background: rgba(255, 255, 255, 0.7); }
 .sx-page--suite .sx-case-result > span { color: var(--sg-petrol); }
 .sx-page--suite .sx-case-switcher__footer > p { color: var(--sg-ink); }
@@ -411,18 +414,10 @@
 
 /* ------------------------------ Tilt 3D + brilho -------------------------- */
 .sx-page--suite .sx-tilt { transform-style: preserve-3d; will-change: transform; }
-.sx-page--suite .sx-tilt::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: inherit;
-  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 169, 169, 0.16), transparent 62%);
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-.sx-page--suite .sx-tilt:hover::after { opacity: 1; }
+/* O brilho radial teal que seguia o cursor DENTRO de cada cartao foi removido
+   a pedido (2026-09-08). Era ele a "bola azul" — nao o BorderGlow, que so
+   acende a borda. O mesmo brilho ja tinha saido do `.sx-story-media` em
+   2026-09-04, pelo mesmo motivo. A inclinacao 3D do `.sx-tilt` continua. */
 .sx-page--suite .sx-grid, .sx-page--suite .sx-benefits-bento, .sx-page--suite .sx-feature, .sx-page--suite .sx-story-layout, .sx-page--suite .sx-suite-stage__panel { perspective: 1200px; }
 .sx-page--suite .sx-cta { will-change: transform; }
 
@@ -1362,16 +1357,23 @@
   margin-bottom: 12px;
   color: var(--sg-petrol);
 }
+/* A marca solta, sem cartao branco em volta (pedido 2026-09-08). Os arquivos
+   vem sobre branco — o da Tecban era um card de compartilhamento de 1200x630,
+   recortado agora so para a marca — e `multiply` apaga esse branco contra o
+   fundo claro da faixa. Sem o padding e a caixa, a marca ainda cresce: cabia
+   em 190x62 menos 36px de respiro interno, agora usa 300x72 inteiros. */
 .sx-page--suite .sx-case-switcher__client img {
-  width: 100%;
-  max-width: 190px;
-  max-height: 62px;
+  width: auto;
+  max-width: 300px;
+  max-height: 72px;
   object-fit: contain;
-  padding: 14px 18px;
-  border: 1px solid rgba(31, 41, 57, 0.08);
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 14px 40px -22px rgba(31, 41, 57, 0.35);
+  object-position: left center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  mix-blend-mode: multiply;
 }
 .sx-page--suite .sx-case-switcher__intro > p { color: var(--sg-ink); }
 .sx-page--suite .sx-case-switcher__intro > p strong { color: var(--sg-petrol); }
@@ -3271,77 +3273,276 @@
   .sx-sentiment-viz__path { animation: none; }
 }
 
-/* Direcao final do Brain: pagina clara e assets no tamanho util, usando o
-   branco como parte da imagem em vez de criar outro painel ao redor dela. */
-.sx-page--suite main > .sx-brain-tabs-air {
+/* Brain em fluxo: tres cenas ligadas pelo scroll. O texto avanca pela coluna
+   esquerda e a imagem permanece em cena, trocando de escala/posicao conforme
+   a natureza de cada asset. Nao ha painel branco duplicando o fundo da foto. */
+.sx-page--suite main > .sx-brain-flow {
+  position: relative;
   isolation: isolate;
-  overflow: hidden;
-  padding-block: clamp(72px, 8vw, 116px) !important;
-  background:
-    radial-gradient(ellipse 40% 60% at 5% 52%, rgba(0, 169, 169, 0.09), transparent 72%),
-    radial-gradient(ellipse 38% 58% at 95% 34%, rgba(67, 143, 201, 0.08), transparent 72%),
-    #ffffff;
-}
-.sx-page--suite .sx-brain-tabs-air .sx-tabs { gap: clamp(28px, 4vw, 48px); }
-.sx-page--suite .sx-brain-tabs-air .sx-tabs__button {
-  color: var(--sg-g700);
-  border-color: rgba(19, 109, 135, 0.14);
-  background: rgba(255, 255, 255, 0.84);
-}
-.sx-page--suite .sx-brain-tabs-air .sx-tabs__button.is-active {
-  color: #ffffff;
-  border-color: var(--sg-petrol);
-  background: linear-gradient(110deg, var(--sg-petrol), var(--sg-teal));
-  box-shadow: 0 16px 34px -20px rgba(0, 169, 169, 0.72);
-}
-.sx-page--suite .sx-brain-tabs-air .sx-tabs__panel .sx-h2 {
-  max-width: 34ch;
+  overflow: clip;
   color: var(--sg-ink);
-  font-size: clamp(1.35rem, 2.1vw, 2rem);
-  line-height: 1.32;
+  background: #fff;
 }
-.sx-brain-tab-media {
+.sx-page--suite main > .sx-brain-flow::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 430px 260px at -90px 17%, transparent 67.5%, rgba(19, 109, 135, .06) 67.8%, transparent 68.25%),
+    radial-gradient(ellipse 560px 330px at -180px 50%, transparent 69%, rgba(0, 169, 169, .052) 69.25%, transparent 69.65%),
+    radial-gradient(ellipse 470px 285px at -105px 84%, transparent 68%, rgba(19, 109, 135, .052) 68.3%, transparent 68.72%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .72) 15%, transparent 38%);
+  mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, .72) 15%, transparent 38%);
+}
+.sx-brain-flow__layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(300px, .82fr) minmax(520px, 1.18fr);
+  gap: clamp(48px, 7vw, 112px);
+}
+.sx-brain-flow__chapters { min-width: 0; }
+.sx-brain-flow__chapter {
+  position: relative;
+  min-height: min(88vh, 820px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(84px, 10vh, 132px);
+  opacity: .28;
+  transform: translateY(22px);
+  transition: opacity 620ms var(--ease-sigma), transform 720ms var(--ease-sigma);
+}
+.sx-brain-flow__chapter::before {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: clamp(-72px, -5vw, -38px);
+  content: attr(data-step);
+  color: rgba(19, 109, 135, .042);
+  font-size: clamp(8rem, 15vw, 13rem);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: -.09em;
+  transform: translateY(-53%);
+  transition: color 700ms var(--ease-sigma), transform 800ms var(--ease-sigma);
+}
+.sx-brain-flow__chapter.is-active::before {
+  color: rgba(0, 169, 169, .065);
+  transform: translateY(-53%) translateX(10px);
+}
+.sx-brain-flow__chapter:first-child { padding-top: clamp(112px, 15vh, 176px); }
+.sx-brain-flow__chapter:last-child { padding-bottom: clamp(112px, 15vh, 176px); }
+.sx-brain-flow__chapter.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sx-brain-flow__kicker {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 24px;
+  color: var(--sg-petrol);
+  font-size: .72rem;
+  font-weight: 750;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.sx-brain-flow__kicker::after {
+  width: clamp(38px, 5vw, 72px);
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, rgba(0, 169, 169, .65), transparent);
+}
+.sx-brain-flow__kicker span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(19, 109, 135, .18);
+  border-radius: 50%;
+  color: var(--sg-teal);
+  background: rgba(255, 255, 255, .66);
+}
+.sx-brain-flow__chapter .sx-h2 {
+  max-width: 19ch;
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 3.25rem);
+  line-height: 1.12;
+  letter-spacing: -.045em;
+}
+.sx-brain-flow__visual {
+  position: sticky;
+  top: 68px;
+  align-self: start;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  width: 100%;
+  height: calc(100vh - 68px);
+  min-height: 590px;
+  padding-block: clamp(48px, 7vh, 78px) 34px;
+}
+.sx-brain-flow__stage {
   position: relative;
   display: grid;
   place-items: center;
-  width: min(76vw, 780px);
-  min-height: clamp(280px, 34vw, 430px);
-  margin-inline: auto;
+  min-height: 0;
+  perspective: 1200px;
 }
-.sx-brain-tab-media__orbit {
+.sx-brain-flow__stage::before {
+  display: none;
+}
+.sx-brain-flow__stage::after {
   position: absolute;
   z-index: -1;
-  width: 86%;
-  aspect-ratio: 1.9;
-  border: 1px solid rgba(0, 169, 169, 0.12);
-  border-radius: 50%;
-  box-shadow: 0 0 0 38px rgba(0, 169, 169, 0.025), 0 0 70px rgba(19, 109, 135, 0.08);
-  transform: rotate(-5deg);
+  right: -8%;
+  bottom: 2%;
+  width: clamp(210px, 27vw, 390px);
+  aspect-ratio: 1;
+  content: "";
+  background: url("/media/site/SigmaIcone-Normal2x.png") center / contain no-repeat;
+  opacity: .035;
+  transform: rotate(8deg);
 }
-.sx-page--suite .sx-brain-tabs-air .sx-brain-tab-media img {
-  position: relative;
+.sx-brain-flow__orbit {
+  position: absolute;
+  border: 1px solid rgba(19, 109, 135, .1);
+  border-radius: 50%;
+  transition: transform 1s var(--ease-sigma), opacity 700ms var(--ease-sigma);
+}
+.sx-brain-flow__orbit--outer { width: 92%; aspect-ratio: 1.7; transform: rotate(-7deg); }
+.sx-brain-flow__orbit--inner { width: 68%; aspect-ratio: 1.45; transform: rotate(8deg); opacity: .65; }
+.sx-brain-flow[data-active="1"] .sx-brain-flow__orbit--outer { transform: rotate(3deg) scale(.88); }
+.sx-brain-flow[data-active="1"] .sx-brain-flow__orbit--inner { transform: rotate(-5deg) scale(1.08); }
+.sx-brain-flow[data-active="2"] .sx-brain-flow__orbit--outer { transform: rotate(-2deg) scale(.74); opacity: .6; }
+.sx-brain-flow[data-active="2"] .sx-brain-flow__orbit--inner { transform: rotate(12deg) scale(.74); opacity: .4; }
+.sx-brain-flow__media {
+  position: absolute;
+  inset: 4% -3% 2%;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 42px, 0) scale(.93) rotateX(3deg);
+  filter: blur(8px);
+  transition:
+    opacity 520ms var(--ease-sigma),
+    visibility 520ms,
+    transform 820ms var(--ease-sigma),
+    filter 620ms var(--ease-sigma);
+}
+.sx-brain-flow__media.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0) scale(1) rotateX(0);
+  filter: blur(0);
+}
+.sx-brain-flow__media img {
   display: block;
   width: auto;
-  max-width: min(100%, 720px);
-  max-height: 420px;
+  max-width: 100%;
+  max-height: 74vh;
   border: 0;
-  border-radius: 0;
   background: transparent;
-  box-shadow: none;
   object-fit: contain;
-  filter: drop-shadow(0 24px 30px rgba(24, 90, 125, 0.11));
-  -webkit-mask-image: radial-gradient(ellipse 94% 94% at 50% 50%, #000 78%, transparent 100%);
-  mask-image: radial-gradient(ellipse 94% 94% at 50% 50%, #000 78%, transparent 100%);
+  filter: drop-shadow(0 30px 34px rgba(24, 90, 125, .12));
 }
-.sx-page--suite .sx-brain-tabs-air .sx-brain-tab-media--2 {
-  width: min(72vw, 520px);
-  min-height: 330px;
+.sx-brain-flow__media--0 img {
+  width: min(108%, 820px);
+  max-width: none;
+  -webkit-mask-image: radial-gradient(ellipse 97% 94% at 50% 50%, #000 78%, transparent 100%);
+  mask-image: radial-gradient(ellipse 97% 94% at 50% 50%, #000 78%, transparent 100%);
 }
-.sx-page--suite .sx-brain-tabs-air .sx-brain-tab-media--2 img {
-  width: min(100%, 368px);
-  max-height: 265px;
-  border-radius: 16px;
-  filter: drop-shadow(0 24px 34px rgba(24, 90, 125, 0.14));
+.sx-brain-flow__media--1 img {
+  width: min(82%, 600px);
+  filter: drop-shadow(0 38px 38px rgba(0, 91, 119, .18));
+}
+.sx-brain-flow__media--2 img {
+  width: min(62%, 440px);
+  border-radius: 22px;
+  box-shadow: 0 30px 80px -30px rgba(24, 90, 125, .28);
+}
+.sx-brain-flow__progress {
+  display: grid;
+  grid-template-columns: auto minmax(80px, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  width: min(86%, 620px);
+  margin-inline: auto;
+  color: rgba(31, 41, 57, .46);
+  font-size: .64rem;
+  font-weight: 750;
+  letter-spacing: .14em;
+}
+.sx-brain-flow__progress > div {
+  position: relative;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(19, 109, 135, .15);
+}
+.sx-brain-flow__progress i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--sg-petrol), var(--sg-teal), #80e6b2);
+  box-shadow: 0 0 18px rgba(0, 169, 169, .7);
+  transition: transform 720ms var(--ease-sigma);
+}
+.sx-brain-flow__mobile-media { display: none; }
+
+@media (max-width: 980px) {
+  .sx-brain-flow__layout { grid-template-columns: minmax(260px, .8fr) minmax(400px, 1.2fr); gap: 30px; }
+  .sx-brain-flow__chapter .sx-h2 { font-size: clamp(1.55rem, 3.6vw, 2.6rem); }
+  .sx-brain-flow__media--0 img { width: min(112%, 720px); }
+}
+
+@media (max-width: 760px) {
+  .sx-page--suite main > .sx-brain-flow { overflow: hidden; }
+  .sx-brain-flow__layout { display: block; }
+  .sx-brain-flow__chapter {
+    min-height: auto;
+    padding-block: clamp(64px, 12vw, 92px);
+    opacity: 1;
+    transform: none;
+  }
+  .sx-brain-flow__chapter:first-child { padding-top: 92px; }
+  .sx-brain-flow__chapter:last-child { padding-bottom: 104px; }
+  .sx-brain-flow__chapter .sx-h2 { max-width: 22ch; font-size: clamp(1.75rem, 7vw, 2.65rem); }
+  .sx-brain-flow__visual { display: none; }
+  .sx-brain-flow__mobile-media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 270px;
+    margin-top: 38px;
+  }
+  .sx-brain-flow__mobile-media::before {
+    display: none;
+  }
+  .sx-brain-flow__chapter::before {
+    top: 54px;
+    right: -10px;
+    left: auto;
+    font-size: clamp(6rem, 30vw, 9rem);
+    transform: none;
+  }
+  .sx-brain-flow__chapter.is-active::before { transform: none; }
+  .sx-brain-flow__mobile-media img { display: block; width: auto; max-width: 100%; max-height: 390px; object-fit: contain; }
+  .sx-brain-flow__mobile-media--0 img { width: 114%; max-width: none; margin-inline: -7%; -webkit-mask-image: radial-gradient(ellipse 96% 95% at 50% 50%, #000 78%, transparent 100%); mask-image: radial-gradient(ellipse 96% 95% at 50% 50%, #000 78%, transparent 100%); }
+  .sx-brain-flow__mobile-media--1 img { width: 92%; filter: drop-shadow(0 28px 28px rgba(0, 91, 119, .16)); }
+  .sx-brain-flow__mobile-media--2 img { width: min(82%, 390px); border-radius: 18px; box-shadow: 0 28px 62px -30px rgba(24, 90, 125, .3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-brain-flow__chapter,
+  .sx-brain-flow__media,
+  .sx-brain-flow__orbit,
+  .sx-brain-flow__progress i { transition: none; }
 }
 
 .sx-page--suite main > .sx-journeys {
@@ -3389,3 +3590,45 @@
   .sx-page--suite .sx-journeys__visual img { width: min(92%, 670px); }
 }
 
+
+/* ==========================================================================
+   Cartoes simples com a moldura que acende conforme o cursor (BorderGlow, sem
+   `alwaysOn`, que e como o componente original reage ao mouse).
+   O BorderGlow ja desenha borda, fundo e raio proprios, entao o cartao por
+   dentro entra sem os dele — dois quadros concentricos era o que dava aquele
+   aspecto de cartao dentro de cartao.
+   ========================================================================== */
+.sx-page--suite .sx-glow--card,
+.sx-page--suite .sx-glow--card > .border-glow-inner { height: 100%; }
+.sx-page--suite .sx-glow--card .sx-card--bare {
+  height: 100%;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+.sx-page--suite .sx-glow--card .sx-card--bare:hover { transform: none; border-color: transparent; }
+/* O cartao largo do Sigma Brain ocupava a linha inteira pelo `--wide`; agora
+   quem e filho da grade e a moldura. */
+.sx-page--suite .sx-glow--wide-card { grid-column: 1 / -1; }
+/* No bento do Insights a grade posiciona por area: a moldura herda o lugar. */
+.sx-page--suite .sx-glow--bento .sx-benefits-bento__item { padding: clamp(20px, 2.2vw, 28px); }
+
+/* ==========================================================================
+   Glow so na borda, nunca por dentro.
+   O `edge-light` do BorderGlow desenha o brilho com um `box-shadow` que mistura
+   camadas externas e camadas `inset` de ate 50px — e sao as `inset` que jogavam
+   a mancha azul para dentro do cartao ao passar o mouse. Aqui ficam apenas o
+   fio de 1px que marca a borda e as camadas externas.
+   Vale so para as molduras que reagem ao cursor: as `--always` (cartao azul do
+   Insights, Sobre, Dialogi) mantem o brilho interno, que ali e proposital.
+   ========================================================================== */
+.border-glow-card:not(.border-glow-card--always) > .edge-light::before {
+  box-shadow:
+    inset 0 0 0 1px var(--glow-color, hsl(40deg 80% 80% / 100%)),
+    0 0 1px 0 var(--glow-color-60, hsl(40deg 80% 80% / 60%)),
+    0 0 3px 0 var(--glow-color-50, hsl(40deg 80% 80% / 50%)),
+    0 0 6px 0 var(--glow-color-40, hsl(40deg 80% 80% / 40%)),
+    0 0 15px 0 var(--glow-color-30, hsl(40deg 80% 80% / 30%)),
+    0 0 25px 2px var(--glow-color-20, hsl(40deg 80% 80% / 20%)),
+    0 0 50px 2px var(--glow-color-10, hsl(40deg 80% 80% / 10%));
+}

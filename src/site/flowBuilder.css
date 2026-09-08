@@ -144,9 +144,8 @@
    A tela e o argumento da secao, entao ela leva a coluna maior; o texto passa
    a ser a legenda dela, nao o contrario.
    ========================================================================== */
-/* A tela e o foco: ela leva a coluna larga e a secao abre um eixo mais largo
-   que o do resto da pagina, so aqui. */
-.sx-page--suite .sx-nocode .sx-shell { width: min(1440px, 100% - var(--sx-gutter) * 2); }
+/* A tela e o foco: ela leva a coluna larga. O eixo de 1440px que esta secao
+   abria virou o do site inteiro (`--sx-shell`), entao o override saiu daqui. */
 .sx-page--suite .sx-nocode .sx-feature {
   grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
   gap: clamp(32px, 4vw, 64px);

@@ -63,6 +63,25 @@ function VoiceTagIcon({ index }: { index: number }) {
   return <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" aria-hidden="true"><path d="M3 12.5V9m3 3.5V6.8m3 5.7V4m3 8.5V7" /></svg>;
 }
 
+function FeatureIcon({ index }: { index: number }) {
+  const common = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.65,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+
+  if (index === 0) return <svg {...common}><path d="M6.4 4.5h3l1.5 4-2.2 1.8a14.7 14.7 0 0 0 5 5l1.8-2.2 4 1.5v3c0 1.1-.9 2-2 2C10.3 19.6 4.4 13.7 4.4 6.5c0-1.1.9-2 2-2Z" /><path d="M15 5.3a5.2 5.2 0 0 1 3.7 3.7M15.3 8.5c.9.2 1.6.9 1.8 1.8" /></svg>;
+  if (index === 1) return <svg {...common}><rect x="8.5" y="3" width="7" height="11.5" rx="3.5" /><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M9 21h6" /></svg>;
+  if (index === 2) return <svg {...common}><path d="M4 5h9M8.5 3v2M6 8.2c1.2 2.2 3.2 3.8 5.6 4.6M11.8 5c-.8 3.5-3.1 6.2-6.3 7.8M14 20l3.4-9 3.4 9M15.2 17h4.4" /></svg>;
+  if (index === 3) return <svg {...common}><path d="M4 20V9h4v11M10 20V4h4v16M16 20v-7h4v7M3 20h18" /></svg>;
+  if (index === 4) return <svg {...common}><circle cx="9" cy="8" r="3" /><circle cx="17" cy="9" r="2.3" /><path d="M3.5 19c.4-3.4 2.2-5.2 5.5-5.2s5.1 1.8 5.5 5.2M14.2 14.2c3.6-.8 5.8.8 6.3 4.1" /></svg>;
+  return <svg {...common}><path d="M12 3a7 7 0 0 0-7 7v2M12 6a4 4 0 0 0-4 4v4M12 9a1 1 0 0 0-1 1v7M15.7 8.5c.2.5.3 1 .3 1.5v4.2c0 2.6-1.1 4.8-3 6M19 10v3.5c0 3.4-1.5 6.1-4 8" /></svg>;
+}
+
 /* Superficies exatas dos dois lados de cada onda, escritas aqui — ao lado da
    ordem das secoes — porque e o unico lugar onde os dois lados de uma emenda
    sao visiveis de uma vez. Uma onda cujas cores fogem das vizinhas pinta uma
@@ -372,16 +391,33 @@ export default function Dialogi() {
           </div>
         </header>
 
-        <Break tone="dark-dark" from={HERO} to={FEATURES} />
+        {/* 2. Respiro claro entre as duas cenas escuras. E a alternancia da home
+            do Dialogi — escuro quando o produto fala, claro quando o leitor
+            pensa — e e ele que separa o azul do azul. A faixa clara carrega a
+            abertura da secao; os cartoes continuam no escuro, logo abaixo.
+            Nenhum texto novo: e a mesma abertura, so que aqui. */}
+        <Break tone="dark-light" from={HERO} to={PAGE} />
 
-        {/* 2. Recursos: o produto falando, entao fundo escuro. */}
-        <section className="dlg-sec dlg-sec--dark dlg-sec--features" id="recursos">
+        <section className="dlg-sec dlg-sec--light dlg-sec--intro" id="recursos">
           <div className="dlg-x">
             <div className="dlg-head" data-reveal="up">
               <span className="dlg-eyebrow">{t.features.kicker}</span>
               <h2 className="dlg-h2"><Split text={t.features.title} /></h2>
               <p className="dlg-body">{t.features.body}</p>
             </div>
+          </div>
+        </section>
+
+        <Break tone="light-dark" from={PAGE} to={FEATURES} />
+
+        {/* 3. Os recursos: o produto falando, entao fundo escuro. */}
+        <section className="dlg-sec dlg-sec--dark dlg-sec--features">
+          <div className="dlg-features-field" aria-hidden="true">
+            <span className="dlg-features-field__dots dlg-features-field__dots--left" />
+            <span className="dlg-features-field__dots dlg-features-field__dots--right" />
+            <i />
+          </div>
+          <div className="dlg-x">
 
             <div className="dlg-feature-carousel" data-reveal="up">
               <div className="dlg-feature-carousel__track" ref={featureTrackRef}>
@@ -396,6 +432,7 @@ export default function Dialogi() {
                     key={`${cycle}-${item.title}`}
                   >
                     <article className="dlg-tile">
+                      <span className="dlg-tile__icon"><FeatureIcon index={i} /></span>
                       <span className="dlg-tile__cat">{item.cat}</span>
                       <h3 className="dlg-h3">{item.title}</h3>
                       <p>{item.body}</p>

@@ -6,7 +6,11 @@
    ========================================================================== */
 
 :root {
-  --sx-shell: 1240px;
+  /* 1440px: o eixo pedido em 2026-09-08, tirado da faixa no-code do Sigma
+     Brain, que era a unica secao mais larga que o resto e virou a referencia.
+     Header, rodape e todas as paginas leem daqui — inclusive o `.dlg-x` da
+     pagina do Dialogi —, entao mudar so este valor alinha o site inteiro. */
+  --sx-shell: 1440px;
   --sx-gutter: clamp(20px, 5vw, 64px);
   --sx-radius: 22px;
   --sx-radius-lg: 32px;
@@ -210,7 +214,10 @@
 .sx-dark .sx-icon--fill { background: rgba(255, 255, 255, 0.1); }
 
 .sx-card--media { padding: 0; overflow: hidden; display: grid; align-content: start; }
-.sx-card__media { aspect-ratio: 16 / 10; overflow: hidden; background: var(--sx-surface-2); }
+/* 16/9 = a proporcao das proprias artes (1400x789). Em 16/10 o `cover`
+   comia ~10% da largura e cortava o balao de mensagem, que e o assunto da
+   imagem. Unico consumidor: o carrossel de acoes do Sigma Channel. */
+.sx-card__media { aspect-ratio: 16 / 9; overflow: hidden; background: var(--sx-surface-2); }
 .sx-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.7s var(--ease-sigma); }
 .sx-card--media:hover .sx-card__media img { transform: scale(1.04); }
 .sx-card--media .sx-card__body { padding: 20px 24px 24px; }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
 import { FlowBuilder } from "../site/FlowBuilder";
 import { FlowAnalytics } from "../site/FlowAnalytics";
@@ -21,8 +21,48 @@ export default function SigmaBrain() {
   const t = pick({ pt, en, es }, lang);
   const [active, setActive] = useState(0);
   const [activePillar, setActivePillar] = useState(0);
+  const brainFlowChapters = useRef<Array<HTMLElement | null>>([]);
   const mainBenefits = t.benefits.items.slice(0, 3);
   const lastBenefit = t.benefits.items[3];
+
+  useEffect(() => {
+    let frame = 0;
+
+    const updateActiveChapter = () => {
+      frame = 0;
+      const chapters = brainFlowChapters.current.filter((chapter): chapter is HTMLElement => Boolean(chapter));
+      if (!chapters.length) return;
+
+      const readingLine = window.innerHeight * 0.48;
+      let nearest = 0;
+      let nearestDistance = Number.POSITIVE_INFINITY;
+
+      chapters.forEach((chapter, index) => {
+        const bounds = chapter.getBoundingClientRect();
+        const distance = Math.abs(bounds.top + bounds.height / 2 - readingLine);
+        if (distance < nearestDistance) {
+          nearest = index;
+          nearestDistance = distance;
+        }
+      });
+
+      setActive((current) => current === nearest ? current : nearest);
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateActiveChapter);
+    };
+
+    updateActiveChapter();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, []);
 
   return (
     <PageShell title={t.meta.title} description={t.meta.description} theme="suite">
@@ -65,7 +105,11 @@ export default function SigmaBrain() {
             </div>
             <div className="sx-story-media__meta" aria-live="polite">
               <span>0{activePillar + 1}</span>
-              <p key={activePillar}>{t.pillars.items[activePillar].eyebrow}</p>
+              {/* Sem o rotulo, nao renderiza o paragrafo: um `<p>` vazio ainda
+                  ocupa uma linha e desalinharia a legenda do video. */}
+              {t.pillars.items[activePillar].eyebrow
+                ? <p key={activePillar}>{t.pillars.items[activePillar].eyebrow}</p>
+                : null}
             </div>
           </div>
           <div className="sx-story-content">
@@ -84,23 +128,48 @@ export default function SigmaBrain() {
 
       <SectionTransition to="light" />
 
-      {/* 4. Abas em campo claro: os mockups ficam soltos, sem ampliacao. */}
-      <section className="sx-section sx-brain-tabs-air" data-reveal>
-        <div className="sx-shell sx-tabs">
-          <div className="sx-tabs__buttons" role="tablist" aria-label="Sigma Brain">
+      {/* 4. Historia guiada pelo scroll: os tres beneficios deixam de ser abas
+          isoladas e passam a formar uma unica sequencia. A composicao visual
+          fica em cena enquanto o texto avanca, sem capturar ou travar o scroll. */}
+      <section className="sx-brain-flow" data-active={active}>
+        <div className="sx-shell sx-brain-flow__layout">
+          <div className="sx-brain-flow__chapters">
             {t.tabs.map((item, index) => (
-              <button key={item.label} type="button" role="tab" id={`brain-tab-${index}`} aria-selected={active === index}
-                aria-controls={`brain-panel-${index}`} className={`sx-tabs__button${active === index ? " is-active" : ""}`}
-                onClick={() => setActive(index)}>
-                {item.label}
-              </button>
+              <article
+                key={item.label}
+                ref={(chapter) => { brainFlowChapters.current[index] = chapter; }}
+                className={`sx-brain-flow__chapter${active === index ? " is-active" : ""}`}
+                data-step={`0${index + 1}`}
+                aria-current={active === index ? "step" : undefined}
+              >
+                <p className="sx-brain-flow__kicker"><span>0{index + 1}</span>{item.label}</p>
+                <h2 className="sx-h2"><SuiteGradient>{item.body}</SuiteGradient></h2>
+                <div className={`sx-brain-flow__mobile-media sx-brain-flow__mobile-media--${index}`}>
+                  <img src={`/media/site/${tabImages[index]}`} alt="" loading="lazy" />
+                </div>
+              </article>
             ))}
           </div>
-          <div className="sx-tabs__panel" key={active} role="tabpanel" id={`brain-panel-${active}`} aria-labelledby={`brain-tab-${active}`}>
-            <h3 className="sx-h2"><SuiteGradient>{t.tabs[active].body}</SuiteGradient></h3>
-            <div className={`sx-brain-tab-media sx-brain-tab-media--${active}`}>
-              <span className="sx-brain-tab-media__orbit" aria-hidden="true" />
-              <img src={`/media/site/${tabImages[active]}`} alt={t.tabs[active].label} loading="lazy" />
+
+          <div className="sx-brain-flow__visual" aria-live="polite">
+            <div className="sx-brain-flow__stage">
+              <span className="sx-brain-flow__orbit sx-brain-flow__orbit--outer" aria-hidden="true" />
+              <span className="sx-brain-flow__orbit sx-brain-flow__orbit--inner" aria-hidden="true" />
+              {t.tabs.map((item, index) => (
+                <figure
+                  key={item.label}
+                  className={`sx-brain-flow__media sx-brain-flow__media--${index}${active === index ? " is-active" : ""}`}
+                  aria-hidden={active !== index}
+                >
+                  <img src={`/media/site/${tabImages[index]}`} alt={active === index ? item.label : ""} loading="lazy" />
+                </figure>
+              ))}
+            </div>
+
+            <div className="sx-brain-flow__progress" aria-hidden="true">
+              <span>01</span>
+              <div><i style={{ transform: `scaleX(${(active + 1) / t.tabs.length})` }} /></div>
+              <span>0{t.tabs.length}</span>
             </div>
           </div>
         </div>
@@ -135,23 +204,6 @@ export default function SigmaBrain() {
         </div>
       </section>
 
-      {/* 6. Construa jornadas flexiveis: o fluxo se dissolve no proprio palco. */}
-      <section className="sx-section sx-journeys" data-reveal>
-        <div className="sx-shell">
-          <div className="sx-journeys__panel">
-            <div className="sx-journeys__visual" aria-hidden="true">
-              <span className="sx-journeys__orbit" />
-              <img src="/media/site/G1-BR.webp" alt="" loading="lazy" />
-            </div>
-            <div className="sx-journeys__copy">
-              <p className="sx-eyebrow">Sigma Brain</p>
-              <h2 className="sx-h2"><SplitText text={t.journeys.title} /></h2>
-              <p className="sx-body">{t.journeys.body}</p>
-              <div className="sx-journeys__signals" aria-hidden="true"><i /><i /><i /></div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <SectionTransition to="dark" />
 
@@ -184,15 +236,21 @@ export default function SigmaBrain() {
         <div className="sx-shell">
           <h2 className="sx-h2" style={{ marginBottom: 30 }}><SplitText text={t.benefits.title} /></h2>
           <div className="sx-grid sx-grid--3">
+            {/* A moldura acende na borda conforme o cursor se aproxima — o
+                mesmo BorderGlow dos botoes, aqui reagindo ao mouse de verdade
+                (sem `alwaysOn`), que e como o componente original funciona. */}
             {mainBenefits.map((item, i) => (
-              <article className="sx-card sx-card--icon" key={item.title}>
-                <h3 className="sx-h3">{item.title}</h3>
-                <Icon name={benefitIcons[i]} />
-                <p>{item.body}</p>
-              </article>
+              <SuiteGlow radius={20} className="sx-glow--card" key={item.title}>
+                <article className="sx-card sx-card--icon sx-card--bare">
+                  <h3 className="sx-h3">{item.title}</h3>
+                  <Icon name={benefitIcons[i]} />
+                  <p>{item.body}</p>
+                </article>
+              </SuiteGlow>
             ))}
             {lastBenefit ? (
-              <article className="sx-card sx-card--icon sx-card--wide">
+              <SuiteGlow radius={20} className="sx-glow--card sx-glow--wide-card">
+              <article className="sx-card sx-card--icon sx-card--bare">
                 <h3 className="sx-h3">{lastBenefit.title}</h3>
                 <Icon name={benefitIcons[3]} />
                 <p>{lastBenefit.body}</p>
@@ -200,6 +258,7 @@ export default function SigmaBrain() {
                   <a className="sx-cta sx-cta--outline sx-cta--sm" href={DEMO_URL} target="_blank" rel="noreferrer">{t.benefits.cta} <span aria-hidden="true">→</span></a>
                 </p>
               </article>
+              </SuiteGlow>
             ) : null}
           </div>
         </div>

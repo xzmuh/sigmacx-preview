@@ -23,7 +23,7 @@ export default function Produto() {
   const [activeSuite, setActiveSuite] = useState(0);
   const cases = [
     { name: "Fractalia", logo: "unnamed.png", lead: t.cases.fractaliaLead, results: t.cases.fractaliaResults, quote: t.cases.fractaliaQuote },
-    { name: "Tecban", logo: "compartilhe-tecban.webp", lead: t.cases.tecbanLead, results: t.cases.tecbanResults, quote: t.cases.tecbanQuote },
+    { name: "Tecban", logo: "tecban-logo.webp", lead: t.cases.tecbanLead, results: t.cases.tecbanResults, quote: t.cases.tecbanQuote },
   ];
   const selectedCase = cases[activeCase];
 
