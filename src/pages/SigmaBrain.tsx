@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
 import { FlowBuilder } from "../site/FlowBuilder";
-import { FeatureAccordion, Icon, Video, SplitText, SuiteGradient, TechLines } from "../site/ui";
+import { FeatureAccordion, Video, SplitText, SuiteGradient, TechLines } from "../site/ui";
 import { BOT_VS_AGENT_URL, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
 import ModuleVideoSection from "../components/ModuleVideoSection";
 import { pick, useLang } from "../lib/i18n";
@@ -12,7 +12,31 @@ import "../site/brainLaser.css";
 
 const pillarIcons = ["bolt", "translate", "smile"];
 const tabImages = ["omni.webp", "Bot-BR.webp", "Flutuacao-BR.png"];
-const benefitIcons = ["bolt", "layers", "check", "target"];
+function BenefitDiagram({ index }: { index: number }) {
+  return <svg className="sx-brain-benefit__diagram" viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {index === 0 ? <>
+      <rect x="21" y="21" width="38" height="38" rx="9" fill="currentColor" fillOpacity=".05" />
+      <path d="M31 13v8m18-8v8M31 59v8m18-8v8M13 31h8m-8 18h8m38-18h8m-8 18h8" strokeOpacity=".5" />
+      <path d="m43 29-12 14h10l-4 9 13-15H40l3-8Z" fill="currentColor" fillOpacity=".12" />
+    </> : index === 1 ? <>
+      <path d="M23 26 32 34m17 0 9-8M40 51v10" strokeOpacity=".5" />
+      <path d="M10 13h18v13H17l-7 5V13Zm42 0h18v18l-7-5H52V13Z" fill="currentColor" fillOpacity=".05" />
+      <circle cx="40" cy="43" r="15" fill="white" />
+      <circle cx="40" cy="39" r="4" /><path d="M32 50c1-7 15-7 16 0" />
+      <rect x="31" y="64" width="18" height="6" rx="3" fill="currentColor" fillOpacity=".1" />
+    </> : index === 2 ? <>
+      <path d="M31 17h-8a4 4 0 0 0-4 4v42a4 4 0 0 0 4 4h29a4 4 0 0 0 4-4v-9M45 17h7a4 4 0 0 1 4 4v11" />
+      <rect x="30" y="12" width="16" height="10" rx="3" fill="currentColor" fillOpacity=".08" />
+      <path d="M28 33h13M28 42h8M28 51h8" strokeOpacity=".4" />
+      <circle cx="55" cy="44" r="13" fill="currentColor" fillOpacity=".06" /><path d="m49 44 4 4 8-9" />
+    </> : <>
+      <path d="M40 19c-3-10-17-9-20 1-8 0-12 9-8 16-7 6-5 18 3 21-1 10 13 16 20 10 3-2 5-5 5-9V19Zm0 0c3-10 17-9 20 1 8 0 12 9 8 16 7 6 5 18-3 21 1 10-13 16-20 10-3-2-5-5-5-9V19Z" fill="currentColor" fillOpacity=".05" />
+      <path d="M21 21c-1 7 3 10 9 10m-17 6c5-3 10-1 12 3m-9 17c7 2 12-2 12-8m31-28c1 7-3 10-9 10m17 6c-5-3-10-1-12 3m9 17c-7 2-12-2-12-8" strokeOpacity=".65" />
+      <path d="m29 32 11 9 11-9M28 49l12-8 12 8" strokeOpacity=".4" />
+      {[[29, 32], [51, 32], [40, 41], [28, 49], [52, 49]].map(([cx, cy]) => <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.5" fill="currentColor" stroke="none" />)}
+    </>}
+  </svg>;
+}
 
 export default function SigmaBrain() {
   useReveal();
@@ -128,27 +152,28 @@ export default function SigmaBrain() {
         videoTitle="Sigma Brain"
       />
 
-      {/* 6. Beneficios com a mesma hierarquia para os quatro itens. */}
+      {/* Benefícios em uma composição editorial com diagramas por capacidade. */}
       <section className="sx-section sx-brain-benefits" data-reveal>
-        <div className="sx-shell">
+        <div className="sx-shell sx-brain-benefits__layout">
           <header className="sx-brain-benefits__head">
             <p className="sx-eyebrow">Sigma Brain</p>
             <h2 className="sx-h2">{t.benefits.title}</h2>
             <p className="sx-lead">{t.benefits.lead}</p>
+            <div className="sx-brain-benefits__cta">
+              <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.benefits.cta} <span aria-hidden="true">→</span></a>
+            </div>
           </header>
           <div className="sx-brain-benefits__list">
             {t.benefits.items.map((item, index) => (
               <article className="sx-brain-benefit" key={item.title}>
-                <div className="sx-brain-benefit__heading">
-                  <Icon name={benefitIcons[index]} />
-                  <h3>{item.title}</h3>
-                </div>
+                <span className="sx-brain-benefit__number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                <div className="sx-brain-benefit__copy">
+                <h3>{item.title}</h3>
                 <p>{item.body}</p>
+                </div>
+                <BenefitDiagram index={index} />
               </article>
             ))}
-          </div>
-          <div className="sx-brain-benefits__cta">
-            <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.benefits.cta} <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>

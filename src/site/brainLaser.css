@@ -42,20 +42,53 @@
 }
 @media (prefers-reduced-motion: reduce) { .sx-brain-laser__tip { display: none; } }
 
-/* Light, consistent benefit cards with restrained product accents. */
-.sx-page--suite main > .sx-brain-benefits { background: #fff; }
-.sx-brain-benefits__head { max-width: 640px; margin-bottom: 32px; }
-.sx-brain-benefits__head .sx-eyebrow { margin: 0 0 12px; }
-.sx-brain-benefits__head .sx-h2 { margin: 0; }
-.sx-brain-benefits__head .sx-lead { margin-top: 16px; }
-.sx-brain-benefits__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
-.sx-brain-benefit { padding: clamp(24px, 3vw, 38px); border: 1px solid #136d871c; border-radius: 20px; background: #f5f8f7; }
-.sx-brain-benefit__heading { display: flex; align-items: center; gap: 16px; }
-.sx-brain-benefit__heading > .sx-icon { flex: 0 0 42px; width: 42px; height: 42px; border: 1px solid #136d8720; border-radius: 12px; color: #136d87; background: #fff; }
-.sx-brain-benefit h3 { margin: 0; color: var(--sg-ink, #1f2939); font-size: clamp(1.1rem, 1.35vw, 1.3rem); font-weight: 650; line-height: 1.35; letter-spacing: -.025em; }
-.sx-brain-benefit p { max-width: 52ch; margin: 12px 0 0; color: var(--sx-fg-muted); font-size: 1rem; line-height: 1.7; }
-.sx-brain-benefits__cta { margin-top: 28px; }
-@media (max-width: 640px) {
-  .sx-brain-benefits__list { grid-template-columns: minmax(0, 1fr); }
-  .sx-brain-benefit { padding-block: 22px; }
+/* Benefícios: título lateral e linhas editoriais com diagramas de capacidade. */
+.sx-page--suite main > .sx-brain-benefits {
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, #fff 0%, transparent 20%, transparent 78%, #fff 100%),
+    radial-gradient(ellipse at 12% 65%, #dcefe96b, transparent 56%),
+    radial-gradient(ellipse at 90% 40%, #e5edf740, transparent 50%),
+    #f8faf9;
+}
+.sx-brain-benefits::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: max(0px, calc((100% - var(--sx-shell)) / 2 - 70px));
+  bottom: 2%;
+  width: clamp(300px, 35vw, 520px);
+  height: 85%;
+  background: url("/media/sigma-mark.png") center / contain no-repeat;
+  opacity: .065;
+  mask-image: linear-gradient(180deg, transparent, #000 25%, #000 65%, transparent);
+  pointer-events: none;
+}
+.sx-brain-benefits__layout { position: relative; display: grid; gap: 36px; }
+.sx-brain-benefits__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 36px; align-items: center; }
+.sx-brain-benefits__head .sx-eyebrow { grid-column: 1; margin: 0; }
+body .sx-page .sx-brain-benefits__head .sx-h2 { grid-column: 1; margin: 0; font-size: clamp(2.1rem, 3.5vw, 3.1rem); line-height: 1.12; letter-spacing: -.04em; font-weight: 500; }
+.sx-brain-benefits__head .sx-lead { grid-column: 1; max-width: 48ch; margin: 0; color: #657271; font-size: 1rem; line-height: 1.7; }
+.sx-brain-benefits__cta { grid-column: 2; grid-row: 2 / 4; }
+.sx-brain-benefits__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; overflow: hidden; border: 1px solid #dce7e3; border-radius: 26px; background: #dce7e3; box-shadow: 0 24px 64px -44px #234e4938; }
+.sx-brain-benefit { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 88px; grid-template-rows: auto 1fr; gap: 24px; min-height: 270px; padding: clamp(28px, 3.5vw, 44px); background: #fff; }
+.sx-brain-benefit:nth-child(2) { background: #edf5f1; }
+.sx-brain-benefit:nth-child(3) { background: #f0f4f8; }
+.sx-brain-benefit:first-child { background: radial-gradient(ellipse at 100% 0%, #236766, transparent 75%), #113f42; }
+.sx-brain-benefit__number { align-self: start; color: #658b80; font-size: .8rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.sx-brain-benefit__copy { grid-column: 1 / -1; grid-row: 2; align-self: end; }
+.sx-brain-benefit h3 { margin: 0; max-width: 27ch; color: #163a3b; font-size: clamp(1.3rem, 1.9vw, 1.65rem); font-weight: 500; line-height: 1.22; letter-spacing: -.025em; }
+.sx-brain-benefit p { margin: 12px 0 0; max-width: 47ch; color: #5b706c; font-size: .94rem; line-height: 1.65; }
+.sx-brain-benefit__diagram { grid-column: 2; grid-row: 1; justify-self: end; display: block; width: 80px; height: 80px; margin-top: -12px; color: #218c82; }
+.sx-brain-benefit:first-child .sx-brain-benefit__number { color: #9ccdc0; }
+.sx-brain-benefit:first-child h3 { color: #fff; }
+.sx-brain-benefit:first-child p { color: #c1dcd6; }
+.sx-brain-benefit:first-child .sx-brain-benefit__diagram { color: #a4e9ce; }
+@media (max-width: 700px) {
+  .sx-brain-benefits__head { grid-template-columns: minmax(0, 1fr); }
+  .sx-brain-benefits__cta { grid-column: 1; grid-row: auto; margin-top: 8px; }
+  .sx-brain-benefits__list { grid-template-columns: minmax(0, 1fr); border-radius: 20px; }
+  .sx-brain-benefit { min-height: 240px; gap: 16px; padding: 28px; }
+  .sx-brain-benefits::before { width: 280px; height: 400px; top: 0; bottom: auto; left: auto; right: 0; opacity: .045; }
 }
