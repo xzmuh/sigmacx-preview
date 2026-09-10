@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
+import { Fragment, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { PageShell } from "../site/PageShell";
 import { useInvestorsMotion } from "../site/investorsMotion";
@@ -404,20 +404,32 @@ export default function Investidores() {
             ))}
           </div>
 
-          <div className="inv-notes" data-reveal>
-            <div className="inv-note">
-              <span className="section-index">{t.why.validationLabel}</span>
-              <Lead text={t.why.validation} />
+          {/* Validacao e conformidade no componente de seguranca da home: a
+              orbita com o cadeado a esquerda, o texto, o fluxo de protecao e
+              as certificacoes a direita (classes de globals.css). */}
+          <div className="inv-trust security-frame" data-reveal>
+            <div className="security-orbit" aria-hidden="true">
+              <div className="security-core">
+                <span className="security-core__lock"><i /></span>
+                <strong>LGPD</strong>
+                <small>DATA / SECURE</small>
+              </div>
             </div>
-            <div className="inv-note">
-              <span className="section-index">{t.why.complianceLabel}</span>
-              <ul className="inv-marks">
-                {t.why.compliance.map((mark) => <li key={mark}>{mark}</li>)}
-              </ul>
-            </div>
-            <div className="inv-note">
-              <span className="section-index">{t.why.techLabel}</span>
-              <p className="inv-small">{t.why.tech}</p>
+            <div className="security-copy">
+              <span className="section-index">{t.why.validationLabel} / {t.why.complianceLabel}</span>
+              <p>{rich(t.why.validation, false)}</p>
+              <p>{t.why.tech}</p>
+              <div className="security-flow" aria-label={t.why.techLabel}>
+                {t.why.flow.map((step, index) => (
+                  <Fragment key={step}>
+                    {index ? <i aria-hidden="true" /> : null}
+                    <span><small>0{index + 1}</small>{step}</span>
+                  </Fragment>
+                ))}
+              </div>
+              <div className="cert-row">
+                {t.why.compliance.map((mark) => <span key={mark}>{mark}</span>)}
+              </div>
             </div>
           </div>
         </section>

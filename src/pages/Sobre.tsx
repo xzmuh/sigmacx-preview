@@ -35,7 +35,10 @@ const labels = {
     timelineLabel: "Linha do tempo da SigmaCX",
     peopleAlt: "Pessoas conectadas",
     leadersLead: "Experiência em tecnologia e operações. Uma visão compartilhada: aproximar empresas e pessoas.",
-    scrollHint: "Role para explorar nossa história",
+    scrollHint: "Role para baixo para avançar",
+    scrollDetail: "A linha do tempo se move para os lados",
+    swipeHint: "Deslize para os lados para explorar",
+    scrollEnd: "Continue rolando para ver nossa história em vídeo",
   },
   en: {
     title: ["ABOUT", "US"], about: "About SigmaCX", philosophy: "Our philosophy",
@@ -47,7 +50,10 @@ const labels = {
     timelineLabel: "SigmaCX timeline",
     peopleAlt: "Connected people",
     leadersLead: "Experience in technology and operations. A shared vision: bringing businesses and people closer.",
-    scrollHint: "Scroll to explore our story",
+    scrollHint: "Scroll down to move forward",
+    scrollDetail: "The timeline moves sideways as you scroll",
+    swipeHint: "Swipe sideways to explore",
+    scrollEnd: "Keep scrolling to watch our story",
   },
   es: {
     title: ["SOBRE", "NOSOTROS"], about: "Sobre SigmaCX", philosophy: "Nuestra filosofía",
@@ -59,7 +65,10 @@ const labels = {
     timelineLabel: "Línea de tiempo de SigmaCX",
     peopleAlt: "Personas conectadas",
     leadersLead: "Experiencia en tecnología y operaciones. Una visión compartida: acercar empresas y personas.",
-    scrollHint: "Desplácese para explorar nuestra historia",
+    scrollHint: "Desplácese hacia abajo para avanzar",
+    scrollDetail: "La línea de tiempo se mueve hacia los lados",
+    swipeHint: "Deslice hacia los lados para explorar",
+    scrollEnd: "Siga bajando para ver nuestra historia en video",
   },
 };
 
@@ -96,6 +105,7 @@ export default function Sobre() {
         ? Math.min(1, Math.max(0, viewport.scrollLeft / Math.max(1, distance)))
         : Math.min(1, Math.max(0, (top - timeline.getBoundingClientRect().top) / travel));
       const shift = Math.min(distance, Math.max(0, progress * distance));
+      timeline.classList.toggle("has-progress", shift > 12);
       timeline.style.setProperty("--ab-progress", String(progress));
       timeline.style.setProperty("--ab-shift", `${fallback.matches ? 0 : -shift}px`);
       let active = 0;
@@ -147,7 +157,7 @@ export default function Sobre() {
           <div className="sx-shell ab-hero__metrics" data-reveal>
             <div><strong>2020</strong><span>{l.since}</span></div>
             <div><strong>04</strong><span>{l.ecosystem}</span></div>
-            <div><strong>01</strong><span>{l.purpose}<b>{l.purposeValue}</b></span></div>
+            <div><strong>01</strong><span>{l.purpose} <b>{l.purposeValue}</b></span></div>
           </div>
         </section>
 
@@ -237,7 +247,23 @@ export default function Sobre() {
               aria-label={l.timelineLabel}
             >
               <div className="ab-timeline__sticky">
-                <div className="ab-timeline__status"><span>{l.scrollHint}</span><span>{String(activeMilestone + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")}</span></div>
+                <div className="ab-timeline__status">
+                  <div className="ab-timeline__hint">
+                    <span className="ab-timeline__hint-icon" aria-hidden="true">
+                      <svg viewBox="0 0 28 40" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m6 8 8 7 8-7" />
+                        <path d="m6 17 8 7 8-7" />
+                        <path d="m6 26 8 7 8-7" />
+                      </svg>
+                    </span>
+                    <div>
+                      <strong className="ab-timeline__hint-desktop">{l.scrollHint}</strong>
+                      <small className="ab-timeline__hint-desktop">{l.scrollDetail}</small>
+                      <strong className="ab-timeline__hint-touch">{l.swipeHint}</strong>
+                    </div>
+                  </div>
+                  <span>{String(activeMilestone + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")}</span>
+                </div>
                 <div className="ab-timeline__viewport" tabIndex={0} role="region" aria-label={l.timelineLabel}>
                   <div className="ab-timeline__rule" aria-hidden="true">
                     <span className="ab-timeline__fill" />

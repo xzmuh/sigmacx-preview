@@ -165,13 +165,19 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-layer-art span:nth-child(2) { top: 18px; left: 12px; }
 .inv-layer-art span:nth-child(3) { top: 36px; left: 24px; }
 .inv-layer-art--1 span { border-color: #b9ff9b78; background: linear-gradient(135deg, #b9ff9b23, #142e2ce0); }
+/* A camada de interacao tem duas placas; a de decisao repete as duas e poe a
+   nova, tracejada, por cima — e o mesmo desenho ganhando uma camada. */
+.inv-layer-art--0 span:first-child { display: none; }
 .inv-layer-art--1 span:first-child { top: -10px; border-style: dashed; }
-.inv-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 64px; padding-top: 40px; border-top: 1px solid #ffffff20; }
-.inv-note:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 2fr; gap: 32px; padding-bottom: 36px; border-bottom: 1px solid #ffffff12; }
-.inv-note .section-index { margin-bottom: 18px; }
-.inv-note .inv-lead { max-width: none; margin-top: 0; }
-.inv-marks { display: flex; flex-wrap: wrap; gap: 12px; }
-.inv-marks li { padding: 9px 12px; border: 1px solid #ffffff20; border-radius: 4px; color: #c7d5d1; font-size: .69rem; letter-spacing: .06em; }
+
+/* Componente de seguranca da home, no eixo desta pagina: ocupa a largura
+   toda (na home ele se fecha em 1160px) e a validacao — o texto principal —
+   sai clara, com a base tecnologica abaixo, mais apagada. */
+.inv-trust { width: 100%; margin-top: 64px; }
+.inv-trust .security-copy > p { max-width: 62ch; margin-top: 1.4rem; color: rgba(255, 255, 255, .58); font-size: .95rem; line-height: 1.66; }
+.inv-trust .security-copy > p:first-of-type { margin-top: 1.6rem; color: #e3eaf5; font-size: 1.06rem; }
+.inv-trust .security-copy > p b { color: #fff; font-weight: 550; }
+@media (max-width: 860px) { .inv-trust { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
 
 /* A quieter closing chapter, with a distinct access form. */
 .inv-gate {
@@ -264,8 +270,7 @@ html:has(.inv) { scroll-behavior: smooth; }
   .inv-flow__step h3 { font-size: 1rem; }
   .inv-card { padding-inline: 28px; }
   .inv-card--layer { padding-top: 175px; }
-  .inv-note:first-child { grid-template-columns: 1fr; gap: 5px; }
-  .inv-gate__grid { gap: 48px; }
+    .inv-gate__grid { gap: 48px; }
 }
 @media (max-width: 580px) {
   .inv-diagnosis::before { inset-inline: calc((100vw - 100%) / -2 + 8px); border-radius: 38px 14px 38px 14px; }
@@ -285,8 +290,7 @@ html:has(.inv) { scroll-behavior: smooth; }
   .inv-section > * + * { margin-top: 38px; }
   .inv-h2 { font-size: 2.1rem; }
   .inv-lead { font-size: .95rem; }
-  .inv-flow, .inv-cards--2, .inv-contrast, .inv-notes { grid-template-columns: minmax(0, 1fr); }
-  .inv-flow { padding-top: 25px; }
+  .inv-flow, .inv-cards--2, .inv-contrast,   .inv-flow { padding-top: 25px; }
   .inv-flow__step { padding: 25px; }
   .inv-flow__step h3 { margin-top: 18px; font-size: 1.15rem; }
   .inv-forces .inv-card { padding-right: 88px; min-height: 230px; }
@@ -302,8 +306,7 @@ html:has(.inv) { scroll-behavior: smooth; }
   .inv-card--layer { min-height: 350px; }
   .inv-form { padding: 24px 20px; }
   .inv-form__row { grid-template-columns: minmax(0, 1fr); gap: 19px; }
-  .inv-note:first-child { padding-bottom: 28px; }
-}
+  }
 @media (prefers-reduced-motion: reduce) {
   html:has(.inv) { scroll-behavior: auto; }
   .inv *, .inv *::before, .inv *::after { animation: none !important; transition: none !important; }

@@ -50,6 +50,24 @@ function MicIcon() {
   );
 }
 
+/** Um icone por setor (educacao, financeiro, saude, servicos publicos,
+ *  varejo) e o brilho do "e o seu setor". */
+function SectorIcon({ index }: { index: number }) {
+  const paths = [
+    "M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5V4.5ZM4 19.5A2.5 2.5 0 0 1 6.5 17H20",
+    "M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Zm0 3h18M15 15h2.5",
+    "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v8M8 12h8",
+    "M3 21h18M5 21V10m4 11V10m6 11V10m4 11V10M2 10l10-6 10 6H2Z",
+    "M5 8h14l-1.2 13H6.2L5 8Zm4 0V6a3 3 0 0 1 6 0v2",
+    "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Zm7 13l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z",
+  ];
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d={paths[index] ?? paths[5]} />
+    </svg>
+  );
+}
+
 function VoiceTagIcon({ index }: { index: number }) {
   if (index === 0) {
     return <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden="true"><path d="M8 13.2S2.5 10.3 2.5 6.1A2.8 2.8 0 0 1 8 5.3a2.8 2.8 0 0 1 5.5.8C13.5 10.3 8 13.2 8 13.2Z" /></svg>;
@@ -459,7 +477,9 @@ export default function Dialogi() {
         {/* 3. Setores: o leitor se perguntando se serve para ele — fundo claro. */}
         <section className="dlg-sec dlg-sec--light">
           <div className="dlg-x">
-            <div className="dlg-head" data-reveal="up">
+            {/* Cabecalho em duas colunas: o titulo cresce a esquerda e o
+                paragrafo senta a direita, no fim da linha — a largura toda. */}
+            <div className="dlg-head dlg-head--wide" data-reveal="up">
               <span className="dlg-eyebrow">{t.sectors.kicker}</span>
               <h2 className="dlg-h2"><Split text={t.sectors.title} /></h2>
               <p className="dlg-body">{t.sectors.body}</p>
@@ -469,6 +489,7 @@ export default function Dialogi() {
               {t.sectors.items.map((item, i) => (
                 <div key={item.title} style={{ ["--i" as string]: i }} data-reveal="up">
                   <article className="dlg-card">
+                    <span className="dlg-card__icon" aria-hidden="true"><SectorIcon index={i} /></span>
                     <h3 className="dlg-h3">{item.title}</h3>
                     <p>{item.body}</p>
                   </article>
@@ -476,6 +497,7 @@ export default function Dialogi() {
               ))}
               <div style={{ ["--i" as string]: t.sectors.items.length }} data-reveal="up">
                 <article className="dlg-card dlg-card--open">
+                  <span className="dlg-card__icon" aria-hidden="true"><SectorIcon index={5} /></span>
                   <h3 className="dlg-h3">{t.sectors.open.title}</h3>
                   <p>{t.sectors.open.body}</p>
                 </article>

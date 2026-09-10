@@ -126,7 +126,12 @@
       "ISO 27001"
     ],
     "techLabel": "Base tecnológica",
-    "tech": "La capa de decisión es propia. Modelos, nube e infraestructura de voz vienen de los principales proveedores globales, elegidos según el requisito de cada operación: latencia, región y conformidad."
+    "tech": "La capa de decisión es propia. Modelos, nube e infraestructura de voz vienen de los principales proveedores globales, elegidos según el requisito de cada operación: latencia, región y conformidad.",
+    "flow": [
+      "Conversación",
+      "Cifrado",
+      "Monitoreo"
+    ]
   },
   "gate": {
     "index": "04",

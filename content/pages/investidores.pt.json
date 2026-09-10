@@ -126,7 +126,12 @@
       "ISO 27001"
     ],
     "techLabel": "Base tecnológica",
-    "tech": "A camada de decisão é própria. Modelos, nuvem e infraestrutura de voz vêm dos principais provedores globais, escolhidos por requisito de cada operação: latência, região e conformidade."
+    "tech": "A camada de decisão é própria. Modelos, nuvem e infraestrutura de voz vêm dos principais provedores globais, escolhidos por requisito de cada operação: latência, região e conformidade.",
+    "flow": [
+      "Conversa",
+      "Criptografia",
+      "Monitoramento"
+    ]
   },
   "gate": {
     "index": "04",

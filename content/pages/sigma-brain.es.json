@@ -105,7 +105,8 @@
       "canvasLabel": "Lienzo del flujo de atención",
       "nodeHint": "Arrastre para mover, o use las flechas del teclado. Suprimir quita el bloque.",
       "added": "añadido al flujo",
-      "removed": "Bloque quitado del flujo"
+      "removed": "Bloque quitado del flujo",
+      "limit": "En esta demo se pueden agregar hasta 2 bloques. Elimina uno (Delete) o vuelve a empezar para agregar otro."
     },
     "lead": "El no-code pone el poder de la innovación en manos de tu equipo."
   },

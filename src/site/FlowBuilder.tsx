@@ -55,6 +55,7 @@ export type FlowBuilderCopy = {
   nodeHint: string;
   added: string;
   removed: string;
+  limit: string;
 };
 
 const SEED_NODES: FlowNode[] = [
@@ -71,6 +72,9 @@ const SEED_EDGES: Edge[] = [
   { from: "n2", to: "n5" },
 ];
 const MENU_OPTIONS = 4;
+/* A demo aceita ate dois blocos novos alem dos que ja vem no fluxo: e o
+   bastante para sentir o builder sem virar uma prancheta infinita. */
+const MAX_ADDED = 2;
 
 export function FlowBuilder({ copy }: { copy: FlowBuilderCopy }) {
   const [nodes, setNodes] = useState<FlowNode[]>(SEED_NODES);
@@ -145,8 +149,15 @@ export function FlowBuilder({ copy }: { copy: FlowBuilderCopy }) {
     setStatus(copy.removed);
   };
 
+  const addedCount = nodes.filter((n) => n.id.startsWith("a")).length;
+  const full = addedCount >= MAX_ADDED;
+
   /** A paleta adiciona um bloco ja ligado ao selecionado (ou ao ultimo). */
   const addNode = (kind: FlowKind) => {
+    if (full) {
+      setStatus(copy.limit);
+      return;
+    }
     const parent = nodes.find((n) => n.id === selected) ?? nodes[nodes.length - 1];
     const id = `a${seq.current++}`;
     const next = clamp({
@@ -196,7 +207,7 @@ export function FlowBuilder({ copy }: { copy: FlowBuilderCopy }) {
 
           <div className="fb__palette">
             {(Object.keys(KIND_ICON) as FlowKind[]).map((kind) => (
-              <button key={kind} type="button" className="fb__chip" onClick={() => addNode(kind)}>
+              <button key={kind} type="button" className="fb__chip" onClick={() => addNode(kind)} disabled={full}>
                 <Icon name={KIND_ICON[kind]} />
                 {copy.palette[kind]}
               </button>
@@ -273,7 +284,7 @@ export function FlowBuilder({ copy }: { copy: FlowBuilderCopy }) {
           </div>
           </div>
 
-          <p className="fb__hint">{copy.hint}</p>
+          <p className="fb__hint">{full ? copy.limit : copy.hint}</p>
           <span className="fb__status" role="status" aria-live="polite">{status}</span>
         </div>
       </div>

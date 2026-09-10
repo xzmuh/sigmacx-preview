@@ -115,7 +115,7 @@ export default function SigmaChannel() {
       <section className="sx-section sx-section--atmosphere sx-automate sx-dark sx-subproduct-stage sx-subproduct-stage--secondary" data-reveal>
         <div className="sx-shell sx-automate__grid">
           <div className="sx-automate__copy">
-            <p className="sx-automate__badge"><Icon name="bell" /> {t.automate.badge}</p>
+            <p className="sx-eyebrow">{t.automate.badge}</p>
             <h2 className="sx-h2"><SplitText text={t.automate.title} /></h2>
             <p className="sx-lead">{t.automate.lead}</p>
             <p className="sx-body">{t.automate.body}</p>

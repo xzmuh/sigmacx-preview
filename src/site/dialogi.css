@@ -567,6 +567,26 @@
 .dlg-card--open { border-color: rgb(44 64 245 / .28); background: linear-gradient(160deg, var(--brand-50), #fff); }
 .dlg-card--open h3 { color: var(--brand-500); }
 
+/* Setores: icone por area e o cartao aberto ("e o seu setor") em destaque. */
+.dlg-card__icon { display: grid; place-items: center; width: 42px; height: 42px; margin-bottom: 1rem; border-radius: 12px; background: var(--brand-50); color: var(--brand-500); }
+.dlg-card__icon svg { width: 20px; height: 20px; }
+.dlg-card--open { border-color: rgb(44 64 245 / .45); box-shadow: 0 26px 60px -40px rgb(44 64 245 / .55); }
+.dlg-card--open .dlg-card__icon { background: linear-gradient(135deg, var(--brand-500), var(--mint-500)); color: #fff; }
+.dlg-card--open h3 { font-size: 1.35rem; letter-spacing: -.03em; }
+.dlg-card--open p { color: var(--ink-900); }
+
+/* Cabecalho largo da secao de setores: titulo maior a esquerda, paragrafo a
+   direita alinhado pela base — a linha inteira, em vez de tudo espremido no
+   canto esquerdo. */
+.dlg-head--wide { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 1.5rem 4rem; align-items: end; }
+.dlg-head--wide .dlg-eyebrow { grid-column: 1 / -1; }
+.dlg-head--wide .dlg-h2 { max-width: 14ch; margin-top: .6rem; font-size: clamp(2.2rem, 4.1vw, 3.7rem); letter-spacing: -.045em; }
+.dlg-head--wide p { margin: 0 0 .35rem; max-width: 38rem; }
+@media (max-width: 900px) {
+  .dlg-head--wide { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .dlg-head--wide p { margin-top: 1.2rem; }
+}
+
 /* ==========================================================================
    Fechamento
    ========================================================================== */

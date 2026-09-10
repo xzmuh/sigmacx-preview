@@ -135,3 +135,27 @@
   .ab-refined .ab-timeline__rule { width: var(--ab-travel); right: auto; }
   .ab-refined .ab-timeline__fill, .ab-refined .ab-timeline__pulse { display: block; }
 }
+/* Introduce the scroll gesture, then fade the cue as the journey starts. */
+.ab-refined .ab-timeline__status { align-items: center; }
+.ab-timeline__hint { display: flex; align-items: center; gap: 14px; min-width: 0; opacity: 1; visibility: visible; transition: opacity .25s ease, visibility .25s; }
+.ab-timeline.has-progress .ab-timeline__hint { opacity: 0; visibility: hidden; }
+.ab-timeline__hint-icon { display: grid; place-items: center; flex: 0 0 32px; width: 32px; height: 42px; color: var(--green); }
+.ab-timeline__hint-icon svg { width: 28px; height: 40px; }
+.ab-timeline__hint-icon path { animation: ab-scroll-cue 1.8s ease-in-out infinite; }
+.ab-timeline__hint-icon path:nth-child(2) { animation-delay: .16s; }
+.ab-timeline__hint-icon path:nth-child(3) { animation-delay: .32s; }
+.ab-timeline.has-progress .ab-timeline__hint-icon path { animation-play-state: paused; }
+.ab-timeline__hint strong { color: #edf4fc; font-size: .95rem; font-weight: 650; line-height: 1.4; letter-spacing: 0; }
+.ab-timeline__hint small { margin-top: 3px; color: #aabed4; font-size: .78rem; font-weight: 400; letter-spacing: 0; }
+.ab-timeline__hint-desktop { display: block; }
+.ab-timeline__hint-touch { display: none; }
+@keyframes ab-scroll-cue { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+@media (max-width: 760px), (max-height: 600px), (prefers-reduced-motion: reduce) {
+  .ab-timeline__hint-desktop { display: none; }
+  .ab-timeline__hint-touch { display: block; }
+  .ab-timeline__hint-icon svg { transform: rotate(-90deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ab-timeline__hint { transition: none; }
+  .ab-timeline__hint-icon path { animation: none; }
+}

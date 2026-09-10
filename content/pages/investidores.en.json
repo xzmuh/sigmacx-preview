@@ -126,7 +126,12 @@
       "ISO 27001"
     ],
     "techLabel": "Technology base",
-    "tech": "The decision layer is proprietary. Models, cloud and voice infrastructure come from the leading global providers, chosen per operation requirement: latency, region and compliance."
+    "tech": "The decision layer is proprietary. Models, cloud and voice infrastructure come from the leading global providers, chosen per operation requirement: latency, region and compliance.",
+    "flow": [
+      "Conversation",
+      "Encryption",
+      "Monitoring"
+    ]
   },
   "gate": {
     "index": "04",

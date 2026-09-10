@@ -105,7 +105,8 @@
       "canvasLabel": "Service flow canvas",
       "nodeHint": "Drag to move, or use the arrow keys. Delete removes the block.",
       "added": "added to the flow",
-      "removed": "Block removed from the flow"
+      "removed": "Block removed from the flow",
+      "limit": "This demo allows up to 2 new blocks. Remove one (Delete) or start over to add another."
     },
     "lead": "No-code puts the power of innovation in the hands of your team."
   },

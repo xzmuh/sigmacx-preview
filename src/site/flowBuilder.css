@@ -75,6 +75,7 @@
 .fb__chip .sx-icon { color: var(--fb-teal); }
 .fb__chip:hover { border-color: rgba(0, 169, 169, .55); background: #16293d; transform: translateY(-1px); }
 .fb__chip:focus-visible { outline: 2px solid var(--fb-teal); outline-offset: 2px; }
+.fb__chip:disabled { opacity: .42; cursor: not-allowed; transform: none; }
 .fb__chip--reset { margin-left: auto; color: var(--fb-mute); }
 
 /* --- Prancheta ----------------------------------------------------------- */

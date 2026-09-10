@@ -106,7 +106,8 @@
       "canvasLabel": "Prancheta do fluxo de atendimento",
       "nodeHint": "Arraste para mover, ou use as setas do teclado. Delete remove o bloco.",
       "added": "adicionado ao fluxo",
-      "removed": "Bloco removido do fluxo"
+      "removed": "Bloco removido do fluxo",
+      "limit": "Nesta demo dá para adicionar até 2 blocos. Remova um (Delete) ou recomece para incluir outro."
     }
   },
   "benefits": {
