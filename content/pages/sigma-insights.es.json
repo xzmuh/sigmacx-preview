@@ -5,12 +5,12 @@
   },
   "hero": {
     "badge": "Sigma Insights",
-    "title": "Hasta 80% más eficiencia en tu operación",
+    "title": "Aumenta la eficiencia de tu operación hasta en 80% con el poder del insight",
     "lead": "Sigma Insights reúne el análisis avanzado de interacciones y la gestión inteligente de calidad en un solo lugar. Transforma voz, chat y pantalla en insights accionables, revelando emociones, patrones y oportunidades que suelen pasar desapercibidos.",
     "cta": "Habla con un experto"
   },
   "dashboards": {
-    "title": "Claridad en segundos, no en informes",
+    "title": "Más control, agilidad y confianza para acompañar resultados y tomar decisiones.",
     "items": [
       {
         "title": "Veja tudo em tempo real",
@@ -26,8 +26,7 @@
       }
     ],
     "cta": "Mira 3 consejos de estrategias de negocio",
-    "eyebrow": "Dashboards",
-    "lead": "Paneles intuitivos, evaluaciones automatizadas e informes en tiempo real le dan a tu empresa claridad, confianza y eficiencia."
+    "eyebrow": "Sigma Insights"
   },
   "voice": {
     "title": "Transforma la voz en estrategia",
@@ -42,11 +41,10 @@
       }
     ],
     "cta": "Pruebe",
-    "eyebrow": "Speech analytics",
-    "lead": "Lo que ocurre cuando cada llamada se vuelve dato consultable."
+    "eyebrow": "Speech analytics"
   },
   "emotions": {
-    "title": "Descubre lo que pasa desapercibido",
+    "title": "Descifra emociones con precisión",
     "items": [
       {
         "title": "Encontre padrões invisíveis",
@@ -58,8 +56,7 @@
       }
     ],
     "cta": "Mira el informe de Tecban",
-    "eyebrow": "Sigma Insights",
-    "lead": "Patrones ocultos en las conversaciones e indicadores reales de calidad, lado a lado."
+    "eyebrow": "Sigma Insights"
   },
   "benefits": {
     "title": "Principales beneficios",
@@ -86,8 +83,7 @@
       }
     ],
     "quote": "Transforme voz, chat e tela em dados que reduzem até 25% dos custos e aceleram a tomada de decisão.",
-    "cta": "Mira en la práctica",
-    "lead": "Cinco frentes en los que Sigma Insights actúa en tu operación."
+    "cta": "Mira en la práctica"
   },
   "video": {
     "eyebrow": "En acción",

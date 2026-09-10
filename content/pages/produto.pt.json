@@ -18,39 +18,72 @@
     "title": "Unificamos canais, automatizamos processos e transformamos **interações em resultados**.",
     "lead": "Com SigmaCX, cada ponto da jornada do cliente ganha consistência, inteligência e fluidez.",
     "items": [
-      { "title": "Sigma Brain", "body": "Ele não é um produto isolado, mas parte do ecossistema SigmaCX. É o motor inteligente da plataforma: atua em todos os canais, executa ações para resolver demandas de ponta a ponta, unindo contexto, automação e personalização." },
-      { "title": "Sigma Channel", "body": "Centralize todos os canais de atendimento em uma única plataforma e tenha uma visão completa e integrada das interações." },
-      { "title": "Sigma Insights", "body": "Com SigmaCX, suas conversas deixam de ser apenas registros e se tornam insumos para evoluir o atendimento." }
+      {
+        "title": "Sigma Brain",
+        "body": "Ele não é um produto isolado, mas parte do ecossistema SigmaCX. É o motor inteligente da plataforma: atua em todos os canais, executa ações para resolver demandas de ponta a ponta, unindo contexto, automação e personalização."
+      },
+      {
+        "title": "Sigma Channel",
+        "body": "Centralize todos os canais de atendimento em uma única plataforma e tenha uma visão completa e integrada das interações."
+      },
+      {
+        "title": "Sigma Insights",
+        "body": "Com SigmaCX, suas conversas deixam de ser apenas registros e se tornam insumos para evoluir o atendimento."
+      }
     ]
   },
   "cases": {
     "title": "Soluções que construímos juntos",
     "lead": "Resultados medidos na operação de quem já roda com a SigmaCX.",
     "highlight": "Cliente em destaque",
-    "fractaliaLead": "O Sigma Insights trouxe mais **estabilidade, eficiência e centralização** para a operação de atendimento. O resultado: produtividade maior e clientes mais satisfeitos.",
-    "fractaliaResults": [
+    "btgLead": "Com uma arquitetura de voz de **quatro camadas de redundância** e rotas críticas em dois continentes, o BTG Pactual transformou cada chamada em uma experiência estável, segura e transparente.",
+    "btgResults": [
       {
-        "value": "-20%",
-        "title": "Redução de reclamações",
-        "body": "Menos reclamações de qualidade de chamada e de desconexão, graças à maior estabilidade da plataforma."
+        "value": "-90%",
+        "title": "Latência média",
+        "body": "Redução na latência do tráfego de voz: comunicação mais rápida e estável com clientes e investidores."
       },
       {
-        "value": "87%",
-        "title": "Percepção de qualidade",
-        "body": "A satisfação do cliente chegou a 87% de percepção positiva, 3 pontos percentuais acima."
+        "value": "100%",
+        "title": "Tráfego criptografado",
+        "body": "Todo o tráfego protegido ponta a ponta (TLS), inclusive nas rotas de contingência fora da rede privada."
       },
       {
-        "value": "+15%",
-        "title": "Aumento da produtividade",
-        "body": "Expansão de canais digitais sem aumento proporcional de equipe."
+        "value": "47 dias",
+        "title": "Três rotas críticas no ar",
+        "body": "TLS São Paulo, TLS Atlanta e ECX ativados em menos de dois meses, com zero impacto na operação."
       },
       {
-        "value": "Multilíngue",
-        "title": "Atendimento multilíngue",
-        "body": "Tradução automática nos canais de texto permitiu atender em vários idiomas sem contratar agentes."
+        "value": "4",
+        "title": "Camadas de redundância",
+        "body": "Conexão principal, backup físico, contingência via internet e georredundância em Atlanta asseguram atendimento ininterrupto."
       }
     ],
-    "fractaliaQuote": "Quando qualidade e tecnologia se encontram, nascem resultados incríveis.",
+    "btgQuote": "Infraestrutura sólida como vantagem competitiva.",
+    "conexionLead": "Com a Linda, agente de IA no WhatsApp, e a integração entre Dialogi e Wooba, a ConexiónTS automatizou o fluxo de cotações e ganhou **agilidade, escala e redução do TMO** sem perder a personalização.",
+    "conexionResults": [
+      {
+        "value": "-60%",
+        "title": "Redução do TMO",
+        "body": "Respostas em segundos via automação, no lugar de um processo de cotação manual e lento."
+      },
+      {
+        "value": "3x",
+        "title": "Mais escalabilidade",
+        "body": "A operação triplicou a capacidade de atendimento com o mesmo time."
+      },
+      {
+        "value": "+45%",
+        "title": "Crescimento projetado",
+        "body": "Com respostas rápidas e precisas, mais cotações viram vendas."
+      },
+      {
+        "value": "30 s",
+        "title": "Tempo médio de resposta",
+        "body": "Atendimento 24/7 com cotações instantâneas e comunicação adaptada ao perfil de cada cliente."
+      }
+    ],
+    "conexionQuote": "Tecnologia e empatia em um mesmo fluxo.",
     "caseCta": "Acesse o case completo",
     "tecbanLead": "O Sigma Insights transformou a gestão de chamadas com análises automatizadas. O resultado: eficiência operacional e mais satisfação dos clientes.",
     "tecbanResults": [

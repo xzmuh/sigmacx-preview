@@ -18,38 +18,71 @@
     "title": "We unify channels, automate processes, and transform **interactions into results**.",
     "lead": "With SigmaCX, every point of the customer journey gains consistency, intelligence, and fluidity.",
     "items": [
-      { "title": "Sigma Brain", "body": "It's not a standalone product, but rather part of the SigmaCX ecosystem. It's the platform's intelligent engine: it operates across all channels, executing actions to resolve end-to-end demands, combining context, automation and personalization." },
-      { "title": "Sigma Channel", "body": "Centralize all service channels on a single platform and have a complete and integrated view of interactions." },
-      { "title": "Sigma Insights", "body": "With SigmaCX, your conversations are no longer just records; they become input for improving customer service." }
+      {
+        "title": "Sigma Brain",
+        "body": "It's not a standalone product, but rather part of the SigmaCX ecosystem. It's the platform's intelligent engine: it operates across all channels, executing actions to resolve end-to-end demands, combining context, automation and personalization."
+      },
+      {
+        "title": "Sigma Channel",
+        "body": "Centralize all service channels on a single platform and have a complete and integrated view of interactions."
+      },
+      {
+        "title": "Sigma Insights",
+        "body": "With SigmaCX, your conversations are no longer just records; they become input for improving customer service."
+      }
     ]
   },
   "cases": {
     "title": "Solutions we build together",
     "highlight": "Featured client",
-    "fractaliaLead": "Sigma Insights modernizes service operations by offering greater **stability, efficiency and centralization**, resulting in higher productivity and more satisfied customers.",
-    "fractaliaResults": [
+    "btgLead": "With a voice architecture built on **four layers of redundancy** and critical routes across two continents, BTG Pactual turned every call into a stable, secure and transparent experience.",
+    "btgResults": [
       {
-        "value": "-20%",
-        "title": "Fewer complaints",
-        "body": "Fewer complaints about call quality and disconnections, thanks to greater platform stability."
+        "value": "-90%",
+        "title": "Average latency",
+        "body": "Reduction in voice traffic latency: faster, more stable communication with clients and investors."
       },
       {
-        "value": "87%",
-        "title": "Quality perception",
-        "body": "Customer satisfaction reached 87% positive perception, 3 percentage points higher."
+        "value": "100%",
+        "title": "Encrypted traffic",
+        "body": "All traffic protected end to end (TLS), including the contingency routes outside the private network."
       },
       {
-        "value": "+15%",
-        "title": "Higher productivity",
-        "body": "Digital channels expanded without a proportional increase in headcount."
+        "value": "47 days",
+        "title": "Three critical routes live",
+        "body": "TLS São Paulo, TLS Atlanta and ECX activated in under two months, with zero impact on operations."
       },
       {
-        "value": "Multilingual",
-        "title": "Multilingual service",
-        "body": "Automatic translation in text channels served several languages without hiring agents."
+        "value": "4",
+        "title": "Layers of redundancy",
+        "body": "Main connection, physical backup, internet contingency and georedundancy in Atlanta keep service uninterrupted."
       }
     ],
-    "fractaliaQuote": "When quality and technology meet, amazing results are born.",
+    "btgQuote": "Solid infrastructure as a competitive advantage.",
+    "conexionLead": "With Linda, its AI agent on WhatsApp, and the integration between Dialogi and Wooba, ConexiónTS automated its quotation workflow and gained **agility, scale and a lower AHT** without losing personalisation.",
+    "conexionResults": [
+      {
+        "value": "-60%",
+        "title": "Lower AHT",
+        "body": "Answers in seconds through automation, replacing a slow, manual quotation process."
+      },
+      {
+        "value": "3x",
+        "title": "More scalability",
+        "body": "The operation tripled its service capacity with the same team."
+      },
+      {
+        "value": "+45%",
+        "title": "Projected growth",
+        "body": "With fast, accurate answers, more quotes turn into sales."
+      },
+      {
+        "value": "30 s",
+        "title": "Average response time",
+        "body": "24/7 service with instant quotes and communication tailored to each client's profile."
+      }
+    ],
+    "conexionQuote": "Technology and empathy in a single workflow.",
     "caseCta": "Access the full case",
     "tecbanLead": "Sigma Insights has transformed call management with automated analytics, bringing operational efficiency and higher customer satisfaction.",
     "tecbanResults": [

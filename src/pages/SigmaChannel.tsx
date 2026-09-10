@@ -149,7 +149,7 @@ export default function SigmaChannel() {
           <div className="sx-shell">
             <header className="sx-results__intro">
               <div>
-                <p className="sx-eyebrow sx-results__eyebrow">✦ {t.benefits.eyebrow}</p>
+                <p className="sx-eyebrow sx-results__eyebrow">{t.benefits.eyebrow}</p>
                 <h2 className="sx-h2"><SplitText text={t.benefits.title} /></h2>
               </div>
               <p className="sx-lead">{t.benefits.lead}</p>

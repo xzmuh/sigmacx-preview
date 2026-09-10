@@ -79,13 +79,16 @@ export function useSuiteMotion(enabled: boolean) {
       if (reduced) return;
 
       root.querySelectorAll<HTMLElement>(".sx-footer-expand").forEach((footer) => {
-        gsap.fromTo(footer, {
-          clipPath: "inset(0px clamp(16px, 3vw, 48px) 0px round 32px)",
+        const background = footer.querySelector(".sx-footer-expand__background");
+        if (!background) return;
+        const inset = () => Math.min(48, Math.max(16, window.innerWidth * 0.03));
+        gsap.fromTo(background, {
+          left: inset, right: inset,
         }, {
-          clipPath: "inset(0px 0px 0px round 0px)",
+          left: -32, right: -32,
           ease: "none",
           scrollTrigger: {
-            trigger: footer, start: "top 85%", end: "top 20%", scrub: 0.7,
+            trigger: footer, start: "top 65%", end: "top 10%", scrub: true,
             invalidateOnRefresh: true,
           },
         });

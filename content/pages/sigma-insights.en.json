@@ -5,12 +5,12 @@
   },
   "hero": {
     "badge": "Sigma Insights",
-    "title": "Up to 80% more efficiency in your operation",
+    "title": "Increase the efficiency of your operation by up to 80% with the power of insights",
     "lead": "Sigma Insights brings advanced interaction analysis and intelligent quality management together in one place. It turns voice, chat and screen into actionable insights, revealing emotions, patterns and opportunities that usually go unnoticed.",
     "cta": "Talk to an expert"
   },
   "dashboards": {
-    "title": "Clarity in seconds, not in reports",
+    "title": "More control, agility and confidence to track results and make decisions.",
     "items": [
       {
         "title": "Veja tudo em tempo real",
@@ -26,8 +26,7 @@
       }
     ],
     "cta": "Check out 3 business strategy tips",
-    "eyebrow": "Dashboards",
-    "lead": "Intuitive dashboards, automated evaluations and real-time reports give your company clarity, confidence and efficiency."
+    "eyebrow": "Sigma Insights"
   },
   "voice": {
     "title": "Turn voice into strategy",
@@ -42,11 +41,10 @@
       }
     ],
     "cta": "Try it",
-    "eyebrow": "Speech analytics",
-    "lead": "What happens when every call becomes searchable data."
+    "eyebrow": "Speech analytics"
   },
   "emotions": {
-    "title": "See what goes unnoticed",
+    "title": "Decode emotions with precision",
     "items": [
       {
         "title": "Encontre padrões invisíveis",
@@ -58,8 +56,7 @@
       }
     ],
     "cta": "Check out Tecban's report",
-    "eyebrow": "Sigma Insights",
-    "lead": "Hidden patterns in conversations and real quality indicators, side by side."
+    "eyebrow": "Sigma Insights"
   },
   "benefits": {
     "title": "Main benefits",
@@ -86,8 +83,7 @@
       }
     ],
     "quote": "Transforme voz, chat e tela em dados que reduzem até 25% dos custos e aceleram a tomada de decisão.",
-    "cta": "Check it out in practice",
-    "lead": "Five fronts where Sigma Insights works in your operation."
+    "cta": "Check it out in practice"
   },
   "video": {
     "eyebrow": "In action",

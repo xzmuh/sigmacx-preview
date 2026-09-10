@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ProductJourney } from "./site/ProductJourney";
+import { JourneyRouteReady, ProductJourney } from "./site/ProductJourney";
 import { SmoothScroll } from "./site/SmoothScroll";
 
 /* Cada pagina vira um chunk proprio: a home traz three/r3f (~700 KB),
@@ -46,6 +46,7 @@ export function App() {
           ))}
           <Route path="*" element={<NaoEncontrado />} />
         </Routes>
+        <JourneyRouteReady />
       </Suspense>
     </BrowserRouter>
   );

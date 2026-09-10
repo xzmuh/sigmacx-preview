@@ -266,16 +266,29 @@
 /* The closing card opens to the viewport as the visitor scrolls into it. */
 .sx-footer-expand {
   position: relative;
+  isolation: isolate;
   margin-top: clamp(24px, 4vw, 56px);
-  background: #061123;
-  clip-path: inset(0 0 0 round 0);
+}
+.sx-footer-expand__background {
+  position: absolute;
+  z-index: -1;
+  inset: 0 -32px;
+  border-radius: 32px 32px 0 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 88% 45%, #605be51f, transparent 40%),
+    linear-gradient(180deg, #061123, #071126 40%, #050a16);
+  pointer-events: none;
 }
 .sx-page--panels .sx-footer-wrap { position: relative; margin-top: 0; }
 .sx-page--panels .sx-footer-wrap::before { content: none; }
 body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !important; }
-.sx-page--suite.sx-page--panels .sx-footer-wrap.sx-dark {
-  background: linear-gradient(180deg, #061123, #071126);
+.sx-page--suite.sx-page--panels .sx-footer-expand .sx-footer-wrap.sx-dark {
+  background: transparent;
 }
+.sx-footer-expand .footer-bridge { display: none; }
+.sx-footer-expand .footer { background: transparent; }
+.sx-footer-expand .footer::before { content: none; }
 
 @media (max-width: 640px) {
   .sx-panel__inner { padding-block: clamp(48px, 12vw, 72px); }

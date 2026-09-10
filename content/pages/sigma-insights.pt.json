@@ -5,14 +5,13 @@
   },
   "hero": {
     "badge": "Sigma Insights",
-    "title": "Até 80% mais eficiência na sua operação",
-    "lead": "O Sigma Insights une análise avançada de interações e gestão de qualidade inteligente em um só lugar. Ele transforma voz, chat e tela em insights acionáveis, revelando emoções, padrões e oportunidades que normalmente passam despercebidos.",
+    "title": "Aumente a eficiência da sua operação em até 80% com o poder dos insights",
+    "lead": "O Sigma Insights é a plataforma que une análise avançada de interações e gestão de qualidade inteligente em um só lugar. Ele transforma voz, chat e tela em insights acionáveis, revelando emoções, padrões e oportunidades que normalmente passam despercebidos.",
     "cta": "Conheça nossa plataforma"
   },
   "dashboards": {
-    "eyebrow": "Dashboards",
-    "title": "Clareza em segundos, não em relatórios",
-    "lead": "Dashboards intuitivos, automação de avaliações e relatórios em tempo real dão à sua empresa clareza, confiança e eficiência.",
+    "eyebrow": "Sigma Insights",
+    "title": "Mais controle, agilidade e confiança para acompanhar resultados e tomar decisões.",
     "items": [
       {
         "title": "Veja tudo em tempo real",
@@ -32,7 +31,6 @@
   "voice": {
     "eyebrow": "Speech analytics",
     "title": "Transforme voz em estratégia",
-    "lead": "O que acontece quando cada chamada vira dado pesquisável.",
     "items": [
       {
         "title": "Ganhe agilidade com transcrição inteligente",
@@ -47,8 +45,7 @@
   },
   "emotions": {
     "eyebrow": "Sigma Insights",
-    "title": "Enxergue o que passa despercebido",
-    "lead": "Padrões escondidos nas conversas e indicadores reais de qualidade, lado a lado.",
+    "title": "Decifre emoções com precisão",
     "items": [
       {
         "title": "Encontre padrões invisíveis",
@@ -63,7 +60,6 @@
   },
   "benefits": {
     "title": "Principais benefícios",
-    "lead": "Cinco frentes em que o Sigma Insights atua na sua operação.",
     "items": [
       {
         "title": "Análise de sentimentos",

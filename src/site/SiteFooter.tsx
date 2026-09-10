@@ -26,18 +26,18 @@ export function FinalCta() {
  * incluindo a ponte .footer-bridge que faz a transicao suave ate ele.
  * Links adaptados para as rotas do site e rotulos por idioma.
  */
-export function SiteFooter() {
+export function SiteFooter({ sharedBackground = false }: { sharedBackground?: boolean }) {
   const lang = useLang();
   const t = pick(dict, lang).footer;
   return (
     <>
       <div className="footer-bridge" aria-hidden="true" />
       <footer className="footer">
-        <div className="footer-atmosphere" aria-hidden="true">
+        {!sharedBackground ? <div className="footer-atmosphere" aria-hidden="true">
           <span className="footer-orbit footer-orbit--outer" />
           <span className="footer-orbit footer-orbit--inner" />
           <span className="footer-scan" />
-        </div>
+        </div> : null}
 
         <div className="footer-top">
           <div className="footer-manifesto">

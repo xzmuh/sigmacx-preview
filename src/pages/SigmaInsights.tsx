@@ -45,7 +45,6 @@ export default function SigmaInsights() {
           <div className="sx-editorial-head sx-editorial-head--center">
             <p className="sx-eyebrow">{t.dashboards.eyebrow}</p>
             <h2 className="sx-h2"><SplitText text={t.dashboards.title} /></h2>
-            <p className="sx-lead">{t.dashboards.lead}</p>
           </div>
           <div className="sx-insights-console">
             <div className="sx-insights-console__media">
@@ -74,7 +73,6 @@ export default function SigmaInsights() {
           <div className="sx-insights-split__content">
             <p className="sx-eyebrow">{t.voice.eyebrow}</p>
             <h2 className="sx-h2"><SplitText text={t.voice.title} /></h2>
-            <p className="sx-lead">{t.voice.lead}</p>
             <FeatureAccordion items={t.voice.items} icons={voiceIcons} active={activeVoice}
               onChange={setActiveVoice} label={t.voice.title} />
             <p className="sx-insights-split__action">
@@ -91,7 +89,6 @@ export default function SigmaInsights() {
             <div className="sx-emotion-stage__head">
               <p className="sx-eyebrow">{t.emotions.eyebrow}</p>
               <h2 className="sx-h2"><SplitText text={t.emotions.title} /></h2>
-              <p className="sx-lead">{t.emotions.lead}</p>
             </div>
             <div className="sx-emotion-stage__body">
               <div className="sx-emotion-stage__visual">
@@ -125,7 +122,6 @@ export default function SigmaInsights() {
           <div className="sx-editorial-head">
             <p className="sx-eyebrow">Sigma Insights</p>
             <h2 className="sx-h2"><SplitText text={t.benefits.title} /></h2>
-            <p className="sx-lead">{t.benefits.lead}</p>
           </div>
           <div className="sx-benefits-bento">
             <BorderGlow

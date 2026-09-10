@@ -63,10 +63,17 @@ export function PageShell({ children, title, description, endsLight = true, them
       <main id="conteudo">{children}</main>
       {endsLight && !expandingFooter ? <SectionTransition to="dark" /> : null}
       {expandingFooter ? <div className="sx-footer-expand">
+        <div className="sx-footer-expand__background" aria-hidden="true">
+          <div className="footer-atmosphere">
+            <span className="footer-orbit footer-orbit--outer" />
+            <span className="footer-orbit footer-orbit--inner" />
+            <span className="footer-scan" />
+          </div>
+        </div>
         <div className="sx-dark sx-footer-wrap">
           {finalCta ? <FinalCta /> : null}
         </div>
-        <SiteFooter />
+        <SiteFooter sharedBackground />
       </div> : <>
         <div className="sx-dark sx-footer-wrap">
           {finalCta ? <FinalCta /> : null}

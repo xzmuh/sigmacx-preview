@@ -84,6 +84,12 @@ export const FOOTER_MANIFESTO =
 
 export const CASE_TECBAN_PDF =
   "https://sigmacx.ai/wp-content/uploads/2025/10/Case-Tecban-PT.pdf";
+/* Os PDFs dos cases do BTG e da Conexion TS ainda nao estao hospedados (sao
+   12 MB cada, em tres idiomas — pesado demais para o repositorio). Com a URL
+   no WordPress preenchida aqui, o botao "Acesse o case completo" volta a
+   aparecer naquele case; vazio, o palco mostra so a frase de fechamento. */
+export const CASE_BTG_PDF = "";
+export const CASE_CONEXION_PDF = "";
 
 export const BOT_VS_AGENT_URL =
   "https://sigmacx.ai/qual-a-diferenca-entre-chatbots-e-agentes-de-ia/";
