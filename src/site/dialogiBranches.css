@@ -17,15 +17,16 @@
 .dlg-connection__actions a:focus-visible { outline: 2px solid #4265ed; outline-offset: 4px; }
 .dlg .dlg-branches { position: relative; width: 100%; min-width: 0; }
 .dlg-branches > svg { display: block; width: 100%; overflow: visible; }
-.dlg-branches__ribbon { transform-origin: 470px 152px; transform: scaleX(0); opacity: 0; }
-.dlg-branches.is-visible .dlg-branches__ribbon { animation: dlg-branch-grow 1.65s cubic-bezier(.16, 1, .3, 1) var(--branch-delay) both; }
+.dlg-branches__reveal { stroke-dasharray: 100 200; stroke-dashoffset: 100; }
+.dlg-branches.is-visible .dlg-branches__reveal { animation: dlg-branch-draw 2.2s cubic-bezier(.4, 0, .2, 1) var(--branch-delay) both; }
 .dlg-branches__label { opacity: 0; filter: drop-shadow(0 5px 12px #7799bf1c); }
-.dlg-branches.is-visible .dlg-branches__label { animation: dlg-branch-label .65s ease calc(var(--branch-delay) + .75s) both; }
-.dlg-branches__pulse { stroke-dasharray: 9 91; animation: dlg-branch-pulse 4.8s linear infinite; animation-delay: var(--branch-delay); opacity: .55; }
+.dlg-branches.is-visible .dlg-branches__label { animation: dlg-branch-label .9s cubic-bezier(.22, 1, .36, 1) calc(var(--branch-delay) + 1.35s) both; }
+.dlg-branches__pulse { stroke-dasharray: 14 86; stroke-linecap: round; opacity: 0; }
+.dlg-branches.is-visible .dlg-branches__pulse { animation: dlg-branch-pulse 5.6s linear calc(var(--branch-delay) + 2.2s) infinite both; }
 .dlg-branches__core { filter: drop-shadow(0 10px 20px #8299d12e); }
-.dlg .dlg-branches figcaption { position: absolute; left: 82%; top: 34%; width: 18%; color: #6c7a96; font-size: clamp(.75rem, 1.3vw, 1.05rem); line-height: 1.5; }
-.dlg-branches figcaption span { display: block; width: 44px; height: 1px; background: #bec8de; margin-top: 18px; position: relative; }
-.dlg-branches figcaption span::after { content: ""; position: absolute; right: 0; top: -2px; width: 5px; height: 5px; border-radius: 50%; background: #5a65c6; }
+/* A legenda senta na linha que sai do nucleo: o conector fica em y=152 da
+   viewBox de 310 (49%), e o bloco de texto se centraliza nele. */
+.dlg .dlg-branches figcaption { position: absolute; left: 82%; top: 49%; width: 18%; transform: translateY(-50%); color: #6c7a96; font-size: clamp(.75rem, 1.3vw, 1.05rem); line-height: 1.5; }
 /* A faixa de luz precisa ultrapassar a emenda sem ser cortada pela próxima seção. */
 .dlg .dlg-connection + .dlg-break {
   height: clamp(48px, 5vw, 76px);
@@ -37,9 +38,14 @@
 .dlg .dlg-connection + .dlg-break svg { overflow: visible; }
 .dlg .dlg-sec--features .dlg-resources-head { display: block; margin-bottom: 38px; }
 .dlg .dlg-resources-head .dlg-body { margin-top: 12px; max-width: 75ch; }
-@keyframes dlg-branch-grow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
-@keyframes dlg-branch-label { from { opacity: 0; translate: 14px 0; } to { opacity: 1; translate: 0 0; } }
-@keyframes dlg-branch-pulse { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes dlg-branch-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+@keyframes dlg-branch-label { from { opacity: 0; transform: translateX(6px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes dlg-branch-pulse {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  15% { opacity: .35; }
+  75% { opacity: .35; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
 @media (max-width: 900px) {
   .dlg-connection__grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .dlg-connection__copy { max-width: 540px; }
@@ -50,7 +56,8 @@
   .dlg-connection__actions a { padding: 10px 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .dlg-branches .dlg-branches__ribbon, .dlg-branches .dlg-branches__label { animation: none; transform: none; opacity: 1; }
-  .dlg-branches__pulse { animation: none; stroke-dasharray: none; opacity: .15; }
+  .dlg-branches .dlg-branches__reveal { animation: none; stroke-dashoffset: 0; }
+  .dlg-branches .dlg-branches__label { animation: none; transform: none; opacity: 1; }
+  .dlg-branches .dlg-branches__pulse { animation: none; stroke-dasharray: none; opacity: .15; }
   .dlg-connection__actions a { transition: none; }
 }

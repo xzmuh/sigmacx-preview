@@ -36,14 +36,19 @@ export function DialogiBranches({ lang }: { lang: Lang }) {
         <defs>
           <radialGradient id={`${id}-disc`} cx="35%" cy="25%" r="85%"><stop stopColor="#fff" /><stop offset="1" stopColor="#e8edff" /></radialGradient>
           {branches.map((branch, i) => <linearGradient key={i} id={`${id}-${i}`} x1="0" y1="0" x2="1" y2="0"><stop stopColor={branch.color} stopOpacity="0.13" /><stop offset="0.5" stopColor={branch.color} stopOpacity="0.57" /><stop offset="1" stopColor={branch.color} stopOpacity="0.85" /></linearGradient>)}
+          {branches.map((branch, i) => (
+            <mask key={i} id={`${id}-reveal-${i}`} maskUnits="userSpaceOnUse" x="0" y="-30" width="530" height="370">
+              <path className="dlg-branches__reveal" style={{ ["--branch-delay" as string]: `${i * 90}ms` }} d={branch.line} pathLength="100" fill="none" stroke="white" strokeWidth="80" strokeLinecap="butt" strokeDasharray="100 200" strokeDashoffset="100" />
+            </mask>
+          ))}
         </defs>
         {branches.map((branch, i) => (
-          <g key={i} style={{ ["--branch-delay" as string]: `${i * 150}ms`, color: branch.color }}>
-            <g className="dlg-branches__ribbon">
+          <g key={i} style={{ ["--branch-delay" as string]: `${i * 90}ms`, color: branch.color }}>
+            <g className="dlg-branches__ribbon" mask={`url(#${id}-reveal-${i})`}>
               <path d={branch.shape} fill={`url(#${id}-${i})`} />
               <path className="dlg-branches__pulse" d={branch.line} pathLength="100" fill="none" stroke={branch.color} strokeWidth="2" />
             </g>
-            <g className="dlg-branches__label">
+            <g className="dlg-branches__label" opacity="0">
               <rect x={branch.x - 62} y={branch.y - 25} width="154" height="50" rx="25" fill="white" stroke="#edf1f8" />
               <circle cx={branch.x - 34} cy={branch.y} r="18" fill={branch.color} opacity="0.13" />
               <svg x={branch.x - 45} y={branch.y - 11} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={branch.icon} /></svg>
@@ -57,7 +62,7 @@ export function DialogiBranches({ lang }: { lang: Lang }) {
           <image href="/media/dialogi-color.png" x="405" y="137" width="144" height="30" preserveAspectRatio="xMidYMid meet" />
         </g>
       </svg>
-      <figcaption>{copy.result}<span aria-hidden="true" /></figcaption>
+      <figcaption>{copy.result}</figcaption>
     </figure>
   );
 }
