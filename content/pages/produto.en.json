@@ -35,30 +35,6 @@
   "cases": {
     "title": "Solutions we build together",
     "highlight": "Featured client",
-    "btgLead": "With a voice architecture built on **four layers of redundancy** and critical routes across two continents, BTG Pactual turned every call into a stable, secure and transparent experience.",
-    "btgResults": [
-      {
-        "value": "-90%",
-        "title": "Average latency",
-        "body": "Reduction in voice traffic latency: faster, more stable communication with clients and investors."
-      },
-      {
-        "value": "100%",
-        "title": "Encrypted traffic",
-        "body": "All traffic protected end to end (TLS), including the contingency routes outside the private network."
-      },
-      {
-        "value": "47 days",
-        "title": "Three critical routes live",
-        "body": "TLS São Paulo, TLS Atlanta and ECX activated in under two months, with zero impact on operations."
-      },
-      {
-        "value": "4",
-        "title": "Layers of redundancy",
-        "body": "Main connection, physical backup, internet contingency and georedundancy in Atlanta keep service uninterrupted."
-      }
-    ],
-    "btgQuote": "Solid infrastructure as a competitive advantage.",
     "conexionLead": "With Linda, its AI agent on WhatsApp, and the integration between Dialogi and Wooba, ConexiónTS automated its quotation workflow and gained **agility, scale and a lower AHT** without losing personalisation.",
     "conexionResults": [
       {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { PageShell, useReveal } from "../site/PageShell";
 import { Panel } from "../site/Panel";
 import { Icon, TechLines, Video, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
-import { CASE_BTG_PDF, CASE_CONEXION_PDF, CASE_TECBAN_PDF, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
+import { CASE_CONEXION_PDF, CASE_TECBAN_PDF, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
 import { href, pick, rich, useLang } from "../lib/i18n";
 import pt from "../../content/pages/produto.pt.json";
 import en from "../../content/pages/produto.en.json";
@@ -19,7 +19,6 @@ const intelShots = [
 ];
 
 const caseResultIcons = [
-  ["bolt", "shield", "check", "layers"],
   ["bolt", "users", "bars", "chat"],
   ["heart", "target", "bolt", "check"],
 ];
@@ -36,11 +35,10 @@ export default function Produto() {
   const t = pick({ pt, en, es }, lang);
   const [activeCase, setActiveCase] = useState(0);
   const [activeSuite, setActiveSuite] = useState(0);
-  /* Os tres cases da pasta de marketing (2026-09-10). As marcas do BTG e da
-     Conexion vieram das capas dos PDFs, recortadas e passadas para a tinta
-     escura: o palco e claro e apaga o branco com `multiply`. */
+  /* Cases da pasta de marketing (2026-09-10). A marca da Conexion veio da capa
+     do PDF, recortada e passada para a tinta escura: o palco e claro e apaga o
+     branco com `multiply`. */
   const cases = [
-    { name: "BTG Pactual", logo: "btg-logo.png", lead: t.cases.btgLead, results: t.cases.btgResults, quote: t.cases.btgQuote, pdf: CASE_BTG_PDF },
     { name: "Conexión TS", logo: "conexion-logo.png", lead: t.cases.conexionLead, results: t.cases.conexionResults, quote: t.cases.conexionQuote, pdf: CASE_CONEXION_PDF },
     { name: "Tecban", logo: "tecban-logo.webp", lead: t.cases.tecbanLead, results: t.cases.tecbanResults, quote: t.cases.tecbanQuote, pdf: CASE_TECBAN_PDF },
   ];

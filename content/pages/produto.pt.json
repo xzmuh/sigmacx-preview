@@ -36,30 +36,6 @@
     "title": "Soluções que construímos juntos",
     "lead": "Resultados medidos na operação de quem já roda com a SigmaCX.",
     "highlight": "Cliente em destaque",
-    "btgLead": "Com uma arquitetura de voz de **quatro camadas de redundância** e rotas críticas em dois continentes, o BTG Pactual transformou cada chamada em uma experiência estável, segura e transparente.",
-    "btgResults": [
-      {
-        "value": "-90%",
-        "title": "Latência média",
-        "body": "Redução na latência do tráfego de voz: comunicação mais rápida e estável com clientes e investidores."
-      },
-      {
-        "value": "100%",
-        "title": "Tráfego criptografado",
-        "body": "Todo o tráfego protegido ponta a ponta (TLS), inclusive nas rotas de contingência fora da rede privada."
-      },
-      {
-        "value": "47 dias",
-        "title": "Três rotas críticas no ar",
-        "body": "TLS São Paulo, TLS Atlanta e ECX ativados em menos de dois meses, com zero impacto na operação."
-      },
-      {
-        "value": "4",
-        "title": "Camadas de redundância",
-        "body": "Conexão principal, backup físico, contingência via internet e georredundância em Atlanta asseguram atendimento ininterrupto."
-      }
-    ],
-    "btgQuote": "Infraestrutura sólida como vantagem competitiva.",
     "conexionLead": "Com a Linda, agente de IA no WhatsApp, e a integração entre Dialogi e Wooba, a ConexiónTS automatizou o fluxo de cotações e ganhou **agilidade, escala e redução do TMO** sem perder a personalização.",
     "conexionResults": [
       {
