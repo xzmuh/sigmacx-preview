@@ -120,6 +120,10 @@ export function SiteHeader() {
               <strong>{t.about}</strong>
               <small>{t.aboutNote}</small>
             </Link>
+            <Link to={href("/investidores", lang)} onClick={close}>
+              <strong>{t.investors}</strong>
+              <small>{t.investorsNote}</small>
+            </Link>
           </div>
         </div>
         <Link data-index="05" to={href("/blog", lang)} {...hover} onClick={close}>{t.blog}</Link>

@@ -1,0 +1,61 @@
+/* A central light beam connects alternating scenes, as in the home story. */
+.sx-page--suite main > .sx-brain-laser {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding-block: clamp(40px, 4.5vw, 64px);
+  background: linear-gradient(180deg, #fff, #f1f9f8 16%, #f3f8fc 52%, #eff8f6 80%, #fff);
+}
+.sx-brain-laser__journey { position: relative; display: grid; row-gap: clamp(32px, 5vh, 56px); }
+.sx-brain-laser__rail {
+  position: absolute; z-index: 2; inset: 0 auto 0 calc(50% - 39px); width: 80px;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg, transparent, #000 80px, #000 calc(100% - 100px), transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 80px, #000 calc(100% - 100px), transparent);
+}
+.sx-brain-laser__rail::before { position: absolute; inset: 0 auto 0 39px; width: 2px; content: ""; background: #159baf16; }
+.sx-brain-laser__fill { position: absolute; inset: 0 auto 0 39px; width: 2px; transform-origin: top; background: linear-gradient(#58aafa, #00b7b0 60%, #93d997); box-shadow: 0 0 12px #00b7b080, 0 0 30px #00b7b045; }
+.sx-brain-laser__tip { position: absolute; top: 100%; left: 50%; width: 4px; height: 52px; transform: translate(-50%, -100%); border-radius: 50%; background: linear-gradient(transparent, #00c5c2 65%, #f5ffff); box-shadow: 0 6px 18px #00b7b0a0, 0 0 40px #00b7b050; }
+.sx-brain-laser__tip::before { position: absolute; left: 50%; bottom: 0; width: 12px; height: 12px; content: ""; transform: translate(-50%, 50%); border: 2px solid #00b7b0; border-radius: 50%; background: #fff; box-shadow: 0 0 12px #00cfc8, 0 0 28px #00b7b080; }
+.sx-brain-laser__tip::after { position: absolute; left: 50%; bottom: 0; width: 22px; height: 22px; content: ""; border: 1px solid #00b7b0; border-radius: 50%; background: #00c5c212; animation: brain-laser-pulse 2.2s ease-out infinite; }
+@keyframes brain-laser-pulse { from { transform: translate(-50%, 50%) scale(.55); opacity: .8; } to { transform: translate(-50%, 50%) scale(2.3); opacity: 0; } }
+.sx-brain-laser__scene { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(60px, 7vw, 108px); align-items: center; min-height: clamp(440px, 62svh, 560px); padding-block: clamp(40px, 4vw, 56px); }
+.sx-brain-laser__node { position: absolute; z-index: 3; left: 50%; top: 50%; width: 10px; height: 10px; transform: translate(-4px, -50%); border: 2px solid #00a9a9; border-radius: 50%; background: #f0faf8; box-shadow: 0 0 0 7px #00a9a90b; }
+.sx-brain-laser__copy { position: relative; z-index: 1; }
+.sx-brain-laser__copy .sx-h2 { max-width: 24ch; font-size: clamp(1.65rem, 2.4vw, 2.35rem); line-height: 1.1; letter-spacing: -.05em; }
+.sx-brain-laser__copy .sx-lead { max-width: 42ch; font-size: clamp(.98rem, 1.1vw, 1.06rem); }
+.sx-brain-laser__scene:nth-of-type(even) .sx-brain-laser__copy { grid-column: 2; grid-row: 1; }
+.sx-brain-laser__scene:nth-of-type(even) .sx-brain-laser__media { grid-column: 1; grid-row: 1; }
+.sx-brain-laser__media { position: relative; isolation: isolate; display: grid; place-items: center; margin: 0; min-width: 0; }
+.sx-brain-laser__media::before { position: absolute; z-index: -1; inset: -25%; content: ""; background: radial-gradient(ellipse, #58c9ce30, #79b5d512 40%, transparent 68%); pointer-events: none; }
+.sx-brain-laser__media img { display: block; width: 100%; max-width: 460px; max-height: 340px; object-fit: contain; filter: drop-shadow(0 22px 28px #195a7d24); }
+.sx-brain-laser__media--2 img { width: min(80%, 320px); border-radius: 20px; }
+@media (max-width: 760px) {
+  .sx-brain-laser__rail { left: -31px; }
+  .sx-brain-laser__scene { grid-template-columns: minmax(0, 1fr); gap: 20px; min-height: 0; padding: 26px 0 26px 36px; }
+  .sx-brain-laser__scene:nth-of-type(even) :is(.sx-brain-laser__copy, .sx-brain-laser__media) { grid-column: auto; grid-row: auto; }
+  .sx-brain-laser__node { left: 8px; top: 57px; }
+  .sx-brain-laser__copy .sx-h2 { font-size: clamp(1.6rem, 5.5vw, 2rem); }
+  .sx-brain-laser__media img { width: 100%; max-height: 280px; }
+  .sx-brain-laser__copy .sx-brain-flow__kicker { font-size: .6rem; gap: 9px; }
+  .sx-brain-laser__copy .sx-brain-flow__kicker::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .sx-brain-laser__tip { display: none; } }
+
+/* Light, consistent benefit cards with restrained product accents. */
+.sx-page--suite main > .sx-brain-benefits { background: #fff; }
+.sx-brain-benefits__head { max-width: 640px; margin-bottom: 32px; }
+.sx-brain-benefits__head .sx-eyebrow { margin: 0 0 12px; }
+.sx-brain-benefits__head .sx-h2 { margin: 0; }
+.sx-brain-benefits__head .sx-lead { margin-top: 16px; }
+.sx-brain-benefits__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.sx-brain-benefit { padding: clamp(24px, 3vw, 38px); border: 1px solid #136d871c; border-radius: 20px; background: #f5f8f7; }
+.sx-brain-benefit__heading { display: flex; align-items: center; gap: 16px; }
+.sx-brain-benefit__heading > .sx-icon { flex: 0 0 42px; width: 42px; height: 42px; border: 1px solid #136d8720; border-radius: 12px; color: #136d87; background: #fff; }
+.sx-brain-benefit h3 { margin: 0; color: var(--sg-ink, #1f2939); font-size: clamp(1.1rem, 1.35vw, 1.3rem); font-weight: 650; line-height: 1.35; letter-spacing: -.025em; }
+.sx-brain-benefit p { max-width: 52ch; margin: 12px 0 0; color: var(--sx-fg-muted); font-size: 1rem; line-height: 1.7; }
+.sx-brain-benefits__cta { margin-top: 28px; }
+@media (max-width: 640px) {
+  .sx-brain-benefits__list { grid-template-columns: minmax(0, 1fr); }
+  .sx-brain-benefit { padding-block: 22px; }
+}

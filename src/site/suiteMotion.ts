@@ -78,6 +78,53 @@ export function useSuiteMotion(enabled: boolean) {
 
       if (reduced) return;
 
+      root.querySelectorAll<HTMLElement>(".sx-footer-expand").forEach((footer) => {
+        gsap.fromTo(footer, {
+          clipPath: "inset(0px clamp(16px, 3vw, 48px) 0px round 32px)",
+        }, {
+          clipPath: "inset(0px 0px 0px round 0px)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: footer, start: "top 85%", end: "top 20%", scrub: 0.7,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+
+      root.querySelectorAll<HTMLElement>(".sx-brain-laser").forEach((section) => {
+        const rail = section.querySelector(".sx-brain-laser__rail");
+        const fill = section.querySelector(".sx-brain-laser__fill");
+        const tip = section.querySelector(".sx-brain-laser__tip");
+        if (!rail || !fill || !tip) return;
+        const beam = gsap.timeline({ scrollTrigger: {
+          trigger: rail, start: "top 65%", end: "bottom 65%", scrub: 0.65,
+          invalidateOnRefresh: true,
+        } });
+        beam.fromTo(fill, { scaleY: 0 }, { scaleY: 1, ease: "none", duration: 1 }, 0);
+        beam.fromTo(tip, { top: "0%" }, { top: "100%", ease: "none", duration: 1 }, 0);
+        section.querySelectorAll<HTMLElement>(".sx-brain-laser__scene").forEach((scene, index) => {
+          const entry = gsap.timeline({ scrollTrigger: {
+            trigger: scene, start: "center 95%", end: "center 65%", scrub: 0.65,
+          } });
+          entry.from(scene.querySelector(".sx-brain-laser__copy"), {
+            x: index % 2 ? 35 : -35, y: 24, opacity: 0, ease: "power2.out", duration: 1,
+          }, 0);
+          entry.from(scene.querySelector(".sx-brain-laser__media"), {
+            x: index % 2 ? -35 : 35, y: 35, scale: 0.96, opacity: 0, ease: "power2.out", duration: 1,
+          }, 0.12);
+          entry.from(scene.querySelector(".sx-brain-laser__node"), {
+            opacity: 0.2, ease: "none", duration: 0.25,
+          }, 0.87);
+        });
+        let frame = 0;
+        const resize = new ResizeObserver(() => {
+          window.cancelAnimationFrame(frame);
+          frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+        });
+        resize.observe(section);
+        cleanups.push(() => { resize.disconnect(); window.cancelAnimationFrame(frame); });
+      });
+
       /* O titulo entra como um bloco, no mesmo ritmo editorial do restante da
          pagina. Evita que letras soltas disputem atencao com a mensagem. */
       const heroTitle = root.querySelector<HTMLElement>(".sx-hero .sx-h1");
@@ -122,6 +169,46 @@ export function useSuiteMotion(enabled: boolean) {
           { xPercent: -2.25 },
           { xPercent: 2.25, ease: "none", stagger: 0.06, scrollTrigger: { trigger: seam, start: "top bottom", end: "bottom top", scrub: true } },
         );
+      });
+
+      /* Revelacao vertical: a ponta acompanha 65% da janela, independentemente
+         do comprimento das curvas. Linha e brilho avancam juntos e recuam ao
+         subir; sem movimento, o SVG permanece inteiro pelo height="1". */
+      root.querySelectorAll<SVGRectElement>(".sx-scroll-thread__reveal").forEach((reveal) => {
+        const svg = reveal.ownerSVGElement;
+        if (!svg) return;
+        gsap.fromTo(
+          reveal,
+          { attr: { height: 0 } },
+          {
+            attr: { height: 1 },
+            ease: "none",
+            scrollTrigger: {
+              trigger: svg,
+              start: "top 65%",
+              end: "bottom 65%",
+              // A ponta alcanca suavemente o scroll, inclusive depois de soltar.
+              scrub: 0.65,
+              invalidateOnRefresh: true,
+            },
+          },
+        );
+        const section = svg.closest(".sx-platform-loop, .sx-brain-flow");
+        let frame = 0;
+        let disposed = false;
+        const refreshThread = () => {
+          if (disposed) return;
+          window.cancelAnimationFrame(frame);
+          frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
+        };
+        const observer = new ResizeObserver(refreshThread);
+        if (section) observer.observe(section);
+        void document.fonts.ready.then(refreshThread);
+        cleanups.push(() => {
+          disposed = true;
+          observer.disconnect();
+          window.cancelAnimationFrame(frame);
+        });
       });
 
       /* -------------------------------------------- numeros que contam (20%...) */

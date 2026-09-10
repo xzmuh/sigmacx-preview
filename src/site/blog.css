@@ -41,7 +41,10 @@
 .bl-progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 130; pointer-events: none; }
 .bl-progress span { display: block; height: 100%; background: var(--green); transform-origin: left center; transition: transform 0.1s linear; }
 
-.bl-head { justify-items: start; text-align: left; gap: 16px; max-width: 900px; }
+/* Mesmo eixo do artigo: .bl-layout e uma coluna de 66rem centralizada, e o
+   cabecalho tinha 900px — as duas margens automaticas nao coincidiam e o hero
+   ficava 78px a direita do texto. A medida agora e a mesma nos dois. */
+.bl-head { justify-items: start; text-align: left; gap: 16px; max-width: 66rem; }
 .bl-back { display: inline-flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.6); font-size: 0.82rem; font-weight: 600; transition: color 0.25s; }
 .bl-back:hover { color: var(--green); }
 .bl-back span { transition: transform 0.3s var(--ease-sigma); }
@@ -49,7 +52,14 @@
 .bl-head__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
 .bl-tag { padding: 6px 10px; border-radius: 10px; background: rgba(185, 255, 155, 0.14); color: var(--green); transition: background 0.25s, color 0.25s; }
 .bl-tag:hover { background: var(--green); color: var(--navy); }
-.bl-head__title { font-size: clamp(1.9rem, 3.6vw, 2.8rem); font-weight: 500; line-height: 1.1; }
+/* Precisa vencer `body .sx-h1` de scale.css, que fixa o corpo de todo titulo:
+   mesma especificidade empata e, como scale.css e importado depois, era ela
+   quem mandava — dai o titulo do artigo continuar espremido. */
+body .sx-page .bl-head__title { font-size: clamp(2.1rem, 4.2vw, 3.4rem); font-weight: 500; line-height: 1.14; letter-spacing: -0.03em; }
+/* A mascara de cada palavra (.sx-word, overflow:hidden) tem 0.08em de folga
+   embaixo — menos do que o rabinho do "p" e do "g" ocupam neste corpo, e a
+   descendente saia cortada. A margem negativa devolve a geometria. */
+.sx-page .bl-head__title .sx-word { padding-bottom: 0.24em; margin-bottom: -0.24em; }
 
 .bl-layout { display: grid; gap: clamp(40px, 5vw, 64px); grid-template-columns: minmax(0, 1fr) 19rem; max-width: 66rem; margin-inline: auto; }
 .bl-main { min-width: 0; }

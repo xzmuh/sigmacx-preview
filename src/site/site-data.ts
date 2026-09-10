@@ -2,6 +2,10 @@ export const DEMO_URL =
   "https://api.whatsapp.com/send/?phone=551142008282&text=Ol%C3%A1%2C+gostaria+de+saber+mais+sobre+a+SigmaCX&type=phone_number&app_absent=0";
 
 export const PARTNER_MAIL = "mailto:canais@nuveto.com.br";
+/* Caixa que recebe as solicitacoes de acesso da area de investidores. Enquanto
+   nao houver endpoint de formulario, a pagina /investidores monta a mensagem e
+   abre o programa de e-mail do visitante. */
+export const INVESTORS_MAIL = "canais@nuveto.com.br";
 export const LINKEDIN_URL = "https://www.linkedin.com/company/sigma-cx/";
 export const DIALOGI_URL = "https://dialogiai.com/";
 /* Home do site proprio do Dialogi por idioma: e para la que a pagina /dialogi

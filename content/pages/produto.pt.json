@@ -6,12 +6,28 @@
   "hero": {
     "title": "Conectando cada ponto da **jornada do cliente**",
     "lead": "Unificamos canais, automatizamos processos e transformamos interações em resultados. Com SigmaCX, cada ponto da jornada do cliente ganha consistência, inteligência e fluidez.",
-    "cta": "Conheça nossa plataforma"
+    "cta": "Conheça nossa plataforma",
+    "trust": "Clientes SigmaCX"
+  },
+  "suiteIntro": {
+    "title": "Sigma Brain + **Sigma Channel**",
+    "lead": "Unificamos canais, automatizamos processos e transformamos interações em resultados."
+  },
+  "overview": {
+    "eyebrow": "Sigma Suite",
+    "title": "Unificamos canais, automatizamos processos e transformamos **interações em resultados**.",
+    "lead": "Com SigmaCX, cada ponto da jornada do cliente ganha consistência, inteligência e fluidez.",
+    "items": [
+      { "title": "Sigma Brain", "body": "Ele não é um produto isolado, mas parte do ecossistema SigmaCX. É o motor inteligente da plataforma: atua em todos os canais, executa ações para resolver demandas de ponta a ponta, unindo contexto, automação e personalização." },
+      { "title": "Sigma Channel", "body": "Centralize todos os canais de atendimento em uma única plataforma e tenha uma visão completa e integrada das interações." },
+      { "title": "Sigma Insights", "body": "Com SigmaCX, suas conversas deixam de ser apenas registros e se tornam insumos para evoluir o atendimento." }
+    ]
   },
   "cases": {
     "title": "Soluções que construímos juntos",
+    "lead": "Resultados medidos na operação de quem já roda com a SigmaCX.",
     "highlight": "Cliente em destaque",
-    "fractaliaLead": "O Sigma Insights moderniza operações de atendimento ao oferecer mais **estabilidade, eficiência e centralização**, resultando em produtividade maior e clientes mais satisfeitos.",
+    "fractaliaLead": "O Sigma Insights trouxe mais **estabilidade, eficiência e centralização** para a operação de atendimento. O resultado: produtividade maior e clientes mais satisfeitos.",
     "fractaliaResults": [
       {
         "value": "-20%",
@@ -36,7 +52,7 @@
     ],
     "fractaliaQuote": "Quando qualidade e tecnologia se encontram, nascem resultados incríveis.",
     "caseCta": "Acesse o case completo",
-    "tecbanLead": "O Sigma Insights transformou a gestão de chamadas com análises automatizadas, trazendo eficiência operacional e mais satisfação dos clientes.",
+    "tecbanLead": "O Sigma Insights transformou a gestão de chamadas com análises automatizadas. O resultado: eficiência operacional e mais satisfação dos clientes.",
     "tecbanResults": [
       {
         "value": "+1.000%",
@@ -77,15 +93,15 @@
     "items": [
       {
         "title": "Da conversa ao insight",
-        "body": "Transcrevemos e analisamos interações em tempo real, aplicando análise de sentimentos, categorização automática e identificação de tendências."
+        "body": "Transcrevemos e analisamos cada interação em tempo real. Análise de sentimentos, categorização automática e identificação de tendências."
       },
       {
         "title": "Dados que geram ação",
-        "body": "Painéis intuitivos e relatórios estratégicos que mostram gargalos, antecipam problemas e orientam mudanças na operação."
+        "body": "Painéis intuitivos e relatórios estratégicos. Mostram gargalos, antecipam problemas e orientam mudanças na operação."
       },
       {
         "title": "Eficiência contínua",
-        "body": "Ao automatizar fluxos e reduzir tarefas manuais, aumentamos a produtividade da equipe e a satisfação do cliente."
+        "body": "Automatizamos fluxos e reduzimos tarefas manuais. A equipe ganha produtividade e o cliente, satisfação."
       }
     ],
     "cta": "Confira na prática",
@@ -110,7 +126,8 @@
     "source": "Source: Folio 3"
   },
   "video": {
-    "eyebrow": "Em ação",
-    "title": "Veja a Sigma Suite funcionando"
+    "eyebrow": "Demo da plataforma",
+    "title": "Veja a jornada completa **acontecer na prática**",
+    "lead": "Unificamos canais, automatizamos processos e transformamos interações em resultados."
   }
 }

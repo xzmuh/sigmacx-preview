@@ -5,31 +5,36 @@
   },
   "hero": {
     "badge": "Sigma Channel",
+    "title": "Todos os pontos de contato em uma *solução única*",
+    "lead": "Inbound e outbound no mesmo lugar, com inteligência, segurança e escalabilidade.",
     "cta": "Conheça nossa plataforma"
   },
-  "opening": "A plataforma que integra todos os pontos de contato com o cliente em uma *solução única*, combinando *inbound e outbound* com *inteligência, segurança e escalabilidade.*",
   "intro": {
-    "title": "Sigma Channel",
-    "body": "Desenvolvido para garantir experiência única e consistente em cada passo da jornada, independentemente do canal que escolher para interagir.",
+    "eyebrow": "Sigma Channel",
+    "title": "A mesma experiência em qualquer canal",
+    "body": "Uma jornada única e consistente em cada passo, não importa o canal que o cliente escolher para falar com você.",
     "cta": "Conecte seus canais"
   },
   "tabs": [
     {
       "label": "Monitoramento em tempo real",
-      "body": "Acompanhe volumes, tempos médios de atendimento e níveis de serviço em dashboards atualizados a cada segundo."
+      "headline": "Acompanhe a operação a cada segundo",
+      "body": "Volumes, tempos médios de atendimento e níveis de serviço em dashboards atualizados a cada segundo."
     },
     {
       "label": "Relatórios e análises detalhadas",
-      "body": "Identifique oportunidades de melhoria com ferramentas avançadas de relatório e análise."
+      "headline": "Descubra onde dá para melhorar",
+      "body": "Ferramentas avançadas de relatório e análise identificam as oportunidades de melhoria."
     },
     {
       "label": "Campanhas omnichannel",
-      "body": "Entregue sua mensagem ao cliente no canal certo e no momento ideal, com confirmações automáticas e campanhas promocionais segmentadas."
+      "headline": "A mensagem certa, no canal certo",
+      "body": "Entregue no momento ideal, com confirmações automáticas e campanhas promocionais segmentadas."
     }
   ],
   "flows": {
-    "title": "Fluxos Personalizáveis",
-    "body": "Crie e implemente fluxos de interação sob medida para atingir seus objetivos de negócio.",
+    "title": "Fluxos personalizáveis",
+    "body": "Crie e implemente fluxos de interação sob medida para os seus objetivos de negócio, em cinco passos.",
     "steps": [
       {
         "title": "Campanha",
@@ -37,18 +42,18 @@
       },
       {
         "title": "Canal",
-        "body": "Configure os envios personalizados e programados para cada público."
+        "body": "Selecione onde a campanha será distribuída: WhatsApp, Instagram, Facebook e mais."
       },
       {
         "title": "Disparo automatizado",
-        "body": "Selecione onde a campanha será distribuída (WhatsApp, Instagram, Facebook, etc)."
+        "body": "Configure envios personalizados e programados para cada público."
       },
       {
         "title": "Engajamento",
         "body": "Monitore respostas e interações em tempo real."
       },
       {
-        "title": "Ajustes Dinâmicos",
+        "title": "Ajustes dinâmicos",
         "body": "Otimize o fluxo durante a campanha com base nos resultados."
       }
     ]
@@ -63,12 +68,14 @@
       "action": "Automação em ação"
     },
     "title": "Automatize o dia a dia do seu cliente",
-    "body": "O Sigma Channel automatiza interações do dia a dia, como lembretes de agendamento, confirmações de compra e campanhas, reforçando o contato com o cliente e garantindo agilidade e proximidade em cada interação.",
+    "lead": "Lembretes de agendamento, confirmações de compra e campanhas, no automático.",
+    "body": "O Sigma Channel reforça o contato com o cliente e garante agilidade e proximidade em cada interação.",
     "cta": "Entenda como funciona"
   },
   "benefits": {
     "eyebrow": "Resultados que impulsionam",
     "title": "Mais eficiência e controle",
+    "lead": "O que muda na rotina do seu time.",
     "items": [
       {
         "title": "Experiência consistente",
@@ -86,29 +93,30 @@
   },
   "actions": {
     "title": "Ações inteligentes para cada etapa do relacionamento",
+    "lead": "Seis automações para os momentos que mais pesam na operação.",
     "items": [
       {
-        "title": "Lembretes Inteligentes",
+        "title": "Lembretes inteligentes",
         "body": "Reduza faltas em agendamentos e aumente a pontualidade com notificações automáticas."
       },
       {
-        "title": "Confirmações de Compra",
+        "title": "Confirmações de compra",
         "body": "Reforce a confiança do cliente com mensagens automáticas de confirmação."
       },
       {
-        "title": "Atualizações de Entrega",
+        "title": "Atualizações de entrega",
         "body": "Mantenha o cliente informado em cada etapa do pedido, em tempo real."
       },
       {
-        "title": "Avisos de Pagamento",
+        "title": "Avisos de pagamento",
         "body": "Envie lembretes personalizados que garantem conveniência e reduzem atrasos."
       },
       {
-        "title": "Recuperação de Carrinhos",
+        "title": "Recuperação de carrinhos",
         "body": "Reengaje clientes com lembretes automáticos que incentivam a finalização da compra."
       },
       {
-        "title": "Campanhas Proativas",
+        "title": "Campanhas proativas",
         "body": "Crie comunicações segmentadas e inteligentes para aumentar engajamento e fidelização."
       }
     ],

@@ -386,7 +386,7 @@ export function SuiteGradient({ children, onDark = false }: { children: ReactNod
  * Titulo com as palavras subindo uma a uma (como as linhas do hero da home).
  * Aceita a marcacao leve dos JSON (**negrito**, *italico*).
  */
-export function SplitText({ text }: { text: string }) {
+export function SplitText({ text, onDark = false }: { text: string; onDark?: boolean }) {
   const segments: { text: string; strong: boolean; em: boolean }[] = [];
   const re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g;
   let last = 0, m: RegExpExecArray | null;
@@ -410,7 +410,7 @@ export function SplitText({ text }: { text: string }) {
           const gradient = (
             <GradientText
               className="sx-gradient sx-title-gradient"
-              colors={["#185a7d", "#00a9a9", "#136d87", "#1f2939"]}
+              colors={onDark ? ["#7fe7e3", "#40d7cb", "#9ff0ea", "#ffffff"] : ["#185a7d", "#00a9a9", "#136d87", "#1f2939"]}
               animationSpeed={7}
             >
               {words}

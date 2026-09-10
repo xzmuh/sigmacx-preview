@@ -5,31 +5,36 @@
   },
   "hero": {
     "badge": "Sigma Channel",
-    "cta": "Habla con un experto"
+    "cta": "Habla con un experto",
+    "title": "Todos los puntos de contacto en *una sola solución*",
+    "lead": "Interacción entrante y saliente en un mismo lugar, con inteligencia, seguridad y escalabilidad."
   },
-  "opening": "La plataforma que unifica todos los puntos de contacto del cliente en *una sola solución*, combinando *interacción entrante y saliente* con *inteligencia, seguridad y escalabilidad.*",
   "intro": {
-    "title": "Sigma Channel",
-    "body": "Sigma Channel fue creado para ofrecer una experiencia única y consistente en cada etapa del recorrido del cliente, sin importar el canal que elija para interactuar.",
+    "eyebrow": "Sigma Channel",
+    "title": "La misma experiencia en cualquier canal",
+    "body": "Un recorrido único y consistente en cada etapa, sin importar el canal que el cliente elija para hablar contigo.",
     "cta": "Conecte sus canales"
   },
   "tabs": [
     {
       "label": "Monitoreo en tiempo real",
-      "body": "Supervisa en tiempo real volúmenes, tiempos promedio de atención y niveles de servicio con paneles que se actualizan cada segundo."
+      "body": "Volúmenes, tiempos promedio de atención y niveles de servicio en paneles que se actualizan cada segundo.",
+      "headline": "Sigue tu operación segundo a segundo"
     },
     {
       "label": "Informes y análisis detallados",
-      "body": "Detecta oportunidades de mejora con análisis e informes avanzados."
+      "body": "Análisis e informes avanzados detectan las oportunidades de mejora.",
+      "headline": "Descubre dónde puedes mejorar"
     },
     {
       "label": "Campañas omnicanal",
-      "body": "Haz llegar tu mensaje al cliente en el canal adecuado y en el momento oportuno, con confirmaciones automáticas y campañas promocionales dirigidas."
+      "body": "Entregado en el momento oportuno, con confirmaciones automáticas y campañas promocionales dirigidas.",
+      "headline": "El mensaje correcto, en el canal correcto"
     }
   ],
   "flows": {
     "title": "Flujos personalizables",
-    "body": "Diseñe e implemente flujos de interacción a medida para alcanzar sus objetivos de negocio.",
+    "body": "Diseñe e implemente flujos de interacción a medida para sus objetivos de negocio, en cinco pasos.",
     "steps": [
       {
         "title": "Campaña",
@@ -37,18 +42,18 @@
       },
       {
         "title": "Canal",
-        "body": "Configura los envíos personalizados y programados para cada público."
+        "body": "Seleccione dónde se distribuirá la campaña: WhatsApp, Instagram, Facebook y más."
       },
       {
         "title": "Disparo automatizado",
-        "body": "Seleccione dónde se distribuirá la campaña (WhatsApp, Instagram, Facebook, etc.)."
+        "body": "Configura los envíos personalizados y programados para cada público."
       },
       {
-        "title": "Compromiso",
+        "title": "Interacción",
         "body": "Monitorea respuestas e interacciones en tiempo real."
       },
       {
-        "title": "Ajustes Dinámicos",
+        "title": "Ajustes dinámicos",
         "body": "Optimice el flujo durante la campaña en función de los resultados."
       }
     ]
@@ -63,8 +68,9 @@
       "action": "Automatización en acción"
     },
     "title": "Automatiza la rutina diaria de tus clientes",
-    "body": "Sigma Channel automatiza interacciones cotidianas como recordatorios de citas, confirmaciones de compra y campañas, fortaleciendo la relación con el cliente y asegurando agilidad y cercanía en cada contacto.",
-    "cta": "Entiende cómo funciona"
+    "body": "Sigma Channel fortalece la relación con el cliente y asegura agilidad y cercanía en cada contacto.",
+    "cta": "Entiende cómo funciona",
+    "lead": "Recordatorios de citas, confirmaciones de compra y campañas, en automático."
   },
   "benefits": {
     "eyebrow": "Resultados que impulsan",
@@ -82,7 +88,8 @@
         "title": "Personalización y proximidad",
         "body": "Acceso al historial, permitiendo soluciones más rápidas y contextualizadas."
       }
-    ]
+    ],
+    "lead": "Lo que cambia en la rutina de tu equipo."
   },
   "actions": {
     "title": "Acciones inteligentes en cada etapa de la relación con el cliente",
@@ -112,7 +119,8 @@
         "body": "Crea comunicaciones segmentadas e inteligentes para aumentar la interacción y la fidelización."
       }
     ],
-    "cta": "Mira en la práctica"
+    "cta": "Mira en la práctica",
+    "lead": "Seis automatizaciones para los momentos que más pesan en la operación."
   },
   "video": {
     "eyebrow": "En acción",

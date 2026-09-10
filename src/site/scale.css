@@ -89,6 +89,11 @@ body .sx-section { padding-block: clamp(44px, 5vw, 76px) !important; }
 body .sx-section--tight { padding-block: clamp(30px, 3.4vw, 52px) !important; }
 body .sx-section--flush { padding-block: 0 clamp(64px, 7vw, 110px) !important; }
 body .sx-suite-immersive { padding-block: clamp(76px, 8.4vw, 132px) !important; }
+/* O painel escuro dos produtos joga uma sombra de 80px para baixo. Como esta
+   camada reescreve o padding de toda .sx-section, o respiro que a secao
+   reservava sumia: a sombra invadia a secao seguinte, que e opaca, e saia
+   cortada reta. Aqui o rodape da secao volta a caber a sombra. */
+body .sx-page--panels .sx-platform-products { padding-bottom: clamp(96px, 9vw, 134px) !important; }
 body .sx-band { padding-block: clamp(60px, 6.6vw, 108px) !important; }
 body .sx-final { padding-bottom: clamp(36px, 3.8vw, 56px) !important; }
 body .section-transition--light-dark + .sx-footer-wrap .sx-final { padding-top: calc(var(--sx-seam) + 24px) !important; }
@@ -116,6 +121,13 @@ body .section-transition--light-dark + .sx-section,
 body .section-transition--light-dark + .sx-suite-immersive,
 body .section-transition--light-dark + .sx-insights-story > .sx-section:first-of-type {
   padding-top: calc(var(--sx-seam) + clamp(26px, 2.8vw, 48px)) !important;
+}
+/* O hero fora do tema suite tambem e vizinho de emenda (blog, artigo,
+   privacidade): sem a reserva, a diagonal subia por cima do titulo. Os heroes
+   da suite ficam de fora — eles tem a reserva propria, em --sx-seam-suite. */
+body .ab-hero:has(+ .section-transition--dark-light),
+body .sx-page:not(.sx-page--suite) .sx-hero:has(+ .section-transition--dark-light) {
+  padding-bottom: calc(var(--sx-seam) + clamp(26px, 2.8vw, 48px)) !important;
 }
 body .sx-band:has(+ .section-transition--dark-light),
 body .sx-section:has(+ .section-transition--dark-light),

@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "title": "Inversores | SigmaCX",
+    "description": "SigmaCX opera la capa donde ocurren las interacciones y construye la que entiende el comportamiento y decide durante la conversación. Solicite acceso al material completo."
+  },
+  "hero": {
+    "eyebrow": "Empresa / Relación con inversores",
+    "title": "El stack de atención fue hecho para gestionar interacciones.",
+    "accent": "No para saber quién está del otro lado.",
+    "lead": "Ya operamos la capa donde ocurren las interacciones: canales, contexto, identidad e historial de grandes operaciones. Desde ahí construimos la capa siguiente — la que entiende el comportamiento y decide durante la conversación.",
+    "cta": "Solicitar acceso al material completo",
+    "note": "Respuesta en hasta 2 días hábiles · material bajo NDA",
+    "creds": [
+      {
+        "value": "2020",
+        "label": "fundada dentro de la operación de contact centers"
+      },
+      {
+        "value": "3",
+        "label": "continentes con operación enterprise validada"
+      },
+      {
+        "value": "15+",
+        "label": "canales conectados en una única operación"
+      },
+      {
+        "value": "4",
+        "label": "tecnologías propias operando como una sola"
+      }
+    ]
+  },
+  "diagnosis": {
+    "index": "01",
+    "eyebrow": "El diagnóstico",
+    "title": "Las empresas generan miles de millones de interacciones por día. Pocas logran convertirlas en decisión confiable.",
+    "lead": "Veinte años de contact center, CRM, omnicanalidad e IA conversacional fueron construidos para **gestionar la interacción** — no para entender quién está detrás, qué quiere o si se puede confiar en esa persona. El cliente es uno solo. La empresa ve fragmentos.",
+    "flow": [
+      {
+        "title": "Interacciones fragmentadas",
+        "body": "Cada canal guarda un pedazo de la misma persona."
+      },
+      {
+        "title": "Inteligencia comportamental",
+        "body": "Las señales atraviesan los canales y forman una lectura única."
+      },
+      {
+        "title": "Decisión en tiempo real",
+        "body": "La próxima acción sale durante la conversación, no en el informe."
+      }
+    ]
+  },
+  "now": {
+    "index": "02",
+    "eyebrow": "Por qué ahora",
+    "title": "Cuatro fuerzas hicieron inevitable esta capa.",
+    "lead": "El timing no es “la IA está de moda”. El timing es que la operación humana ya no acompaña la complejidad.",
+    "cards": [
+      {
+        "k": "01",
+        "title": "La IA multiplicó el volumen",
+        "body": "Los modelos de lenguaje hicieron viable la automatización y multiplicaron la escala de las interacciones."
+      },
+      {
+        "k": "02",
+        "title": "El deepfake rompió la confianza",
+        "body": "La voz, la pregunta de seguridad y la validación humana ya no bastan para autenticar a alguien."
+      },
+      {
+        "k": "03",
+        "title": "Los canales explotaron",
+        "body": "El cliente cambia de canal más rápido de lo que el legado acompaña. El fraude moderno explota eso: empieza en un canal, valida en otro, ejecuta en un tercero."
+      },
+      {
+        "k": "04",
+        "title": "El compliance se volvió crítico",
+        "body": "LGPD, GDPR y nuevas exigencias elevaron el nivel de trazabilidad, gobernanza y decisión con evidencia."
+      }
+    ]
+  },
+  "principle": {
+    "kicker": "Lo que ya ocurre en cada interacción",
+    "quote": "Los mismos datos necesarios para **detectar fraude** son los datos necesarios para **entender el comportamiento**.",
+    "signals": [
+      "Identidad",
+      "Intención",
+      "Contexto",
+      "Riesgo",
+      "Tiempo",
+      "Canal",
+      "Historial",
+      "Acción"
+    ],
+    "contrast": {
+      "themWho": "La mayoría de las plataformas",
+      "them": "usa esas señales para **automatizar la interacción**.",
+      "usWho": "SigmaCX",
+      "us": "usa las mismas señales para **entender el comportamiento**."
+    },
+    "closer": "Esa diferencia no es un plan.",
+    "closerNote": "Es lo que ya separa a las dos operaciones hoy."
+  },
+  "why": {
+    "index": "03",
+    "eyebrow": "Por qué SigmaCX",
+    "title": "No es un plan. Es la operación que ya funciona.",
+    "lead": "Ya operamos plataformas de atención, automatización, analytics e IA en entornos enterprise complejos — la capa donde nacen las señales. Eso es lo que hace posible construir inteligencia comportamental sobre cada interacción.",
+    "cards": [
+      {
+        "k": "Ya funciona hoy",
+        "title": "La capa de interacción",
+        "body": "Omnicanalidad, IA conversacional, analytics, monitoreo, automatización y contexto unificado — en operación enterprise real, no en piloto."
+      },
+      {
+        "k": "Lo que estamos construyendo",
+        "title": "La capa de decisión",
+        "body": "Inteligencia de confianza, lectura de riesgo, modelos comportamentales y detección de fraude que atraviesa canales, sobre la base que ya existe."
+      }
+    ],
+    "validationLabel": "Validación",
+    "validation": "Operaciones de misión crítica en **servicios financieros, energía, telecom, retail y BPO**, en tres continentes, con integraciones comprobadas en sistemas legados y en la nube. Los nombres de clientes y casos quedan para la conversación, bajo confidencialidad.",
+    "complianceLabel": "Conformidad",
+    "compliance": [
+      "LGPD",
+      "GDPR",
+      "PCI",
+      "ISO 27001"
+    ],
+    "techLabel": "Base tecnológica",
+    "tech": "La capa de decisión es propia. Modelos, nube e infraestructura de voz vienen de los principales proveedores globales, elegidos según el requisito de cada operación: latencia, región y conformidad."
+  },
+  "gate": {
+    "index": "04",
+    "eyebrow": "Material completo",
+    "title": "El resto está en el área de inversores.",
+    "lead": "Números de operación, proyecciones, unit economics, uso de recursos, clientes nominales y condiciones de la ronda — bajo NDA, mediante solicitud.",
+    "tocTitle": "A qué recibe acceso",
+    "toc": [
+      "Tracción y evolución de ingresos",
+      "Dimensionamiento de mercado y expansión del direccionable",
+      "Proyecciones financieras 2026–2029",
+      "Unit economics — LTV, ticket, retención neta y CAC",
+      "Modelo de negocio y frentes de ingresos",
+      "Uso de recursos por prioridad estratégica",
+      "Condiciones y estructura de la ronda",
+      "Base de clientes, casos y referencias globales"
+    ],
+    "form": {
+      "name": "Nombre completo",
+      "namePlaceholder": "Su nombre",
+      "email": "E-mail corporativo",
+      "emailPlaceholder": "nombre@empresa.com",
+      "company": "Empresa / fondo",
+      "companyPlaceholder": "Nombre de la organización",
+      "role": "Cargo",
+      "rolePlaceholder": "Socio, analista, director…",
+      "profile": "Perfil",
+      "profiles": [
+        "Fondo de venture capital",
+        "Inversor ángel",
+        "Corporate venture",
+        "Family office",
+        "Socio estratégico",
+        "Otro"
+      ],
+      "message": "Qué despertó su interés",
+      "messagePlaceholder": "Opcional — ayuda a preparar la conversación",
+      "consent": "Autorizo a SigmaCX a contactarme y tratar mis datos conforme a la",
+      "consentLink": "Política de Privacidad",
+      "consentEnd": ". El material es confidencial y el acceso es personal e intransferible.",
+      "submit": "Solicitar acceso",
+      "note": "Cada solicitud se revisa individualmente. Aprobada, usted recibe un acceso nominal, válido por tiempo determinado.",
+      "required": "Complete nombre, e-mail corporativo, empresa y la aceptación.",
+      "subject": "Solicitud de acceso — área de inversores",
+      "sentTitle": "Solicitud preparada.",
+      "sentBody": "Su programa de correo abrió con la solicitud lista. Si no se abrió nada, escriba a"
+    }
+  },
+  "disclaimer": "Esta página tiene carácter informativo y no constituye oferta pública de valores, recomendación de inversión ni promesa de rentabilidad. La información financiera, las proyecciones, la base de clientes y las condiciones de captación se comparten exclusivamente con inversores calificados, mediante identificación y acuerdo de confidencialidad."
+}

@@ -5,12 +5,12 @@
   },
   "hero": {
     "badge": "Sigma Insights",
-    "title": "Increase the efficiency of your operation by up to 80% with the power of insights",
-    "lead": "O Sigma Insights é a plataforma que une análise avançada de interações e gestão de qualidade inteligente em um só lugar. Ele transforma voz, chat e tela em insights acionáveis, revelando emoções, padrões e oportunidades que normalmente passam despercebidos.",
+    "title": "Up to 80% more efficiency in your operation",
+    "lead": "Sigma Insights brings advanced interaction analysis and intelligent quality management together in one place. It turns voice, chat and screen into actionable insights, revealing emotions, patterns and opportunities that usually go unnoticed.",
     "cta": "Talk to an expert"
   },
   "dashboards": {
-    "title": "Com dashboards intuitivos, automação de avaliações e relatórios em tempo real, sua empresa ganha clareza, confiança e eficiência.",
+    "title": "Clarity in seconds, not in reports",
     "items": [
       {
         "title": "Veja tudo em tempo real",
@@ -25,10 +25,12 @@
         "body": "Crie relatórios e visualizações sob medida, adaptando o dashboard às metas e prioridades da sua operação."
       }
     ],
-    "cta": "Check out 3 business strategy tips"
+    "cta": "Check out 3 business strategy tips",
+    "eyebrow": "Dashboards",
+    "lead": "Intuitive dashboards, automated evaluations and real-time reports give your company clarity, confidence and efficiency."
   },
   "voice": {
-    "title": "Transforme voz em estratégia",
+    "title": "Turn voice into strategy",
     "items": [
       {
         "title": "Ganhe agilidade com transcrição inteligente",
@@ -39,10 +41,12 @@
         "body": "Com Speech Analytics, você identifica sentimentos e intenções em cada chamada, alcançando até 20% mais satisfação do cliente e reduzindo falhas no atendimento (Mordor Intelligence)."
       }
     ],
-    "cta": "Try it"
+    "cta": "Try it",
+    "eyebrow": "Speech analytics",
+    "lead": "What happens when every call becomes searchable data."
   },
   "emotions": {
-    "title": "Decifre emoções com precisão",
+    "title": "See what goes unnoticed",
     "items": [
       {
         "title": "Encontre padrões invisíveis",
@@ -53,7 +57,9 @@
         "body": "Monitore silêncio, interrupções e tags de sentimento para avaliar a performance dos agentes e elevar a experiência do cliente."
       }
     ],
-    "cta": "Check out Tecban's report"
+    "cta": "Check out Tecban's report",
+    "eyebrow": "Sigma Insights",
+    "lead": "Hidden patterns in conversations and real quality indicators, side by side."
   },
   "benefits": {
     "title": "Main benefits",
@@ -80,7 +86,8 @@
       }
     ],
     "quote": "Transforme voz, chat e tela em dados que reduzem até 25% dos custos e aceleram a tomada de decisão.",
-    "cta": "Check it out in practice"
+    "cta": "Check it out in practice",
+    "lead": "Five fronts where Sigma Insights works in your operation."
   },
   "video": {
     "eyebrow": "In action",

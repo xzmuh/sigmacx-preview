@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
-import { SectionTransition } from "../site/SectionTransition";
 import { Vimeo } from "../site/ui";
 import BorderGlow from "../components/BorderGlow";
 import GradientText from "../components/GradientText";
+import { SectionTransition } from "../site/SectionTransition";
 import { LINKEDIN_URL, VIMEO } from "../site/site-data";
 import { pick, useLang } from "../lib/i18n";
 import pt from "../../content/pages/sobre.pt.json";
 import en from "../../content/pages/sobre.en.json";
 import es from "../../content/pages/sobre.es.json";
 import "../site/sobre.css";
+import "../site/sobreRefined.css";
 
-const HOME_GRADIENT = ["#b9ff9b", "#5da6ff", "#00a9a9", "#b9ff9b"];
 const timelineLogos = [
   "SigmaIcone-Normal2x.png",
   "SigmaChannel-Default.png",
@@ -34,6 +34,8 @@ const labels = {
     purpose: "Um propósito", purposeValue: "aproximar", manifestoTitle: "Tecnologia só importa quando aproxima.",
     timelineLabel: "Linha do tempo da SigmaCX",
     peopleAlt: "Pessoas conectadas",
+    leadersLead: "Experiência em tecnologia e operações. Uma visão compartilhada: aproximar empresas e pessoas.",
+    scrollHint: "Role para explorar nossa história",
   },
   en: {
     title: ["ABOUT", "US"], about: "About SigmaCX", philosophy: "Our philosophy",
@@ -44,6 +46,8 @@ const labels = {
     purpose: "One purpose", purposeValue: "bring closer", manifestoTitle: "Technology only matters when it brings people closer.",
     timelineLabel: "SigmaCX timeline",
     peopleAlt: "Connected people",
+    leadersLead: "Experience in technology and operations. A shared vision: bringing businesses and people closer.",
+    scrollHint: "Scroll to explore our story",
   },
   es: {
     title: ["SOBRE", "NOSOTROS"], about: "Sobre SigmaCX", philosophy: "Nuestra filosofía",
@@ -54,6 +58,8 @@ const labels = {
     purpose: "Un propósito", purposeValue: "acercar", manifestoTitle: "La tecnología solo importa cuando acerca a las personas.",
     timelineLabel: "Línea de tiempo de SigmaCX",
     peopleAlt: "Personas conectadas",
+    leadersLead: "Experiencia en tecnología y operaciones. Una visión compartida: acercar empresas y personas.",
+    scrollHint: "Desplácese para explorar nuestra historia",
   },
 };
 
@@ -74,49 +80,59 @@ export default function Sobre() {
     const timeline = timelineRef.current;
     if (!timeline) return;
 
+    const viewport = timeline.querySelector<HTMLDivElement>(".ab-timeline__viewport")!;
+    const sticky = timeline.querySelector<HTMLDivElement>(".ab-timeline__sticky")!;
+    const track = timeline.querySelector<HTMLDivElement>(".ab-timeline__items")!;
+    const items = Array.from(track.querySelectorAll<HTMLElement>(".ab-timeline__item"));
+    const fallback = window.matchMedia("(max-width: 760px), (max-height: 600px), (prefers-reduced-motion: reduce)");
     let frame = 0;
+    let distance = 0;
+    let offsets: number[] = [];
     const update = () => {
       frame = 0;
-      const mobile = window.matchMedia("(max-width: 760px)").matches;
-      if (mobile) {
-        timeline.style.setProperty("--ab-shift", "0px");
-        timeline.style.setProperty("--ab-progress", "0");
-        return;
-      }
-
-      const rect = timeline.getBoundingClientRect();
-      const pinTop = 66;
-      const distance = Math.max(timeline.offsetHeight - window.innerHeight + pinTop, 1);
-      const progress = Math.min(1, Math.max(0, (pinTop - rect.top) / distance));
-      const viewport = timeline.querySelector<HTMLElement>(".ab-timeline__viewport");
-      const track = timeline.querySelector<HTMLElement>(".ab-timeline__items");
-      const shift = Math.max(0, (track?.scrollWidth ?? 0) - (viewport?.clientWidth ?? 0));
-
-      timeline.style.setProperty("--ab-progress", progress.toFixed(4));
-      timeline.style.setProperty("--ab-shift", `${(-shift * progress).toFixed(2)}px`);
-      setActiveMilestone(Math.min(milestones.length - 1, Math.floor(progress * (milestones.length - 1) + .001)));
+      const top = parseFloat(getComputedStyle(sticky).top) || 0;
+      const travel = Math.max(1, timeline.offsetHeight - sticky.offsetHeight);
+      const progress = fallback.matches
+        ? Math.min(1, Math.max(0, viewport.scrollLeft / Math.max(1, distance)))
+        : Math.min(1, Math.max(0, (top - timeline.getBoundingClientRect().top) / travel));
+      const shift = Math.min(distance, Math.max(0, progress * distance));
+      timeline.style.setProperty("--ab-progress", String(progress));
+      timeline.style.setProperty("--ab-shift", `${fallback.matches ? 0 : -shift}px`);
+      let active = 0;
+      offsets.forEach((offset, index) => {
+        if (shift >= offset - 1) active = index;
+      });
+      setActiveMilestone(active);
     };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(update);
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const measure = () => {
+      offsets = items.map((item) => item.offsetLeft - items[0].offsetLeft);
+      distance = offsets.at(-1) || 0;
+      if (!fallback.matches) viewport.scrollLeft = 0;
+      timeline.style.setProperty("--ab-travel", `${distance}px`);
+      schedule();
     };
-    const resizeObserver = new ResizeObserver(requestUpdate);
-    resizeObserver.observe(timeline);
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    update();
-
+    const observer = new ResizeObserver(measure);
+    observer.observe(viewport);
+    observer.observe(track);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", measure);
+    viewport.addEventListener("scroll", schedule, { passive: true });
+    fallback.addEventListener("change", measure);
+    measure();
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
-      resizeObserver.disconnect();
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", measure);
+      viewport.removeEventListener("scroll", schedule);
+      fallback.removeEventListener("change", measure);
     };
-  }, [milestones.length]);
+  }, [milestones.length, lang]);
 
   return (
     <PageShell title={t.meta.title} description={t.meta.description}>
-      <div className="ab-page">
+      <div className="ab-page ab-refined">
         <section className="ab-hero">
           <div className="ab-hero__media" aria-hidden="true">
             <img src="/media/site/sobre-hero.webp" alt="" fetchPriority="high" />
@@ -124,11 +140,9 @@ export default function Sobre() {
           <div className="ab-hero__field" aria-hidden="true"><i /><i /><i /></div>
           <div className="sx-shell ab-hero__content">
             <p className="ab-kicker">{l.about}</p>
-            <h1>
-              <span>{l.title[0]}</span>
-              <GradientText className="ab-hero__gradient" colors={HOME_GRADIENT} animationSpeed={7}>{l.title[1]}</GradientText>
-            </h1>
+            <h1><span>{l.title[0]}</span><GradientText className="ab-hero__gradient" colors={["#5da6ff", "#b9ff9b", "#00a9a9"]} animationSpeed={6}>{l.title[1]}</GradientText></h1>
             <p className="ab-hero__statement">{t.hero.title}</p>
+            <a className="pill pill--primary ab-hero__cta" href="#historia">{l.history} <span aria-hidden="true">↓</span></a>
           </div>
           <div className="sx-shell ab-hero__metrics" data-reveal>
             <div><strong>2020</strong><span>{l.since}</span></div>
@@ -137,7 +151,7 @@ export default function Sobre() {
           </div>
         </section>
 
-        <div className="ab-seam" aria-hidden="true"><span /><span /></div>
+        <SectionTransition to="light" />
 
         <section className="ab-beliefs" data-reveal>
           <div className="sx-shell">
@@ -187,7 +201,7 @@ export default function Sobre() {
           <div className="sx-shell">
             <header className="ab-section-head">
               <div><p className="ab-kicker">{l.leadership}</p><h2>{l.leaders}</h2></div>
-              <p>{t.history.continues}</p>
+              <p>{l.leadersLead}</p>
             </header>
             <div className="ab-leadership__grid">
               {t.team.members.map((person, index) => (
@@ -208,38 +222,29 @@ export default function Sobre() {
           </div>
         </section>
 
-        <section className="ab-history">
-          <div className="sx-shell">
-            <header className="ab-history__head" data-reveal>
-              <div><p className="ab-kicker">2020 — 2024</p><h2>{l.history}</h2></div>
-              <p>{t.history.intro}</p>
-            </header>
-          </div>
-
-          <SectionTransition to="dark" />
-
+        <section className="ab-history" id="historia">
           <div className="ab-history__timeline-band">
+            <div className="sx-shell ab-history__intro">
+              <header className="ab-history__head" data-reveal>
+                <div><p className="ab-kicker">2020 — 2024</p><h2>{l.history}</h2></div>
+                <p>{t.history.intro}</p>
+              </header>
+            </div>
             <div className="sx-shell">
             <div
               ref={timelineRef}
               className="ab-timeline"
               aria-label={l.timelineLabel}
-              style={{ "--ab-steps": milestones.length } as CSSProperties}
             >
               <div className="ab-timeline__sticky">
-                <div className="ab-timeline__viewport">
+                <div className="ab-timeline__status"><span>{l.scrollHint}</span><span>{String(activeMilestone + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")}</span></div>
+                <div className="ab-timeline__viewport" tabIndex={0} role="region" aria-label={l.timelineLabel}>
                   <div className="ab-timeline__rule" aria-hidden="true">
                     <span className="ab-timeline__fill" />
-                    <span className="ab-timeline__nodes">
-                      {milestones.map((item, index) => (
-                        <b
-                          className={`${index <= activeMilestone ? "is-hit" : ""}${index === activeMilestone ? " is-current" : ""}`}
-                          style={{ left: `${(index / (milestones.length - 1)) * 100}%` }}
-                          key={`${item.year}-node-${index}`}
-                        />
-                      ))}
-                    </span>
-                    <i className="ab-timeline__pulse" />
+                    <div className="ab-timeline__nodes">
+                      {milestones.map((item, index) => <b key={`${item.year}-${index}`} className={`${index <= activeMilestone ? "is-hit" : ""}${index === activeMilestone ? " is-current" : ""}`} style={{ left: `${index / (milestones.length - 1) * 100}%` }} />)}
+                    </div>
+                    <span className="ab-timeline__pulse" />
                   </div>
                   <div className="ab-timeline__items">
                     {milestones.map((item, index) => (
@@ -261,11 +266,12 @@ export default function Sobre() {
             </div>
           </div>
 
-          <SectionTransition to="light" />
-
           <div className="sx-shell ab-history__after">
             <div className="ab-history__video">
-              <div><p className="ab-kicker">{l.watch}</p><a className="ab-link" href={LINKEDIN_URL} target="_blank" rel="noreferrer">{l.linkedin} <span aria-hidden="true">↗</span></a></div>
+              <header className="ab-history__video-head">
+                <h2>{l.watch}</h2>
+                <a className="ab-link" href={LINKEDIN_URL} target="_blank" rel="noreferrer">{l.linkedin} <span aria-hidden="true">↗</span></a>
+              </header>
               <Vimeo id={VIMEO.sobreHistoria} className="sx-video--dark" title={l.watch} />
             </div>
           </div>

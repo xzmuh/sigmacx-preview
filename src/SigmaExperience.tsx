@@ -1,7 +1,6 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import * as THREE from "three";
 import { useLazyVideo } from "./site/useLazyVideo";
 import {
@@ -426,23 +425,8 @@ export function SigmaExperience() {
       return () => waitingContext.revert();
     }
 
-    let cleanupMotion = () => {};
     const context = gsap.context(() => {
       if (!reducedMotion) {
-        const lenis = new Lenis({
-          duration: 1.35,
-          easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
-          smoothWheel: true,
-          wheelMultiplier: 0.82,
-          touchMultiplier: 1.1,
-          syncTouch: false,
-          anchors: { offset: -88, duration: 1.25 },
-        });
-        lenis.on("scroll", ScrollTrigger.update);
-        const tick = (time: number) => lenis.raf(time * 1000);
-        gsap.ticker.add(tick);
-        gsap.ticker.lagSmoothing(0);
-
         gsap
           .timeline({ defaults: { ease: "power3.out" } })
           .set(".intro-curtain", { animation: "none" })
@@ -573,17 +557,12 @@ export function SigmaExperience() {
         });
 
         // Bola que seguia o mouse (.cursor-glow) removida a pedido (2026-09-03).
-        cleanupMotion = () => {
-          gsap.ticker.remove(tick);
-          lenis.destroy();
-        };
       } else {
         gsap.set(".intro-curtain", { display: "none" });
       }
     }, root);
 
     return () => {
-      cleanupMotion();
       context.revert();
     };
   }, [reducedMotion, visualReady]);

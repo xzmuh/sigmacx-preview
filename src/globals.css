@@ -2208,25 +2208,6 @@ video {
   pointer-events: none;
 }
 
-.footer-atmosphere::before {
-  position: absolute;
-  inset: 0;
-  content: "";
-  opacity: 0.24;
-  background-image:
-    linear-gradient(rgba(93, 166, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(93, 166, 255, 0.1) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image:
-    linear-gradient(180deg, transparent 0, black 180px),
-    linear-gradient(90deg, transparent, black 34%, black 86%, transparent);
-  mask-composite: intersect;
-  -webkit-mask-image:
-    linear-gradient(180deg, transparent 0, black 180px),
-    linear-gradient(90deg, transparent, black 34%, black 86%, transparent);
-  -webkit-mask-composite: source-in;
-}
-
 .footer-orbit {
   position: absolute;
   top: -22vw;
@@ -2520,6 +2501,8 @@ video {
   position: relative;
   z-index: 2;
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
   align-items: flex-end;
   justify-content: space-between;
   max-width: 1440px;
@@ -2531,20 +2514,19 @@ video {
 }
 
 .footer-wordmark > span {
-  margin-left: -0.07em;
   color: rgba(255, 255, 255, 0.055);
+  -webkit-text-stroke: 1px rgba(185, 255, 155, 0.18);
   font-size: clamp(5.74rem, 11.76vw, 12.24rem);
   font-weight: 700;
   letter-spacing: -0.062em;
-  line-height: 0.76;
+  line-height: 1.12;
   white-space: nowrap;
-  -webkit-text-stroke: 1px rgba(185, 255, 155, 0.13);
 }
 
 .footer-wordmark small {
   flex: 0 0 auto;
-  margin: 0 0 0.2rem 2rem;
-  color: rgba(255, 255, 255, 0.25);
+  margin: 0 0 0.8rem;
+  color: #9ea9bd;
   font-family: monospace;
   font-size: 0.5rem;
   letter-spacing: 0.14em;

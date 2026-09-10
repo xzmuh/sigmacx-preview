@@ -7,6 +7,7 @@ import "./site/suite.css";
 import "./site/blog.css";
 import "./site/productJourney.css";
 import "./site/scale.css";
+import "./site/panel.css";
 
 /* O Firefox nao implementa `-webkit-user-drag`, entao o bloqueio de verdade e
    este: um unico listener no documento, em vez de `draggable={false}` espalhado

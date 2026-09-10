@@ -1259,23 +1259,35 @@
   background: #0b142d;
 }
 .sx-page--suite .sx-story-immersive .sx-video--story { border: 0; border-radius: 0; background: #0b142d; }
-.sx-page--suite .sx-story-immersive .sx-story-media__meta {
-  padding: 18px 4px 0;
-  border-top: 0;
+.sx-page--suite .sx-story-immersive .sx-accordion__trigger { color: #ffffff; }
+/* Mesmo componente do console claro do Insights, na tinta escura: itens
+   separados por regua, o item aberto vira cartao arredondado com tinta teal e
+   o tile do icone e solido — teal quando ativo. */
+.sx-page--suite .sx-story-immersive .sx-accordion__item {
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background: transparent;
 }
-.sx-page--suite .sx-story-immersive .sx-story-media__meta span { background: rgba(127, 231, 227, 0.14); color: #7fe7e3; }
-.sx-page--suite .sx-story-immersive .sx-story-media__meta p { color: rgba(219, 229, 236, 0.72); }
-.sx-page--suite .sx-story-immersive .sx-accordion__trigger { color: #ffffff; }
-/* Destaque difuso: brilho que esfuma em todas as direcoes, sem borda reta.
-   A elipse termina antes das bordas do item para nao criar corte visivel. */
+.sx-page--suite .sx-story-immersive .sx-accordion__item:last-of-type { border-bottom: 0; }
 .sx-page--suite .sx-story-immersive .sx-accordion__item.is-open {
-  background: radial-gradient(52% 58% at 38% 50%, rgba(0, 169, 169, 0.28), rgba(0, 169, 169, 0.08) 55%, transparent 92%);
+  border-bottom-color: transparent;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0, 169, 169, 0.22), rgba(159, 240, 234, 0.07));
+  box-shadow: inset 0 0 0 1px rgba(127, 231, 227, 0.26);
 }
 .sx-page--suite .sx-story-immersive .sx-accordion__panel p { color: rgba(219, 229, 236, 0.72); }
 .sx-page--suite .sx-story-immersive .sx-accordion__heading strong { color: #ffffff; }
-.sx-page--suite .sx-story-immersive .sx-icon--fill { background: rgba(255, 255, 255, 0.08); color: #ffffff; border-color: rgba(255, 255, 255, 0.14); }
-.sx-page--suite .sx-story-immersive .sx-accordion__item.is-open .sx-icon { color: #7fe7e3; border-color: rgba(127, 231, 227, 0.4); }
+.sx-page--suite .sx-story-immersive .sx-accordion__trigger .sx-icon {
+  border: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+.sx-page--suite .sx-story-immersive .sx-accordion__item.is-open .sx-icon {
+  background: linear-gradient(135deg, #2bd4cf, var(--sg-petrol));
+  color: #ffffff;
+  box-shadow: 0 12px 26px -10px rgba(0, 169, 169, 0.65);
+}
 .sx-page--suite .sx-story-immersive .sx-accordion__plus { border-color: rgba(255, 255, 255, 0.3); color: #ffffff; }
 /* A emenda seguinte parte do azul da cena, nao do branco. */
 .sx-page--suite .sx-story-immersive + .section-transition--light-dark span:nth-child(1) { background: #0b142d; }
@@ -1285,6 +1297,13 @@
    Faixa superior com tinta teal, metricas com icone + numero grande e
    rodape com CTA solido. Substitui o palco escuro anterior.
    ========================================================================== */
+/* A secao da marca d'agua recorta em `overflow: hidden` (e o que segura a
+   marca gigante); a sombra do painel desce 118px e batia nesse corte, saindo
+   reta embaixo. `clip` com margem solta a sombra sem soltar a marca. */
+.sx-page--suite .sx-section--wm.sx-platform-cases {
+  overflow: clip;
+  overflow-clip-margin: 150px;
+}
 .sx-page--suite .sx-case-switcher__stage {
   border: 0;
   padding: 0;
@@ -1960,8 +1979,6 @@
 .sx-page--suite .sx-story-immersive .sx-story-media__stage { width: min(100%, 600px); aspect-ratio: 1 / 1; }
 .sx-page--suite .sx-story-immersive .sx-video--story { aspect-ratio: 1 / 1; width: 100%; height: 100%; }
 .sx-page--suite .sx-story-immersive .sx-video--story video { width: 100%; height: 100%; object-fit: contain; }
-.sx-page--suite .sx-story-immersive .sx-story-media__meta { width: min(100%, 600px); }
-.sx-page--suite .sx-story-immersive .sx-story-media__meta { padding-top: 16px; }
 @media (max-width: 900px) {
   .sx-page--suite .sx-story-immersive .sx-story-layout { grid-template-columns: minmax(0, 1fr); }
   .sx-page--suite .sx-story-immersive .sx-story-media { order: 2; margin: 0; max-width: none; }
@@ -2399,27 +2416,35 @@
   align-items: center;
   margin-top: clamp(26px, 3.4vw, 44px);
 }
-.sx-flows__steps { position: relative; padding-left: clamp(6px, 0.8vw, 12px); }
-.sx-flows__path {
+.sx-flows__steps { position: relative; }
+
+/* Trilho reto ligando os nos. Era um <path> curvo em SVG; a curva passava
+   entre os passos e competia com a leitura da sequencia. Aqui a linha so
+   conecta, e quem ordena e a pilha. Recuada em cima e embaixo para nascer e
+   morrer dentro do primeiro e do ultimo icone. */
+.sx-flows__steps::before {
+  content: "";
   position: absolute;
-  top: 14px;
-  bottom: 14px;
-  left: clamp(6px, 0.8vw, 12px);
-  width: 64px;
-  height: calc(100% - 28px);
+  z-index: 0;
+  top: 29px;
+  bottom: 29px;
+  left: 28px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 169, 169, 0.12),
+    rgba(0, 169, 169, 0.5) 10%,
+    rgba(0, 169, 169, 0.5) 90%,
+    rgba(0, 169, 169, 0.12)
+  );
 }
-.sx-flows__path path {
-  fill: none;
-  stroke: var(--sg-teal);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-  opacity: 0.5;
-}
-.sx-flows__steps ol { display: grid; gap: clamp(18px, 2.4vw, 30px); margin: 0; padding: 0; list-style: none; }
+
+.sx-flows__steps ol { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
 .sx-flows__steps li {
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: clamp(16px, 2vw, 26px);
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 24px);
   align-items: center;
 }
 .sx-flows__node {
@@ -2431,24 +2456,35 @@
   height: 58px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 14px 34px -14px rgba(24, 90, 125, 0.35), 0 0 0 1px rgba(19, 109, 135, 0.08);
+  box-shadow: 0 0 0 1px rgba(19, 109, 135, 0.1), 0 8px 20px -14px rgba(24, 90, 125, 0.5);
   transition:
     transform 0.4s var(--ease-sigma),
     background-color 0.35s var(--ease-sigma),
     box-shadow 0.4s var(--ease-sigma);
 }
 .sx-flows__node .sx-icon { border: 0; color: var(--sg-teal); transition: color 0.35s var(--ease-sigma); background: transparent; }
-.sx-flows__node:hover {
-  transform: translateY(-4px) scale(1.12) rotate(-5deg);
-  background: linear-gradient(135deg, var(--sg-teal), var(--sg-petrol));
-  box-shadow:
-    0 14px 30px -10px rgba(0, 169, 169, 0.55),
-    0 0 0 8px rgba(0, 169, 169, 0.09);
+
+/* O passo vira cartao: separa um do outro sem precisar de numero nem regua. */
+.sx-flows__card {
+  padding: clamp(14px, 1.6vw, 20px) clamp(16px, 1.9vw, 24px);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(19, 109, 135, 0.09), 0 10px 26px -20px rgba(24, 90, 125, 0.55);
+  transition: box-shadow 0.35s var(--ease-sigma), transform 0.35s var(--ease-sigma);
 }
-.sx-flows__node:hover .sx-icon { color: #ffffff; }
-.sx-flows__node:hover svg { animation: sx-icon-wiggle 0.45s var(--ease-sigma); }
-.sx-flows__steps h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 680; }
-.sx-flows__steps li p { margin: 0; color: rgba(31, 41, 57, 0.62); line-height: 1.55; }
+.sx-flows__steps li:hover .sx-flows__card {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(0, 169, 169, 0.28), 0 16px 34px -22px rgba(24, 90, 125, 0.6);
+}
+.sx-flows__steps li:hover .sx-flows__node {
+  transform: scale(1.06);
+  background: linear-gradient(135deg, var(--sg-teal), var(--sg-petrol));
+  box-shadow: 0 10px 24px -12px rgba(0, 169, 169, 0.6), 0 0 0 6px rgba(0, 169, 169, 0.09);
+}
+.sx-flows__steps li:hover .sx-flows__node .sx-icon { color: #ffffff; }
+
+.sx-flows__steps h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 680; letter-spacing: -0.015em; }
+.sx-flows__steps li p { margin: 0; color: rgba(31, 41, 57, 0.62); line-height: 1.5; }
 
 /* A animacao do fluxo, sem moldura: a secao fica em branco puro para o
    fundo branco do arquivo desaparecer por igualdade — animacao solta. */

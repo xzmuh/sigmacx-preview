@@ -5,12 +5,14 @@
   },
   "hero": {
     "badge": "Sigma Insights",
-    "title": "Aumente a eficiência da sua operação em até 80% com o poder dos insights",
-    "lead": "O Sigma Insights é a plataforma que une análise avançada de interações e gestão de qualidade inteligente em um só lugar. Ele transforma voz, chat e tela em insights acionáveis, revelando emoções, padrões e oportunidades que normalmente passam despercebidos.",
+    "title": "Até 80% mais eficiência na sua operação",
+    "lead": "O Sigma Insights une análise avançada de interações e gestão de qualidade inteligente em um só lugar. Ele transforma voz, chat e tela em insights acionáveis, revelando emoções, padrões e oportunidades que normalmente passam despercebidos.",
     "cta": "Conheça nossa plataforma"
   },
   "dashboards": {
-    "title": "Com dashboards intuitivos, automação de avaliações e relatórios em tempo real, sua empresa ganha clareza, confiança e eficiência.",
+    "eyebrow": "Dashboards",
+    "title": "Clareza em segundos, não em relatórios",
+    "lead": "Dashboards intuitivos, automação de avaliações e relatórios em tempo real dão à sua empresa clareza, confiança e eficiência.",
     "items": [
       {
         "title": "Veja tudo em tempo real",
@@ -28,11 +30,13 @@
     "cta": "Confira 3 dicas de estratégias de negócio"
   },
   "voice": {
+    "eyebrow": "Speech analytics",
     "title": "Transforme voz em estratégia",
+    "lead": "O que acontece quando cada chamada vira dado pesquisável.",
     "items": [
       {
         "title": "Ganhe agilidade com transcrição inteligente",
-        "body": "Organizações que convertem chamadas em dado pesquisáveis reduzem o tempo médio de atendimento em até 30% e os custos operacionais em até 25% (Market Research Future / Polaris)."
+        "body": "Organizações que convertem chamadas em dados pesquisáveis reduzem o tempo médio de atendimento em até 30% e os custos operacionais em até 25% (Market Research Future / Polaris)."
       },
       {
         "title": "Decifre emoções com precisão",
@@ -42,7 +46,9 @@
     "cta": "Experimente"
   },
   "emotions": {
-    "title": "Decifre emoções com precisão",
+    "eyebrow": "Sigma Insights",
+    "title": "Enxergue o que passa despercebido",
+    "lead": "Padrões escondidos nas conversas e indicadores reais de qualidade, lado a lado.",
     "items": [
       {
         "title": "Encontre padrões invisíveis",
@@ -57,6 +63,7 @@
   },
   "benefits": {
     "title": "Principais benefícios",
+    "lead": "Cinco frentes em que o Sigma Insights atua na sua operação.",
     "items": [
       {
         "title": "Análise de sentimentos",

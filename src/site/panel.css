@@ -1,0 +1,1933 @@
+/* ==========================================================================
+   Painéis — direção "Borda Viva"
+   --------------------------------------------------------------------------
+   Substitui a linguagem de faixas empilhadas (.section-transition + emendas
+   diagonais) por cartões escuros arredondados que flutuam no branco. O branco
+   entre um painel e o próximo É a transição: não existe encontro de faixas,
+   então não existe corte.
+
+   O aro é o mesmo princípio do .dlg-feature-slide do Dialogi: um gradiente em
+   border-box mascarado com mask-composite. Encaixotado ele contorna o cartão;
+   quando o painel fica inteiro (margem 0, raio 0) ele vira a linha neon no
+   topo e na base — que é a "borda neon" da transição claro→escuro.
+
+   As variáveis --sx-panel-x (margem) e --sx-panel-r (raio) são escritas pelo
+   componente Panel a cada quadro de scroll. Ver src/site/Panel.tsx.
+   ========================================================================== */
+
+.sx-page--panels {
+  /* A nav tem 74px. Restam apenas 12–18px de respiro real; antes havia mais
+     de 40px de branco inutil entre ela e o painel. */
+  --sx-hero-top-space: clamp(92px, 6.4vw, 100px);
+}
+.sx-page--panels main {
+  overflow-x: clip;
+  padding-top: var(--sx-hero-top-space);
+  background:
+    radial-gradient(ellipse 46% 104px at 50% 0, rgba(0, 169, 169, .075), transparent 76%) top center / 100% 180px no-repeat,
+    #fff;
+}
+
+.sx-panel {
+  position: relative;
+  isolation: isolate;
+  margin-inline: var(--sx-panel-x, 16px);
+  border-radius: var(--sx-panel-r, 30px);
+  overflow: hidden;
+  background:
+    radial-gradient(90% 120% at 22% 12%, rgba(0, 169, 169, 0.22), transparent 62%),
+    radial-gradient(70% 90% at 88% 90%, rgba(24, 90, 125, 0.35), transparent 66%),
+    #071a26;
+  box-shadow: 0 0 60px rgba(64, 215, 203, 0.16);
+}
+
+/* Espaço em volta do painel: é ele que faz a passagem, no lugar da emenda. */
+.sx-panel + .sx-section,
+.sx-section + .sx-panel { margin-top: clamp(28px, 4vw, 56px); }
+
+/* ---- o aro ---- */
+.sx-panel::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  /* Sem o azul opaco nas pontas: ele desenhava um contorno chapado em volta do
+     cartao. Com as extremidades transparentes o aro le como luz correndo pela
+     borda, nao como moldura. */
+  background: linear-gradient(112deg,
+    rgba(64, 215, 203, 0) 0%,
+    rgba(64, 215, 203, 0.55) 22%,
+    #9ff0ea 50%,
+    rgba(64, 215, 203, 0.55) 78%,
+    rgba(64, 215, 203, 0) 100%);
+  background-size: 260% 100%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: sx-panel-rim 14s linear infinite;
+}
+
+@keyframes sx-panel-rim {
+  to { background-position: 260% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-panel::after { animation: none; }
+}
+
+.sx-panel__inner {
+  position: relative;
+  z-index: 3;
+  padding-block: clamp(64px, 8vw, 116px);
+}
+
+/* --------------------------------------------------------------------------
+   Tipografia sobre o painel escuro.
+   A .sx-hero da linguagem antiga era BRANCA, então os títulos herdavam tinta
+   escura (--sg-ink). Dentro do painel isso vira preto no preto: aqui o
+   contraste é remapeado. O trecho em **negrito** não entra nesta conta — ele
+   é um GradientText com backgroundImage inline, então a paleta clara vem do
+   prop `onDark` do SplitText, não do CSS.
+   -------------------------------------------------------------------------- */
+
+.sx-page--panels .sx-panel :is(.sx-h1, .sx-h2, .sx-h3) { color: #ffffff; }
+.sx-page--panels .sx-panel :is(.sx-h1, .sx-h2) :is(strong, em) { color: #9ff0ea; }
+
+/* O trecho em **negrito** vinha como GradientText: `background-clip: text` com
+   `color: transparent`. Dentro do painel as palavras do SplitText ficam com
+   `transform` durante a entrada, e o recorte do gradiente nao acompanha o
+   glifo transformado — o texto sumia por inteiro ("...cada ponto da" e nada
+   mais). Aqui o destaque volta a ser cor solida, que e o que precisa ser
+   legivel sobre o painel escuro. */
+.sx-page--panels .sx-panel .sx-title-gradient .text-content {
+  background: none !important;
+  color: #9ff0ea !important;
+  -webkit-text-fill-color: #9ff0ea;
+}
+
+/* As palavras do SplitText nascem deslocadas 112% para baixo dentro de uma
+   caixa com overflow:hidden, e só voltam com .is-visible (data-reveal) ou
+   dentro de .sx-hero. O painel do hero não é nem um nem outro, então sem esta
+   regra o título fica invisível. Mesma animação de site.css. */
+.sx-page--panels .sx-panel--hero .sx-word > span,
+.sx-page--panels .sx-panel--hero .sx-word > strong > span,
+.sx-page--panels .sx-panel--hero .sx-word > em > span {
+  animation: sx-word-up 0.8s var(--ease-sigma) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 0.15s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-page--panels .sx-panel--hero .sx-word > span,
+  .sx-page--panels .sx-panel--hero .sx-word > strong > span,
+  .sx-page--panels .sx-panel--hero .sx-word > em > span { animation: none; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Seletor vertical (padrão Zendesk): a lista de itens fica à esquerda, a
+   visualização do item ativo à direita, e o texto dele embaixo. Substitui a
+   pilha vertical em que os três itens competiam pela atenção ao mesmo tempo.
+   -------------------------------------------------------------------------- */
+
+.sx-switch {
+  display: grid;
+  grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+  gap: clamp(26px, 4vw, 56px);
+  align-items: start;
+  margin-top: clamp(34px, 4vw, 52px);
+}
+
+.sx-switch__list { display: flex; flex-direction: column; gap: 2px; }
+
+.sx-switch__btn {
+  padding: clamp(16px, 2vw, 22px) clamp(16px, 2vw, 24px);
+  border: 0;
+  border-left: 3px solid rgba(255, 255, 255, 0.14);
+  border-radius: 0 10px 10px 0;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.62);
+  font: inherit;
+  font-weight: 700;
+  font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+.sx-switch__btn:hover { color: #fff; }
+.sx-switch__btn.is-active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  border-left-color: #40d7cb;
+}
+.sx-switch__btn:focus-visible { outline: 2px solid #7fe7e3; outline-offset: -2px; }
+
+.sx-switch__stage { display: grid; gap: clamp(20px, 3vw, 30px); }
+
+/* Cartão branco sobre o painel escuro: é o que o .sx-viz já espera como fundo,
+   e é o mesmo enquadramento da referência (mock claro sobre a cena escura). */
+.sx-switch__media {
+  overflow: hidden;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 30px 70px -40px rgba(0, 0, 0, 0.7), 0 0 40px rgba(64, 215, 203, 0.12);
+}
+.sx-switch__media img { display: block; width: 100%; height: auto; }
+
+.sx-switch__caption {
+  max-width: 60ch;
+  margin-inline: auto;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.65;
+}
+
+@media (max-width: 860px) {
+  .sx-switch { grid-template-columns: minmax(0, 1fr); }
+  .sx-switch__caption { text-align: left; margin-inline: 0; }
+}
+
+/* ---- hero: fica encaixotado, não expande ---- */
+.sx-page--panels .sx-panel--hero {
+  display: grid;
+  min-height: max(640px, calc(100svh - var(--sx-hero-top-space) - 16px));
+}
+
+.sx-page--panels .sx-panel--hero .sx-panel__inner {
+  display: flex;
+  min-height: inherit;
+  align-items: center;
+  padding-block: clamp(132px, 17vh, 184px) clamp(82px, 11vh, 124px);
+}
+
+.sx-page--panels .sx-panel--hero .sx-h1 {
+  max-width: 17ch;
+  font-size: clamp(2.7rem, 5.4vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+}
+
+.sx-page--panels .sx-panel--hero .sx-lead { max-width: 52ch; }
+
+.sx-panel__actions { margin-top: clamp(26px, 3vw, 36px); }
+
+/* A hero em Panel nao usa `.sx-hero__inner`, portanto a entrada global nao a
+   alcançava. O titulo continua montando palavra a palavra e os demais blocos
+   chegam em sequencia, sem salto no layout. */
+.sx-page--panels .sx-panel--hero .sx-shell > :is(.sx-eyebrow, .sx-lead, .sx-panel__actions) {
+  animation: sx-panel-hero-content-in .72s var(--ease-sigma) both;
+}
+.sx-page--panels .sx-panel--hero .sx-shell > .sx-eyebrow { animation-delay: .04s; }
+.sx-page--panels .sx-panel--hero .sx-shell > .sx-lead { animation-delay: .24s; }
+.sx-page--panels .sx-panel--hero .sx-shell > .sx-panel__actions { animation-delay: .36s; }
+@keyframes sx-panel-hero-content-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Faixa de clientes dentro do painel escuro do hero. */
+.sx-page--panels .sx-panel .sx-logos {
+  margin-top: clamp(44px, 6vw, 70px);
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+}
+.sx-page--panels .sx-panel .sx-logos img { filter: brightness(0) invert(1); opacity: 0.6; }
+
+/* --------------------------------------------------------------------------
+   Herdados: as duas cenas escuras da página viram painéis, mas mantêm as
+   classes internas para não perder o layout já ajustado (.sx-suite-stage,
+   .sx-stat-banner). Só o invólucro muda, então aqui neutralizamos o fundo e
+   o padding que essas classes traziam da linguagem de faixa.
+   -------------------------------------------------------------------------- */
+
+.sx-page--suite main .sx-panel.sx-suite-immersive.sx-dark {
+  display: block;
+  min-height: 0;
+  padding-block: 0;
+  background:
+    radial-gradient(90% 120% at 22% 12%, rgba(0, 169, 169, 0.2), transparent 62%),
+    radial-gradient(70% 90% at 88% 90%, rgba(24, 90, 125, 0.34), transparent 66%),
+    #0a142d;
+}
+
+.sx-page--suite main .sx-panel.sx-stat-band {
+  padding-block: 0;
+}
+.sx-page--suite main .sx-panel.sx-stat-band .sx-panel__inner {
+  padding-block: clamp(52px, 6vw, 84px);
+}
+/* o ::before original desenhava o brilho da faixa; o painel já tem o dele */
+.sx-page--suite main .sx-panel.sx-stat-band::before { content: none; }
+
+/* The closing card opens to the viewport as the visitor scrolls into it. */
+.sx-footer-expand {
+  position: relative;
+  margin-top: clamp(24px, 4vw, 56px);
+  background: #061123;
+  clip-path: inset(0 0 0 round 0);
+}
+.sx-page--panels .sx-footer-wrap { position: relative; margin-top: 0; }
+.sx-page--panels .sx-footer-wrap::before { content: none; }
+body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !important; }
+.sx-page--suite.sx-page--panels .sx-footer-wrap.sx-dark {
+  background: linear-gradient(180deg, #061123, #071126);
+}
+
+@media (max-width: 640px) {
+  .sx-panel__inner { padding-block: clamp(48px, 12vw, 72px); }
+}
+
+/* ========================================================================== 
+   Plataforma — ritmo editorial inspirado em páginas SaaS de alta conversão.
+   O hero mantém a linguagem própria da Sigma; depois dele, cada trecho ganha
+   uma composição diferente em vez de repetir o painel escuro expansível.
+   ========================================================================== */
+
+/* Confiança: os clientes saem do hero e passam a abrir o campo claro. */
+.sx-page--panels .sx-platform-trust {
+  padding: clamp(34px, 4.5vw, 58px) 0 clamp(24px, 3vw, 40px);
+  background: #fff;
+}
+.sx-page--panels .sx-platform-trust > .sx-shell {
+  display: grid;
+  grid-template-columns: minmax(180px, .34fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+  padding-bottom: clamp(30px, 4vw, 48px);
+  border-bottom: 1px solid rgba(31, 41, 57, .1);
+}
+.sx-page--panels .sx-platform-trust p {
+  max-width: 24ch;
+  margin: 0;
+  color: rgba(31, 41, 57, .76);
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+.sx-platform-trust__marquee {
+  min-width: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.sx-platform-trust__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: sx-client-marquee 24s linear infinite;
+}
+.sx-platform-trust__set {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: clamp(44px, 5vw, 76px);
+  padding-right: clamp(44px, 5vw, 76px);
+}
+.sx-platform-trust__set img {
+  display: block;
+  max-width: 124px;
+  height: 32px;
+  flex: 0 0 auto;
+  opacity: .82;
+  filter: grayscale(1) brightness(0) contrast(1.15);
+  transition: opacity .25s ease, filter .25s ease, transform .25s ease;
+}
+.sx-platform-trust__set img:hover {
+  opacity: 1;
+  filter: grayscale(1) brightness(0) contrast(1.15);
+  transform: translateY(-2px);
+}
+@keyframes sx-client-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Respiro pós-hero: não é uma faixa de logos, mas uma apresentação clara da
+   arquitetura. Os três princípios compartilham uma única linha, sem cards. */
+.sx-page--panels .sx-section.sx-platform-overview {
+  position: relative;
+  margin-top: 0;
+  padding-block: clamp(92px, 10vw, 138px) clamp(112px, 12vw, 166px) !important;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0) 86%, #fff 100%),
+    radial-gradient(ellipse 34% 54% at -8% 62%, rgba(0, 169, 169, .07), transparent 76%),
+    #fff;
+}
+.sx-platform-overview__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, .72fr);
+  gap: clamp(42px, 8vw, 112px);
+  align-items: end;
+}
+.sx-page--panels .sx-platform-overview__intro .sx-h2 {
+  max-width: 24ch;
+  margin-top: 18px;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -.047em;
+}
+.sx-platform-overview__intro .sx-lead {
+  max-width: 50ch;
+  margin-bottom: 6px;
+  color: rgba(31, 41, 57, .68);
+}
+.sx-platform-overview__items {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(64px, 8vw, 104px);
+  border-top: 1px solid rgba(31, 41, 57, .12);
+}
+.sx-platform-overview__items article {
+  position: relative;
+  min-width: 0;
+  padding: clamp(30px, 3.5vw, 46px) clamp(20px, 3vw, 42px) 0 0;
+}
+.sx-platform-overview__items article + article {
+  padding-left: clamp(20px, 3vw, 42px);
+  border-left: 1px solid rgba(31, 41, 57, .1);
+}
+.sx-platform-overview__items article::before {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 46px;
+  height: 3px;
+  border-radius: 999px;
+  content: "";
+  background: linear-gradient(90deg, var(--sg-teal), #5f68ff);
+}
+.sx-platform-overview__items article + article::before { left: clamp(20px, 3vw, 42px); }
+.sx-platform-overview__items span {
+  color: var(--sg-teal);
+  font-size: .67rem;
+  font-weight: 750;
+  letter-spacing: .16em;
+}
+.sx-platform-overview__items h3 {
+  margin: 20px 0 0;
+  color: var(--sg-ink);
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
+  letter-spacing: -.025em;
+}
+.sx-platform-overview__items p {
+  max-width: 34ch;
+  margin: 12px 0 0;
+  color: rgba(31, 41, 57, .6);
+  font-size: .93rem;
+  line-height: 1.6;
+}
+
+/* Demo: entra depois da explicação do produto, com contexto editorial antes
+   do vídeo. O degradê começa e termina em branco para não criar outra faixa. */
+.sx-page--panels .sx-section.sx-platform-video {
+  position: relative;
+  margin-top: 0;
+  padding-top: clamp(76px, 8vw, 108px) !important;
+  padding-bottom: clamp(82px, 9vw, 120px) !important;
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0) 86%, #fff 100%),
+    radial-gradient(ellipse 42% 34% at 5% 58%, rgba(0, 169, 169, .1), transparent 75%),
+    radial-gradient(ellipse 36% 30% at 96% 68%, rgba(95, 104, 255, .07), transparent 78%),
+    linear-gradient(180deg, #fff 0%, #f4f8f7 18%, #f4f8f7 82%, #fff 100%);
+}
+.sx-platform-video__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, .72fr);
+  gap: clamp(42px, 7vw, 96px);
+  align-items: end;
+  margin-bottom: clamp(42px, 5vw, 66px);
+  padding-inline: clamp(0px, 3vw, 42px);
+}
+.sx-page--panels .sx-platform-video__intro .sx-h2 {
+  max-width: 22ch;
+  margin-top: 18px;
+  font-size: clamp(2.15rem, 3.45vw, 3.35rem);
+  line-height: 1.07;
+  letter-spacing: -.045em;
+}
+.sx-platform-video__copy .sx-lead {
+  max-width: 43ch;
+  color: rgba(31, 41, 57, .72);
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+}
+.sx-platform-video__note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 26px 0 0;
+  color: rgba(31, 41, 57, .52);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+.sx-platform-video__note span {
+  width: 34px;
+  height: 2px;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sg-teal), #5f68ff);
+}
+.sx-page--panels .sx-platform-video .sx-glow--wide {
+  max-width: 1040px;
+  margin-inline: auto;
+  filter: drop-shadow(0 34px 46px rgba(18, 56, 75, .12));
+}
+
+/* Único palco escuro depois do hero. Ele é fixo e verde-petróleo; não repete
+   a animação de expansão do componente Panel. */
+.sx-page--panels .sx-section.sx-platform-products {
+  margin-top: 0;
+  padding: 0 clamp(14px, 2.6vw, 42px) clamp(84px, 10vw, 142px);
+  background: #fff;
+}
+.sx-platform-products__canvas {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(76px, 8vw, 118px);
+  border: 1px solid rgba(127, 231, 227, .22);
+  border-radius: clamp(24px, 3vw, 40px);
+  color: #fff;
+  background:
+    radial-gradient(ellipse 55% 82% at 88% 18%, rgba(64, 215, 203, .2), transparent 70%),
+    radial-gradient(ellipse 44% 62% at 8% 100%, rgba(185, 255, 155, .1), transparent 72%),
+    linear-gradient(145deg, #082a2c 0%, #0a3a39 54%, #071d28 100%);
+  box-shadow: 0 44px 100px -64px rgba(7, 45, 50, .82);
+}
+.sx-platform-products__canvas::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(115deg, transparent 22%, rgba(159, 240, 234, .055) 22.1%, transparent 22.28%),
+    radial-gradient(ellipse 66% 46% at 92% 30%, transparent 63%, rgba(159, 240, 234, .12) 63.2%, transparent 63.5%);
+  pointer-events: none;
+}
+.sx-platform-products__mark {
+  position: absolute;
+  z-index: -1;
+  right: -7%;
+  bottom: -26%;
+  width: min(42vw, 620px);
+  opacity: .045;
+  rotate: -9deg;
+}
+.sx-platform-products__head {
+  display: grid;
+  justify-items: center;
+  max-width: 1020px;
+  margin-inline: auto;
+  text-align: center;
+}
+.sx-platform-products__head .sx-eyebrow { color: #9ff0ea; }
+.sx-page--panels .sx-platform-products__head .sx-h2 {
+  max-width: 23ch;
+  margin-top: 18px;
+  color: #fff;
+  font-size: clamp(1.85rem, 3vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -.042em;
+}
+.sx-platform-products__head .sx-lead {
+  /* Duas frases largas leem melhor em duas linhas cheias do que em quatro
+     curtas: a tela horizontal esta ai para isso. */
+  max-width: 78ch;
+  margin-top: 24px;
+  color: rgba(229, 245, 244, .72);
+}
+.sx-platform-products__nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: clamp(42px, 5vw, 68px);
+}
+.sx-platform-products__nav button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, .66);
+  background: rgba(255, 255, 255, .035);
+  font: inherit;
+  font-size: .88rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: color .25s ease, border-color .25s ease, background .25s ease, transform .25s ease;
+}
+.sx-platform-products__nav button span {
+  color: rgba(159, 240, 234, .62);
+  font-size: .62rem;
+  letter-spacing: .12em;
+}
+.sx-platform-products__nav button:hover { color: #fff; border-color: rgba(159, 240, 234, .48); transform: translateY(-2px); }
+.sx-platform-products__nav button.is-active {
+  color: #082a2c;
+  border-color: #9ff0ea;
+  background: #9ff0ea;
+  box-shadow: 0 16px 42px -20px rgba(64, 215, 203, .82);
+}
+.sx-platform-products__nav button.is-active span { color: rgba(8, 42, 44, .64); }
+.sx-platform-products__body {
+  display: grid;
+  /* O texto ficava numa faixa de ~28% do painel e descia como uma tira. As
+     duas colunas agora dividem quase meio a meio. */
+  grid-template-columns: minmax(320px, 1fr) minmax(0, 1.06fr);
+  gap: clamp(32px, 4vw, 60px);
+  align-items: center;
+  margin-top: clamp(38px, 5vw, 68px);
+  padding: clamp(28px, 4vw, 52px);
+  border: 1px solid rgba(255, 255, 255, .11);
+  border-radius: clamp(18px, 2vw, 28px);
+  background: rgba(1, 15, 24, .22);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .045);
+  backdrop-filter: blur(8px);
+  animation: sx-platform-product-in .6s var(--ease-sigma) both;
+}
+@keyframes sx-platform-product-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.sx-platform-products__copy .sx-h2 {
+  max-width: 18ch;
+  color: #fff;
+  font-size: clamp(2rem, 3.25vw, 3.35rem);
+  line-height: 1.06;
+}
+.sx-platform-products__copy .sx-lead { margin-top: 20px; color: rgba(255, 255, 255, .88); }
+.sx-platform-products__copy .sx-body { max-width: 54ch; margin-top: 14px; color: rgba(222, 239, 239, .65); line-height: 1.68; }
+.sx-platform-products__copy > p:last-child { margin-top: 28px; }
+.sx-page--panels .sx-platform-products .sx-cta--outline {
+  color: #fff;
+  border-color: rgba(255, 255, 255, .32);
+  background: transparent;
+}
+.sx-page--panels .sx-platform-products .sx-cta--outline:hover { color: #9ff0ea; border-color: #9ff0ea; box-shadow: none; }
+.sx-platform-products__media {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(159, 240, 234, .18);
+  border-radius: 18px;
+  background: #071f2d;
+  box-shadow: 0 34px 80px -40px rgba(0, 0, 0, .82), 0 0 42px rgba(64, 215, 203, .08);
+}
+.sx-platform-products__media .sx-video { border: 0; border-radius: 0; background: #071f2d; }
+
+/* Fluxo Sigma: telas soltas e capítulos abertos. Uma única curva larga nasce
+   na esquerda e e desenhada para baixo pelo scroll; ela substitui os pequenos
+   riscos soltos que atravessavam cada etapa. */
+.sx-page--panels .sx-section.sx-platform-loop {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-top: 0;
+  padding-block: clamp(88px, 11vw, 156px);
+  background:
+    linear-gradient(180deg,
+      #fff 0%,
+      rgba(255, 255, 255, .94) 4%,
+      rgba(255, 255, 255, 0) 16%,
+      rgba(255, 255, 255, 0) 84%,
+      rgba(255, 255, 255, .94) 96%,
+      #fff 100%),
+    radial-gradient(ellipse 46% 28% at -6% 34%, rgba(0, 169, 169, .2), transparent 72%),
+    radial-gradient(ellipse 38% 25% at 104% 76%, rgba(95, 104, 255, .15), transparent 75%),
+    linear-gradient(112deg, #eaf8f6 0%, #f5fbfa 31%, #f4f7fc 72%, #eef2fb 100%);
+}
+.sx-page--panels .sx-platform-loop::before,
+.sx-page--panels .sx-platform-loop::after {
+  position: absolute;
+  z-index: -1;
+  width: min(76vw, 1120px);
+  aspect-ratio: 1.7;
+  content: "";
+  border: 1px solid rgba(0, 169, 169, .075);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sx-page--panels .sx-platform-loop::before { top: 15%; left: -48%; rotate: -11deg; }
+.sx-page--panels .sx-platform-loop::after { right: -52%; bottom: 8%; rotate: 13deg; }
+.sx-platform-loop__thread {
+  --thread-top: clamp(86px, 10vw, 150px);
+  --thread-bottom: clamp(70px, 8vw, 118px);
+  position: absolute;
+  z-index: 0;
+  top: var(--thread-top);
+  bottom: var(--thread-bottom);
+  left: 0;
+  width: min(42vw, 620px);
+  height: calc(100% - var(--thread-top) - var(--thread-bottom));
+  overflow: visible;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 4%, #000 96%, transparent 100%);
+}
+.sx-platform-loop__thread path {
+  fill: none;
+  stroke: url(#sx-platform-thread-gradient);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.sx-platform-loop__thread-glow {
+  stroke-width: 18;
+  opacity: .16;
+  filter: blur(7px);
+}
+.sx-platform-loop__thread-line {
+  stroke-width: 3.5;
+  opacity: .78;
+  filter: drop-shadow(0 0 8px rgba(0, 169, 169, .36));
+}
+.sx-platform-loop__mark {
+  position: absolute;
+  z-index: -1;
+  top: 8%;
+  left: -7%;
+  width: min(42vw, 620px);
+  opacity: .055;
+  filter: saturate(.9);
+  rotate: -12deg;
+  pointer-events: none;
+}
+.sx-platform-loop__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, .72fr);
+  grid-template-areas:
+    "eyebrow lead"
+    "title lead";
+  column-gap: clamp(42px, 8vw, 112px);
+  row-gap: 18px;
+  align-items: end;
+}
+.sx-platform-loop__head .sx-eyebrow { grid-area: eyebrow; align-self: end; }
+.sx-page--panels .sx-platform-loop__head .sx-h2 {
+  grid-area: title;
+  max-width: 14ch;
+  margin-top: 0;
+  font-size: clamp(2.25rem, 4vw, 3.85rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+.sx-platform-loop__head .sx-lead {
+  grid-area: lead;
+  align-self: end;
+  max-width: 45ch;
+  margin: 0 0 7px;
+}
+.sx-platform-loop__track {
+  position: relative;
+  display: grid;
+  gap: clamp(76px, 9vw, 132px);
+  margin-top: clamp(58px, 7vw, 92px);
+}
+.sx-platform-loop__item {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(250px, .65fr) minmax(0, 1.35fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+  width: min(100%, 1050px);
+  min-height: 330px;
+  padding: 0;
+}
+.sx-platform-loop__item:nth-child(2) {
+  grid-template-columns: minmax(0, 1.35fr) minmax(250px, .65fr);
+  margin-left: auto;
+}
+.sx-platform-loop__item:nth-child(2) .sx-platform-loop__copy { order: 2; }
+.sx-platform-loop__item:nth-child(2) .sx-platform-loop__media { order: 1; }
+.sx-platform-loop__item:nth-child(3) { margin-left: clamp(0px, 5vw, 72px); }
+.sx-platform-loop__item::before { content: none; }
+.sx-platform-loop__copy {
+  position: relative;
+  z-index: 3;
+  padding: clamp(24px, 3vw, 38px) 0;
+}
+.sx-platform-loop__copy > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(0, 169, 169, .22);
+  border-radius: 50%;
+  color: var(--sg-teal);
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .16em;
+  background: rgba(255, 255, 255, .78);
+  box-shadow: 0 0 0 8px rgba(0, 169, 169, .035), 0 14px 30px -18px rgba(24, 90, 125, .5);
+}
+.sx-platform-loop__copy h3 {
+  max-width: 13ch;
+  margin: 28px 0 0;
+  color: var(--sg-ink);
+  font-size: clamp(1.65rem, 2.8vw, 2.65rem);
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+.sx-platform-loop__copy p { max-width: 42ch; margin: 18px 0 0; color: rgba(31, 41, 57, .64); line-height: 1.68; }
+.sx-platform-loop__media {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  border: 1px solid rgba(31, 41, 57, .09);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 36px 80px -44px rgba(24, 90, 125, .56), 0 12px 24px rgba(31, 41, 57, .06);
+  transform: translateY(-8px) rotate(.65deg);
+  transition: transform .55s var(--ease-sigma), box-shadow .55s var(--ease-sigma);
+}
+.sx-platform-loop__item:nth-child(2) .sx-platform-loop__media { transform: translateY(8px) rotate(-.65deg); }
+.sx-platform-loop__media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border-radius: inherit;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .75);
+  pointer-events: none;
+}
+.sx-platform-loop__item:hover .sx-platform-loop__media { transform: rotate(0) translateY(-3px); box-shadow: 0 42px 90px -42px rgba(24, 90, 125, .62), 0 14px 28px rgba(31, 41, 57, .07); }
+.sx-platform-loop__media img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: contain; background: #fff; }
+.sx-platform-loop__item[data-reveal="left"] { transform: translate3d(-22px, 18px, 0); }
+.sx-platform-loop__item[data-reveal="right"] { transform: translate3d(22px, 18px, 0); }
+.sx-platform-loop__item[data-reveal].is-visible { transform: none; }
+.sx-platform-loop__action { margin: clamp(48px, 6vw, 74px) 0 0; text-align: center; }
+
+/* Mesmo sistema visual da hero do Sigma Channel: fundo --live da Suite e o
+   próprio FloatingLines na variante channel. */
+.sx-page--panels .sx-section.sx-platform-proof {
+  position: relative;
+  isolation: isolate;
+  width: calc(100% - 32px);
+  margin: 0 16px;
+  padding-block: clamp(72px, 8vw, 112px) !important;
+  overflow: hidden;
+  border: 1px solid rgba(96, 165, 255, .2);
+  border-radius: clamp(24px, 3vw, 40px);
+  color: #fff;
+  background:
+    radial-gradient(56% 60% at 82% 18%, rgba(0, 169, 169, .16), transparent 64%),
+    radial-gradient(48% 56% at 10% 86%, rgba(24, 90, 125, .22), transparent 66%),
+    linear-gradient(165deg, #061123 0%, #08222f 52%, #061123 100%);
+  box-shadow: 0 38px 90px -56px rgba(4, 23, 62, .72);
+}
+.sx-page--panels .sx-platform-proof > .sx-tech-lines {
+  z-index: 0;
+  inset: -18% -4%;
+  opacity: .38;
+  filter: saturate(.9) contrast(.96);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+.sx-page--panels .sx-platform-proof .sx-stat-banner {
+  position: relative;
+  z-index: 2;
+  padding: clamp(42px, 5vw, 64px) 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.sx-page--panels .sx-platform-proof .sx-stat-banner__copy p { color: #fff; }
+.sx-page--panels .sx-platform-proof .sx-stat-banner__copy strong { color: #9ff0ea; }
+.sx-page--panels .sx-platform-proof .sx-stat-banner__copy cite { color: rgba(219, 229, 236, .48); }
+.sx-page--panels .sx-platform-proof .sx-stat + .sx-stat { border-left: 0; }
+.sx-page--panels .sx-platform-proof .sx-stat > p { color: rgba(229, 238, 248, .7); }
+.sx-page--panels .sx-platform-proof .sx-stat > strong { font-size: clamp(3.2rem, 6vw, 5.7rem); }
+
+/* Cases em um papel levemente esverdeado: muda o ritmo sem virar outra faixa
+   escura e prepara a entrada do footer. */
+.sx-page--panels .sx-section.sx-platform-cases {
+  margin-top: 0;
+  padding-block: clamp(90px, 10vw, 142px);
+  background:
+    linear-gradient(180deg,
+      #fff 0%,
+      rgba(255, 255, 255, 0) clamp(140px, 14vw, 220px),
+      rgba(255, 255, 255, 0) 82%,
+      #fff 100%),
+    radial-gradient(ellipse 34% 48% at 100% 18%, rgba(0, 169, 169, .07), transparent 74%),
+    linear-gradient(180deg,
+      #fff 0%,
+      #f9fbf8 clamp(70px, 7vw, 108px),
+      #f3f6f1 clamp(170px, 16vw, 250px),
+      #f3f6f1 72%,
+      #f9fbf8 90%,
+      #fff 100%);
+}
+.sx-page--panels .sx-platform-cases::before { opacity: .22; }
+
+@media (max-width: 900px) {
+  .sx-page--panels .sx-platform-trust > .sx-shell { grid-template-columns: 1fr; }
+  .sx-page--panels .sx-platform-trust p { max-width: none; margin-bottom: 6px; text-align: center; }
+  .sx-platform-overview__intro { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .sx-platform-overview__intro .sx-lead { max-width: 56ch; margin-bottom: 0; }
+  .sx-platform-products__body,
+  .sx-platform-loop__item,
+  .sx-platform-loop__item:nth-child(2) { grid-template-columns: minmax(0, 1fr); }
+  .sx-platform-products__copy .sx-h2 { max-width: 18ch; }
+  .sx-platform-loop__item:nth-child(2) .sx-platform-loop__copy,
+  .sx-platform-loop__item:nth-child(2) .sx-platform-loop__media { order: initial; }
+  .sx-platform-loop__head { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .sx-platform-loop__head {
+    grid-template-areas:
+      "eyebrow"
+      "title"
+      "lead";
+  }
+  .sx-platform-loop__head .sx-lead { max-width: 52ch; margin: 0; }
+  .sx-platform-loop__item::before { display: none; }
+  .sx-platform-loop__item { min-height: 0; }
+  .sx-platform-video__intro { grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+  .sx-platform-video__intro .sx-h2 { max-width: 18ch; }
+}
+
+@media (max-width: 620px) {
+  .sx-page--panels .sx-panel--hero {
+    min-height: max(600px, calc(100svh - var(--sx-hero-top-space) - 8px));
+  }
+  .sx-page--panels .sx-panel--hero .sx-panel__inner {
+    padding-block: 124px 72px;
+  }
+  .sx-page--panels .sx-panel--hero .sx-h1 {
+    font-size: clamp(2.45rem, 11.5vw, 3.3rem);
+  }
+  .sx-platform-trust__set {
+    gap: 38px;
+    padding-right: 38px;
+  }
+  .sx-platform-trust__set img {
+    width: auto;
+    max-width: 104px;
+    height: 28px;
+  }
+  .sx-platform-overview__items { grid-template-columns: minmax(0, 1fr); }
+  .sx-platform-overview__items article { padding: 28px 0; }
+  .sx-platform-overview__items article + article { padding-left: 0; border-top: 1px solid rgba(31, 41, 57, .1); border-left: 0; }
+  .sx-platform-overview__items article + article::before { left: 0; }
+  .sx-page--panels .sx-platform-proof .sx-stat + .sx-stat { border-top: 0; }
+  .sx-platform-products__nav { align-items: stretch; }
+  .sx-platform-products__nav button { flex: 1; justify-content: center; padding-inline: 12px; }
+  .sx-platform-products__body { padding: 22px; }
+  .sx-platform-products__media { margin-inline: -12px; }
+  .sx-platform-loop__track { gap: 84px; }
+  .sx-platform-loop__mark { top: 15%; left: -34%; width: 92vw; opacity: .045; }
+  .sx-platform-loop__thread { left: -12vw; width: min(58vw, 360px); opacity: .68; }
+  .sx-platform-loop__item { gap: 24px; padding: 0; }
+  .sx-platform-loop__item:nth-child(3) { margin-left: 0; }
+  .sx-platform-loop__media,
+  .sx-platform-loop__item:nth-child(2) .sx-platform-loop__media { transform: none; }
+  .sx-platform-video__intro { padding-inline: 0; }
+  .sx-platform-video__note { align-items: flex-start; line-height: 1.45; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-page--panels .sx-panel--hero .sx-shell > :is(.sx-eyebrow, .sx-lead, .sx-panel__actions) { animation: none; }
+  .sx-platform-trust__track { animation: none; }
+  .sx-platform-trust__set[aria-hidden="true"] { display: none; }
+  .sx-platform-products__body { animation: none; }
+  .sx-platform-loop__item[data-reveal] { transform: none; }
+}
+
+
+/* ==========================================================================
+   Medidas
+   --------------------------------------------------------------------------
+   Escala tirada da folha de estilo da Zendesk (medida, nao estimada):
+   container 1150px; padding vertical de secao em degraus 48/64/88/104;
+   raio dominante 16px, com 20/32/40 nos blocos maiores; titulos em 1.25 de
+   entrelinha e corpo em 1.45. Os valores anteriores aqui eram chute meu —
+   raio de 30-36px, quase o dobro do que a referencia usa.
+   ========================================================================== */
+
+/* O container de 1150px vinha da folha da Zendesk, mas o header, o rodape e
+   todas as outras paginas do site rodam no eixo de 1440px (--sx-shell): as
+   paginas de produto ficavam estreitas no meio de telas largas, com faixas
+   mortas dos dois lados. Agora seguem o mesmo eixo do resto do site.
+   O cap (e nao `none`) e o que segura a calha: os heroes de subproduto pedem
+   `width: 100%` no proprio .sx-shell, e sem limite o texto encostava na
+   borda da tela. */
+.sx-page--panels .sx-shell { max-width: min(var(--sx-shell), 100% - var(--sx-gutter) * 2); }
+
+.sx-page--panels .sx-section { padding-block: 64px; }
+.sx-page--panels .sx-panel__inner { padding-block: 64px; }
+
+@media (min-width: 760px) {
+  .sx-page--panels .sx-section { padding-block: 88px; }
+  .sx-page--panels .sx-panel__inner { padding-block: 88px; }
+}
+@media (min-width: 1100px) {
+  .sx-page--panels .sx-section { padding-block: 104px; }
+  .sx-page--panels .sx-panel__inner { padding-block: 104px; }
+}
+
+.sx-page--panels :is(.sx-h1, .sx-h2) { line-height: 1.25; }
+.sx-page--panels :is(.sx-lead, .sx-body) { line-height: 1.45; }
+.sx-page--panels .sx-panel__actions { margin-top: 32px; }
+
+/* O título do palco Brain/Channel quebrava em quatro linhas numa coluna de
+   480px. Corpo menor e limite em caracteres, não em pixels. */
+.sx-page--panels .sx-suite-stage__panel .sx-h2 {
+  max-width: 14ch;
+  font-size: clamp(1.75rem, 2.7vw, 2.4rem);
+}
+
+/* ========================================================================== 
+   Páginas dos módulos — o sistema visual lançado em /produto.
+   O conteúdo continua sendo o de cada JSON; esta camada muda só composição,
+   superfícies e ritmo entre claro/escuro.
+   ========================================================================== */
+
+/* Hero em viewport, encaixotado como o hero da Plataforma. */
+.sx-page--panels .sx-hero.sx-subproduct-hero {
+  display: grid;
+  align-items: center;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  min-height: max(640px, calc(100svh - var(--sx-hero-top-space) - 16px));
+  margin: 0 16px;
+  padding-block: clamp(132px, 17vh, 184px) clamp(82px, 11vh, 124px) !important;
+  border: 1px solid rgba(127, 231, 227, .2);
+  border-radius: 20px;
+  background:
+    radial-gradient(56% 60% at 82% 18%, rgba(0, 169, 169, .16), transparent 64%),
+    radial-gradient(48% 56% at 10% 86%, rgba(24, 90, 125, .22), transparent 66%),
+    linear-gradient(165deg, #061123 0%, #08222f 52%, #061123 100%);
+  box-shadow: 0 0 60px rgba(64, 215, 203, .14);
+}
+.sx-page--panels .sx-subproduct-hero .sx-hero__inner { width: 100%; }
+.sx-page--panels .sx-subproduct-hero .sx-h1 {
+  max-width: 18ch;
+  font-size: clamp(2.55rem, 4.8vw, 4.35rem);
+  line-height: 1.04;
+  letter-spacing: -.044em;
+  text-shadow: none;
+}
+.sx-page--panels .sx-subproduct-hero .sx-tech-lines { opacity: .34; }
+
+/* Intervalo editorial entre a abertura e o primeiro palco funcional. Em vez
+   de um espacador vazio, recebe o titulo que antes ficava repetido dentro do
+   segundo painel azul. Nao usa linhas decorativas: a profundidade vem apenas
+   de auras difusas, que desaparecem antes das bordas. */
+.sx-page--panels .sx-section.sx-subproduct-bridge {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  padding-block: clamp(92px, 10vw, 144px) !important;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, #fff 100%),
+    radial-gradient(ellipse 38% 70% at -4% 56%, rgba(0, 169, 169, .1), transparent 74%),
+    radial-gradient(ellipse 30% 62% at 102% 28%, rgba(24, 90, 125, .075), transparent 76%),
+    #fff;
+}
+.sx-subproduct-bridge__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(300px, .72fr);
+  gap: clamp(42px, 8vw, 112px);
+  align-items: end;
+}
+.sx-page--panels .sx-subproduct-bridge .sx-h2 {
+  max-width: 16ch;
+  margin-top: 16px;
+  font-size: clamp(2.25rem, 4vw, 3.8rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+.sx-subproduct-bridge__copy {
+  display: grid;
+  justify-items: start;
+  gap: 26px;
+  padding-bottom: 7px;
+}
+.sx-subproduct-bridge__copy .sx-lead {
+  max-width: 42ch;
+  margin: 0;
+  color: rgba(31, 41, 57, .68);
+}
+@media (max-width: 900px) {
+  .sx-subproduct-bridge__layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .sx-subproduct-bridge__copy { padding-bottom: 0; }
+  .sx-subproduct-bridge__copy .sx-lead { max-width: 54ch; }
+}
+@media (max-width: 620px) {
+  .sx-page--panels .sx-section.sx-subproduct-bridge { padding-block: 72px !important; }
+}
+
+/* Primeira área clara: vídeo com bastante campo branco após o hero. */
+.sx-page--panels .sx-section.sx-subproduct-demo {
+  margin: 0;
+  padding-block: clamp(96px, 10vw, 142px) !important;
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 14%, rgba(255, 255, 255, 0) 86%, #fff 100%),
+    radial-gradient(ellipse 32% 46% at 4% 64%, rgba(0, 169, 169, .075), transparent 76%),
+    #fff;
+}
+.sx-page--panels .sx-subproduct-demo .sx-video-head {
+  max-width: 760px;
+  margin: 0 auto clamp(38px, 5vw, 58px);
+  text-align: center;
+}
+.sx-page--panels .sx-subproduct-demo .sx-video-head .sx-h2 {
+  margin-top: 16px;
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+  line-height: 1.08;
+}
+.sx-page--panels .sx-subproduct-demo .sx-glow--wide { max-width: 1040px; margin-inline: auto; }
+
+/* O palco funcional principal: sempre o mesmo navy vivo da Suite. */
+.sx-page--panels :is(.sx-section, .sx-band).sx-subproduct-stage {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  margin: clamp(58px, 7vw, 96px) 16px;
+  padding-block: clamp(82px, 9vw, 124px) !important;
+  overflow: hidden;
+  border: 1px solid rgba(127, 231, 227, .18);
+  border-radius: clamp(24px, 3vw, 40px);
+  color: #fff;
+  background:
+    radial-gradient(54% 66% at 86% 14%, rgba(46, 103, 173, .2), transparent 66%),
+    radial-gradient(44% 60% at 8% 88%, rgba(24, 90, 125, .17), transparent 68%),
+    linear-gradient(145deg, #071226 0%, #0a2141 56%, #07162b 100%) !important;
+  box-shadow: 0 38px 90px -58px rgba(4, 23, 62, .78);
+}
+.sx-page--panels .sx-subproduct-stage--secondary {
+  background:
+    radial-gradient(52% 84% at 10% 18%, rgba(24, 90, 125, .26), transparent 68%),
+    radial-gradient(48% 76% at 92% 82%, rgba(93, 166, 255, .16), transparent 70%),
+    linear-gradient(145deg, #07152d, #0a2348 58%, #07182f) !important;
+}
+.sx-page--panels .sx-subproduct-stage > .sx-tech-lines { inset: -12% -4%; opacity: .34; }
+.sx-page--panels .sx-subproduct-stage > .sx-shell { position: relative; z-index: 2; }
+.sx-page--panels .sx-subproduct-stage :is(.sx-h2, .sx-h3) { color: #fff; }
+.sx-page--panels .sx-subproduct-stage :is(.sx-lead, .sx-body) { color: rgba(219, 229, 236, .74); }
+.sx-page--panels .sx-subproduct-stage .sx-cta--outline { color: #fff; border-color: rgba(255, 255, 255, .34); background: transparent; }
+
+/* Capítulos claros entre os palcos. */
+.sx-page--panels .sx-subproduct-story {
+  position: relative;
+  margin-top: 0;
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0) 85%, #fff 100%),
+    radial-gradient(ellipse 34% 44% at -5% 42%, rgba(0, 169, 169, .08), transparent 74%),
+    radial-gradient(ellipse 30% 40% at 104% 76%, rgba(93, 166, 255, .06), transparent 76%),
+    #fff;
+}
+.sx-page--panels .sx-brain-flow.sx-subproduct-story {
+  background: linear-gradient(180deg, #fff 0%, #f1f9f8 18%, #f5f9fc 52%, #eef8f6 76%, #fff 96%);
+}
+.sx-brain-flow__atmosphere {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 180px, #000 calc(100% - 280px), transparent calc(100% - 24px));
+  mask-image: linear-gradient(180deg, transparent, #000 180px, #000 calc(100% - 280px), transparent calc(100% - 24px));
+}
+.sx-brain-flow__atmosphere svg { width: 100%; height: 100%; overflow: visible; }
+.sx-brain-flow__atmosphere path { fill: none; stroke: url(#brain-flow-thread); stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.sx-brain-flow__ribbon { stroke-width: 48; opacity: .035; }
+.sx-brain-flow__thread-halo { stroke-width: 20; opacity: .15; filter: blur(10px); }
+.sx-brain-flow__thread { stroke-width: 2; opacity: .45; }
+.sx-brain-flow__aura {
+  position: absolute; z-index: -1; inset: 0 -14%; pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 64%, transparent 94%);
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 64%, transparent 94%);
+}
+.sx-brain-flow__aura span { position: absolute; inset: 10% -4% 15%; border-radius: 50%; background: radial-gradient(ellipse, #53cfc53b, #85d7d61a 44%, transparent 70%); transition: transform 1.4s var(--ease-sigma), opacity 1.4s; }
+.sx-brain-flow__aura span + span { inset: 28% 0 0 20%; background: radial-gradient(ellipse, #709eea30, transparent 68%); }
+.sx-brain-flow[data-active="1"] .sx-brain-flow__aura span { transform: translate(-12%, 8%) scale(1.12); }
+.sx-brain-flow[data-active="1"] .sx-brain-flow__aura span + span { transform: translate(10%, -15%); }
+.sx-brain-flow[data-active="2"] .sx-brain-flow__aura span { transform: translate(8%, -8%) scale(.92); }
+.sx-brain-flow[data-active="2"] .sx-brain-flow__aura span + span { transform: translate(-15%, 10%) scale(1.15); }
+@media (max-width: 900px) {
+  .sx-brain-flow__atmosphere svg { width: 100%; margin-left: 0; }
+  .sx-brain-flow__thread { opacity: .24; }
+  .sx-brain-flow__ribbon { opacity: .03; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-brain-flow__aura span { transition: none; }
+}
+
+/* Terceiro acento azul, equivalente ao bloco de métricas de /produto. */
+.sx-page--panels .sx-section.sx-subproduct-proof {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: calc(100% - 32px);
+  margin: clamp(58px, 7vw, 96px) 16px;
+  padding-block: clamp(84px, 9vw, 122px) !important;
+  overflow: hidden;
+  border: 1px solid rgba(127, 231, 227, .18);
+  border-radius: clamp(24px, 3vw, 40px);
+  color: #fff;
+  background:
+    radial-gradient(56% 60% at 82% 18%, rgba(0, 169, 169, .16), transparent 64%),
+    radial-gradient(48% 56% at 10% 86%, rgba(24, 90, 125, .22), transparent 66%),
+    linear-gradient(165deg, #061123 0%, #08222f 52%, #061123 100%);
+}
+.sx-page--panels .sx-subproduct-proof > .sx-tech-lines { inset: -18% -4%; opacity: .36; }
+.sx-page--panels .sx-subproduct-proof > .sx-shell { position: relative; z-index: 2; }
+.sx-page--panels .sx-subproduct-proof :is(.sx-h2, .sx-h3) { color: #fff; }
+.sx-page--panels .sx-subproduct-proof :is(.sx-lead, .sx-body) { color: rgba(219, 229, 236, .74); }
+.sx-page--panels .sx-subproduct-proof .sx-eyebrow { color: #7fe7e3; }
+.sx-page--panels .sx-subproduct-proof .sx-result-card {
+  border-color: rgba(127, 231, 227, .16);
+  background: rgba(4, 18, 39, .46);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .045), 0 24px 60px -44px rgba(0, 0, 0, .72);
+  backdrop-filter: blur(8px);
+}
+.sx-page--panels .sx-subproduct-proof .sx-result-card p { color: rgba(219, 229, 236, .68); }
+
+/* Channel / resultados: os benefícios não são etapas. A composição radial
+   apresenta três efeitos simultâneos ligados ao mesmo núcleo da plataforma. */
+.sx-page--panels .sx-channel-light-run > .sx-results.sx-subproduct-proof {
+  width: 100%;
+  margin: 0;
+  padding-block: clamp(82px, 9vw, 126px) !important;
+  border: 0;
+  border-radius: 0;
+  color: var(--sg-ink);
+  background:
+    linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0) 18%, rgba(255, 255, 255, 0) 82%, #fff 100%),
+    radial-gradient(ellipse 34% 52% at 0 44%, rgba(0, 169, 169, .065), transparent 76%),
+    #fff !important;
+  box-shadow: none;
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__intro {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(300px, .55fr);
+  gap: clamp(34px, 7vw, 100px);
+  align-items: end;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__intro .sx-h2 {
+  max-width: 16ch;
+  margin-top: 12px;
+  font-size: clamp(2.15rem, 3.5vw, 3.35rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+  color: var(--sg-ink);
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__intro .sx-lead {
+  max-width: 34ch;
+  margin: 0 0 7px;
+  padding-left: 22px;
+  border-left: 1px solid rgba(0, 169, 169, .34);
+  color: rgba(31, 41, 57, .64);
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__eyebrow { color: var(--sg-petrol); }
+.sx-results__simple {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+  padding: clamp(24px, 2.7vw, 34px);
+  border: 1px solid rgba(31, 41, 57, .09);
+  border-radius: 22px;
+  color: var(--sg-ink);
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 24px 56px -46px rgba(24, 90, 125, .42);
+  backdrop-filter: none;
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card::before,
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card::after { content: none; }
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 169, 169, .24);
+  box-shadow: 0 30px 66px -48px rgba(24, 90, 125, .5);
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card h3 {
+  margin: 4px 0 8px;
+  padding-right: 0;
+  color: var(--sg-ink);
+  font-size: 1.02rem;
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card p {
+  color: rgba(31, 41, 57, .62);
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__simple .sx-result-card__blob {
+  width: 52px;
+  height: 52px;
+  color: var(--sg-petrol);
+  background: rgba(0, 169, 169, .09);
+  box-shadow: none;
+}
+.sx-results__constellation {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(140px, 14vw, 188px) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: clamp(64px, 7vw, 96px) clamp(22px, 3vw, 44px);
+  align-items: center;
+  min-height: 510px;
+}
+.sx-results__connections {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.sx-results__connections path {
+  fill: none;
+  stroke: rgba(127, 231, 227, .25);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 8;
+  vector-effect: non-scaling-stroke;
+  animation: sx-result-signal 8s linear infinite;
+}
+.sx-results__connections path:nth-child(2) { animation-delay: -2.6s; }
+.sx-results__connections path:nth-child(3) { animation-delay: -5.2s; }
+.sx-results__hub {
+  position: relative;
+  z-index: 2;
+  grid-column: 2;
+  grid-row: 1;
+  width: clamp(132px, 13vw, 174px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  justify-self: center;
+  border: 1px solid rgba(127, 231, 227, .34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 28%, rgba(127, 231, 227, .2), transparent 34%),
+    rgba(4, 20, 40, .74);
+  box-shadow: 0 0 0 12px rgba(127, 231, 227, .025), 0 0 54px rgba(0, 169, 169, .16), inset 0 1px rgba(255, 255, 255, .08);
+  backdrop-filter: blur(12px);
+}
+.sx-results__hub::before,
+.sx-results__hub::after {
+  position: absolute;
+  inset: -12px;
+  content: "";
+  border: 1px solid rgba(127, 231, 227, .1);
+  border-radius: 50%;
+  animation: sx-result-hub-pulse 3.8s ease-out infinite;
+}
+.sx-results__hub::after { animation-delay: -1.9s; }
+.sx-results__hub > span {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #7fe7e3;
+  background: rgba(0, 169, 169, .12);
+}
+.sx-results__hub .sx-icon { border: 0; color: inherit; }
+.sx-results__hub strong {
+  color: #fff;
+  font-size: clamp(.78rem, 1.05vw, .95rem);
+  line-height: 1.15;
+  text-align: center;
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__constellation .sx-result-card {
+  width: 100%;
+  max-width: 390px;
+  min-height: 190px;
+  align-items: center;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 0 0, rgba(0, 169, 169, .14), transparent 46%),
+    linear-gradient(145deg, rgba(6, 30, 55, .8), rgba(5, 19, 39, .64));
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__constellation .sx-result-card h3 {
+  padding-right: 0;
+  color: #fff;
+}
+.sx-page--panels .sx-results.sx-subproduct-proof .sx-results__constellation .sx-result-card__blob {
+  color: #8ceae5;
+  background: linear-gradient(140deg, rgba(64, 215, 203, .2), rgba(24, 90, 125, .22));
+  box-shadow: inset 0 1px rgba(255, 255, 255, .12), 0 16px 34px -22px rgba(64, 215, 203, .7);
+}
+.sx-page--panels .sx-results__constellation .sx-result-card::after { display: none; }
+.sx-results__constellation .sx-result-card--benefit-1 { grid-column: 1; grid-row: 1; justify-self: end; }
+.sx-results__constellation .sx-result-card--benefit-2 { grid-column: 3; grid-row: 1; justify-self: start; }
+.sx-results__constellation .sx-result-card--benefit-3 { grid-column: 1 / 4; grid-row: 2; justify-self: center; }
+@keyframes sx-result-signal {
+  to { stroke-dashoffset: -44; }
+}
+@keyframes sx-result-hub-pulse {
+  0% { opacity: .5; transform: scale(.9); }
+  70%, 100% { opacity: 0; transform: scale(1.24); }
+}
+
+@media (max-width: 940px) {
+  .sx-page--panels .sx-results.sx-subproduct-proof .sx-results__intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .sx-page--panels .sx-results.sx-subproduct-proof .sx-results__intro .sx-lead {
+    max-width: 48ch;
+    margin: 0;
+  }
+  .sx-results__constellation {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    gap: 18px;
+    min-height: 0;
+  }
+  .sx-results__connections { display: none; }
+  .sx-results__hub {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 18px;
+  }
+  .sx-results__constellation .sx-result-card--benefit-1,
+  .sx-results__constellation .sx-result-card--benefit-2,
+  .sx-results__constellation .sx-result-card--benefit-3 {
+    grid-column: 1;
+    justify-self: center;
+  }
+  .sx-results__constellation .sx-result-card--benefit-1 { grid-row: 2; }
+  .sx-results__constellation .sx-result-card--benefit-2 { grid-row: 3; }
+  .sx-results__constellation .sx-result-card--benefit-3 { grid-row: 4; }
+  .sx-results__simple {
+    grid-template-columns: minmax(0, 680px);
+    justify-content: center;
+  }
+}
+
+/* Fechamentos claros, com o mesmo papel levemente esverdeado dos cases. */
+.sx-page--panels .sx-section.sx-subproduct-cases {
+  margin-top: 0;
+  padding-block: clamp(88px, 10vw, 140px) !important;
+  background:
+    linear-gradient(180deg,
+      #fff 0%,
+      rgba(255, 255, 255, 0) clamp(140px, 14vw, 220px),
+      rgba(255, 255, 255, 0) 82%,
+      #fff 100%),
+    radial-gradient(ellipse 34% 48% at 100% 18%, rgba(0, 169, 169, .075), transparent 74%),
+    linear-gradient(180deg,
+      #fff 0%,
+      #f9fbf8 clamp(70px, 7vw, 108px),
+      #f3f6f1 clamp(170px, 16vw, 250px),
+      #f3f6f1 72%,
+      #f9fbf8 90%,
+      #fff 100%);
+}
+.sx-page--panels .sx-channel-light-run { background: #fff; }
+
+/* Insights: um palco escuro e a leitura emocional volta ao campo claro. */
+.sx-page--panels .sx-insights-story.sx-subproduct-run {
+  color: var(--sg-ink);
+  background: #fff !important;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run::after { content: none; }
+.sx-page--panels .sx-insights-story.sx-subproduct-run > .sx-insights-story__bg {
+  opacity: .1;
+  filter: hue-rotate(12deg) saturate(.75);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 14%, #000 86%, transparent 100%);
+}
+.sx-page--panels .sx-subproduct-light-stage {
+  color: var(--sg-ink);
+  border-color: rgba(31, 41, 57, .09);
+  background:
+    radial-gradient(60% 80% at 20% 40%, rgba(0, 169, 169, .1), transparent 70%),
+    #f7fbfa;
+  box-shadow: 0 34px 84px -56px rgba(24, 90, 125, .42);
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-subproduct-light-stage .sx-accordion__item {
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-subproduct-light-stage .sx-accordion__item.is-open {
+  background: linear-gradient(105deg, rgba(0, 169, 169, .075), rgba(255, 255, 255, .82) 72%);
+  box-shadow: inset 0 0 0 1px rgba(0, 169, 169, .16);
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-subproduct-light-stage .sx-accordion__trigger { color: var(--sg-ink); }
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-subproduct-light-stage .sx-accordion__panel p { color: rgba(31, 41, 57, .64); }
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotions-free .sx-subproduct-light-stage {
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotions-free .sx-emotion-stage__visual {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotions-free .sx-emotion-stage__visual::before {
+  inset: 16% 8%;
+  background: rgba(0, 169, 169, .085);
+  filter: blur(68px);
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotions-free .sx-emotion-stage__visual > img {
+  width: min(92%, 760px);
+  max-width: 100%;
+  margin-inline: auto;
+  filter: drop-shadow(0 28px 34px rgba(24, 90, 125, .14));
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotion-stage__content {
+  position: relative;
+  padding: clamp(14px, 2vw, 24px);
+  overflow: hidden;
+  border: 1px solid rgba(31, 41, 57, .085);
+  border-radius: clamp(22px, 2.4vw, 30px);
+  background:
+    radial-gradient(circle at 100% 0, rgba(0, 169, 169, .075), transparent 46%),
+    rgba(255, 255, 255, .72);
+  box-shadow: 0 32px 74px -58px rgba(24, 90, 125, .54);
+  backdrop-filter: blur(14px);
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotion-stage__content::after {
+  position: absolute;
+  right: -76px;
+  bottom: -92px;
+  width: 210px;
+  height: 210px;
+  content: "";
+  border: 1px solid rgba(0, 169, 169, .1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotion-stage__content > * {
+  position: relative;
+  z-index: 1;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotion-stage__content .sx-accordion {
+  gap: 8px;
+  border-top: 0;
+}
+.sx-page--panels .sx-insights-story.sx-subproduct-run .sx-emotion-stage__content .sx-emotion-stage__action {
+  margin: 22px 8px 4px;
+}
+
+/* Brain / no-code: concentra toda a promessa de construção nesta única cena. */
+.sx-page--panels .sx-nocode--featured .sx-feature {
+  grid-template-columns: minmax(280px, .62fr) minmax(0, 1.38fr);
+  gap: clamp(44px, 7vw, 96px);
+  align-items: center;
+}
+.sx-page--panels .sx-nocode--featured .sx-nocode__copy { position: relative; z-index: 3; }
+.sx-page--panels .sx-nocode--featured .sx-nocode__copy .sx-h2 {
+  max-width: 13ch;
+  font-size: clamp(2rem, 3.5vw, 3.35rem);
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+.sx-page--panels .sx-nocode--featured .sx-nocode__copy .sx-lead {
+  max-width: 36ch;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, .88);
+  font-size: clamp(1.02rem, 1.25vw, 1.16rem);
+}
+.sx-page--panels .sx-nocode--featured .sx-nocode__copy .sx-body {
+  max-width: 43ch;
+  margin-top: 14px;
+}
+.sx-page--panels .sx-nocode--featured .sx-nocode__builder {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(127, 231, 227, .2);
+  border-radius: 20px;
+  background: #07182f;
+  box-shadow: 0 36px 86px -42px rgba(0, 0, 0, .82), 0 0 52px rgba(93, 166, 255, .1);
+}
+.sx-page--panels .sx-nocode--featured .sx-nocode__builder::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  border-radius: inherit;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .08);
+  pointer-events: none;
+}
+
+/* Channel / automação: reconstrução nativa da cena do antigo vídeo. Os três
+   cartões permanecem independentes e flutuam no próprio ambiente da seção. */
+.sx-page--panels .sx-automate__stage--native,
+.sx-page--panels .sx-automate__stage--native:hover {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+.sx-automation-scene {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 700px);
+  aspect-ratio: 1.32;
+  min-height: 410px;
+  margin-inline: auto;
+  color: #152238;
+}
+.sx-automation-scene::before {
+  position: absolute;
+  z-index: -2;
+  inset: 7% 1% 3%;
+  content: "";
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0, 169, 169, .2), rgba(10, 38, 57, .08) 48%, transparent 72%);
+  filter: blur(24px);
+}
+.sx-automation-scene::after {
+  position: absolute;
+  z-index: -1;
+  inset: 12% -3% 4% 4%;
+  content: "";
+  border: 1px solid rgba(127, 231, 227, .14);
+  border-radius: 50%;
+  transform: rotate(-8deg);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 22% 78%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 22% 78%, transparent);
+  animation: sx-auto-orbit-breathe 8s ease-in-out infinite alternate;
+}
+.sx-automation-scene__halo {
+  position: absolute;
+  z-index: -1;
+  top: 18%;
+  left: 54%;
+  width: 44%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(0, 191, 186, .12);
+  filter: blur(58px);
+  animation: sx-auto-halo-breathe 5.8s ease-in-out infinite alternate;
+}
+.sx-auto-ui {
+  position: absolute;
+  box-sizing: border-box;
+  display: grid;
+  align-content: start;
+  overflow: visible;
+  border: 1px solid rgba(198, 211, 218, .78);
+  border-radius: clamp(10px, 1.25vw, 16px);
+  background: linear-gradient(145deg, #fff 0%, #fff 76%, #f8fbfb 100%);
+  box-shadow:
+    0 34px 60px -34px rgba(1, 11, 25, .88),
+    0 10px 24px -16px rgba(1, 11, 25, .5),
+    inset 0 1px 0 #fff;
+  will-change: transform;
+}
+.sx-auto-ui strong {
+  display: block;
+  color: #152238;
+  font-size: clamp(.8rem, 1.45vw, 1.22rem);
+  font-weight: 650;
+  line-height: 1.18;
+  letter-spacing: -.025em;
+}
+.sx-auto-ui small {
+  display: block;
+  margin-top: 7px;
+  color: #677286;
+  font-size: clamp(.48rem, .72vw, .66rem);
+  font-weight: 600;
+}
+.sx-auto-ui--package {
+  z-index: 1;
+  top: 4%;
+  left: 22%;
+  width: 45%;
+  height: 56%;
+  padding: clamp(32px, 4vw, 50px) clamp(22px, 3.1vw, 38px) clamp(18px, 2.5vw, 30px);
+  animation: sx-auto-assemble-package 9.6s cubic-bezier(.22, .8, .24, 1) infinite;
+}
+.sx-auto-ui--messages {
+  z-index: 3;
+  top: 53%;
+  left: 4%;
+  width: 48%;
+  min-height: 24%;
+  grid-template-columns: clamp(34px, 4.4vw, 50px) minmax(0, 1fr);
+  align-items: center;
+  align-content: center;
+  gap: clamp(12px, 1.8vw, 20px);
+  padding: clamp(16px, 2.2vw, 26px);
+  animation: sx-auto-assemble-messages 9.6s cubic-bezier(.22, .8, .24, 1) infinite;
+}
+.sx-auto-ui--schedule {
+  z-index: 2;
+  top: 31%;
+  left: 46%;
+  width: 50%;
+  height: 61%;
+  align-content: end;
+  padding: clamp(58px, 7.2vw, 86px) clamp(22px, 3vw, 36px) clamp(20px, 2.7vw, 32px);
+  animation: sx-auto-assemble-schedule 9.6s cubic-bezier(.22, .8, .24, 1) infinite;
+}
+.sx-auto-ui--schedule > strong { text-align: center; }
+.sx-auto-ui__window-dots {
+  position: absolute;
+  top: clamp(14px, 1.8vw, 21px);
+  left: clamp(16px, 2.1vw, 24px);
+  display: flex;
+  gap: 5px;
+}
+.sx-auto-ui__window-dots i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #dbe3e7;
+}
+.sx-auto-ui__channel {
+  position: relative;
+  width: clamp(34px, 4.4vw, 50px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(145deg, #13bfb9, #00a29f);
+  box-shadow: 0 14px 28px -15px rgba(0, 169, 169, .8), 0 0 0 1px rgba(255, 255, 255, .3) inset;
+}
+.sx-auto-ui__channel svg {
+  width: 52%;
+  height: 52%;
+  stroke: currentColor;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sx-auto-ui__channel--package {
+  position: absolute;
+  top: 10%;
+  right: -10%;
+  width: clamp(42px, 5.5vw, 62px);
+  animation:
+    sx-auto-channel-pulse 3.4s ease-in-out infinite,
+    sx-auto-node-package 9.6s cubic-bezier(.2, .9, .25, 1) infinite;
+}
+.sx-auto-ui--schedule > .sx-auto-ui__channel {
+  position: absolute;
+  top: -10%;
+  left: 44%;
+  width: clamp(44px, 5.8vw, 66px);
+  transform: translateX(-50%);
+  animation:
+    sx-auto-channel-pulse 3.4s ease-in-out -1.2s infinite,
+    sx-auto-node-schedule 9.6s cubic-bezier(.2, .9, .25, 1) infinite;
+}
+.sx-auto-ui__channel b {
+  position: absolute;
+  top: -4px;
+  right: -3px;
+  min-width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
+  padding-inline: 4px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  color: #fff;
+  background: #f04455;
+  font-size: 8px;
+  line-height: 1;
+  animation: sx-auto-notification 4.8s ease-in-out infinite;
+}
+.sx-auto-ui__lines {
+  display: grid;
+  gap: clamp(7px, .9vw, 10px);
+  margin-top: clamp(18px, 2.6vw, 30px);
+  transform-origin: left center;
+}
+.sx-auto-ui__lines i {
+  display: block;
+  width: 100%;
+  height: clamp(4px, .55vw, 7px);
+  overflow: hidden;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #e3e9ec 0 38%, #f4f7f8 50%, #e3e9ec 62% 100%);
+  background-size: 220% 100%;
+  animation: sx-auto-line-shimmer 5.2s ease-in-out infinite;
+}
+.sx-auto-ui__lines i:nth-child(2) { width: 78%; animation-delay: -.8s; }
+.sx-auto-ui__lines i:nth-child(3) { width: 56%; animation-delay: -1.5s; }
+.sx-auto-ui__lines.is-compact {
+  gap: clamp(5px, .65vw, 8px);
+  margin-top: clamp(10px, 1.2vw, 15px);
+}
+.sx-auto-ui__lines.is-compact i { height: clamp(3px, .42vw, 5px); }
+.sx-auto-ui__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: clamp(18px, 2.3vw, 28px);
+  transform-origin: center;
+}
+.sx-auto-ui__actions span {
+  padding: clamp(7px, .9vw, 10px) 5px;
+  border-radius: 999px;
+  color: #697485;
+  background: #eef2f3;
+  text-align: center;
+  font-size: clamp(.43rem, .68vw, .62rem);
+  font-weight: 650;
+}
+.sx-auto-ui__actions span:last-child {
+  color: #fff;
+  background: linear-gradient(100deg, #12bdb7, #00a9a9);
+  box-shadow: 0 8px 18px -10px rgba(0, 169, 169, .9);
+}
+/* Montagem completa da interface. O ciclo reserva o último trecho para a
+   leitura e apaga tudo junto antes de reiniciar, sem salto de quadro. */
+@keyframes sx-auto-assemble-package {
+  0%, 3% { opacity: 0; transform: translate3d(0, 34px, 0) scale(.91) rotate(-1.2deg); }
+  14% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(-.25deg); }
+  48% { transform: translate3d(0, -5px, 0) scale(1) rotate(.12deg); }
+  86% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(-.1deg); }
+  94% { opacity: 1; transform: translate3d(0, -3px, 0) scale(1) rotate(0); }
+  100% { opacity: 0; transform: translate3d(0, -14px, 0) scale(.97) rotate(.2deg); }
+}
+@keyframes sx-auto-assemble-schedule {
+  0%, 18% { opacity: 0; transform: translate3d(46px, 34px, 0) scale(.9) rotate(1.4deg); }
+  32% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(.2deg); }
+  58% { transform: translate3d(3px, -6px, 0) scale(1) rotate(-.12deg); }
+  88% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(.08deg); }
+  94% { opacity: 1; transform: translate3d(0, -3px, 0) scale(1) rotate(0); }
+  100% { opacity: 0; transform: translate3d(10px, -13px, 0) scale(.97) rotate(-.2deg); }
+}
+@keyframes sx-auto-assemble-messages {
+  0%, 35% { opacity: 0; transform: translate3d(-52px, 24px, 0) scale(.89) rotate(-1.1deg); }
+  49% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(.18deg); }
+  70% { transform: translate3d(-3px, -5px, 0) scale(1) rotate(-.14deg); }
+  88% { opacity: 1; transform: translate3d(0, 0, 0) scale(1) rotate(.06deg); }
+  94% { opacity: 1; transform: translate3d(0, -3px, 0) scale(1) rotate(0); }
+  100% { opacity: 0; transform: translate3d(-9px, -12px, 0) scale(.97) rotate(.2deg); }
+}
+.sx-auto-ui--package > :is(strong, small, .sx-auto-ui__lines) {
+  animation: sx-auto-content-package 9.6s ease infinite;
+}
+.sx-auto-ui--schedule > :is(strong, .sx-auto-ui__lines, .sx-auto-ui__actions) {
+  animation: sx-auto-content-schedule 9.6s ease infinite;
+}
+.sx-auto-ui--messages > div {
+  animation: sx-auto-content-messages 9.6s ease infinite;
+}
+.sx-auto-ui--messages > .sx-auto-ui__channel {
+  animation: sx-auto-node-messages 9.6s cubic-bezier(.2, .9, .25, 1) infinite;
+}
+@keyframes sx-auto-content-package {
+  0%, 9% { opacity: 0; transform: translateY(10px); }
+  19%, 94% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-5px); }
+}
+@keyframes sx-auto-content-schedule {
+  0%, 28% { opacity: 0; transform: translateY(12px); }
+  40%, 94% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-5px); }
+}
+@keyframes sx-auto-content-messages {
+  0%, 45% { opacity: 0; transform: translateX(-12px); }
+  56%, 94% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateX(5px); }
+}
+@keyframes sx-auto-node-package {
+  0%, 12% { opacity: 0; scale: .35; }
+  18% { opacity: 1; scale: 1.13; }
+  22%, 94% { opacity: 1; scale: 1; }
+  100% { opacity: 0; scale: .8; }
+}
+@keyframes sx-auto-node-schedule {
+  0%, 29% { opacity: 0; scale: .35; }
+  35% { opacity: 1; scale: 1.13; }
+  39%, 94% { opacity: 1; scale: 1; }
+  100% { opacity: 0; scale: .8; }
+}
+@keyframes sx-auto-node-messages {
+  0%, 45% { opacity: 0; scale: .35; }
+  51% { opacity: 1; scale: 1.13; }
+  55%, 94% { opacity: 1; scale: 1; }
+  100% { opacity: 0; scale: .8; }
+}
+@keyframes sx-auto-channel-pulse {
+  0%, 100% { box-shadow: 0 14px 28px -15px rgba(0, 169, 169, .8), 0 0 0 0 rgba(65, 222, 214, 0); }
+  48% { box-shadow: 0 16px 32px -13px rgba(0, 169, 169, .9), 0 0 0 10px rgba(65, 222, 214, .08); }
+}
+@keyframes sx-auto-notification {
+  0%, 74%, 100% { transform: scale(1); }
+  80% { transform: scale(1.2); }
+  87% { transform: scale(.96); }
+}
+@keyframes sx-auto-line-shimmer {
+  0%, 30% { background-position: 110% 0; }
+  70%, 100% { background-position: -110% 0; }
+}
+@keyframes sx-auto-orbit-breathe {
+  from { opacity: .42; transform: rotate(-9deg) scale(.98); }
+  to { opacity: .9; transform: rotate(-5deg) scale(1.025); }
+}
+@keyframes sx-auto-halo-breathe {
+  from { opacity: .55; transform: scale(.9); }
+  to { opacity: 1; transform: scale(1.08); }
+}
+
+@media (max-width: 760px) {
+  .sx-page--panels { --sx-hero-top-space: 82px; }
+  .sx-page--panels .sx-hero.sx-subproduct-hero {
+    width: calc(100% - 16px);
+    min-height: max(600px, calc(100svh - var(--sx-hero-top-space) - 8px));
+    margin-inline: 8px;
+    padding-block: 124px 74px !important;
+    border-radius: 16px;
+  }
+  .sx-page--panels .sx-subproduct-hero .sx-h1 { font-size: clamp(2.25rem, 10.5vw, 3.25rem); }
+  .sx-page--panels :is(.sx-section, .sx-band).sx-subproduct-stage,
+  .sx-page--panels .sx-section.sx-subproduct-proof {
+    width: calc(100% - 16px);
+    margin-inline: 8px;
+    border-radius: 20px;
+  }
+  .sx-page--panels .sx-nocode--featured .sx-feature { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .sx-page--panels .sx-nocode--featured .sx-nocode__copy .sx-h2 { max-width: 16ch; }
+  .sx-automation-scene { min-height: 360px; }
+}
+
+@media (max-width: 470px) {
+  .sx-automation-scene { aspect-ratio: 1.02; min-height: 330px; }
+  .sx-auto-ui--package { left: 18%; width: 51%; }
+  .sx-auto-ui--messages { left: 0; width: 54%; }
+  .sx-auto-ui--schedule { left: 45%; width: 55%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-automation-scene::after,
+  .sx-automation-scene__halo,
+  .sx-auto-ui,
+  .sx-auto-ui__channel,
+  .sx-auto-ui__channel b,
+  .sx-auto-ui__lines i,
+  .sx-auto-ui--package > :is(strong, small, .sx-auto-ui__lines),
+  .sx-auto-ui--schedule > :is(strong, .sx-auto-ui__lines, .sx-auto-ui__actions),
+  .sx-auto-ui--messages > div { animation: none !important; }
+}

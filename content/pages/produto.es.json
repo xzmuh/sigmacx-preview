@@ -6,7 +6,22 @@
   "hero": {
     "title": "Conectamos cada punto del **recorrido del cliente**",
     "lead": "Unificamos canales, automatizamos procesos y transformamos cada interacción en resultados tangibles. Con SigmaCX, cada etapa de la experiencia del cliente se vuelve más consistente, inteligente y fluida.",
-    "cta": "Habla con un experto"
+    "cta": "Habla con un experto",
+    "trust": "Clientes SigmaCX"
+  },
+  "suiteIntro": {
+    "title": "Sigma Brain + **Sigma Channel**",
+    "lead": "Unificamos canales, automatizamos procesos y transformamos cada interacción en resultados tangibles."
+  },
+  "overview": {
+    "eyebrow": "Sigma Suite",
+    "title": "Unificamos canales, automatizamos procesos y transformamos cada **interacción en resultados tangibles**.",
+    "lead": "Con SigmaCX, cada etapa de la experiencia del cliente se vuelve más consistente, inteligente y fluida.",
+    "items": [
+      { "title": "Sigma Brain", "body": "No es un producto independiente, sino el motor inteligente del ecosistema SigmaCX. Funciona en todos los canales, ejecutando acciones que resuelven demandas de forma integral, combinando contexto, automatización y personalización." },
+      { "title": "Sigma Channel", "body": "Todos tus canales en una sola plataforma, con una visión integrada de tus interacciones." },
+      { "title": "Sigma Insights", "body": "Con SigmaCX, tus conversaciones dejan de ser simples registros: se transforman en inteligencia para elevar el servicio al cliente." }
+    ]
   },
   "cases": {
     "title": "Soluciones que construimos juntos",
@@ -59,7 +74,8 @@
         "body": "La optimización de los guiones redujo los contactos repetidos."
       }
     ],
-    "tecbanQuote": "Cuando escuchar al cliente se convierte en resultado de negocio."
+    "tecbanQuote": "Cuando escuchar al cliente se convierte en resultado de negocio.",
+    "lead": "Resultados medidos en la operación de quienes ya trabajan con SigmaCX."
   },
   "brain": {
     "title": "Sigma Brain responde, se adapta y resuelve por ti.",
@@ -110,7 +126,8 @@
     "source": "Fuente: Folio 3"
   },
   "video": {
-    "eyebrow": "En acción",
-    "title": "Mira Sigma Suite en funcionamiento"
+    "eyebrow": "Demo de la plataforma",
+    "title": "Mira cómo el recorrido completo **cobra vida**",
+    "lead": "Unificamos canales, automatizamos procesos y transformamos cada interacción en resultados tangibles."
   }
 }

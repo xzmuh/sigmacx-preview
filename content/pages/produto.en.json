@@ -6,7 +6,22 @@
   "hero": {
     "title": "Connecting every dot of the **customer journey**",
     "lead": "We unify channels, automate processes, and transform interactions into results. With SigmaCX, every point of the customer journey gains consistency, intelligence, and fluidity.",
-    "cta": "Talk to an expert"
+    "cta": "Talk to an expert",
+    "trust": "SigmaCX clients"
+  },
+  "suiteIntro": {
+    "title": "Sigma Brain + **Sigma Channel**",
+    "lead": "We unify channels, automate processes, and transform interactions into results."
+  },
+  "overview": {
+    "eyebrow": "Sigma Suite",
+    "title": "We unify channels, automate processes, and transform **interactions into results**.",
+    "lead": "With SigmaCX, every point of the customer journey gains consistency, intelligence, and fluidity.",
+    "items": [
+      { "title": "Sigma Brain", "body": "It's not a standalone product, but rather part of the SigmaCX ecosystem. It's the platform's intelligent engine: it operates across all channels, executing actions to resolve end-to-end demands, combining context, automation and personalization." },
+      { "title": "Sigma Channel", "body": "Centralize all service channels on a single platform and have a complete and integrated view of interactions." },
+      { "title": "Sigma Insights", "body": "With SigmaCX, your conversations are no longer just records; they become input for improving customer service." }
+    ]
   },
   "cases": {
     "title": "Solutions we build together",
@@ -59,7 +74,8 @@
         "body": "Script changes reduced the volume of repeat contacts."
       }
     ],
-    "tecbanQuote": "When listening to the customer turns into business results."
+    "tecbanQuote": "When listening to the customer turns into business results.",
+    "lead": "Results measured in the operations of companies already running SigmaCX."
   },
   "brain": {
     "title": "Sigma Brain responding, adjusting and solving for you.",
@@ -110,7 +126,8 @@
     "source": "Source: Folio 3"
   },
   "video": {
-    "eyebrow": "In action",
-    "title": "See Sigma Suite at work"
+    "eyebrow": "Platform demo",
+    "title": "See the complete journey **come to life**",
+    "lead": "We unify channels, automate processes, and transform interactions into results."
   }
 }

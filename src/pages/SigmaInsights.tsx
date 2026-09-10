@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
-import { SectionTransition } from "../site/SectionTransition";
-import { FeatureAccordion, TechLines, Video, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
+import { FeatureAccordion, TechLines, Video, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
 import { CASE_TECBAN_PDF, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
 import { href, pick, rich, useLang } from "../lib/i18n";
 import { Link } from "react-router-dom";
 import BorderGlow from "../components/BorderGlow";
+import ModuleVideoSection from "../components/ModuleVideoSection";
 import pt from "../../content/pages/sigma-insights.pt.json";
 import en from "../../content/pages/sigma-insights.en.json";
 import es from "../../content/pages/sigma-insights.es.json";
@@ -23,9 +23,9 @@ export default function SigmaInsights() {
   const [activeEmotion, setActiveEmotion] = useState(0);
 
   return (
-    <PageShell title={t.meta.title} description={t.meta.description} theme="suite">
+    <PageShell title={t.meta.title} description={t.meta.description} theme="suite" variant="panels">
       {/* 1. Hero: titulo, apoio e CTA (o video vem logo abaixo) */}
-      <section className="sx-hero sx-hero--insights sx-dark sx-hero--live">
+      <section className="sx-hero sx-hero--insights sx-dark sx-hero--live sx-subproduct-hero">
         <div className="sx-hero__aura" aria-hidden="true" />
         <TechLines variant="suite" />
         <div className="sx-shell sx-hero__inner">
@@ -38,23 +38,14 @@ export default function SigmaInsights() {
         </div>
       </section>
 
-      <SectionTransition to="light" />
-
-      {/* 2. Video de apresentacao */}
-      <section className="sx-section sx-section--tight sx-section--tint" data-reveal>
-        <div className="sx-shell">
-          <div className="sx-video-head"><p className="sx-eyebrow">{t.video.eyebrow}</p><h2 className="sx-h2"><SplitText text={t.video.title} /></h2></div>
-          <SuiteGlow className="sx-glow--wide" animated><Vimeo id={VIMEO.insightsHero} className="sx-video--dark" title="Sigma Insights" /></SuiteGlow>
-        </div>
-      </section>
-
-      {/* 3. Console interativo de dashboards */}
-      <section className="sx-section sx-section--wm" data-reveal>
+      {/* 2. Console interativo de dashboards */}
+      <section className="sx-section sx-section--wm sx-subproduct-story" data-reveal>
         <Watermark side="left" />
         <div className="sx-shell">
           <div className="sx-editorial-head sx-editorial-head--center">
-            <p className="sx-eyebrow">Sigma Insights</p>
+            <p className="sx-eyebrow">{t.dashboards.eyebrow}</p>
             <h2 className="sx-h2"><SplitText text={t.dashboards.title} /></h2>
+            <p className="sx-lead">{t.dashboards.lead}</p>
           </div>
           <div className="sx-insights-console">
             <div className="sx-insights-console__media">
@@ -69,20 +60,21 @@ export default function SigmaInsights() {
         </div>
       </section>
 
-      <SectionTransition to="dark" />
-      <div className="sx-insights-story sx-dark">
+      <div className="sx-insights-story sx-subproduct-run">
         <img className="sx-insights-story__bg" src="/media/site/insights-lines.svg" alt="" aria-hidden="true" />
 
       {/* 4. Voz: vídeo e leitura sincronizados */}
-      <section className="sx-section" data-reveal>
+      <section className="sx-section sx-dark sx-subproduct-stage" data-reveal>
+        <TechLines variant="suite" />
         <div className="sx-shell sx-insights-split">
           <div className="sx-insights-split__media">
             <SuiteGlow radius={22}><Video src={VIDEO.designer} className="sx-video--tall sx-video--bare" /></SuiteGlow>
             <span className="sx-insights-split__marker">0{activeVoice + 1}</span>
           </div>
           <div className="sx-insights-split__content">
-            <p className="sx-eyebrow">Speech analytics</p>
+            <p className="sx-eyebrow">{t.voice.eyebrow}</p>
             <h2 className="sx-h2"><SplitText text={t.voice.title} /></h2>
+            <p className="sx-lead">{t.voice.lead}</p>
             <FeatureAccordion items={t.voice.items} icons={voiceIcons} active={activeVoice}
               onChange={setActiveVoice} label={t.voice.title} />
             <p className="sx-insights-split__action">
@@ -95,16 +87,17 @@ export default function SigmaInsights() {
       {/* 6. Leitura emocional imersiva */}
       <section className="sx-section sx-section--flush sx-emotions-free" data-reveal>
         <div className="sx-shell">
-          <div className="sx-emotion-stage sx-dark">
+          <div className="sx-emotion-stage sx-subproduct-light-stage">
             <div className="sx-emotion-stage__head">
-              <p className="sx-eyebrow">Sigma Insights</p>
+              <p className="sx-eyebrow">{t.emotions.eyebrow}</p>
               <h2 className="sx-h2"><SplitText text={t.emotions.title} /></h2>
+              <p className="sx-lead">{t.emotions.lead}</p>
             </div>
             <div className="sx-emotion-stage__body">
               <div className="sx-emotion-stage__visual">
                 <img src="/media/site/ssss-01.webp" alt="" loading="lazy" />
               </div>
-              <div>
+              <div className="sx-emotion-stage__content">
                 <FeatureAccordion items={t.emotions.items} icons={patternIcons} active={activeEmotion}
                   onChange={setActiveEmotion} label={t.emotions.title} />
                 <p className="sx-emotion-stage__action">
@@ -117,14 +110,22 @@ export default function SigmaInsights() {
       </section>
 
       </div>
-      <SectionTransition to="light" />
+
+      <ModuleVideoSection
+        eyebrow={t.video.eyebrow}
+        title={t.video.title}
+        lead={t.hero.lead}
+        vimeoId={VIMEO.insightsHero}
+        videoTitle="Sigma Insights"
+      />
 
       {/* 7. Benefícios em composição editorial assimétrica */}
-      <section className="sx-section sx-section--atmosphere" data-reveal>
+      <section className="sx-section sx-section--atmosphere sx-subproduct-cases" data-reveal>
         <div className="sx-shell">
           <div className="sx-editorial-head">
             <p className="sx-eyebrow">Sigma Insights</p>
             <h2 className="sx-h2"><SplitText text={t.benefits.title} /></h2>
+            <p className="sx-lead">{t.benefits.lead}</p>
           </div>
           <div className="sx-benefits-bento">
             <BorderGlow

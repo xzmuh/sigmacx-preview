@@ -18,16 +18,22 @@ type PageShellProps = {
    * de produto. Ver site/suite.css.
    */
   theme?: "default" | "suite";
+  /** "panels": paginas na direcao de paineis arredondados (ver site/panel.css). */
+  variant?: "panels";
+  /** false quando a propria pagina ja termina com a sua chamada (ex.: o
+   *  formulario de /investidores) e o CTA de demo soaria repetido. */
+  finalCta?: boolean;
 };
 
 /**
  * Pagina branca com header fixo e bloco final escuro (CTA + rodape).
  * A emenda diagonal animada faz a passagem do branco para o navy.
  */
-export function PageShell({ children, title, description, endsLight = true, theme = "default" }: PageShellProps) {
+export function PageShell({ children, title, description, endsLight = true, theme = "default", variant, finalCta = true }: PageShellProps) {
   const { pathname } = useLocation();
   const lang = useLang();
   const skip = pick(ui as Record<Lang, typeof ui.pt>, lang).nav.skip;
+  const expandingFooter = theme === "suite" && variant === "panels" && endsLight;
   useSuiteMotion(theme === "suite");
 
   useEffect(() => {
@@ -51,15 +57,22 @@ export function PageShell({ children, title, description, endsLight = true, them
   }, [title, description]);
 
   return (
-    <div className={theme === "suite" ? "sx-page sx-page--suite" : "sx-page"}>
+    <div className={`${theme === "suite" ? "sx-page sx-page--suite" : "sx-page"}${variant ? ` sx-page--${variant}` : ""}`}>
       <a className="sx-skip" href="#conteudo">{skip}</a>
       <SiteHeader />
       <main id="conteudo">{children}</main>
-      {endsLight ? <SectionTransition to="dark" /> : null}
-      <div className="sx-dark sx-footer-wrap">
-        <FinalCta />
-      </div>
-      <SiteFooter />
+      {endsLight && !expandingFooter ? <SectionTransition to="dark" /> : null}
+      {expandingFooter ? <div className="sx-footer-expand">
+        <div className="sx-dark sx-footer-wrap">
+          {finalCta ? <FinalCta /> : null}
+        </div>
+        <SiteFooter />
+      </div> : <>
+        <div className="sx-dark sx-footer-wrap">
+          {finalCta ? <FinalCta /> : null}
+        </div>
+        <SiteFooter />
+      </>}
     </div>
   );
 }

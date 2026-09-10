@@ -8,55 +8,56 @@
     "cta": "Habla con un experto"
   },
   "intro": {
-    "title": "O Sigma Brain é a inteligência por trás das interações digitais",
-    "body": "Ele atua tanto em voz quanto em texto, um agente de IA autônomo, capaz de compreender intenções, analisar sentimentos e agir em toda jornada para resolver solicitações de clientes.",
+    "title": "**Sigma Brain** resuelve, no solo responde",
+    "body": "La inteligencia detrás de las interacciones digitales: un agente de IA autónomo en voz y texto, capaz de comprender intenciones, analizar sentimientos y actuar en todo el recorrido para resolver solicitudes de los clientes.",
     "cta": "¿Cuál es la diferencia entre los chatbots y los agentes de IA?"
   },
   "pillars": {
-    "title": "Deixe seu atendimento falar por você",
+    "title": "Deja que tu atención **hable por ti**",
     "items": [
       {
-        "eyebrow": "Diálogos naturais e empáticos que resolvem de primeira",
-        "title": "Ofereça conversas fluidas e eficazes 24/7",
-        "body": "Com IA generativa e reconhecimento de linguagem natural, o Sigma Brain entende linguagem natural de forma contextual, elevando a taxa de resolução no primeiro contato e engajamento emocional."
+        "title": "Ofrece conversaciones fluidas y eficaces 24/7",
+        "body": "Con IA generativa y reconocimiento de lenguaje natural, Sigma Brain entiende el contexto de cada conversación. Eso eleva la tasa de resolución en el primer contacto y el compromiso emocional."
       },
       {
-        "eyebrow": "Suporte multilinguístico e contextual global",
-        "title": "Fale o idioma do cliente, em qualquer lugar",
-        "body": "Traduza chamadas em tempo real e e adapte o estilo de comunicação ao perfil cultural. Além disso, personalize a experiência com sotaques configuráveis, tornando a interação mais próxima e natural para cada público."
+        "title": "Habla el idioma del cliente, en cualquier lugar",
+        "body": "Traduce llamadas en tiempo real y adapta el estilo de comunicación al perfil cultural. Los acentos configurables hacen la interacción más cercana y natural para cada público."
       },
       {
-        "eyebrow": "",
-        "title": "Atendimento empático em cada chamada",
-        "body": "Identifique o tom de voz e o estado emocional do cliente em tempo real, e ajuste suas respostas para transmitir empatia. Com análise de sentimentos integrada e adaptação de linguagem, crie conversas mais humanas, fortalecendo a confiança e aumentando a satisfação."
+        "title": "Atención empática en cada llamada",
+        "body": "Identifica el tono de voz y el estado emocional del cliente en tiempo real y ajusta las respuestas para transmitir empatía. Con análisis de sentimiento integrado y adaptación del lenguaje, las conversaciones se vuelven más humanas, lo que fortalece la confianza y aumenta la satisfacción."
       }
-    ]
+    ],
+    "lead": "Tres cosas que Sigma Brain hace en cada conversación."
   },
   "tabs": [
     {
       "label": "Estar presente en todos los canales",
-      "body": "Conecte-se por voz, chat, redes sociais e aplicativos de mensagem em uma experiência contínua, sem que o cliente precise repetir informações."
+      "body": "Conéctate por voz, chat, redes sociales y aplicaciones de mensajería en una experiencia continua, sin que el cliente tenga que repetir información.",
+      "headline": "Una sola conversación, en cualquier canal"
     },
     {
       "label": "Gana eficiencia a escala",
-      "body": "Automatiza los flujos de trabajo sin código y reduce las tareas manuales, liberando a tu equipo para interacciones estratégicas de mayor valor."
+      "body": "Automatiza los flujos de trabajo sin código y reduce las tareas manuales, liberando a tu equipo para interacciones estratégicas de mayor valor.",
+      "headline": "Menos tarea manual, más escala"
     },
     {
       "label": "Ofrecer experiencias más humanas",
-      "body": "Utiliza IA generativa para comprender la intención, analiza el sentimiento y ofrece respuestas contextuales que aumenten la satisfacción del cliente."
+      "body": "Utiliza IA generativa para comprender la intención, analiza el sentimiento y ofrece respuestas contextuales que aumenten la satisfacción del cliente.",
+      "headline": "Respuestas que entienden el contexto"
     }
   ],
   "configurable": {
-    "title": "Autônomo e totalmente configurável",
-    "adjust": "Faça ajustes quando quiser",
+    "title": "Autónomo y totalmente **configurable**",
+    "adjust": "Haz ajustes cuando quieras",
     "items": [
       {
-        "title": "Construa bots em minutos",
-        "body": "Crie assistentes inteligentes sem programação e reduza drasticamente o tempo de lançamento."
+        "title": "Construye bots en minutos",
+        "body": "Crea asistentes inteligentes sin programación y reduce drásticamente el tiempo de lanzamiento."
       },
       {
-        "title": "Escale canais com um clique",
-        "body": "Expanda rapidamente para WhatsApp, voz, redes sociais e muito mais, sem complexidade técnica."
+        "title": "Escala canales con un clic",
+        "body": "Expande rápidamente a WhatsApp, voz, redes sociales y mucho más, sin complejidad técnica."
       }
     ],
     "cta": "Saber más",
@@ -74,15 +75,16 @@
       "zoomIn": "Acercar",
       "zoomOut": "Alejar",
       "fit": "Encuadrar"
-    }
+    },
+    "lead": "Del primer asistente al canal nuevo, sin depender de código."
   },
   "journeys": {
     "title": "Construa jornadas flexíveis",
     "body": "Ofereça menus interativos, direcione clientes para diferentes ações e simplifique cada etapa do atendimento."
   },
   "nocode": {
-    "title": "Crie, ajuste e escale jornadas de atendimento sem precisar de código",
-    "body": "O no-code coloca o poder da inovação nas mãos do seu time. Fluxos, campanhas e análises podem ser configurados de forma visual e intuitiva, reduzindo dependência de equipes técnicas e acelerando o tempo de resposta às demandas do negócio.",
+    "title": "Crea, ajusta y escala recorridos sin código",
+    "body": "Flujos, campañas y análisis se configuran de forma visual e intuitiva. Eso reduce la dependencia de equipos técnicos y acelera el tiempo de respuesta a las demandas del negocio.",
     "cta": "Solicite una demostración",
     "builder": {
       "windowTitle": "Builder / Campaña · Auto chequeo de vehículo",
@@ -104,7 +106,8 @@
       "nodeHint": "Arrastre para mover, o use las flechas del teclado. Suprimir quita el bloque.",
       "added": "añadido al flujo",
       "removed": "Bloque quitado del flujo"
-    }
+    },
+    "lead": "El no-code pone el poder de la innovación en manos de tu equipo."
   },
   "benefits": {
     "title": "Principales beneficios",
@@ -119,14 +122,15 @@
       },
       {
         "title": "Resolución de extremo a extremo",
-        "body": "no sólo responde sino que actúa, ejecuta y completa procesos, como un colaborador digital."
+        "body": "No solo responde: actúa, ejecuta y completa procesos, como un colaborador digital."
       },
       {
         "title": "Aprendizaje continuo",
         "body": "Mejora con cada interacción, identificando patrones y anticipándose a las necesidades."
       }
     ],
-    "cta": "Pruebe"
+    "cta": "Pruebe",
+    "lead": "Lo que cambia en tu operación con Sigma Brain."
   },
   "video": {
     "eyebrow": "En acción",
