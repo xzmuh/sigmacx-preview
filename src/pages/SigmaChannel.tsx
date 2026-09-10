@@ -32,7 +32,7 @@ export default function SigmaChannel() {
         <div className="sx-hero__aura" aria-hidden="true" />
         <TechLines variant="channel" />
         <div className="sx-shell sx-hero__inner sx-hero__inner--left">
-          <p className="sx-eyebrow">{t.hero.badge}</p>
+          <div className="sx-product-hero-brand"><img src="/media/brand/sigma-channel-white.png" alt="Sigma Channel" /></div>
           <h1 className="sx-h1"><SplitText text={t.hero.title} /></h1>
           <p className="sx-lead">{t.hero.lead}</p>
           <a className="sx-cta sx-cta--grad sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">

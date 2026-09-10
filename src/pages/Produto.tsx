@@ -54,7 +54,7 @@ export default function Produto() {
         <TechLines variant="suite" />
         <div className="sx-panel__inner">
           <div className="sx-shell">
-            <p className="sx-eyebrow">Sigma Suite</p>
+            <div className="sx-product-hero-brand sx-product-hero-brand--suite"><img src="/media/brand/sigma-white.png" alt="Sigma" /><span>Suite</span></div>
             <h1 className="sx-h1"><SplitText text={t.hero.title} onDark /></h1>
             <p className="sx-lead">{t.hero.lead}</p>
             <p className="sx-panel__actions">
@@ -113,17 +113,17 @@ export default function Produto() {
           <img className="sx-platform-products__mark" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
           <div className="sx-shell" data-reveal>
             <header className="sx-platform-products__head">
-              <p className="sx-eyebrow">Sigma Suite</p>
+              <p className="sx-eyebrow sx-platform-products__brand"><img src="/media/brand/sigma-white.png" alt="Sigma" loading="lazy" /><span>Suite</span></p>
               <h2 className="sx-h2"><SplitText text={t.suiteIntro.title} onDark /></h2>
               <p className="sx-lead">{t.suiteIntro.lead}</p>
             </header>
 
             <div className="sx-platform-products__nav" role="tablist" aria-label="Sigma Suite">
-              {["Sigma Brain", "Sigma Channel"].map((label, index) => (
+              {["Brain", "Channel"].map((label, index) => (
                 <button key={label} type="button" role="tab" id={`suite-tab-${index}`}
                   aria-selected={activeSuite === index} aria-controls={`suite-panel-${index}`}
                   className={activeSuite === index ? "is-active" : ""} onClick={() => setActiveSuite(index)}>
-                  <span>0{index + 1}</span>{label}
+                  <img src={`/media/brand/sigma-${index === 0 ? "brain" : "channel"}-${activeSuite === index ? "default" : "white"}.png`} alt={`Sigma ${label}`} loading="lazy" />
                 </button>
               ))}
             </div>

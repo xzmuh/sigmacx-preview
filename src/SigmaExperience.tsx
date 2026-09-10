@@ -12,6 +12,7 @@ import {
   useState,
 } from "react";
 import { SiteHeader } from "./site/SiteHeader";
+import { Link } from "react-router-dom";
 import { startDialogiJourney } from "./site/ProductJourney";
 import { href, langFromPath } from "./lib/i18n";
 import GradientText from "./components/GradientText";
@@ -466,9 +467,9 @@ export function SigmaExperience() {
 
         gsap.to(".client-rail__track", { xPercent: -50, duration: 28, ease: "none", repeat: -1 });
 
-        gsap.to(".insight-visual span", {
+        gsap.to(".insight-wave rect", {
           scaleY: 0.28,
-          transformOrigin: "bottom",
+          transformOrigin: "center",
           duration: 0.75,
           stagger: { each: 0.08, yoyo: true, repeat: -1 },
           ease: "sine.inOut",
@@ -773,33 +774,37 @@ export function SigmaExperience() {
               <LazyVideo src="/media/brain.mp4" label="Holograma de cérebro representando a inteligência Sigma Brain" />
               <div className="suite-overlay" />
               <div className="suite-card-content">
-                <span className="suite-code">01 — GENERATIVE CORE</span>
                 <h3>Sigma Brain</h3>
                 <p>Agentes de IA autônomos que compreendem intenções e conduzem conversas fluidas, em voz e texto.</p>
                 <a href="https://sigmacx.ai/sigma-brain" target="_blank" rel="noreferrer">Explorar produto ↗</a>
               </div>
             </article>
-            <article className="suite-card suite-card--channel" data-reveal>
+            <article className="suite-card suite-card--channel suite-card--module" data-reveal>
               <div className="channel-visual" aria-hidden="true">
-                <span className="channel-node channel-node--one">WA</span>
+                <span className="channel-node channel-node--one">IA</span>
                 <span className="channel-node channel-node--two">VOZ</span>
                 <span className="channel-node channel-node--three">CHAT</span>
                 <span className="channel-core"><img src="/media/sigma-mark.png" alt="" /></span>
+                <i className="channel-signal channel-signal--one" /><i className="channel-signal channel-signal--two" /><i className="channel-signal channel-signal--three" />
               </div>
               <div className="suite-card-content">
-                <span className="suite-code">02 — OMNICHANNEL FLOW</span>
                 <h3>Sigma Channel</h3>
                 <p>Todos os pontos de contato reunidos numa jornada contínua, segura e inteligente.</p>
+                <Link className="suite-module-link" to="/sigma-channel" aria-label="Conheça o Sigma Channel">→</Link>
               </div>
             </article>
-            <article className="suite-card suite-card--insights" data-reveal>
+            <article className="suite-card suite-card--insights suite-card--module" data-reveal>
               <div className="insight-visual" aria-hidden="true">
-                {[34, 66, 44, 82, 58, 91, 71, 96].map((height, index) => <span key={index} style={{ height: `${height}%` }} />)}
+                  <svg className="insight-wave" viewBox="0 0 360 90" fill="none">
+                    {[4, 7, 12, 12, 20, 38, 24, 26, 50, 86, 70, 34, 20, 42, 56, 34, 22, 12, 12, 14, 10, 6].map((height, index) => (
+                      <rect key={index} x={8 + index * 16} y={(90 - height) / 2} width="5" height={height} rx="2.5" fill={index < 11 ? "#5da6ff" : "#b9ff9b"} />
+                    ))}
+                  </svg>
               </div>
               <div className="suite-card-content">
-                <span className="suite-code">03 — DECISION LAYER</span>
                 <h3>Sigma Insights</h3>
                 <p>Interações viram métricas, padrões e próximos passos para a operação.</p>
+                <Link className="suite-module-link" to="/sigma-insights" aria-label="Conheça o Sigma Insights">→</Link>
               </div>
             </article>
           </div>
@@ -850,6 +855,16 @@ export function SigmaExperience() {
           </div>
         </section>
 
+        </div>
+      </main>
+
+      <div className="home-closing">
+        <div className="home-closing__background" aria-hidden="true">
+          <div className="footer-atmosphere">
+            <span className="footer-orbit footer-orbit--outer" />
+            <span className="footer-orbit footer-orbit--inner" />
+          </div>
+        </div>
         <section className="final-cta section-dark" aria-labelledby="final-title">
           <p className="eyebrow" data-reveal>Vamos conversar?</p>
           <h2 id="final-title" data-reveal>Veja o que a SigmaCX<br />pode fazer por você.</h2>
@@ -857,22 +872,12 @@ export function SigmaExperience() {
             Agende uma demonstração <span aria-hidden="true">↗</span>
           </a>
         </section>
-        </div>
-      </main>
-
-      <div className="footer-bridge" aria-hidden="true" />
       <footer className="footer">
-        <div className="footer-atmosphere" aria-hidden="true">
-          <span className="footer-orbit footer-orbit--outer" />
-          <span className="footer-orbit footer-orbit--inner" />
-          <span className="footer-scan" />
-        </div>
 
         <div className="footer-top">
           <div className="footer-manifesto">
             <div className="footer-identity">
               <img src="/media/logo-white.png" alt="SigmaCX" />
-              <span><i /> SISTEMA ONLINE</span>
             </div>
             <h2>Tecnologia para entender.<br /><em>Inteligência para transformar.</em></h2>
             <p>O hub que conecta canais, interpreta cada conversa e transforma sinais em decisões para negócios que não param de evoluir.</p>
@@ -918,6 +923,7 @@ export function SigmaExperience() {
           <span>Humano no propósito. <b>Tech por natureza.</b></span>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

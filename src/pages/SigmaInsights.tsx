@@ -28,13 +28,15 @@ export default function SigmaInsights() {
       <section className="sx-hero sx-hero--insights sx-dark sx-hero--live sx-subproduct-hero">
         <div className="sx-hero__aura" aria-hidden="true" />
         <TechLines variant="suite" />
-        <div className="sx-shell sx-hero__inner">
-          <p className="sx-eyebrow">{t.hero.badge}</p>
-          <div className="sx-center">
-            <h1 className="sx-h1" style={{ maxWidth: "22ch", marginInline: "auto" }}><SplitText text={t.hero.title} /></h1>
+        <div className="sx-shell sx-hero__inner sx-hero__inner--left">
+          <div className="sx-product-hero-brand"><img src="/media/brand/sigma-insights-white.png" alt="Sigma Insights" /></div>
+          <div>
+            <h1 className="sx-h1" style={{ maxWidth: "22ch" }}><SplitText text={t.hero.title} /></h1>
             <p className="sx-lead">{t.hero.lead}</p>
           </div>
-          <a className="sx-cta sx-cta--outline sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">{t.hero.cta} <span aria-hidden="true">→</span></a>
+          <div className="sx-hero__actions">
+            <a className="sx-cta sx-cta--outline sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">{t.hero.cta} <span aria-hidden="true">→</span></a>
+          </div>
         </div>
       </section>
 

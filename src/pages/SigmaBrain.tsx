@@ -27,7 +27,7 @@ export default function SigmaBrain() {
         <div className="sx-hero__aura" aria-hidden="true" />
         <TechLines variant="brain" />
         <div className="sx-shell sx-hero__inner sx-hero__inner--left">
-          <p className="sx-eyebrow">{t.hero.badge}</p>
+          <div className="sx-product-hero-brand"><img src="/media/brand/sigma-brain-white.png" alt="Sigma Brain" /></div>
           <div>
             <h1 className="sx-h1"><SplitText text={t.intro.title} /></h1>
             <p className="sx-lead">{t.intro.body}</p>

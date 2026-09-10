@@ -413,7 +413,7 @@ export function SplitText({ text, onDark = false }: { text: string; onDark?: boo
               colors={onDark ? ["#7fe7e3", "#40d7cb", "#9ff0ea", "#ffffff"] : ["#185a7d", "#00a9a9", "#136d87", "#1f2939"]}
               animationSpeed={7}
             >
-              {words}
+              {seg.text}
             </GradientText>
           );
           return seg.strong ? <strong key={s}>{gradient}</strong> : <em key={s}>{gradient}</em>;

@@ -83,7 +83,7 @@ html.product-journey-running::view-transition-old(root) {
     calc(50vw - 60vmax + cos(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax + sin(var(--tunnel-angle)) * var(--tunnel-radius)),
     calc(50vw - 60vmax - sin(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax + cos(var(--tunnel-angle)) * var(--tunnel-radius)),
     calc(50vw - 60vmax - cos(var(--tunnel-angle)) * var(--tunnel-radius)) calc(50vh - 60vmax - sin(var(--tunnel-angle)) * var(--tunnel-radius));
-  animation: sigma-home-tunnel-fluid 1500ms cubic-bezier(0.45, 0, 0.18, 1) both;
+  animation: sigma-home-tunnel-fluid 700ms cubic-bezier(0.4, 0, 0.3, 1) both;
   will-change: mask-position, -webkit-mask-position;
 }
 
@@ -259,7 +259,7 @@ html.product-journey-dialogi::view-transition-old(root) {
   }
   to {
     --tunnel-angle: 150deg;
-    --tunnel-radius: 190vmax;
+    --tunnel-radius: 140vmax;
   }
 }
 
@@ -270,7 +270,7 @@ html.product-journey-dialogi::view-transition-old(root) {
   }
   to {
     --tunnel-angle: -150deg;
-    --tunnel-radius: 190vmax;
+    --tunnel-radius: 140vmax;
   }
 }
 
@@ -281,7 +281,7 @@ html.product-journey-dialogi::view-transition-old(root) {
   }
   to {
     --tunnel-angle: 210deg;
-    --tunnel-radius: 190vmax;
+    --tunnel-radius: 140vmax;
   }
 }
 

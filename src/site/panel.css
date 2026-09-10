@@ -540,6 +540,13 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
   text-align: center;
 }
 .sx-platform-products__head .sx-eyebrow { color: #9ff0ea; }
+.sx-product-hero-brand { display: flex; align-items: center; gap: 18px; margin: 0 0 clamp(22px, 3vw, 36px); }
+.sx-product-hero-brand img { display: block; width: auto; height: clamp(32px, 3.5vw, 46px); max-width: 100%; object-fit: contain; object-position: left; }
+.sx-product-hero-brand--suite img { height: clamp(40px, 4vw, 54px); }
+.sx-product-hero-brand--suite > span { padding-left: 18px; border-left: 1px solid #ffffff40; color: #fff; font-size: 1rem; font-weight: 500; letter-spacing: .08em; }
+.sx-platform-products__brand { display: flex; align-items: center; gap: 18px; }
+.sx-platform-products__brand img { display: block; width: 138px; height: auto; }
+.sx-platform-products__brand > span { padding-left: 18px; border-left: 1px solid #ffffff40; font-size: .8rem; letter-spacing: .18em; }
 .sx-page--panels .sx-platform-products__head .sx-h2 {
   max-width: 23ch;
   margin-top: 18px;
@@ -582,6 +589,9 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
   letter-spacing: .12em;
 }
 .sx-platform-products__nav button:hover { color: #fff; border-color: rgba(159, 240, 234, .48); transform: translateY(-2px); }
+.sx-platform-products__nav button { min-width: 0; }
+.sx-platform-products__nav button img { display: block; width: clamp(108px, 14vw, 180px); height: 28px; max-width: 100%; object-fit: contain; }
+.sx-platform-products__nav button.is-active img { filter: none; }
 .sx-platform-products__nav button.is-active {
   color: #082a2c;
   border-color: #9ff0ea;

@@ -22,21 +22,21 @@
 .sx-brain-laser__scene { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(60px, 7vw, 108px); align-items: center; min-height: clamp(440px, 62svh, 560px); padding-block: clamp(40px, 4vw, 56px); }
 .sx-brain-laser__node { position: absolute; z-index: 3; left: 50%; top: 50%; width: 10px; height: 10px; transform: translate(-4px, -50%); border: 2px solid #00a9a9; border-radius: 50%; background: #f0faf8; box-shadow: 0 0 0 7px #00a9a90b; }
 .sx-brain-laser__copy { position: relative; z-index: 1; }
-.sx-brain-laser__copy .sx-h2 { max-width: 24ch; font-size: clamp(1.65rem, 2.4vw, 2.35rem); line-height: 1.1; letter-spacing: -.05em; }
-.sx-brain-laser__copy .sx-lead { max-width: 42ch; font-size: clamp(.98rem, 1.1vw, 1.06rem); }
+.sx-brain-laser__copy .sx-h2 { max-width: 22ch; font-size: clamp(1.9rem, 2.9vw, 2.85rem); line-height: 1.12; letter-spacing: -.045em; }
+.sx-brain-laser__copy .sx-lead { max-width: 44ch; font-size: clamp(1rem, 1.2vw, 1.12rem); line-height: 1.7; }
 .sx-brain-laser__scene:nth-of-type(even) .sx-brain-laser__copy { grid-column: 2; grid-row: 1; }
 .sx-brain-laser__scene:nth-of-type(even) .sx-brain-laser__media { grid-column: 1; grid-row: 1; }
 .sx-brain-laser__media { position: relative; isolation: isolate; display: grid; place-items: center; margin: 0; min-width: 0; }
 .sx-brain-laser__media::before { position: absolute; z-index: -1; inset: -25%; content: ""; background: radial-gradient(ellipse, #58c9ce30, #79b5d512 40%, transparent 68%); pointer-events: none; }
-.sx-brain-laser__media img { display: block; width: 100%; max-width: 460px; max-height: 340px; object-fit: contain; filter: drop-shadow(0 22px 28px #195a7d24); }
-.sx-brain-laser__media--2 img { width: min(80%, 320px); border-radius: 20px; }
+.sx-brain-laser__media img { display: block; width: 100%; max-width: 540px; max-height: 410px; object-fit: contain; filter: drop-shadow(0 22px 28px #195a7d24); }
+.sx-brain-laser__media--2 img { width: min(88%, 380px); border-radius: 20px; }
 @media (max-width: 760px) {
   .sx-brain-laser__rail { left: -31px; }
   .sx-brain-laser__scene { grid-template-columns: minmax(0, 1fr); gap: 20px; min-height: 0; padding: 26px 0 26px 36px; }
   .sx-brain-laser__scene:nth-of-type(even) :is(.sx-brain-laser__copy, .sx-brain-laser__media) { grid-column: auto; grid-row: auto; }
   .sx-brain-laser__node { left: 8px; top: 57px; }
-  .sx-brain-laser__copy .sx-h2 { font-size: clamp(1.6rem, 5.5vw, 2rem); }
-  .sx-brain-laser__media img { width: 100%; max-height: 280px; }
+  .sx-brain-laser__copy .sx-h2 { font-size: clamp(1.8rem, 6vw, 2.3rem); }
+  .sx-brain-laser__media img { width: 100%; max-height: 330px; }
   .sx-brain-laser__copy .sx-brain-flow__kicker { font-size: .6rem; gap: 9px; }
   .sx-brain-laser__copy .sx-brain-flow__kicker::after { display: none; }
 }
