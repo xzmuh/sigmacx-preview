@@ -1,8 +1,9 @@
 import { Fragment, Suspense, lazy, useEffect, useId, useRef, useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
-import { DIALOGI_SITE } from "../site/site-data";
+import { DEMO_URL, DIALOGI_SITE } from "../site/site-data";
 import { pick, rich, useLang } from "../lib/i18n";
 import BorderGlow from "../components/BorderGlow";
+import { DialogiBranches, dialogiIntro } from "../site/DialogiBranches";
 import pt from "../../content/pages/dialogi.pt.json";
 import en from "../../content/pages/dialogi.en.json";
 import es from "../../content/pages/dialogi.es.json";
@@ -226,6 +227,7 @@ export default function Dialogi() {
   const lang = useLang();
   const t = pick({ pt, en, es }, lang);
   const site = DIALOGI_SITE[lang];
+  const intro = dialogiIntro[lang];
   const reduced = useReducedMotion();
   const featureTrackRef = useRef<HTMLDivElement>(null);
   const [activeFeature, setActiveFeature] = useState(2);
@@ -416,27 +418,36 @@ export default function Dialogi() {
             Nenhum texto novo: e a mesma abertura, so que aqui. */}
         <Break tone="dark-light" from={HERO} to={PAGE} />
 
-        <section className="dlg-sec dlg-sec--light dlg-sec--intro" id="recursos">
-          <div className="dlg-x">
-            <div className="dlg-head" data-reveal="up">
-              <span className="dlg-eyebrow">{t.features.kicker}</span>
-              <h2 className="dlg-h2"><Split text={t.features.title} /></h2>
-              <p className="dlg-body">{t.features.body}</p>
+        <section className="dlg-sec dlg-sec--light dlg-connection">
+          <div className="dlg-x dlg-connection__grid">
+            <div className="dlg-connection__copy" data-reveal="up">
+              <span className="dlg-eyebrow">{intro.kicker}</span>
+              <h2 className="dlg-connection__title">{intro.title}<span>{intro.accent}</span></h2>
+              <p className="dlg-connection__body">{intro.body}</p>
+              <div className="dlg-connection__actions">
+                <a href={DEMO_URL} target="_blank" rel="noreferrer">{intro.demo}<span aria-hidden="true">→</span></a>
+                <a href={site} target="_blank" rel="noreferrer">{intro.discover}<span aria-hidden="true">↗</span></a>
+              </div>
             </div>
+            <DialogiBranches lang={lang} />
           </div>
         </section>
 
         <Break tone="light-dark" from={PAGE} to={FEATURES} />
 
         {/* 3. Os recursos: o produto falando, entao fundo escuro. */}
-        <section className="dlg-sec dlg-sec--dark dlg-sec--features">
+        <section className="dlg-sec dlg-sec--dark dlg-sec--features" id="recursos">
           <div className="dlg-features-field" aria-hidden="true">
             <span className="dlg-features-field__dots dlg-features-field__dots--left" />
             <span className="dlg-features-field__dots dlg-features-field__dots--right" />
             <i />
           </div>
           <div className="dlg-x">
-
+            <div className="dlg-head dlg-resources-head" data-reveal="up">
+              <span className="dlg-eyebrow">{t.features.kicker}</span>
+              <h2 className="dlg-h2"><Split text={t.features.title} /></h2>
+              <p className="dlg-body">{t.features.body}</p>
+            </div>
             <div className="dlg-feature-carousel" data-reveal="up">
               <div className="dlg-feature-carousel__track" ref={featureTrackRef}>
               {[0, 1, 2].flatMap((cycle) => t.features.items.map((item, i) => {

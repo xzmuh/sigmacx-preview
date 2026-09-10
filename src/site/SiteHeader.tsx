@@ -59,14 +59,15 @@ export function SiteHeader() {
   const close = () => { setMenuOpen(false); setDropOpen(false); setCompanyOpen(false); };
   const openProducts = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     close();
-    // Nova aba, atalhos do navegador e navegacoes fora da home continuam nativos.
-    if ((base !== "/" && base !== "/dialogi") || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    // Nova aba e atalhos do navegador continuam nativos; de qualquer outra
+    // pagina a Suite entra com a transicao — so nao de dentro dela mesma.
+    if (productRoutes.includes(base) || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     startProductJourney(href("/produto", lang), lang);
   };
   const openHome = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     close();
-    if ((!productRoutes.includes(base) && base !== "/dialogi") || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (base === "/" || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     startHomeJourney(href("/", lang), lang);
   };
