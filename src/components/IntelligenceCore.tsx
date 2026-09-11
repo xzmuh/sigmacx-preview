@@ -93,6 +93,7 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
       sizes,
       phases,
       basePositions: positions.slice(),
+      spherePositions: positions.slice(),
       logoPositions,
     };
   }, [surfaceCount, totalCount, trailCount]);
@@ -107,6 +108,7 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
     motionTime.current = 0;
     velocities.fill(0);
     cloud.positions.set(cloud.basePositions);
+    cloud.spherePositions.set(cloud.basePositions);
     if (points.current) {
       points.current.rotation.set(0, 0, 0);
       points.current.geometry.getAttribute("position").needsUpdate = true;
@@ -173,39 +175,20 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
     });
     if (reducedMotion) return;
 
-    // Só as posições mudam na abertura; tamanho, cor e shader são os originais.
-    if (opening < OPENING_END) {
-      const attribute = points.current.geometry.getAttribute("position") as THREE.BufferAttribute;
-      const positions = attribute.array as Float32Array;
-      const spread = THREE.MathUtils.smootherstep(opening, LOGO_HOLD_END, OPENING_END);
-      for (let index = 0; index < totalCount; index++) {
-        const offset = index * 3;
-        const assemble = THREE.MathUtils.smootherstep(opening, (index % 11) * .015, .85 + (index % 11) * .015);
-        for (let axis = 0; axis < 3; axis++) {
-          const logo = THREE.MathUtils.lerp(cloud.basePositions[offset + axis], cloud.logoPositions[offset + axis], assemble);
-          const breath = Math.sin(opening * .85 + axis * 1.8) * .006;
-          positions[offset + axis] = THREE.MathUtils.lerp(logo, cloud.basePositions[offset + axis], spread)
-            + breath * assemble * (1 - spread)
-            + Math.sin(Math.PI * spread) * Math.sin(index * .7 + axis) * .09;
-        }
-      }
-      dotUniforms.uTime.value = opening * .35;
-      attribute.needsUpdate = true;
-      return;
-    }
-
-    const safeDelta = Math.min(delta, 1 / 30);
+    // Simulate the living sphere throughout the intro, even while the S is visible.
+    const safeDelta = document.visibilityState === "visible" ? Math.min(delta, 1 / 30) : 0;
     motionTime.current += safeDelta * 0.78;
     const animatedTime = motionTime.current;
     dotUniforms.uTime.value = animatedTime;
     const positionAttribute = points.current.geometry.getAttribute("position") as THREE.BufferAttribute;
-    const positions = positionAttribute.array as Float32Array;
+    const positions = cloud.spherePositions;
     const damping = Math.pow(0.87, safeDelta * 60);
+    const spread = THREE.MathUtils.smootherstep(opening, LOGO_HOLD_END, OPENING_END);
 
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.04, 0.04);
-    points.current.rotation.z += safeDelta * 0.032;
-    points.current.rotation.y += safeDelta * 0.016;
-    points.current.rotation.x = (-0.1 + Math.sin(animatedTime * 0.42) * 0.052) * THREE.MathUtils.smoothstep(opening, OPENING_END, OPENING_END + 1);
+    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, THREE.MathUtils.lerp(.05, state.pointer.y * .04, spread), 0.04);
+    points.current.rotation.z += safeDelta * 0.032 * spread;
+    points.current.rotation.y += safeDelta * 0.016 * spread;
+    points.current.rotation.x = (-0.1 + Math.sin(animatedTime * 0.42) * 0.052) * spread;
 
     for (let index = 0; index < surfaceCount; index += 1) {
       const offset = index * 3;
@@ -262,6 +245,22 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
       positions[offset + 2] = currentZ + velocities[offset + 2];
     }
 
+    const renderedPositions = positionAttribute.array as Float32Array;
+    if (opening < OPENING_END) {
+      for (let index = 0; index < totalCount; index++) {
+        const offset = index * 3;
+        const assemble = THREE.MathUtils.smootherstep(opening, (index % 11) * .015, .85 + (index % 11) * .015);
+        for (let axis = 0; axis < 3; axis++) {
+          const logo = THREE.MathUtils.lerp(cloud.basePositions[offset + axis], cloud.logoPositions[offset + axis], assemble);
+          const breath = Math.sin(opening * .85 + axis * 1.8) * .006;
+          renderedPositions[offset + axis] = THREE.MathUtils.lerp(logo, positions[offset + axis], spread)
+            + breath * assemble * (1 - spread)
+            + Math.sin(Math.PI * spread) * Math.sin(index * .7 + axis) * .09;
+        }
+      }
+    } else {
+      renderedPositions.set(positions);
+    }
     positionAttribute.needsUpdate = true;
   });
 
