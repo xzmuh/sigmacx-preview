@@ -1,5 +1,6 @@
 ﻿.investor-teaser {
-  padding-block: clamp(32px, 4vw, 64px) clamp(80px, 8vw, 128px);
+  /* Embaixo, ar para a sombra do card antes do circulo do manifesto. */
+  padding-block: clamp(32px, 4vw, 64px) clamp(130px, 11vw, 190px);
   padding-inline: max(var(--sx-home-gutter), calc((100% - var(--sx-home-shell)) / 2 + var(--sx-home-gutter)));
 }
 .investor-teaser__inner {

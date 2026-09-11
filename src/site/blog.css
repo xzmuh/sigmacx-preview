@@ -88,7 +88,7 @@ body .sx-page .bl-hero__title { font-size: clamp(3.5rem, 6.4vw, 5.5rem); font-we
 
 /* --------------------------------- artigo ------------------------------- */
 /* Linha de leitura: corre em largura (nao em escala, para a ponta nao
-   esticar), com o degrade da marca e uma cabeca acesa na frente — da a
+   esticar), com o degrade da marca e uma cabeca acesa na frente, da a
    sensacao de algo passando, nao de uma regua parada. */
 .bl-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 130; pointer-events: none; background: rgba(255, 255, 255, 0.06); }
 .bl-progress span { position: relative; display: block; height: 100%; background: linear-gradient(90deg, #5da6ff, var(--green)); box-shadow: 0 0 12px rgba(185, 255, 155, 0.5); transition: width 0.18s cubic-bezier(0.22, 1, 0.36, 1); will-change: width; }

@@ -40,7 +40,7 @@ function useReadingProgress(targetId: string): number {
     if (!target) return;
 
     // A linha de leitura: 0 quando o topo do artigo entra pela base da tela e
-    // 100% quando a ultima linha chega a essa mesma altura — acompanha o
+    // 100% quando a ultima linha chega a essa mesma altura, acompanha o
     // scroll desde o primeiro pixel, em vez de esperar o artigo encostar no
     // topo, e fecha quando o texto termina, nao antes.
     let frame = 0;
