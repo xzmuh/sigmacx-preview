@@ -69,14 +69,16 @@
 .ab-refined .ab-timeline__status { display: flex; justify-content: space-between; gap: 24px; margin: 0 var(--ab-inset) 32px; color: #b8c9dd; font-size: .8rem; font-weight: 650; letter-spacing: .05em; }
 .ab-refined .ab-timeline__status > span:last-child { color: var(--green); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ab-refined .ab-timeline__viewport { overflow: clip; margin: 0; padding: 0; mask-image: none; -webkit-mask-image: none; }
-.ab-refined .ab-timeline__rule { top: 100px; left: var(--ab-inset); right: var(--ab-inset); }
+.ab-refined .ab-timeline__rule { top: 100px; left: var(--ab-inset); right: auto; width: var(--ab-length, 2800px); transform: translate3d(var(--ab-shift), 0, 0); background: rgba(93, 166, 255, .22); will-change: transform; }
 .ab-refined .ab-timeline__fill { background: linear-gradient(90deg, var(--blue), var(--green) 68%, #b9ff9b29); box-shadow: 0 0 14px #5da6ff8c, 0 0 30px #b9ff9b38; }
-.ab-refined .ab-timeline__items { display: flex; width: max-content; padding: 0 calc(100vw - var(--ab-inset) - var(--ab-card)) 0 var(--ab-inset); transform: translate3d(var(--ab-shift), 0, 0); }
+/* A folga do fim e metade do que sobra da tela: no ultimo passo o cartao de
+   2024 para centralizado, em vez de encostar na esquerda com o resto vazio. */
+.ab-refined .ab-timeline__items { display: flex; width: max-content; padding: 0 max(var(--ab-inset), calc((var(--ab-viewport-width, 100vw) - var(--ab-card)) / 2)) 0 var(--ab-inset); transform: translate3d(var(--ab-shift), 0, 0); }
 .ab-refined .ab-timeline__item { flex: 0 0 var(--ab-card); width: var(--ab-card); padding: 0 clamp(44px, 7vw, 100px) 20px 0; }
 .ab-refined .ab-timeline__item time { height: 100px; font-size: clamp(3rem, 5vw, 5rem); font-weight: 700; color: #96adc5; letter-spacing: -.06em; }
 .ab-refined .ab-timeline__item.is-active time { color: var(--green); }
-.ab-refined .ab-timeline__body { max-width: 56ch; padding-top: 44px; opacity: .5; transform: translateY(8px); }
-.ab-refined .ab-timeline__item.is-active .ab-timeline__body { opacity: 1; transform: none; }
+.ab-refined .ab-timeline__body,
+.ab-refined .ab-timeline__item.is-active .ab-timeline__body { max-width: 56ch; padding-top: 44px; opacity: var(--ab-focus, 1); transform: none; transition: none; }
 .ab-refined .ab-timeline__body img { height: 34px; max-width: 170px; }
 .ab-refined .ab-timeline__body p { margin-top: 22px; color: #c4cede; font-size: 1rem; line-height: 1.75; }
 .ab-refined .ab-timeline__viewport:focus-visible { outline: 2px solid var(--green); outline-offset: -3px; }
@@ -132,7 +134,8 @@
   .ab-refined .ab-timeline__items { transform: none; will-change: auto; }
   .ab-refined .ab-timeline__item { scroll-snap-align: start; }
   .ab-refined .ab-timeline__body { opacity: 1; transform: none; }
-  .ab-refined .ab-timeline__rule { width: var(--ab-travel); right: auto; }
+  .ab-refined .ab-timeline__rule { transform: none; will-change: auto; }
+  .ab-refined .ab-timeline__item .ab-timeline__body { opacity: 1; }
   .ab-refined .ab-timeline__fill, .ab-refined .ab-timeline__pulse { display: block; }
 }
 /* Introduce the scroll gesture, then fade the cue as the journey starts. */
@@ -169,11 +172,10 @@
    preenchimento e pulso continuam no trecho original (até o fim do conteúdo),
    então a leitura do progresso não muda. Só na versão com rolagem. */
 @media (min-width: 761px) and (min-height: 601px) and (prefers-reduced-motion: no-preference) {
-  .ab-refined .ab-timeline__rule { right: 0; background: linear-gradient(90deg, transparent, rgba(93, 166, 255, .22) 4%, rgba(93, 166, 255, .22)); }
-  .ab-refined .ab-timeline__fill { width: calc(100% - var(--ab-inset)); }
-  .ab-refined .ab-timeline__nodes { right: var(--ab-inset); }
-  .ab-refined .ab-timeline__pulse { left: calc(var(--ab-progress) * (100% - var(--ab-inset))); }
+  .ab-refined .ab-timeline__viewport { mask-image: linear-gradient(90deg, transparent, #000 24px, #000 calc(100% - 40px), transparent); }
 }
+.ab-refined .ab-timeline__fill { width: var(--ab-cursor, 0px); transform: none; }
+.ab-refined .ab-timeline__pulse { left: var(--ab-cursor, 0px); }
 
 /* Seta da foto da liderança: ícone desenhado no lugar do caractere "↗", que
    saía fino e torto. Vidro escuro em repouso; no hover o círculo acende em

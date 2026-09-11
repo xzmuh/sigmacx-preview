@@ -39,24 +39,29 @@ function useReadingProgress(targetId: string): number {
     const target = document.getElementById(targetId);
     if (!target) return;
 
+    // A linha de leitura: 0 quando o topo do artigo entra pela base da tela e
+    // 100% quando a ultima linha chega a essa mesma altura — acompanha o
+    // scroll desde o primeiro pixel, em vez de esperar o artigo encostar no
+    // topo, e fecha quando o texto termina, nao antes.
+    let frame = 0;
     const update = () => {
+      frame = 0;
       const box = target.getBoundingClientRect();
-      const total = box.height - window.innerHeight * 0.5;
-      const next =
-        total <= 0
-          ? box.bottom < window.innerHeight
-            ? 1
-            : 0
-          : Math.min(1, Math.max(0, -box.top / total));
+      const line = window.innerHeight * 0.82;
+      const next = box.height <= 0 ? 0 : Math.min(1, Math.max(0, (line - box.top) / box.height));
       setProgress(next);
+    };
+    const request = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
     };
 
     update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
     return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", request);
+      window.removeEventListener("resize", request);
     };
   }, [targetId]);
 
@@ -93,7 +98,7 @@ export default function BlogPost() {
   return (
     <PageShell title={`${doc.title} - Sigma CX`} description={excerptOf(doc, 155) || doc.title}>
       <div className="bl-progress" aria-hidden="true">
-        <span style={{ transform: `scaleX(${progress})` }} />
+        <span style={{ width: `${(progress * 100).toFixed(2)}%` }} />
       </div>
 
       {/* Sem imagem de capa aqui, e de proposito: a capa do WordPress e uma

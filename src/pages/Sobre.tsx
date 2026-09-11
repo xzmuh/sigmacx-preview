@@ -96,41 +96,75 @@ export default function Sobre() {
     const sticky = timeline.querySelector<HTMLDivElement>(".ab-timeline__sticky")!;
     const track = timeline.querySelector<HTMLDivElement>(".ab-timeline__items")!;
     const items = Array.from(track.querySelectorAll<HTMLElement>(".ab-timeline__item"));
+    const nodes = Array.from(timeline.querySelectorAll<HTMLElement>(".ab-timeline__nodes b"));
     const fallback = window.matchMedia("(max-width: 760px), (max-height: 600px), (prefers-reduced-motion: reduce)");
     let frame = 0;
     let distance = 0;
+    // Percurso completo do trilho (ate o ultimo no) e percurso do deslocamento
+    // dos cartoes: o segundo e menor, para o ultimo cartao parar centralizado
+    // em vez de encostar na esquerda com o resto da tela vazia. O pulso corre
+    // o trilho inteiro, entao chega ao no de 2024 exatamente quando o cartao
+    // dele para no centro.
+    let full = 0;
     let offsets: number[] = [];
     const update = () => {
       frame = 0;
       const top = parseFloat(getComputedStyle(sticky).top) || 0;
-      const travel = Math.max(1, timeline.offsetHeight - sticky.offsetHeight);
       const progress = fallback.matches
         ? Math.min(1, Math.max(0, viewport.scrollLeft / Math.max(1, distance)))
-        : Math.min(1, Math.max(0, (top - timeline.getBoundingClientRect().top) / travel));
+        : Math.min(1, Math.max(0, (top - timeline.getBoundingClientRect().top) / Math.max(1, distance)));
       const shift = Math.min(distance, Math.max(0, progress * distance));
-      timeline.classList.toggle("has-progress", shift > 12);
+      const cursor = Math.min(full, Math.max(0, progress * full));
+      timeline.classList.toggle("has-progress", cursor > 12);
       timeline.style.setProperty("--ab-progress", String(progress));
       timeline.style.setProperty("--ab-shift", `${fallback.matches ? 0 : -shift}px`);
+      timeline.style.setProperty("--ab-cursor", `${cursor}px`);
       let active = 0;
       offsets.forEach((offset, index) => {
-        if (shift >= offset - 1) active = index;
+        if (Math.abs(cursor - offset) < Math.abs(cursor - offsets[active])) active = index;
+        const proximity = 1 - Math.min(1, Math.abs(cursor - offset) / Math.max(1, items[index].offsetWidth));
+        items[index].style.setProperty("--ab-focus", String(.38 + .62 * proximity));
       });
       setActiveMilestone(active);
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     const measure = () => {
+      timeline.style.setProperty("--ab-viewport-width", `${viewport.clientWidth}px`);
       offsets = items.map((item) => item.offsetLeft - items[0].offsetLeft);
-      distance = offsets.at(-1) || 0;
+      full = offsets.at(-1) || 0;
+      const last = items.at(-1);
+      const centering = fallback.matches || !last
+        ? 0
+        // Um pouco a direita do centro, para o cartao final nao ficar exatamente
+        // no meio da linha que chega pela esquerda.
+        : Math.max(0, (viewport.clientWidth - last.offsetWidth) / 2 + viewport.clientWidth * 0.07 - items[0].offsetLeft);
+      distance = Math.max(0, full - centering);
       if (!fallback.matches) viewport.scrollLeft = 0;
-      timeline.style.setProperty("--ab-travel", `${distance}px`);
+      timeline.style.setProperty("--ab-length", `${full}px`);
+      // Finish the horizontal passage before releasing the sticky scene.
+      timeline.style.setProperty("--ab-travel", `${distance + (fallback.matches ? 0 : Math.min(240, window.innerHeight * .25))}px`);
+      nodes.forEach((node, index) => { node.style.left = `${offsets[index]}px`; });
       schedule();
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (fallback.matches || !["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+      event.preventDefault();
+      const top = parseFloat(getComputedStyle(sticky).top) || 0;
+      const start = window.scrollY + timeline.getBoundingClientRect().top - top;
+      const shift = Math.max(0, Math.min(distance, window.scrollY - start));
+      const target = event.key === "Home" ? 0 : event.key === "End" ? distance
+        : event.key === "ArrowRight" ? offsets.find(offset => offset > shift + 1) ?? distance
+        : [...offsets].reverse().find(offset => offset < shift - 1) ?? 0;
+      window.scrollTo({ top: start + target, behavior: "smooth" });
     };
     const observer = new ResizeObserver(measure);
     observer.observe(viewport);
     observer.observe(track);
+    observer.observe(sticky);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", measure);
     viewport.addEventListener("scroll", schedule, { passive: true });
+    viewport.addEventListener("keydown", onKeyDown);
     fallback.addEventListener("change", measure);
     measure();
     return () => {
@@ -139,6 +173,7 @@ export default function Sobre() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", measure);
       viewport.removeEventListener("scroll", schedule);
+      viewport.removeEventListener("keydown", onKeyDown);
       fallback.removeEventListener("change", measure);
     };
   }, [milestones.length, lang]);
