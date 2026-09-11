@@ -230,3 +230,6 @@ FAQ, onde a foto caiu no meio do texto — para o usuário poder discordar.
 - Reescrever o argumento do texto. Corrigir digitação e pontuação, sim;
   melhorar o que a pessoa quis dizer, não.
 - Apagar `_novos-posts/` antes do build passar.
+- Deixar travessão (—) no texto publicado, em qualquer idioma. Troque por
+  vírgula, dois-pontos ou ponto final, conforme a frase pedir. O time acha que
+  ele deixa o texto com cara de gerado por IA.

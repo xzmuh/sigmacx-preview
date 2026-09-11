@@ -79,7 +79,7 @@ body .sx-watermark { font-size: clamp(4rem, 11vw, 9rem); }
 body .sx-hero { padding-block: clamp(104px, 8.4vw, 132px) clamp(44px, 4.6vw, 72px) !important; }
 /* Heroes da suite: a emenda diagonal e irma do hero, mas sobe por cima dele
    (z-index 6). O padding de baixo tem de reservar a altura dela, senao o
-   ultimo bloco do hero — o CTA, ou a faixa de logos do /produto — fica
+   ultimo bloco do hero, o CTA, ou a faixa de logos do /produto, fica
    coberto pela diagonal. suite.css ja fazia isso; esta camada de escala
    sobrescrevia com `!important` e derrubava a reserva junto. */
 body .sx-page--suite .sx-hero {
@@ -107,8 +107,7 @@ body .section-transition--light-dark + .sx-footer-wrap .sx-final { padding-top: 
    padding da secao vizinha, tambem em `site.css`.
 
    Esta camada de escala reescreve `padding-block` de .sx-section / .sx-band /
-   .sx-suite-immersive com `!important`, e junto derrubava aquelas reservas —
-   a diagonal passava a comer o primeiro (ou o ultimo) bloco da secao. Medido
+   .sx-suite-immersive com `!important`, e junto derrubava aquelas reservas, a diagonal passava a comer o primeiro (ou o ultimo) bloco da secao. Medido
    em 1440x900: de 52 a 101px de conteudo coberto em /produto, /sigma-channel,
    /sigma-brain e /sigma-insights.
 
@@ -124,7 +123,7 @@ body .section-transition--light-dark + .sx-insights-story > .sx-section:first-of
 }
 /* O hero fora do tema suite tambem e vizinho de emenda (blog, artigo,
    privacidade): sem a reserva, a diagonal subia por cima do titulo. Os heroes
-   da suite ficam de fora — eles tem a reserva propria, em --sx-seam-suite. */
+   da suite ficam de fora, eles tem a reserva propria, em --sx-seam-suite. */
 body .ab-hero:has(+ .section-transition--dark-light),
 body .sx-page:not(.sx-page--suite) .sx-hero:has(+ .section-transition--dark-light) {
   padding-bottom: calc(var(--sx-seam) + clamp(26px, 2.8vw, 48px)) !important;

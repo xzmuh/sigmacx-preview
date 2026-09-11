@@ -14,7 +14,7 @@ type PanelProps = {
 /**
  * Cartão escuro arredondado que "fica inteiro" conforme sobe na tela: a margem
  * lateral vai a zero e o raio some, até o painel ocupar a largura toda. É a
- * única animação de scroll da página — no lugar das emendas diagonais, que
+ * única animação de scroll da página, no lugar das emendas diagonais, que
  * sempre deixavam um corte reto entre duas faixas.
  *
  * O progresso vem só da posição do topo do painel na janela, sem observer de
@@ -28,7 +28,7 @@ export function Panel({ children, expand = true, inset = 88, radius = 24, classN
     if (!el || !expand) return;
 
     /* Sem movimento: entrega o painel já inteiro, que é o estado de repouso
-       mais legível — encaixotado sem nunca abrir pareceria um erro. */
+       mais legível, encaixotado sem nunca abrir pareceria um erro. */
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.style.setProperty("--sx-panel-x", "0px");
       el.style.setProperty("--sx-panel-r", "0px");

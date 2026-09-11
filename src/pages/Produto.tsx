@@ -27,7 +27,7 @@ const caseResultIcons = [
 /**
  * Sigma Suite na direcao de paineis: as cenas escuras deixam de ser faixas
  * coladas e viram cartoes arredondados sobre o branco, com o aro neon da
- * marca. Sem `SectionTransition` — o respiro branco entre os blocos e a
+ * marca. Sem `SectionTransition`, o respiro branco entre os blocos e a
  * propria transicao, entao nao sobra corte reto em lugar nenhum.
  */
 export default function Produto() {
@@ -47,7 +47,7 @@ export default function Produto() {
 
   return (
     <PageShell title={t.meta.title} description={t.meta.description} theme="suite" variant="panels">
-      {/* 1. Hero: painel encaixotado, como o da referencia. Nao expande — ele
+      {/* 1. Hero: painel encaixotado, como o da referencia. Nao expande, ele
              ja abre a pagina, entao nao ha scroll antes dele para animar. */}
       <Panel expand={false} inset={16} radius={20} className="sx-panel--hero">
         <TechLines variant="suite" />
@@ -212,7 +212,7 @@ export default function Produto() {
             </div>
           </div>
           <SuiteGlow className="sx-glow--wide" animated>
-            <Vimeo id={VIMEO.produtoHero} className="sx-video--dark" title="SigmaCX — Sigma Suite" />
+            <Vimeo id={VIMEO.produtoHero} className="sx-video--dark" title="SigmaCX | Sigma Suite" />
           </SuiteGlow>
         </div>
       </section>

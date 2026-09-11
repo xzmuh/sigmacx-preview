@@ -12,7 +12,7 @@
   },
   {
    "t": "html",
-   "html": "<p>Every outbound campaign starts with a simple intention: talking to people.</p><p>The problem begins when we try to do this manually in a world where no one responds in the same way, through the same channel, or at the same time.</p><p>That’s where Sigma Suite comes in — not as a robot that blindly presses buttons, but as a copilot that understands behavior, organizes paths, and keeps humans in control of the most important decisions.</p><p>Let’s step away from the metaphor for a moment and enter the cockpit.</p>"
+   "html": "<p>Every outbound campaign starts with a simple intention: talking to people.</p><p>The problem begins when we try to do this manually in a world where no one responds in the same way, through the same channel, or at the same time.</p><p>That’s where Sigma Suite comes in: not as a robot that blindly presses buttons, but as a copilot that understands behavior, organizes paths, and keeps humans in control of the most important decisions.</p><p>Let’s step away from the metaphor for a moment and enter the cockpit.</p>"
   },
   {
    "t": "img",
@@ -26,7 +26,7 @@
   },
   {
    "t": "html",
-   "html": "<p>In Sigma, creating a campaign doesn’t require complex spreadsheets or painful integrations.</p><p>You upload a contact list — that’s it.</p><p>This list may include fields such as:</p><ul><li>name</li><li>phone</li><li>email</li><li>city</li><li>product</li><li>status</li><li>any data that makes sense for your strategy</li></ul><p>From there, Sigma turns data into possibilities.</p>"
+   "html": "<p>In Sigma, creating a campaign doesn’t require complex spreadsheets or painful integrations.</p><p>You upload a contact list. That’s it.</p><p>This list may include fields such as:</p><ul><li>name</li><li>phone</li><li>email</li><li>city</li><li>product</li><li>status</li><li>any data that makes sense for your strategy</li></ul><p>From there, Sigma turns data into possibilities.</p>"
   },
   {
    "t": "h",
@@ -44,7 +44,7 @@
   },
   {
    "t": "html",
-   "html": "<p>Let’s say your campaign starts on WhatsApp.</p><p>You define the message, tone, timing, and send it.</p><p>So far, nothing very different from what the market already does.</p><p>The difference appears in the next step.</p><p>Sigma observes. And reacts.</p><p><strong>Sigma Suite tracks customer behavior in real time</strong></p><p>It knows:</p><ul><li>whether the message was delivered</li><li>whether it was read</li><li>whether there was a response</li><li>whether it was ignored</li></ul><p>And based on those signals, it decides the next move — exactly as you configured.</p>"
+   "html": "<p>Let’s say your campaign starts on WhatsApp.</p><p>You define the message, tone, timing, and send it.</p><p>So far, nothing very different from what the market already does.</p><p>The difference appears in the next step.</p><p>Sigma observes. And reacts.</p><p><strong>Sigma Suite tracks customer behavior in real time</strong></p><p>It knows:</p><ul><li>whether the message was delivered</li><li>whether it was read</li><li>whether there was a response</li><li>whether it was ignored</li></ul><p>And based on those signals, it decides the next move, exactly as you configured.</p>"
   },
   {
    "t": "h",
@@ -62,7 +62,7 @@
   },
   {
    "t": "html",
-   "html": "<p>When Sigma reaches the voice call step, it doesn’t call blindly.</p><p>It already knows:</p><ul><li>who the customer is</li><li>which channels they went through</li><li>what was sent</li><li>what was ignored</li><li>what triggered interest</li></ul><p>This completely changes the quality of the interaction — whether with a human agent or an automated voice agent.</p><p><strong>The human stays in control. Always</strong></p><p>Throughout the campaign, the team monitors dashboards, events, and responses.</p><p>They can:</p><ul><li>pause flows</li><li>adjust messages</li><li>change rules</li><li>intervene when needed</li></ul><p>Sigma suggests. Executes. Orchestrates.</p><p>But the strategy remains human.</p><p>In the end, it’s not about sending messages. It’s about guiding conversations.</p><p>A well-designed campaign in Sigma Suite doesn’t try to win by force.</p><p>It navigates channels with intelligence, respect, and timing.</p><p>Assisted outbound is this:</p><ul><li>lists come in</li><li>flows come to life</li><li>the system reacts</li><li>the human decides</li></ul><p>And together, campaign and team go further than any isolated blast ever could.</p>"
+   "html": "<p>When Sigma reaches the voice call step, it doesn’t call blindly.</p><p>It already knows:</p><ul><li>who the customer is</li><li>which channels they went through</li><li>what was sent</li><li>what was ignored</li><li>what triggered interest</li></ul><p>This completely changes the quality of the interaction, whether with a human agent or an automated voice agent.</p><p><strong>The human stays in control. Always</strong></p><p>Throughout the campaign, the team monitors dashboards, events, and responses.</p><p>They can:</p><ul><li>pause flows</li><li>adjust messages</li><li>change rules</li><li>intervene when needed</li></ul><p>Sigma suggests. Executes. Orchestrates.</p><p>But the strategy remains human.</p><p>In the end, it’s not about sending messages. It’s about guiding conversations.</p><p>A well-designed campaign in Sigma Suite doesn’t try to win by force.</p><p>It navigates channels with intelligence, respect, and timing.</p><p>Assisted outbound is this:</p><ul><li>lists come in</li><li>flows come to life</li><li>the system reacts</li><li>the human decides</li></ul><p>And together, campaign and team go further than any isolated blast ever could.</p>"
   },
   {
    "t": "img",

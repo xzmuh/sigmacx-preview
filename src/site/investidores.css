@@ -19,7 +19,7 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-h1 { max-width: 17ch; font-size: clamp(2.2rem, 3.9vw, 3.9rem); font-weight: 430; letter-spacing: -.065em; line-height: 1.03; }
 .inv-h2 { max-width: 24ch; font-size: clamp(2rem, 3.55vw, 3.65rem); font-weight: 430; letter-spacing: -.055em; line-height: 1.1; text-wrap: balance; }
 /* A copy nao muda: o que muda e o ritmo. Medida mais curta, entrelinha menos
-   solta, e a primeira frase clara e um ponto maior — o resto desce menor, para
+   solta, e a primeira frase clara e um ponto maior, o resto desce menor, para
    quem for atras do detalhe. */
 .inv-lead { max-width: 56ch; margin-top: 26px; color: var(--inv-muted); font-size: clamp(.98rem, 1.12vw, 1.12rem); line-height: 1.64; letter-spacing: -.016em; }
 .inv-lead__lede { color: #e3eaf5; font-size: 1.07em; line-height: 1.48; letter-spacing: -.022em; }
@@ -190,13 +190,12 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-layer-art span:nth-child(3) { top: 36px; left: 24px; }
 .inv-layer-art--1 span { border-color: #b9ff9b78; background: linear-gradient(135deg, #b9ff9b23, #142e2ce0); }
 /* A camada de interacao tem duas placas; a de decisao repete as duas e poe a
-   nova, tracejada, por cima — e o mesmo desenho ganhando uma camada. */
+   nova, tracejada, por cima, e o mesmo desenho ganhando uma camada. */
 .inv-layer-art--0 span:first-child { display: none; }
 .inv-layer-art--1 span:first-child { top: -10px; border-style: dashed; }
 
 /* Componente de seguranca da home, no eixo desta pagina: ocupa a largura
-   toda (na home ele se fecha em 1160px) e a validacao — o texto principal —
-   sai clara, com a base tecnologica abaixo, mais apagada. */
+   toda (na home ele se fecha em 1160px) e a validacao, o texto principal, sai clara, com a base tecnologica abaixo, mais apagada. */
 .inv-trust { width: 100%; margin-top: 64px; }
 /* Mesma moldura dos cards de cima: uma borda so, sem a segunda linha interna
    nem o brilho inferior que o componente traz da home. */

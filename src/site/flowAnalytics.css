@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Leitura de fluxo (Sigma Channel) — a versao clara e jogavel do `Fluxo.gif`.
+   Leitura de fluxo (Sigma Channel), a versao clara e jogavel do `Fluxo.gif`.
    Mesma familia do builder do Brain, so que sobre superficie clara: aqui o
    assunto e o VOLUME que passou por cada caminho, nao a montagem do fluxo.
    ========================================================================== */
@@ -192,7 +192,7 @@
 
 /* ==========================================================================
    No lugar do print `G2-BR.webp` (Sigma Brain): a moldura herdava as regras do
-   `<img>` — 110% de largura e margem negativa, para o print sangrar. A tela
+   `<img>`, 110% de largura e margem negativa, para o print sangrar. A tela
    jogavel nao sangra: ela precisa caber inteira, senao os controles de zoom
    ficam fora da area clicavel.
    ========================================================================== */

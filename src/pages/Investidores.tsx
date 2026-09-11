@@ -20,8 +20,7 @@ function Grad({ children, speed = 7 }: { children: ReactNode; speed?: number }) 
 
 /**
  * Marcacao leve dos JSON de conteudo: `**trecho**` sai em degrade da home
- * (`gradient`) ou em negrito claro, quando o destaque nao pode roubar a cena —
- * o lado "as outras plataformas" do bloco de contraste, por exemplo.
+ * (`gradient`) ou em negrito claro, quando o destaque nao pode roubar a cena, * o lado "as outras plataformas" do bloco de contraste, por exemplo.
  */
 function rich(text: string, gradient = true): ReactNode[] {
   return text.split(/(\*\*[^*]+\*\*)/g).filter(Boolean).map((part, index) => {
@@ -82,7 +81,7 @@ function Counter({ value }: { value: string }) {
 
 /**
  * O texto e o mesmo, palavra por palavra: o que muda e o ritmo. A primeira
- * frase sai clara e um ponto maior — e o que o leitor pega de relance — e o
+ * frase sai clara e um ponto maior, e o que o leitor pega de relance, e o
  * resto desce menor, para quem for ler o detalhe.
  */
 const SENTENCE = /(?<=[.!?])\s+(?=[A-ZÀ-ÜÑ“"])/;
@@ -351,7 +350,7 @@ export default function Investidores() {
       <div className="inv" ref={root}>
         <div className="inv-progress" aria-hidden="true" />
 
-        {/* 1. Hero — a atmosfera da home por tras do texto de abertura. */}
+        {/* 1. Hero, a atmosfera da home por tras do texto de abertura. */}
         <header className="inv-hero">
           <div className="inv-atmos" aria-hidden="true">
             <Sculpture />
@@ -400,7 +399,7 @@ export default function Investidores() {
           </div>
         </nav>
 
-        {/* 2. Diagnostico — a leitura em tres tempos, no trilho de sinal. */}
+        {/* 2. Diagnostico, a leitura em tres tempos, no trilho de sinal. */}
         <section className="inv-section inv-diagnosis inv-x" id="diagnostico">
           <div className="inv-editorial" data-reveal>
             <span className="section-index"><i>{t.diagnosis.index}</i> / {t.diagnosis.eyebrow}</span>
@@ -422,7 +421,7 @@ export default function Investidores() {
           </div>
         </section>
 
-        {/* 3. Por que agora — as quatro forcas. */}
+        {/* 3. Por que agora, as quatro forcas. */}
         <section className="inv-section inv-now inv-x" id="agora">
           <div className="inv-now__intro" data-reveal>
             <span className="section-index"><i>{t.now.index}</i> / {t.now.eyebrow}</span>
@@ -441,7 +440,7 @@ export default function Investidores() {
           </div>
         </section>
 
-        {/* 4. O principio — a faixa de destaque com a frase que separa as duas
+        {/* 4. O principio, a faixa de destaque com a frase que separa as duas
             leituras do mesmo dado. */}
         <section className="inv-band">
           <div className="inv-band__arcs" aria-hidden="true"><span /><span /><span /></div>
@@ -472,7 +471,7 @@ export default function Investidores() {
           </div>
         </section>
 
-        {/* 5. Por que a SigmaCX — a camada que ja roda e a que esta em obra. */}
+        {/* 5. Por que a SigmaCX, a camada que ja roda e a que esta em obra. */}
         <section className="inv-section inv-why inv-x" id="sigma">
           <div className="inv-editorial" data-reveal>
             <span className="section-index"><i>{t.why.index}</i> / {t.why.eyebrow}</span>
@@ -521,7 +520,7 @@ export default function Investidores() {
           </div>
         </section>
 
-        {/* 6. Material completo — o sumario do que existe atras do NDA e o
+        {/* 6. Material completo, o sumario do que existe atras do NDA e o
             pedido de acesso. */}
         <section className="inv-gate" id="material">
           <div className="inv-x inv-gate__grid">

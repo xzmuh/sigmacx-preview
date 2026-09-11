@@ -31,7 +31,7 @@ const KIND_ICON: Record<FlowKind, string> = {
   end: "check",
 };
 
-/** Altura de cada bloco no plano logico — as linhas precisam dela para achar
+/** Altura de cada bloco no plano logico, as linhas precisam dela para achar
     o centro vertical de cada lado, entao ela vive aqui e nao so no CSS. */
 function nodeHeight(kind: FlowKind, optionCount: number) {
   if (kind === "message") return 82;

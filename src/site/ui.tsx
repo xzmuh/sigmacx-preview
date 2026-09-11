@@ -356,8 +356,7 @@ export function SuiteGlow({
       glowIntensity={dark ? 1.2 : 1.1}
       glowRadius={44}
       /* Sem preenchimento interno: o `::after` do BorderGlow e uma mancha de
-         cor que acompanha o cursor DENTRO do cartao, e ela nao foi pedida —
-         o que se quer aqui e so a borda acendendo. Os blocos que ainda usam
+         cor que acompanha o cursor DENTRO do cartao, e ela nao foi pedida, o que se quer aqui e so a borda acendendo. Os blocos que ainda usam
          mancha (`alwaysOn`, como o cartao azul do Insights) nao passam por
          aqui e ficam como estao. */
       fillOpacity={0}

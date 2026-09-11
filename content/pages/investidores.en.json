@@ -33,7 +33,7 @@
     "index": "01",
     "eyebrow": "The diagnosis",
     "title": "Companies generate billions of interactions a day. Few turn them into reliable decisions.",
-    "lead": "Twenty years of contact center, CRM, omnichannel and conversational AI were built to **manage interaction** — not to understand who is behind it, what they want or whether they can be trusted. The customer is one person. The company sees fragments.",
+    "lead": "Twenty years of contact center, CRM, omnichannel and conversational AI were built to **manage interaction**, not to understand who is behind it, what they want or whether they can be trusted. The customer is one person. The company sees fragments.",
     "flow": [
       {
         "title": "Fragmented interactions",
@@ -103,12 +103,12 @@
     "index": "03",
     "eyebrow": "Why SigmaCX",
     "title": "It is not a plan. It is the operation already running.",
-    "lead": "We already run customer service, automation, analytics and AI platforms in complex enterprise environments — the layer where the signals are born. That is what makes it possible to build behavioural intelligence on every interaction.",
+    "lead": "We already run customer service, automation, analytics and AI platforms in complex enterprise environments: the layer where the signals are born. That is what makes it possible to build behavioural intelligence on every interaction.",
     "cards": [
       {
         "k": "Running today",
         "title": "The interaction layer",
-        "body": "Omnichannel, conversational AI, analytics, monitoring, automation and unified context — in real enterprise operations, not pilots."
+        "body": "Omnichannel, conversational AI, analytics, monitoring, automation and unified context, in real enterprise operations, not pilots."
       },
       {
         "k": "What we are building",
@@ -137,13 +137,13 @@
     "index": "04",
     "eyebrow": "Full material",
     "title": "The rest is in the investor area.",
-    "lead": "Operating numbers, projections, unit economics, use of funds, named clients and round terms — under NDA, upon request.",
+    "lead": "Operating numbers, projections, unit economics, use of funds, named clients and round terms. Under NDA, upon request.",
     "tocTitle": "What you get access to",
     "toc": [
       "Traction and revenue evolution",
       "Market sizing and addressable expansion",
       "Financial projections 2026–2029",
-      "Unit economics — LTV, ticket, net retention and CAC",
+      "Unit economics: LTV, ticket, net retention and CAC",
       "Business model and revenue streams",
       "Use of funds by strategic priority",
       "Round terms and structure",
@@ -168,14 +168,14 @@
         "Other"
       ],
       "message": "What caught your interest",
-      "messagePlaceholder": "Optional — helps us prepare the conversation",
+      "messagePlaceholder": "Optional: helps us prepare the conversation",
       "consent": "I authorise SigmaCX to contact me and process my data according to the",
       "consentLink": "Privacy Policy",
       "consentEnd": ". The material is confidential and access is personal and non-transferable.",
       "submit": "Request access",
       "note": "Every request is reviewed individually. Once approved, you receive a named access, valid for a set period.",
       "required": "Fill in name, work email, company and the consent.",
-      "subject": "Access request — investor area",
+      "subject": "Access request: investor area",
       "sentTitle": "Request ready.",
       "sentBody": "Your email client opened with the request ready to send. If nothing opened, write to"
     }

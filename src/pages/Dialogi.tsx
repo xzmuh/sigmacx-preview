@@ -26,8 +26,7 @@ function useReducedMotion() {
 }
 
 /* O envelope tem VALE no centro: a onda afina onde o microfone esta e engorda
-   a meio caminho das pontas, voltando a afinar nas bordas. Antes era o inverso
-   — o pico caia justamente atras do microfone e a onda parecia inchada ali.
+   a meio caminho das pontas, voltando a afinar nas bordas. Antes era o inverso, o pico caia justamente atras do microfone e a onda parecia inchada ali.
    O expoente 1.6 alarga o vale, para o afinamento cobrir o disco inteiro e nao
    so o ponto central. A textura e escalada pela propria forma, senao o ruido
    reengordava as barras do meio. Deterministico, para o build nao variar. */
@@ -101,8 +100,8 @@ function FeatureIcon({ index }: { index: number }) {
   return <svg {...common}><path d="M12 3a7 7 0 0 0-7 7v2M12 6a4 4 0 0 0-4 4v4M12 9a1 1 0 0 0-1 1v7M15.7 8.5c.2.5.3 1 .3 1.5v4.2c0 2.6-1.1 4.8-3 6M19 10v3.5c0 3.4-1.5 6.1-4 8" /></svg>;
 }
 
-/* Superficies exatas dos dois lados de cada onda, escritas aqui — ao lado da
-   ordem das secoes — porque e o unico lugar onde os dois lados de uma emenda
+/* Superficies exatas dos dois lados de cada onda, escritas aqui, ao lado da
+   ordem das secoes, porque e o unico lugar onde os dois lados de uma emenda
    sao visiveis de uma vez. Uma onda cujas cores fogem das vizinhas pinta uma
    faixa da cor errada, que grita mais alto que o corte reto que ela substitui. */
 const HERO = "#050b1d";
@@ -124,7 +123,7 @@ function ArrowRight() {
  * home: em vez de um corte reto, a superficie de cima desce numa curva e uma
  * faixa de luz brand→mint respira por baixo dela.
  *
- * Um unico caminho continuo alcanca as duas bordas — caixas arredondadas
+ * Um unico caminho continuo alcanca as duas bordas, caixas arredondadas
  * sobrepostas expunham uma tira reta na ponta.
  *
  * Entre dois escuros nao ha onda: e uma entrega rapida de tinta, porque
@@ -171,13 +170,12 @@ function Break({ tone, from, to }: { tone: "dark-light" | "light-dark" | "dark-d
 }
 
 /**
- * Titulo revelado palavra a palavra, cada palavra na sua mascara — o lettering
+ * Titulo revelado palavra a palavra, cada palavra na sua mascara, o lettering
  * do site do Dialogi (motion/SplitText). O disparo vem do `.is-visible` que o
  * useReveal poe no bloco que envolve o titulo.
  */
 function Split({ text }: { text: string }) {
-  // `**trecho**` vira a faixa em degrade que corre por dentro dos glifos —
-  // o mesmo recurso do titulo "Transformamos cada interacao em **inteligencia
+  // `**trecho**` vira a faixa em degrade que corre por dentro dos glifos, // o mesmo recurso do titulo "Transformamos cada interacao em **inteligencia
   // estrategica**" do /produto, aqui na paleta do Dialogi.
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
   let i = 0;
@@ -189,7 +187,7 @@ function Split({ text }: { text: string }) {
         const body = grad ? part.slice(2, -2) : part;
         // O espaco e um no de texto entre as mascaras, e nao o ultimo caractere
         // dentro delas: `.dlg-split__w` e inline-block com overflow hidden, e
-        // ali o espaco final e descartado no processamento de white-space — as
+        // ali o espaco final e descartado no processamento de white-space, as
         // palavras saiam coladas ("Oqueaplataformafaz").
         const nodes = grad ? null : body.split(/(\s+)/).map((token, t) => {
           if (!token) return null;
@@ -203,7 +201,7 @@ function Split({ text }: { text: string }) {
         // O trecho em degrade NAO se divide em palavras. `background-clip: text`
         // para de achar os glifos assim que um descendente abre o proprio
         // contexto de formatacao, e cada mascara de palavra e um inline-block
-        // com overflow hidden — a frase inteira pintava transparente e sumia.
+        // com overflow hidden, a frase inteira pintava transparente e sumia.
         // E a mesma regra que o projeto do Dialogi segue nos titulos compostos.
         return grad
           ? <span className="dlg-split__grad" key={p}>{body}</span>
@@ -218,7 +216,7 @@ function Split({ text }: { text: string }) {
  *
  * O desenho e o da home do Dialogi: o campo de luz da primeira tela, o deck
  * que responde "o que e o Dialogi", as ondas entre as secoes e a alternancia
- * de fundo — escuro quando o produto fala, claro quando o leitor pensa. Sem a
+ * de fundo, escuro quando o produto fala, claro quando o leitor pensa. Sem a
  * camada gamificada. O header e o rodape continuam sendo os do site, e a
  * jornada termina no site proprio do produto.
  */
@@ -302,18 +300,18 @@ export default function Dialogi() {
   return (
     <PageShell title={t.meta.title} description={t.meta.description}>
       <div className="dlg">
-        {/* 1. Hero: o stage sobre o campo de luz, e o deck logo abaixo — as
+        {/* 1. Hero: o stage sobre o campo de luz, e o deck logo abaixo, as
             duas telas continuam sendo o mesmo hero, entao dividem o fundo. */}
         <header className="dlg-signal">
           <div className="dlg-signal__base" aria-hidden="true" />
           <div className="dlg-signal__bloom" aria-hidden="true" />
           <div className="dlg-signal__shade" aria-hidden="true" />
 
-          {/* Stage: a primeira tela. Uma coluna so — o modulo que ocupava a
+          {/* Stage: a primeira tela. Uma coluna so, o modulo que ocupava a
               outra na home e a barra de XP, que fica de fora aqui. */}
           <div className="dlg-stage">
             {/* O campo vive dentro do stage porque o que ele precisa acertar e
-                a base do stage — a borda de cima do deck, onde o afunilamento
+                a base do stage, a borda de cima do deck, onde o afunilamento
                 do arco morre. Nada o recorta ali; o stage so lhe da de onde
                 medir. */}
             {!reduced ? (
@@ -368,7 +366,7 @@ export default function Dialogi() {
 
                   {/* No lugar do key visual do cliente: o unico ponto da pagina
                       em que a superficie real do produto e mostrada, e nao
-                      descrita — a chamada de voz com a leitura acontecendo. */}
+                      descrita, a chamada de voz com a leitura acontecendo. */}
                   <figure className="dlg-deck__art dlg-voice" aria-label={t.voice.alt}>
                     <div className="dlg-voice__top">
                       <div className="dlg-voice__who">
@@ -412,8 +410,8 @@ export default function Dialogi() {
         </header>
 
         {/* 2. Respiro claro entre as duas cenas escuras. E a alternancia da home
-            do Dialogi — escuro quando o produto fala, claro quando o leitor
-            pensa — e e ele que separa o azul do azul. A faixa clara carrega a
+            do Dialogi, escuro quando o produto fala, claro quando o leitor
+            pensa, e e ele que separa o azul do azul. A faixa clara carrega a
             abertura da secao; os cartoes continuam no escuro, logo abaixo.
             Nenhum texto novo: e a mesma abertura, so que aqui. */}
         <Break tone="dark-light" from={HERO} to={PAGE} />
@@ -484,11 +482,11 @@ export default function Dialogi() {
 
         <Break tone="dark-light" from={FEATURES} to={PAGE} />
 
-        {/* 3. Setores: o leitor se perguntando se serve para ele — fundo claro. */}
+        {/* 3. Setores: o leitor se perguntando se serve para ele, fundo claro. */}
         <section className="dlg-sec dlg-sec--light">
           <div className="dlg-x">
             {/* Cabecalho em duas colunas: o titulo cresce a esquerda e o
-                paragrafo senta a direita, no fim da linha — a largura toda. */}
+                paragrafo senta a direita, no fim da linha, a largura toda. */}
             <div className="dlg-head dlg-head--wide" data-reveal="up">
               <span className="dlg-eyebrow">{t.sectors.kicker}</span>
               <h2 className="dlg-h2"><Split text={t.sectors.title} /></h2>

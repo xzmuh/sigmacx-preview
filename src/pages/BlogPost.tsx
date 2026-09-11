@@ -30,7 +30,7 @@ const BODY_ID = "bl-article-body";
  * Fio de 2px que enche conforme o artigo passa.
  *
  * Mede o *artigo*, nao a pagina: chega a 100% quando o texto acaba, nao quando
- * o rodape acaba — responde "quanto falta para ler", que e a pergunta do leitor.
+ * o rodape acaba, responde "quanto falta para ler", que e a pergunta do leitor.
  */
 function useReadingProgress(targetId: string): number {
   const [progress, setProgress] = useState(0);
@@ -204,7 +204,7 @@ function AuthorCard({ author, label }: { author: Author; label: string }) {
  * Barra de compartilhamento. A URL e lida na montagem em vez de montada a
  * partir de uma constante, para um deploy de preview compartilhar o proprio
  * link. `navigator.clipboard` nao existe em origem insegura, entao ha o
- * caminho antigo por tras — senao o botao nao faz nada e ninguem descobre.
+ * caminho antigo por tras, senao o botao nao faz nada e ninguem descobre.
  */
 function ShareRow({ title, t }: { title: string; t: BlogDict }) {
   const [url, setUrl] = useState("");

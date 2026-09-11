@@ -4,7 +4,7 @@ import "./flowAnalytics.css";
 
 /**
  * A leitura de um fluxo em producao: os mesmos blocos do builder, agora com o
- * volume que passou por cada caminho. Substitui o `Fluxo.gif` — um GIF nao
+ * volume que passou por cada caminho. Substitui o `Fluxo.gif`, um GIF nao
  * responde ao cursor, e o argumento da secao ("monitore respostas e interacoes
  * em tempo real") pede justamente que o visitante siga um caminho com o olho.
  *
@@ -19,7 +19,7 @@ const CANVAS_W = 820;
 const CANVAS_H = 430;
 const NODE_W = 118;
 /* Alturas no plano logico. Precisam ser >= o que o conteudo mede de fato,
-   senao o `overflow: hidden` do bloco come o cabecalho — foi o que aconteceu
+   senao o `overflow: hidden` do bloco come o cabecalho, foi o que aconteceu
    com os Menus: 22 + 4x19 nao cobria cabecalho + quatro opcoes + respiro. */
 const HEAD_H = 30;
 const OPTION_H = 25;
@@ -156,7 +156,7 @@ export function FlowAnalytics({ copy }: { copy: FlowAnalyticsCopy }) {
     if (e.button !== 0) return;
     // Os controles de zoom vivem dentro da prancheta: sem esta saida, o
     // `setPointerCapture` abaixo desviava o ponteiro para ela e o clique nunca
-    // chegava ao botao — o zoom simplesmente nao respondia.
+    // chegava ao botao, o zoom simplesmente nao respondia.
     if ((e.target as HTMLElement).closest(".fa__zoom")) return;
     e.currentTarget.setPointerCapture(e.pointerId);
     drag.current = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y };

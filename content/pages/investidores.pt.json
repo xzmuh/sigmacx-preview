@@ -33,7 +33,7 @@
     "index": "01",
     "eyebrow": "O diagnóstico",
     "title": "Empresas geram bilhões de interações por dia. Poucas conseguem transformá-las em decisão confiável.",
-    "lead": "Vinte anos de contact center, CRM, omnichannel e IA conversacional foram construídos para **gerenciar interação** — não para entender quem está atrás dela, o que quer ou se pode ser confiado. O cliente é um só. A empresa enxerga fragmentos.",
+    "lead": "Vinte anos de contact center, CRM, omnichannel e IA conversacional foram construídos para **gerenciar interação**, não para entender quem está atrás dela, o que quer ou se pode ser confiado. O cliente é um só. A empresa enxerga fragmentos.",
     "flow": [
       {
         "title": "Interações fragmentadas",
@@ -103,12 +103,12 @@
     "index": "03",
     "eyebrow": "Por que a SigmaCX",
     "title": "Não é um plano. É a operação que já roda.",
-    "lead": "Já operamos plataformas de atendimento, automação, analytics e IA em ambientes enterprise complexos — a camada onde os sinais nascem. É o que torna possível construir inteligência comportamental sobre cada interação.",
+    "lead": "Já operamos plataformas de atendimento, automação, analytics e IA em ambientes enterprise complexos: a camada onde os sinais nascem. É o que torna possível construir inteligência comportamental sobre cada interação.",
     "cards": [
       {
         "k": "Já roda hoje",
         "title": "A camada de interação",
-        "body": "Omnichannel, IA conversacional, analytics, monitoramento, automação e contexto unificado — em operação enterprise real, não em piloto."
+        "body": "Omnichannel, IA conversacional, analytics, monitoramento, automação e contexto unificado, em operação enterprise real, não em piloto."
       },
       {
         "k": "O que estamos construindo",
@@ -137,13 +137,13 @@
     "index": "04",
     "eyebrow": "Material completo",
     "title": "O restante está na área de investidores.",
-    "lead": "Números de operação, projeções, unit economics, uso de recursos, clientes nominais e condições da rodada — sob NDA, mediante solicitação.",
+    "lead": "Números de operação, projeções, unit economics, uso de recursos, clientes nominais e condições da rodada. Sob NDA, mediante solicitação.",
     "tocTitle": "O que você recebe acesso",
     "toc": [
       "Tração e evolução de receita",
       "Dimensionamento de mercado e expansão do endereçável",
       "Projeções financeiras 2026–2029",
-      "Unit economics — LTV, ticket, retenção líquida e CAC",
+      "Unit economics: LTV, ticket, retenção líquida e CAC",
       "Modelo de negócio e frentes de receita",
       "Uso de recursos por prioridade estratégica",
       "Condições e estrutura da rodada",
@@ -168,14 +168,14 @@
         "Outro"
       ],
       "message": "O que despertou seu interesse",
-      "messagePlaceholder": "Opcional — ajuda a preparar a conversa",
+      "messagePlaceholder": "Opcional: ajuda a preparar a conversa",
       "consent": "Autorizo a SigmaCX a entrar em contato e tratar meus dados conforme a",
       "consentLink": "Política de Privacidade",
       "consentEnd": ". O material é confidencial e o acesso é pessoal e intransferível.",
       "submit": "Solicitar acesso",
       "note": "Cada solicitação é revisada individualmente. Aprovada, você recebe um acesso nominal, válido por tempo determinado.",
       "required": "Preencha nome, e-mail corporativo, empresa e o aceite.",
-      "subject": "Solicitação de acesso — área de investidores",
+      "subject": "Solicitação de acesso: área de investidores",
       "sentTitle": "Solicitação preparada.",
       "sentBody": "Seu programa de e-mail abriu com a solicitação pronta. Se nada abriu, escreva para"
     }

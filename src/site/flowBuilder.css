@@ -1,7 +1,7 @@
 /* ==========================================================================
    Builder no-code jogavel (Sigma Brain)
    Substitui o print `Sigma-Bot.webp`. Vive sobre a faixa escura da pagina,
-   entao a maquete e navy com acento teal — a mesma paleta do brand kit da
+   entao a maquete e navy com acento teal, a mesma paleta do brand kit da
    suite, so que na versao de produto.
    ========================================================================== */
 
@@ -157,7 +157,7 @@
 /* Fundo escuro: a secao herdava o "bloco forte da marca" (degrade petroleo ->
    azul), claro demais para uma tela de produto escura viver em cima dele. Agora
    e ink profundo com um bloom teal atras justamente da tela, mais uma malha
-   fina mascarada no mesmo ponto — o olho cai onde esta a coisa jogavel. */
+   fina mascarada no mesmo ponto, o olho cai onde esta a coisa jogavel. */
 .sx-page--suite main .sx-band.sx-nocode.sx-dark {
   position: relative;
   isolation: isolate;
@@ -168,7 +168,7 @@
     radial-gradient(48% 72% at 6% 88%, rgba(24, 90, 125, 0.26), transparent 68%),
     linear-gradient(162deg, #06121f 0%, #081c2b 46%, #050f1c 100%);
 }
-/* As linhas ficam na metade esquerda, atras do texto — a direita e da tela, e
+/* As linhas ficam na metade esquerda, atras do texto, a direita e da tela, e
    duas coisas em movimento no mesmo ponto brigariam pelo olho. */
 .sx-page--suite .sx-tech-lines--nocode {
   inset: -14% 40% -14% -8%;

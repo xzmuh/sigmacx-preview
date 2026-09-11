@@ -85,7 +85,7 @@ export const FOOTER_MANIFESTO =
 export const CASE_TECBAN_PDF =
   "https://sigmacx.ai/wp-content/uploads/2025/10/Case-Tecban-PT.pdf";
 /* O PDF do case da Conexion TS ainda nao esta hospedado (12 MB, em tres
-   idiomas — pesado demais para o repositorio). Com a URL no WordPress
+   idiomas, pesado demais para o repositorio). Com a URL no WordPress
    preenchida aqui, o botao "Acesse o case completo" volta a aparecer nele;
    vazio, o palco mostra so a frase de fechamento. */
 export const CASE_CONEXION_PDF = "";

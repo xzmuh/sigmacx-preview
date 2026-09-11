@@ -2,11 +2,11 @@
    Pagina Dialogi AI
 
    A referencia e a HOME do Dialogi (C:/Projects/Nuvetto/dialogi.ia), nao as
-   paginas internas nem a LP solta em HTML — aquela era so a fonte do texto.
+   paginas internas nem a LP solta em HTML, aquela era so a fonte do texto.
    Portado de la, em CSS puro porque este site nao usa as utilitarias Tailwind
    do Dialogi, e sem a camada gamificada (nenhum PNG de jogo):
 
-   - `hero-signal`: o campo de luz da primeira tela — fundo em camadas, riscos
+   - `hero-signal`: o campo de luz da primeira tela, fundo em camadas, riscos
      diagonais, bloom conico e a sombra que fecha por cima;
    - `hero-signal__deck`: o cartao grande que responde "o que e o Dialogi",
      com barra de rotulo, titulo, arte e a grade de tres provas;
@@ -60,7 +60,7 @@
 
 /* ==========================================================================
    Onda entre secoes (SectionBreak)
-   Um caminho continuo que alcanca as duas bordas — caixas arredondadas
+   Um caminho continuo que alcanca as duas bordas, caixas arredondadas
    sobrepostas deixavam uma tira reta na ponta. A faixa de luz por baixo e o
    que faz a emenda ler como leve, e nao como um corte.
    ========================================================================== */
@@ -91,7 +91,7 @@
     radial-gradient(circle at 92% 8%, rgb(17 67 190 / .32), transparent 34%),
     linear-gradient(122deg, #020713 0%, #07173a 48%, #03091d 100%);
 }
-/* As camadas pertencem a primeira tela e se dissolvem na descida — por isso
+/* As camadas pertencem a primeira tela e se dissolvem na descida, por isso
    sao medidas em svh e absolutas a secao, nao recortadas na caixa do stage. */
 .dlg-signal__base, .dlg-signal__bloom, .dlg-signal__shade {
   position: absolute; top: 0; left: 0; width: 100%;
@@ -248,7 +248,7 @@
 .dlg-wave span:nth-child(5n) { animation-duration: 1.55s; }
 /* A respiracao e proporcional ao pico de cada barra. Com valores fixos (12% e
    24%) as barras do centro, que agora sao as mais baixas, ficavam MAIS altas no
-   fim do ciclo do que no proprio pico — o vale sumia na metade da animacao. */
+   fim do ciclo do que no proprio pico, o vale sumia na metade da animacao. */
 @keyframes dlg-pulse {
   0% { height: max(6%, calc(var(--peak) * .2)); opacity: .62; }
   48% { height: var(--peak); opacity: 1; }
@@ -275,7 +275,7 @@
 .dlg-sec--light .dlg-body { color: var(--ink-500); }
 .dlg-sec--dark .dlg-body { color: rgb(255 255 255 / .7); }
 
-/* Etiqueta: sem traco decorativo — o peso e o espacamento das maiusculas ja
+/* Etiqueta: sem traco decorativo, o peso e o espacamento das maiusculas ja
    dizem que e etiqueta (regra do projeto do Dialogi). */
 .dlg-eyebrow { display: inline-block; font-size: .66rem; font-weight: 600; letter-spacing: .3em; line-height: 1; text-transform: uppercase; }
 .dlg-sec--dark .dlg-eyebrow { color: rgb(255 255 255 / .42); }
@@ -492,7 +492,7 @@
 }
 .dlg-feature-slide .dlg-h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
 .dlg-feature-slide .dlg-tile p { max-width: 39ch; }
-/* Contador e setas em cima, a direita, antes do trilho — o trilho ja reserva
+/* Contador e setas em cima, a direita, antes do trilho, o trilho ja reserva
    o respiro de cima para a aura do cartao em foco. */
 .dlg-feature-carousel__controls { order: -1; display: flex; align-items: center; justify-content: flex-end; gap: 18px; margin: 0; padding-inline: 2px; }
 .dlg-feature-carousel__controls > span { color: rgb(255 255 255 / .42); font-size: .68rem; font-weight: 650; letter-spacing: .14em; }
@@ -580,7 +580,7 @@
 .dlg-card--open p { color: var(--ink-900); }
 
 /* Cabecalho largo da secao de setores: titulo maior a esquerda, paragrafo a
-   direita alinhado pela base — a linha inteira, em vez de tudo espremido no
+   direita alinhado pela base, a linha inteira, em vez de tudo espremido no
    canto esquerdo. */
 .dlg-head--wide { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 1.5rem 4rem; align-items: end; }
 .dlg-head--wide .dlg-eyebrow { grid-column: 1 / -1; }
@@ -636,13 +636,12 @@
 /* A mascara de cada palavra precisa liberar os descendentes: os titulos tem
    leading apertado, entao g, j, p e c-cedilha passam da caixa de linha e uma
    mascara rente a ela decapita a letra. A folga e em `em` para acompanhar o
-   corpo do texto, e a margem negativa devolve a altura da caixa de margem —
-   `vertical-align: bottom` mede a caixa de margem, e sem isso cada palavra
+   corpo do texto, e a margem negativa devolve a altura da caixa de margem, `vertical-align: bottom` mede a caixa de margem, e sem isso cada palavra
    engordaria a linha e um titulo quebrado em duas se afastaria. */
 .dlg-split__w { display: inline-block; overflow: hidden; padding-bottom: .22em; margin-bottom: -.22em; vertical-align: bottom; }
 /* Degrade que corre por dentro dos glifos, no espirito do titulo em degrade
    do /produto. `box-decoration-break: clone` da a cada fragmento de linha a
-   propria caixa de pintura — sem ele a ultima palavra de uma linha quebrada
+   propria caixa de pintura, sem ele a ultima palavra de uma linha quebrada
    fica sem tinta, porque `background-clip: text` so pinta dentro da caixa do
    fragmento. A rampa vai e volta devagar, entao le como brilho, nao como GIF. */
 .dlg-split__grad {
@@ -711,8 +710,7 @@
 /* ==========================================================================
    Respiro claro entre o hero e os recursos (opcao B, escolhida em 2026-09-08).
    A faixa e curta de proposito: existe para o olho descansar entre duas cenas
-   escuras, nao para virar mais uma secao. Por isso ela so carrega a abertura
-   — o cabecalho que antes ficava dentro do escuro — e nada mais.
+   escuras, nao para virar mais uma secao. Por isso ela so carrega a abertura, o cabecalho que antes ficava dentro do escuro, e nada mais.
    ========================================================================== */
 .dlg-sec--intro { padding-block: clamp(44px, 5vw, 76px); }
 .dlg-sec--intro .dlg-head .dlg-h2 { max-width: 24ch; }

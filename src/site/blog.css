@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Blog — estrutura do blog do Dialogi, com a identidade SigmaCX
+   Blog, estrutura do blog do Dialogi, com a identidade SigmaCX
    (navy #0a142c, verde var(--green), tokens --sx-* de site.css).
    ========================================================================== */
 
@@ -21,7 +21,7 @@ body .sx-page .bl-hero__title { font-size: clamp(3.5rem, 6.4vw, 5.5rem); font-we
 .bl-hero .bl-chip { padding: 9px 13px; border-radius: 999px; border-color: rgba(255, 255, 255, 0.16); background: transparent; color: #cbd3e0; font-size: 0.78rem; font-weight: 500; }
 .bl-hero .bl-chip:hover, .bl-hero .bl-chip.is-active { border-color: rgba(185, 255, 155, 0.6); color: var(--green); background: rgba(185, 255, 155, 0.05); }
 .bl-featured { position: relative; min-width: 0; isolation: isolate; }
-/* Rotulo do destaque so em texto, como os outros eyebrows do site — sem
+/* Rotulo do destaque so em texto, como os outros eyebrows do site, sem
    pilula nem estrela. */
 .bl-featured__label { margin: 0 0 14px 4px; color: var(--green); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
 /* Bloom leve atras do cartao em destaque: verde da marca esfumando para o
@@ -91,7 +91,7 @@ body .sx-page .bl-hero__title { font-size: clamp(3.5rem, 6.4vw, 5.5rem); font-we
 .bl-progress span { display: block; height: 100%; background: var(--green); transform-origin: left center; transition: transform 0.1s linear; }
 
 /* Mesmo eixo do artigo: .bl-layout e uma coluna de 66rem centralizada, e o
-   cabecalho tinha 900px — as duas margens automaticas nao coincidiam e o hero
+   cabecalho tinha 900px, as duas margens automaticas nao coincidiam e o hero
    ficava 78px a direita do texto. A medida agora e a mesma nos dois. */
 .bl-head { justify-items: start; text-align: left; gap: 16px; max-width: 66rem; }
 .bl-back { display: inline-flex; align-items: center; gap: 8px; color: rgba(255, 255, 255, 0.6); font-size: 0.82rem; font-weight: 600; transition: color 0.25s; }
@@ -103,17 +103,17 @@ body .sx-page .bl-hero__title { font-size: clamp(3.5rem, 6.4vw, 5.5rem); font-we
 .bl-tag:hover { background: var(--green); color: var(--navy); }
 /* Precisa vencer `body .sx-h1` de scale.css, que fixa o corpo de todo titulo:
    mesma especificidade empata e, como scale.css e importado depois, era ela
-   quem mandava — dai o titulo do artigo continuar espremido. */
+   quem mandava, dai o titulo do artigo continuar espremido. */
 body .sx-page .bl-head__title { font-size: clamp(2.1rem, 4.2vw, 3.4rem); font-weight: 500; line-height: 1.14; letter-spacing: -0.03em; }
 /* A mascara de cada palavra (.sx-word, overflow:hidden) tem 0.08em de folga
-   embaixo — menos do que o rabinho do "p" e do "g" ocupam neste corpo, e a
+   embaixo, menos do que o rabinho do "p" e do "g" ocupam neste corpo, e a
    descendente saia cortada. A margem negativa devolve a geometria. */
 .sx-page .bl-head__title .sx-word { padding-bottom: 0.24em; margin-bottom: -0.24em; }
 
 .bl-layout { display: grid; gap: clamp(40px, 5vw, 64px); grid-template-columns: minmax(0, 1fr) 19rem; max-width: 66rem; margin-inline: auto; }
 .bl-main { min-width: 0; }
 
-/* prosa — mesma tipografia do .prose-article do Dialogi */
+/* prosa, mesma tipografia do .prose-article do Dialogi */
 .bl-prose { color: rgba(10, 20, 44, 0.8); font-size: 1rem; line-height: 1.75; }
 .bl-prose > * + * { margin-top: 1.35rem; }
 .bl-prose p { margin: 0; }

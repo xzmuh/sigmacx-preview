@@ -60,7 +60,7 @@ export function SiteHeader() {
   const openProducts = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     close();
     // Nova aba e atalhos do navegador continuam nativos; de qualquer outra
-    // pagina a Suite entra com a transicao — so nao de dentro dela mesma.
+    // pagina a Suite entra com a transicao, so nao de dentro dela mesma.
     if (productRoutes.includes(base) || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     startProductJourney(href("/produto", lang), lang);
@@ -80,7 +80,7 @@ export function SiteHeader() {
 
   return (
     <header className={compact ? "site-header site-header--compact" : "site-header"}>
-      <a className="brand" href={href("/", lang)} aria-label="SigmaCX — início">
+      <a className="brand" href={href("/", lang)} aria-label="Página inicial da SigmaCX">
         <img src="/media/logo-white.png" alt="SigmaCX" />
       </a>
       <nav className={menuOpen ? "nav nav--open" : "nav"} aria-label="Navegação principal">

@@ -72,7 +72,7 @@ export function startDialogiJourney(to: string, lang: Lang) {
 /**
  * A View Transition mantém um snapshot real da home enquanto a nova rota já
  * está renderizada por baixo. A máscara animada fica no CSS dos pseudo-elements
- * ::view-transition-old/new — nenhum fundo ou mock da página é criado aqui.
+ * ::view-transition-old/new, nenhum fundo ou mock da página é criado aqui.
  */
 export function ProductJourney() {
   const navigate = useNavigate();
