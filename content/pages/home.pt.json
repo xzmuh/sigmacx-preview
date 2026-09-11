@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "title": "SigmaCX — Inteligência para cada conversa",
+    "description": "Soluções que escutam, entendem e melhoram cada conversa entre marcas e pessoas."
+  },
+  "aria": {
+    "clients": "Empresas clientes",
+    "clientLogo": "Empresa cliente SigmaCX",
+    "womanVideo": "Pessoa em uma experiência de atendimento conectada",
+    "brainVideo": "Holograma de cérebro representando a inteligência Sigma Brain",
+    "footerNav": "Navegação do rodapé"
+  },
+  "voice": "VOZ",
+  "hero": {
+    "kicker": "CX inteligente começa com a tecnologia certa",
+    "copy": "Soluções que **escutam**, entendem e melhoram cada conversa entre marcas e pessoas.",
+    "cta": "Entre na experiência",
+    "specialist": "Fale com um especialista"
+  },
+  "manifesto": {
+    "index": "01 / Por que existimos",
+    "body": "Em um mundo com tantos canais, mensagens e demandas, o atendimento virou uma tarefa trabalhosa. A relação entre marcas e clientes se tornou automática demais.",
+    "title": "O SigmaCX nasceu",
+    "accent": "para mudar isso."
+  },
+  "story": {
+    "index": "02 / A inteligência",
+    "title": "Toda conversa\ntem algo a dizer.",
+    "lead": "O SigmaCX transforma milhares de interações em uma visão viva da sua operação.",
+    "steps": [
+      {
+        "eyebrow": "Escuta em escala",
+        "title": "Sinais entram\npor todos os canais.",
+        "body": "Voz, chat, WhatsApp e redes sociais convergem sem perder contexto."
+      },
+      {
+        "eyebrow": "Entende de verdade",
+        "title": "A IA reconhece\no que não foi dito.",
+        "body": "Intenção, emoção, padrões e oportunidades surgem em tempo real."
+      },
+      {
+        "eyebrow": "Transforma em ação",
+        "title": "Insight deixa de ser\nrelatório. Vira decisão.",
+        "body": "Cada módulo trabalha junto para fazer a experiência evoluir continuamente."
+      }
+    ]
+  },
+  "proof": {
+    "index": "03 / Confiança",
+    "title": "Empresas que confiam\n**na tecnologia.**",
+    "lead": "Marcas que confiam na tecnologia para transformar o relacionamento com seus clientes e, assim como nós, acreditam na excelência da experiência e no poder do atendimento inteligente.",
+    "quotes": [
+      {
+        "text": "“O Speech Analytics revolucionou o dia a dia da Tecban, tornando-se uma ferramenta indispensável.”",
+        "author": "Equipe de Atendimento ao Cliente"
+      },
+      {
+        "text": "“A migração foi executada com perfeição. Os resultados demonstram uma melhora substancial na eficiência operacional.”",
+        "author": "Equipe de Operações"
+      }
+    ]
+  },
+  "solutions": {
+    "index": "04 / Soluções conectadas",
+    "title": "Duas plataformas.",
+    "accent": "Uma experiência contínua.",
+    "sigma": {
+      "title": "Inteligência para decisões de CX",
+      "body": "O Sigma é uma plataforma completa para gestão da experiência do cliente, que integra canais, automatiza interações e gera insights em tempo real.",
+      "strong": "Cada módulo do Sigma trabalha de forma integrada para proporcionar uma jornada contínua, inteligente e centrada no cliente.",
+      "link": "Conheça o Sigma"
+    },
+    "dialogi": {
+      "title": "Conexão entre marcas e pessoas",
+      "body": "O Dialogi é uma plataforma de inteligência artificial voltada para criar conversas digitais mais humanas, fluidas e eficientes.",
+      "strong": "Integrando WhatsApp, chat, redes sociais e voz, o Dialogi conecta marcas e clientes com velocidade, empatia e automação inteligente.",
+      "link": "Conheça o Dialogi AI"
+    }
+  },
+  "connection": {
+    "index": "05 / Conexão entre marcas e pessoas",
+    "title": "Conversas digitais mais humanas.",
+    "cta": "Conheça a plataforma"
+  },
+  "platform": {
+    "index": "06 / Sigma Suite",
+    "title": "Inteligência para",
+    "accent": "decisões de CX.",
+    "body": "O Sigma é uma plataforma completa para gestão da experiência do cliente: integra canais, automatiza interações e gera insights em tempo real.",
+    "strong": "Cada módulo trabalha de forma integrada para proporcionar uma jornada contínua, inteligente e orientada a resultados.",
+    "brain": "Agentes de IA autônomos que compreendem intenções e conduzem conversas fluidas, em voz e texto.",
+    "brainLink": "Explorar produto",
+    "channel": "Todos os pontos de contato reunidos numa jornada contínua, segura e inteligente.",
+    "channelLink": "Conheça o Sigma Channel",
+    "insights": "Interações viram métricas, padrões e próximos passos para a operação.",
+    "insightsLink": "Conheça o Sigma Insights"
+  },
+  "trust": {
+    "aria": "Confiança do consumidor",
+    "body": "dos clientes dizem que a **confiança em uma marca** é um fator decisivo para a compra."
+  },
+  "security": {
+    "index": "07 / Confiança por design",
+    "title": "Dados sensíveis.",
+    "accent": "Proteção inegociável.",
+    "body1": "Cada conversa, troca de informação e registro do cliente carrega dados sensíveis que precisam ser tratados com proteção.",
+    "body2": "O SigmaCX foi projetado com protocolos de segurança, criptografia de ponta a ponta e conformidade com normas globais. Do momento em que um cliente envia uma mensagem até a finalização do atendimento, tudo permanece protegido e monitorado.",
+    "flowAria": "Fluxo contínuo de proteção de dados",
+    "flow": [
+      "Conversa",
+      "Criptografia",
+      "Monitoramento"
+    ]
+  },
+  "final": {
+    "eyebrow": "Vamos conversar?",
+    "title": "Veja o que a SigmaCX\npode fazer por você.",
+    "cta": "Agende uma demonstração"
+  },
+  "footer": {
+    "suite": "Sigma Suite",
+    "experience": "Experiência",
+    "results": "Resultados",
+    "security": "Segurança",
+    "institutional": "Site institucional ↗"
+  }
+}
