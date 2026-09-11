@@ -229,6 +229,86 @@ function ForceArt({ index }: { index: number }) {
   );
 }
 
+/**
+ * Login da area do investidor: janela nativa (`<dialog>`), que ja fecha no Esc e
+ * prende o foco. O site nao tem autenticacao: ate existir um endpoint, o envio
+ * so orienta quem ja assinou o NDA a falar com a caixa de investidores. Trocar
+ * o trecho marcado em `submit` pela chamada real quando houver backend.
+ */
+type LoginText = (typeof pt)["login"];
+
+function InvestorLogin({ t, open, onClose }: { t: LoginText; open: boolean; onClose: () => void }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState<"idle" | "error" | "pending">("idle");
+
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+    if (open && !dialog.open) dialog.showModal();
+    if (!open && dialog.open) dialog.close();
+  }, [open]);
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!/.+@.+\..+/.test(email) || !password) {
+      setStatus("error");
+      return;
+    }
+    // Sem backend de login ainda: aqui entra a autenticacao real.
+    setStatus("pending");
+  };
+
+  return (
+    <dialog
+      ref={ref}
+      className="inv-login"
+      aria-labelledby="inv-login-title"
+      data-lenis-prevent
+      onClose={onClose}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
+    >
+      <form className="inv-form" onSubmit={submit} noValidate>
+        <div className="inv-login__head">
+          <h3 id="inv-login-title">{t.title}</h3>
+          <button type="button" className="inv-login__close" aria-label={t.close} onClick={onClose}>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+              <path d="M4 4l8 8M12 4l-8 8" />
+            </svg>
+          </button>
+        </div>
+        <p className="inv-small">{t.lead}</p>
+        <label className="inv-field">
+          <span>{t.email}</span>
+          <input type="email" value={email} placeholder={t.emailPlaceholder} autoComplete="username"
+            onChange={(event) => setEmail(event.target.value)} />
+        </label>
+        <label className="inv-field">
+          <span>{t.password}</span>
+          <input type="password" value={password} placeholder={t.passwordPlaceholder} autoComplete="current-password"
+            onChange={(event) => setPassword(event.target.value)} />
+        </label>
+        <p className="inv-form__error" role="alert">{status === "error" ? t.required : ""}</p>
+        {status === "pending" && (
+          <p className="inv-login__pending" role="status">
+            {t.pending} <a href={`mailto:${INVESTORS_MAIL}`}>{INVESTORS_MAIL}</a>.
+          </p>
+        )}
+        <button className="pill pill--primary" type="submit">
+          {t.submit} <span aria-hidden="true">→</span>
+        </button>
+        <div className="inv-login__links">
+          <a href={`mailto:${INVESTORS_MAIL}?subject=${encodeURIComponent(t.forgot)}`}>{t.forgot}</a>
+          <span>
+            {t.noAccess} <a href="#material" onClick={onClose}>{t.request}</a>
+          </span>
+        </div>
+      </form>
+    </dialog>
+  );
+}
+
 export default function Investidores() {
   const lang = useLang();
   const root = useRef<HTMLDivElement>(null);
@@ -238,6 +318,7 @@ export default function Investidores() {
   const [form, setForm] = useState(EMPTY_FORM);
   const [error, setError] = useState(false);
   const [sent, setSent] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const set = (field: keyof typeof EMPTY_FORM, value: string | boolean) =>
     setForm((current) => ({ ...current, [field]: value }));
 
@@ -287,7 +368,13 @@ export default function Investidores() {
               <a className="pill pill--primary" href="#material">
                 {t.hero.cta} <span aria-hidden="true">↓</span>
               </a>
-              <span className="inv-hero__note">{t.hero.note}</span>
+              <button className="pill pill--outline" type="button" onClick={() => setLoginOpen(true)}>
+                {t.hero.login}
+                <svg className="inv-lock" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6"
+                  strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="7" width="10" height="7" rx="1.6" /><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" />
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -519,9 +606,7 @@ export default function Investidores() {
           </div>
         </section>
 
-        <div className="inv-x">
-          <p className="inv-disclaimer">{t.disclaimer}</p>
-        </div>
+        <InvestorLogin t={t.login} open={loginOpen} onClose={() => setLoginOpen(false)} />
       </div>
     </PageShell>
   );

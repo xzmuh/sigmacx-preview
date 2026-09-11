@@ -55,8 +55,25 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-rise > span { display: block; animation: inv-rise 1.2s var(--ease-sigma) var(--d, 0ms) both; }
 @keyframes inv-rise { from { transform: translateY(105%); opacity: 0; } to { transform: none; opacity: 1; } }
 .inv-hero__lead { max-width: 54ch; margin-top: 27px; }
-.inv-hero__actions { display: flex; align-items: flex-start; flex-direction: column; gap: 18px; margin-top: 32px; }
-.inv-hero__note { color: var(--inv-muted); font-size: .73rem; }
+.inv-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 32px; }
+.inv-hero__actions .pill--outline { background: #ffffff05; color: var(--white); cursor: pointer; font: inherit; font-size: .78rem; font-weight: 650; }
+.inv-lock { width: 15px; height: 15px; flex: none; }
+
+/* Login da area do investidor: mesma linguagem do formulario de acesso. */
+.inv-login { position: fixed; inset: 0; width: min(440px, 100% - 32px); max-height: calc(100% - 32px); margin: auto; padding: 0; border: 0; border-radius: 24px; background: var(--navy-deep); color: var(--white); box-shadow: 0 40px 120px #00000080; }
+.inv-login::backdrop { background: #020814b3; backdrop-filter: blur(6px); }
+.inv-login[open] { animation: inv-login-in .32s cubic-bezier(.2, .8, .2, 1); }
+@keyframes inv-login-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+.inv-login .inv-form { gap: 16px; }
+.inv-login__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.inv-login__head h3 { margin: 0; font-weight: 450; font-size: 1.5rem; letter-spacing: -.03em; }
+.inv-login .inv-small { margin-top: -6px; }
+.inv-login__close { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1px solid #ffffff26; border-radius: 50%; background: transparent; color: var(--inv-muted); cursor: pointer; transition: color .25s, border-color .25s; }
+.inv-login__close:hover, .inv-login__close:focus-visible { border-color: var(--green); color: var(--green); }
+.inv-login__close svg { width: 14px; height: 14px; }
+.inv-login__pending { padding: 14px; border: 1px solid #b9ff9b40; border-radius: 8px; background: #b9ff9b09; color: #b6c3d1; font-size: .8rem; line-height: 1.55; overflow-wrap: anywhere; }
+.inv-login__links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; color: var(--inv-muted); font-size: .74rem; }
+.inv-login :is(.inv-login__links, .inv-login__pending) a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 .inv-creds { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(60px, 7vw, 108px); padding-block: 34px; border-top: 1px solid #ffffff20; }
 .inv-cred { padding: 0 30px; }
 .inv-cred:first-child { padding-left: 0; }
@@ -181,6 +198,10 @@ html:has(.inv) { scroll-behavior: smooth; }
    toda (na home ele se fecha em 1160px) e a validacao — o texto principal —
    sai clara, com a base tecnologica abaixo, mais apagada. */
 .inv-trust { width: 100%; margin-top: 64px; }
+/* Mesma moldura dos cards de cima: uma borda so, sem a segunda linha interna
+   nem o brilho inferior que o componente traz da home. */
+.inv-trust.security-frame { border: 1px solid #ffffff18; border-radius: 24px; box-shadow: none; }
+.inv-trust.security-frame::before, .inv-trust.security-frame::after { display: none; }
 .inv-trust .security-copy > p { max-width: 62ch; margin-top: 1.4rem; color: rgba(255, 255, 255, .58); font-size: .95rem; line-height: 1.66; }
 .inv-trust .security-copy > p:first-of-type { margin-top: 1.6rem; color: #e3eaf5; font-size: 1.06rem; }
 .inv-trust .security-copy > p b { color: #fff; font-weight: 550; }
@@ -245,7 +266,6 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-sent { padding: 40px; border: 1px solid #b9ff9b60; border-radius: 24px; background: #b9ff9b09; }
 .inv-sent h3 { font-weight: 450; font-size: 1.5rem; }
 .inv-sent p { max-width: 46ch; margin-top: 20px; color: #b6c3d1; line-height: 1.6; overflow-wrap: anywhere; }
-.inv-disclaimer { max-width: 92ch; padding-block: 40px; color: #8693a5; font-size: .72rem; line-height: 1.7; }
 
 /* GSAP owns these reveals; content remains visible if motion is disabled. */
 .sx-page .inv [data-reveal] { opacity: 1; transform: none; transition: none; }
@@ -287,7 +307,6 @@ html:has(.inv) { scroll-behavior: smooth; }
   .inv-sculpture { width: 140vw; right: -72%; opacity: .24; }
   .inv-hero__actions .pill { width: 100%; justify-content: space-between; font-size: .74rem; }
   .inv-hero__actions .pill > span { margin-left: 5px; }
-  .inv-hero__note { font-size: .65rem; }
   .inv-creds { margin-top: 48px; }
   .inv-cred { padding-inline: 20px 0; }
   .inv-cred strong { font-size: 2.7rem; }

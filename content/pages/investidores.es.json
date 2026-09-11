@@ -9,7 +9,7 @@
     "accent": "No para saber quién está del otro lado.",
     "lead": "Ya operamos la base de las interacciones. Ahora construimos la inteligencia que entiende comportamientos y decide durante la conversación.",
     "cta": "Solicitar acceso al material completo",
-    "note": "Respuesta en hasta 2 días hábiles · material bajo NDA",
+    "login": "Área del inversor",
     "creds": [
       {
         "value": "2020",
@@ -180,5 +180,19 @@
       "sentBody": "Su programa de correo abrió con la solicitud lista. Si no se abrió nada, escriba a"
     }
   },
-  "disclaimer": "Esta página tiene carácter informativo y no constituye oferta pública de valores, recomendación de inversión ni promesa de rentabilidad. La información financiera, las proyecciones, la base de clientes y las condiciones de captación se comparten exclusivamente con inversores calificados, mediante identificación y acuerdo de confidencialidad."
+  "login": {
+    "title": "Área del inversor",
+    "lead": "Acceso restringido a inversores con NDA firmado.",
+    "email": "E-mail",
+    "emailPlaceholder": "nombre@empresa.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "submit": "Ingresar",
+    "forgot": "Olvidé mi contraseña",
+    "noAccess": "¿Todavía no tienes acceso?",
+    "request": "Solicitar acceso",
+    "required": "Completa e-mail y contraseña.",
+    "pending": "El acceso se libera tras la firma del NDA. Si ya lo firmaste, escríbenos a",
+    "close": "Cerrar"
+  }
 }

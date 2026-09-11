@@ -9,7 +9,7 @@
     "accent": "Not to know who is on the other side.",
     "lead": "We already run the base of interactions. Now we are building the intelligence that understands behaviour and decides during the conversation.",
     "cta": "Request access to the full material",
-    "note": "Reply within 2 business days · material under NDA",
+    "login": "Investor area",
     "creds": [
       {
         "value": "2020",
@@ -180,5 +180,19 @@
       "sentBody": "Your email client opened with the request ready to send. If nothing opened, write to"
     }
   },
-  "disclaimer": "This page is informational and does not constitute a public offering of securities, an investment recommendation or a promise of returns. Financial information, projections, client base and fundraising terms are shared exclusively with qualified investors, upon identification and a confidentiality agreement."
+  "login": {
+    "title": "Investor area",
+    "lead": "Restricted to investors with a signed NDA.",
+    "email": "Email",
+    "emailPlaceholder": "name@company.com",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "submit": "Sign in",
+    "forgot": "Forgot my password",
+    "noAccess": "Don't have access yet?",
+    "request": "Request access",
+    "required": "Fill in email and password.",
+    "pending": "Access is granted after the NDA is signed. If you have already signed it, reach us at",
+    "close": "Close"
+  }
 }
