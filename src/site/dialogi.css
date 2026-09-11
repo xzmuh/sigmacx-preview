@@ -163,7 +163,9 @@
 }
 .dlg-stage__grid { display: grid; gap: clamp(2rem, 4vw, 3.5rem); align-items: center; }
 @media (min-width: 1024px) { .dlg-stage__grid { grid-template-columns: minmax(0, 1fr) minmax(20rem, 25rem); } }
-.dlg-stage__copy { max-width: 44rem; }
+/* O hero ocupa a tela pela medida, nao pelo corpo da letra: o texto corre
+   mais para a direita em vez de quebrar cedo. */
+.dlg-stage__copy { max-width: 60rem; }
 .dlg-logo { width: auto; height: 30px; }
 .dlg-stage__from { margin-top: 1.6rem; }
 .dlg-stage__from strong { font-weight: 700; color: #fff; }
@@ -174,7 +176,7 @@
   font-size: clamp(2.6rem, 5vw, 4.35rem); font-weight: 600; line-height: .95; letter-spacing: -.065em;
 }
 .dlg-h1__accent { display: block; margin-top: .5rem; padding-bottom: .12em; color: var(--mint-400); text-shadow: 0 0 42px rgb(21 239 109 / .16); }
-.dlg-stage__lead { max-width: 38rem; margin-top: 1.8rem; font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.8; color: rgb(255 255 255 / .68); }
+.dlg-stage__lead { max-width: 54rem; margin-top: 1.8rem; font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.8; color: rgb(255 255 255 / .68); }
 .dlg-stage__actions { margin-top: 2.25rem; }
 
 /* ==========================================================================
@@ -384,6 +386,8 @@
 .dlg-feature-carousel {
   --feature-width: clamp(310px, 30vw, 430px);
   position: relative;
+  display: flex;
+  flex-direction: column;
   margin-top: clamp(1rem, 2.5vw, 2rem);
 }
 .dlg-feature-carousel__track {
@@ -488,7 +492,9 @@
 }
 .dlg-feature-slide .dlg-h3 { font-size: clamp(1.1rem, 1.6vw, 1.3rem); }
 .dlg-feature-slide .dlg-tile p { max-width: 39ch; }
-.dlg-feature-carousel__controls { display: flex; align-items: center; justify-content: space-between; max-width: var(--feature-width); margin: 0 auto; padding-inline: 2px; }
+/* Contador e setas em cima, a direita, antes do trilho — o trilho ja reserva
+   o respiro de cima para a aura do cartao em foco. */
+.dlg-feature-carousel__controls { order: -1; display: flex; align-items: center; justify-content: flex-end; gap: 18px; margin: 0; padding-inline: 2px; }
 .dlg-feature-carousel__controls > span { color: rgb(255 255 255 / .42); font-size: .68rem; font-weight: 650; letter-spacing: .14em; }
 .dlg-feature-carousel__controls > div { display: flex; gap: 9px; }
 .dlg-feature-carousel__controls button {
@@ -552,8 +558,6 @@
 .dlg-tile__cat { font-size: .66rem; font-weight: 600; letter-spacing: .24em; line-height: 1; text-transform: uppercase; color: var(--mint-400); }
 .dlg-tile h3 { margin-top: 1.25rem; color: #fff; }
 .dlg-tile p { margin-top: .65rem; font-size: .9375rem; line-height: 1.7; color: rgb(255 255 255 / .74); }
-.dlg-more { margin-top: 2rem; font-size: .9375rem; color: rgb(255 255 255 / .55); }
-.dlg-more strong { font-weight: 600; color: #fff; }
 
 /* Claros (o leitor pensando). */
 .dlg-card {

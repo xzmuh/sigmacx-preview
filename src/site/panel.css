@@ -732,6 +732,8 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
   align-items: end;
 }
 .sx-platform-loop__head .sx-eyebrow { grid-area: eyebrow; align-self: end; }
+.sx-platform-loop__brand { margin: 0; }
+.sx-platform-loop__brand img { display: block; width: auto; height: clamp(28px, 2.8vw, 40px); max-width: 100%; object-fit: contain; object-position: left; }
 .sx-page--panels .sx-platform-loop__head .sx-h2 {
   grid-area: title;
   max-width: 14ch;

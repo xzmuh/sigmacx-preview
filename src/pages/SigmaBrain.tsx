@@ -79,7 +79,14 @@ export default function SigmaBrain() {
 
       {/* 2. Pilares: cena azul de tela inteira (cor do fundo do video), midia
           dissolvida no fundo e accordion ao lado, como a Sigma Suite no Produto */}
-      <section className="sx-section sx-section--story sx-story-immersive sx-dark sx-subproduct-stage" data-reveal>
+      <section className="sx-section sx-section--story sx-story-immersive sx-dark sx-subproduct-stage sx-brain-voice-stage" data-reveal>
+        <div className="sx-brain-voice-stage__atmosphere" aria-hidden="true">
+          <svg viewBox="0 0 800 700" preserveAspectRatio="xMidYMid slice" fill="none">
+            <path d="M-100 590C120 590 65 120 300 120H540M-100 620C150 620 105 150 320 150H590M-100 650C185 650 145 180 340 180H640" />
+            <path d="M-40 80H175Q220 80 220 125V460Q220 510 270 510H630" />
+            <circle cx="300" cy="120" r="3" /><circle cx="220" cy="360" r="3" /><circle cx="480" cy="510" r="3" />
+          </svg>
+        </div>
         <div className="sx-shell sx-story-layout">
           <div className="sx-story-media">
             <div className="sx-story-media__stage">

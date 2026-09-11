@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { PageShell, useReveal } from "../site/PageShell";
 import { Panel } from "../site/Panel";
-import { Icon, TechLines, Video, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
-import { CASE_CONEXION_PDF, CASE_TECBAN_PDF, DEMO_URL, VIDEO, VIMEO } from "../site/site-data";
+import { Icon, TechLines, Vimeo, Watermark, SplitText, SuiteGlow, SuiteGradient } from "../site/ui";
+import { CASE_CONEXION_PDF, CASE_TECBAN_PDF, DEMO_URL, VIMEO } from "../site/site-data";
+import ChannelConversation from "../components/ChannelConversation";
 import { href, pick, rich, useLang } from "../lib/i18n";
 import pt from "../../content/pages/produto.pt.json";
 import en from "../../content/pages/produto.en.json";
@@ -140,7 +141,7 @@ export default function Produto() {
               <div className="sx-platform-products__media">
                 {activeSuite === 0
                   ? <Vimeo id={VIMEO.produtoBrain} className="sx-video--dark" title="Sigma Brain" preloadMargin={2200} />
-                  : <Video src={VIDEO.animacao} className="sx-video--bare" sound />}
+                  : <ChannelConversation lang={lang} />}
               </div>
             </div>
           </div>
@@ -170,7 +171,9 @@ export default function Produto() {
         <img className="sx-platform-loop__mark" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
         <div className="sx-shell">
           <header className="sx-platform-loop__head" data-reveal>
-            <p className="sx-eyebrow">SigmaCX</p>
+            {/* A marca do Sigma Insights no lugar do rotulo "SigmaCX": esta e a
+                secao dele (transcricao, analise e paineis). */}
+            <p className="sx-eyebrow sx-platform-loop__brand"><img src="/media/site/SigmaInsights-Default.png" alt="Sigma Insights" /></p>
             <h2 className="sx-h2"><SplitText text={t.intelligence.title} /></h2>
             <p className="sx-lead">{t.intelligence.lead}</p>
           </header>

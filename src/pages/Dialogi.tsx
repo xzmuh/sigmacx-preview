@@ -479,7 +479,6 @@ export default function Dialogi() {
               </div>
             </div>
 
-            <p className="dlg-more" data-reveal="up">{rich(t.features.more)}</p>
           </div>
         </section>
 

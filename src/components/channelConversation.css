@@ -1,0 +1,17 @@
+.sx-channel-conversation { position: relative; isolation: isolate; width: min(100%, 510px); margin-inline: auto; padding: 20px 12px; }
+.sx-channel-conversation::before { content: ""; position: absolute; z-index: -1; inset: 0 -6%; background: radial-gradient(ellipse, #1dbfb51c, transparent 70%); pointer-events: none; }
+.sx-channel-conversation__messages { display: flex; flex-direction: column; gap: 20px; padding: 0; margin: 0; list-style: none; }
+.sx-channel-conversation__message { position: relative; align-self: flex-start; width: 87%; padding: 17px 20px 11px; border-radius: 17px 17px 17px 4px; background: #e7f1f3; color: #18363d; box-shadow: 0 10px 24px #0000000c; animation: channel-message-in .8s cubic-bezier(.22, 1, .36, 1) var(--message-delay) both; }
+.sx-channel-conversation__message.is-customer { align-self: flex-end; background: #156d80; color: #fff; border-radius: 17px 17px 4px 17px; }
+.sx-channel-conversation__message p { margin: 0; font-size: clamp(.85rem, 1.15vw, 1rem); line-height: 1.55; }
+.sx-channel-conversation__time { display: block; margin-top: 5px; text-align: right; font-size: .65rem; color: #68858b; }
+.is-customer .sx-channel-conversation__time { color: #a4dce8; }
+.sx-channel-conversation__channel { position: absolute; left: -13px; top: -13px; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; background: #f7fffd; color: #139f6f; box-shadow: 0 4px 14px #071c3220; }
+.sx-channel-conversation__channel.is-instagram { color: #79529a; }
+.sx-channel-conversation__channel svg { width: 21px; height: 21px; }
+.sx-channel-conversation__status { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 22px 0 0; color: #a9d8d1; font-size: .72rem; }
+.sx-channel-conversation__status > span { color: #8de9bf; }
+.sx-page--panels .sx-platform-products__media:has(> .sx-channel-conversation) { background: transparent; border: 0; box-shadow: none; overflow: visible; aspect-ratio: auto; }
+@keyframes channel-message-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 480px) { .sx-channel-conversation { padding-inline: 8px; } .sx-channel-conversation__message { width: 91%; padding: 14px 16px 10px; } }
+@media (prefers-reduced-motion: reduce) { .sx-channel-conversation__message { animation: none; } }

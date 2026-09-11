@@ -1,3 +1,30 @@
+/* O azul amostrado do vídeo permanece uniforme ao redor da animação. */
+.sx-page--panels main .sx-section.sx-brain-voice-stage {
+  background: #0b142d !important;
+}
+.sx-brain-voice-stage__atmosphere {
+  position: absolute;
+  inset: 0 44% 0 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 12% 70%, #167c9530, transparent 68%), radial-gradient(ellipse at 45% 18%, #3956be14, transparent 62%);
+  mask-image: linear-gradient(90deg, #000 45%, transparent 100%);
+}
+.sx-brain-voice-stage__atmosphere svg { width: 100%; height: 100%; stroke: #66c6df; stroke-width: 1; opacity: .1; }
+.sx-brain-voice-stage__atmosphere circle { fill: #94e8ef; stroke: none; }
+.sx-page--suite .sx-brain-voice-stage :is(.sx-story-media, .sx-story-media__stage, .sx-video--story) {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.sx-page--suite .sx-brain-voice-stage .sx-video--story video {
+  border-radius: 0;
+  mask-image: radial-gradient(ellipse, #000 60%, transparent 74%);
+}
+@media (max-width: 900px) {
+  .sx-brain-voice-stage__atmosphere { inset: 0 0 45%; mask-image: linear-gradient(#000 45%, transparent); }
+}
+
 /* A central light beam connects alternating scenes, as in the home story. */
 .sx-page--suite main > .sx-brain-laser {
   position: relative;
@@ -75,16 +102,18 @@ body .sx-page .sx-brain-benefits__head .sx-h2 { grid-column: 1; margin: 0; font-
 .sx-brain-benefit { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 88px; grid-template-rows: auto 1fr; gap: 24px; min-height: 270px; padding: clamp(28px, 3.5vw, 44px); background: #fff; }
 .sx-brain-benefit:nth-child(2) { background: #edf5f1; }
 .sx-brain-benefit:nth-child(3) { background: #f0f4f8; }
-.sx-brain-benefit:first-child { background: radial-gradient(ellipse at 100% 0%, #236766, transparent 75%), #113f42; }
+/* O cartao escuro na paleta Sigma (navy com o teal da marca), nao no verde-
+   petroleo que destoava do resto da pagina. */
+.sx-brain-benefit:first-child { background: radial-gradient(ellipse at 100% 0%, rgba(0, 169, 169, .38), transparent 72%), linear-gradient(145deg, #0a2141, #071226); }
 .sx-brain-benefit__number { align-self: start; color: #658b80; font-size: .8rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
 .sx-brain-benefit__copy { grid-column: 1 / -1; grid-row: 2; align-self: end; }
 .sx-brain-benefit h3 { margin: 0; max-width: 27ch; color: #163a3b; font-size: clamp(1.3rem, 1.9vw, 1.65rem); font-weight: 500; line-height: 1.22; letter-spacing: -.025em; }
 .sx-brain-benefit p { margin: 12px 0 0; max-width: 47ch; color: #5b706c; font-size: .94rem; line-height: 1.65; }
 .sx-brain-benefit__diagram { grid-column: 2; grid-row: 1; justify-self: end; display: block; width: 80px; height: 80px; margin-top: -12px; color: #218c82; }
-.sx-brain-benefit:first-child .sx-brain-benefit__number { color: #9ccdc0; }
+.sx-brain-benefit:first-child .sx-brain-benefit__number { color: #7fe7e3; }
 .sx-brain-benefit:first-child h3 { color: #fff; }
-.sx-brain-benefit:first-child p { color: #c1dcd6; }
-.sx-brain-benefit:first-child .sx-brain-benefit__diagram { color: #a4e9ce; }
+.sx-brain-benefit:first-child p { color: rgba(219, 229, 236, .78); }
+.sx-brain-benefit:first-child .sx-brain-benefit__diagram { color: #7fe7e3; }
 @media (max-width: 700px) {
   .sx-brain-benefits__head { grid-template-columns: minmax(0, 1fr); }
   .sx-brain-benefits__cta { grid-column: 1; grid-row: auto; margin-top: 8px; }
@@ -92,3 +121,9 @@ body .sx-page .sx-brain-benefits__head .sx-h2 { grid-column: 1; margin: 0; font-
   .sx-brain-benefit { min-height: 240px; gap: 16px; padding: 28px; }
   .sx-brain-benefits::before { width: 280px; height: 400px; top: 0; bottom: auto; left: auto; right: 0; opacity: .045; }
 }
+
+/* Hero: os botoes nao sobem no hover, e o "Conheca nossa plataforma" e o
+   botao cheio, no ciano claro da marca (o mesmo do menu ativo da Suite). */
+.sx-page--suite .sx-hero--brain .sx-cta:hover { transform: none; box-shadow: none; }
+.sx-page--suite .sx-hero--brain .sx-hero__actions > .sx-cta:first-child { background: #9ff0ea; border-color: #9ff0ea; color: #082a2c; }
+.sx-page--suite .sx-hero--brain .sx-hero__actions > .sx-cta:first-child:hover { background: #bdf6f2; border-color: #bdf6f2; color: #082a2c; }
