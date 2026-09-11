@@ -7,7 +7,7 @@
     "eyebrow": "Company / Investor relations",
     "title": "The customer service stack was built to manage interactions.",
     "accent": "Not to know who is on the other side.",
-    "lead": "We already run the layer where interactions happen: channels, context, identity and history of large operations. From there we are building the next one — the layer that understands behaviour and decides during the conversation.",
+    "lead": "We already run the base of interactions. Now we are building the intelligence that understands behaviour and decides during the conversation.",
     "cta": "Request access to the full material",
     "note": "Reply within 2 business days · material under NDA",
     "creds": [
@@ -117,7 +117,7 @@
       }
     ],
     "validationLabel": "Validation",
-    "validation": "Mission-critical operations in **financial services, energy, telecom, retail and BPO**, across three continents, with proven integrations into legacy and cloud systems. Client names and cases are for the conversation, under confidentiality.",
+    "validation": "We run operations across three continents, integrating legacy and cloud systems. Clients and cases are presented under confidentiality.",
     "complianceLabel": "Compliance",
     "compliance": [
       "LGPD",
@@ -126,7 +126,7 @@
       "ISO 27001"
     ],
     "techLabel": "Technology base",
-    "tech": "The decision layer is proprietary. Models, cloud and voice infrastructure come from the leading global providers, chosen per operation requirement: latency, region and compliance.",
+    "tech": "Our decision layer is proprietary, with models, cloud and voice from global providers, chosen by latency, region and compliance.",
     "flow": [
       "Conversation",
       "Encryption",

@@ -16,7 +16,7 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv section[id] { scroll-margin-top: 155px; }
 .inv .section-index { display: block; margin-bottom: 26px; color: var(--inv-muted); line-height: 1.6; }
 .inv .section-index i { margin-right: 10px; font-style: normal; color: var(--green); }
-.inv-h1 { max-width: 22ch; font-size: clamp(2.6rem, 4.9vw, 5rem); font-weight: 430; letter-spacing: -.065em; line-height: 1.03; }
+.inv-h1 { max-width: 22ch; font-size: clamp(2.2rem, 3.9vw, 3.9rem); font-weight: 430; letter-spacing: -.065em; line-height: 1.03; }
 .inv-h2 { max-width: 24ch; font-size: clamp(2rem, 3.55vw, 3.65rem); font-weight: 430; letter-spacing: -.055em; line-height: 1.1; text-wrap: balance; }
 /* A copy nao muda: o que muda e o ritmo. Medida mais curta, entrelinha menos
    solta, e a primeira frase clara e um ponto maior — o resto desce menor, para

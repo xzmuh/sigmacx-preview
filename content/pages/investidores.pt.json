@@ -7,7 +7,7 @@
     "eyebrow": "Empresa / Relação com investidores",
     "title": "O stack de atendimento foi feito para gerenciar interações.",
     "accent": "Não para saber quem está do outro lado.",
-    "lead": "Já operamos a camada onde as interações acontecem: canais, contexto, identidade e histórico de grandes operações. É dessa posição que construímos a camada seguinte — a que entende comportamento e decide durante a conversa.",
+    "lead": "Já operamos a base das interações. Agora, construímos a inteligência que entende comportamentos e decide durante a conversa.",
     "cta": "Solicitar acesso ao material completo",
     "note": "Retorno em até 2 dias úteis · material sob NDA",
     "creds": [
@@ -117,7 +117,7 @@
       }
     ],
     "validationLabel": "Validação",
-    "validation": "Operações de missão crítica em **serviços financeiros, energia, telecom, varejo e BPO**, em três continentes, com integrações comprovadas em sistemas legados e em nuvem. Nomes de clientes e casos ficam para a conversa, sob confidencialidade.",
+    "validation": "Atuamos em operações em três continentes, integrando sistemas legados e em nuvem. Clientes e casos são apresentados sob confidencialidade.",
     "complianceLabel": "Conformidade",
     "compliance": [
       "LGPD",
@@ -126,7 +126,7 @@
       "ISO 27001"
     ],
     "techLabel": "Base tecnológica",
-    "tech": "A camada de decisão é própria. Modelos, nuvem e infraestrutura de voz vêm dos principais provedores globais, escolhidos por requisito de cada operação: latência, região e conformidade.",
+    "tech": "Nossa camada de decisão é própria, com modelos, nuvem e voz de provedores globais, escolhidos por latência, região e conformidade.",
     "flow": [
       "Conversa",
       "Criptografia",
