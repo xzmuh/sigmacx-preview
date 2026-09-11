@@ -122,8 +122,6 @@ body .sx-page .sx-brain-benefits__head .sx-h2 { grid-column: 1; margin: 0; font-
   .sx-brain-benefits::before { width: 280px; height: 400px; top: 0; bottom: auto; left: auto; right: 0; opacity: .045; }
 }
 
-/* Hero: os botoes nao sobem no hover, e o "Conheca nossa plataforma" e o
-   botao cheio, no ciano claro da marca (o mesmo do menu ativo da Suite). */
+/* Hero: os botoes nao sobem no hover. O "Conheca nossa plataforma" usa o
+   mesmo botao em degrade do hero do Sigma Channel (pedido 2026-09-11). */
 .sx-page--suite .sx-hero--brain .sx-cta:hover { transform: none; box-shadow: none; }
-.sx-page--suite .sx-hero--brain .sx-hero__actions > .sx-cta:first-child { background: #9ff0ea; border-color: #9ff0ea; color: #082a2c; }
-.sx-page--suite .sx-hero--brain .sx-hero__actions > .sx-cta:first-child:hover { background: #bdf6f2; border-color: #bdf6f2; color: #082a2c; }

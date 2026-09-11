@@ -415,7 +415,7 @@
 /* ------------------------------ Tilt 3D + brilho -------------------------- */
 .sx-page--suite .sx-tilt { transform-style: preserve-3d; will-change: transform; }
 /* O brilho radial teal que seguia o cursor DENTRO de cada cartao foi removido
-   a pedido (2026-09-08). Era ele a "bola azul" — nao o BorderGlow, que so
+   a pedido (2026-09-08). Era ele a "bola azul", nao o BorderGlow, que so
    acende a borda. O mesmo brilho ja tinha saido do `.sx-story-media` em
    2026-09-04, pelo mesmo motivo. A inclinacao 3D do `.sx-tilt` continua. */
 .sx-page--suite .sx-grid, .sx-page--suite .sx-benefits-bento, .sx-page--suite .sx-feature, .sx-page--suite .sx-story-layout, .sx-page--suite .sx-suite-stage__panel { perspective: 1200px; }
@@ -1262,7 +1262,7 @@
 .sx-page--suite .sx-story-immersive .sx-accordion__trigger { color: #ffffff; }
 /* Mesmo componente do console claro do Insights, na tinta escura: itens
    separados por regua, o item aberto vira cartao arredondado com tinta teal e
-   o tile do icone e solido — teal quando ativo. */
+   o tile do icone e solido, teal quando ativo. */
 .sx-page--suite .sx-story-immersive .sx-accordion__item {
   border: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1377,8 +1377,8 @@
   color: var(--sg-petrol);
 }
 /* A marca solta, sem cartao branco em volta (pedido 2026-09-08). Os arquivos
-   vem sobre branco — o da Tecban era um card de compartilhamento de 1200x630,
-   recortado agora so para a marca — e `multiply` apaga esse branco contra o
+   vem sobre branco, o da Tecban era um card de compartilhamento de 1200x630,
+   recortado agora so para a marca, e `multiply` apaga esse branco contra o
    fundo claro da faixa. Sem o padding e a caixa, a marca ainda cresce: cabia
    em 190x62 menos 36px de respiro interno, agora usa 300x72 inteiros. */
 .sx-page--suite .sx-case-switcher__client img {
@@ -1413,8 +1413,8 @@
 
 /* Metricas: 4 colunas com divisorias, icone em selo e numero grande. */
 /* Compactado (pedido 2026-09-08): o painel do case somava 771px de altura e
-   mais da metade era respiro. Os quatro recuos abaixo cairam junto — cabecalho,
-   faixa de metricas, cada metrica e o rodape — mantendo a mesma proporcao
+   mais da metade era respiro. Os quatro recuos abaixo cairam junto, cabecalho,
+   faixa de metricas, cada metrica e o rodape, mantendo a mesma proporcao
    entre eles, entao o bloco encolhe sem mudar de ritmo. */
 .sx-page--suite .sx-case-results {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1460,8 +1460,7 @@
 }
 
 /* ==========================================================================
-   Autonomo e configuravel (Brain): editor de fluxo desenhado em codigo —
-   janela do app com nos, conexoes teal, card de canais e donut de fluxos.
+   Autonomo e configuravel (Brain): editor de fluxo desenhado em codigo, janela do app com nos, conexoes teal, card de canais e donut de fluxos.
    ========================================================================== */
 .sx-page--suite .sx-builder {
   display: grid;
@@ -1689,7 +1688,7 @@
 /* ==========================================================================
    A mesma estatistica, agora sobre faixa escura: a moldura de cartao sai e a
    propria faixa vira a superficie, como a faixa de porcentagem da home. So as
-   cores mudam — grade, medidas e hierarquia continuam as de cima.
+   cores mudam, grade, medidas e hierarquia continuam as de cima.
    ========================================================================== */
 .sx-page--suite .sx-stat-band { position: relative; isolation: isolate; overflow: hidden; }
 .sx-page--suite .sx-stat-band::before {
@@ -2487,7 +2486,7 @@
 .sx-flows__steps li p { margin: 0; color: rgba(31, 41, 57, 0.62); line-height: 1.5; }
 
 /* A animacao do fluxo, sem moldura: a secao fica em branco puro para o
-   fundo branco do arquivo desaparecer por igualdade — animacao solta. */
+   fundo branco do arquivo desaparecer por igualdade, animacao solta. */
 .sx-page--suite main > .sx-section--wm.sx-flows {
   background: #ffffff;
 }
@@ -2495,7 +2494,7 @@
    real, centralizado, sempre nitido. */
 .sx-flows__media img {
   display: block;
-  width: min(100%, 560px);
+  width: min(100%, 544px);
   margin-inline: auto;
 }
 
@@ -2521,8 +2520,8 @@
 }
 /* A secao nao recorta: o brilho do mockup (box-shadow de 72px) e o da orbita
    (64px) passavam da borda de baixo e eram decepados numa reta. As duas
-   camadas decorativas desta secao ja se apagam sozinhas — a `::before` por
-   mascara radial e a `::after` por `blur(72px)` — entao nao dependiam do
+   camadas decorativas desta secao ja se apagam sozinhas, a `::before` por
+   mascara radial e a `::after` por `blur(72px)`, entao nao dependiam do
    recorte para nao vazar. */
 .sx-page--suite main > .sx-automate.sx-dark {
   overflow: visible;
@@ -2606,7 +2605,7 @@
   transition: transform 0.7s var(--ease-sigma), box-shadow 0.7s var(--ease-sigma);
 }
 /* O video e 1:1 (600x600) e a moldura e 1.76:1. Com `cover` ele era ampliado e
-   tinha ~43% da altura cortada — sumiam o balao de notificacao no topo e os
+   tinha ~43% da altura cortada, sumiam o balao de notificacao no topo e os
    botoes Cancelar/Confirmar embaixo. Com `contain` o quadro inteiro aparece, e
    como a arte ja e reduzida em vez de ampliada, tambem fica mais nitida. O
    fundo e o mesmo #1f2838 do proprio video, entao as laterais nao aparecem. */
@@ -2698,7 +2697,7 @@
 /* A secao era branca sobre branco: chao branco, cards brancos, e so a linha
    teal entre eles dando sinal de vida. Ganha o mesmo chao das outras faixas
    claras da suite (radiais teal/petroleo sobre o veu sky), um arco de linhas
-   ao fundo e cards com borda, topo colorido e icone em gradiente — o mesmo
+   ao fundo e cards com borda, topo colorido e icone em gradiente, o mesmo
    vocabulario de `--atmosphere`, sem inventar uma linguagem nova. */
 .sx-page--suite main > .sx-results.sx-dark {
   position: relative;
@@ -2779,7 +2778,7 @@
     linear-gradient(145deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.025));
 }
 /* Sem `overflow: hidden` no cartao: o no da linha que liga um cartao ao outro
-   e o `::after`, e ele fica fora da caixa — recortar o cartao apagava os nos.
+   e o `::after`, e ele fica fora da caixa, recortar o cartao apagava os nos.
    O fio do topo entao arredonda as proprias pontas. */
 .sx-page--suite .sx-results.sx-dark .sx-result-card::before {
   content: "";
@@ -3046,7 +3045,7 @@
   box-shadow: none;
 }
 /* Esfera do Brain em resolucao nativa (600x600): quadro 1:1 limitado a
-   620px e video contido — nada de esticar e borrar. O fundo do video e o
+   620px e video contido, nada de esticar e borrar. O fundo do video e o
    mesmo azul do palco, entao as bordas se dissolvem. */
 .sx-page--suite .sx-story-immersive .sx-video--story {
   width: min(100%, 620px);
@@ -3079,7 +3078,7 @@
 /* O `border-top` da regra base fecha uma lista de linhas separadas por regua.
    Nas quatro variantes da suite o item ja e um cartao com borda propria (ou
    ganha cantos arredondados ao abrir), entao aquele traco sobrava solto acima
-   do primeiro item — sem encostar em nada. */
+   do primeiro item, sem encostar em nada. */
 .sx-page--suite .sx-accordion { border-top: 0; }
 
 /* Accordion: tiles de icone; ativo em gradiente teal com fundo tintado */
@@ -3112,7 +3111,7 @@
 }
 
 /* ===========================================================================
-   Sigma Brain — sentimento vetorial e jornada valorizada
+   Sigma Brain, sentimento vetorial e jornada valorizada
    ========================================================================== */
 .sx-page--suite .sx-sentiment-viz {
   position: relative;
@@ -3206,7 +3205,7 @@
 .sx-journeys__signals i:nth-child(3) { width: 6px; height: 6px; opacity: 0.45; box-shadow: none; }
 
 /* ===========================================================================
-   Sigma Insights — a interface e os emojis ficam livres no campo escuro
+   Sigma Insights, a interface e os emojis ficam livres no campo escuro
    ========================================================================== */
 .sx-page--suite .sx-insights-story .sx-emotions-free {
   position: relative;
@@ -3269,7 +3268,7 @@
 
 /* Alinhamento das duas colunas: `center` deixava o topo do painel branco da
    foto 54px acima da linha do titulo. Com `start` as duas comecam na mesma
-   linha e o deslocamento fica explicito — a foto desce ate a altura do texto,
+   linha e o deslocamento fica explicito, a foto desce ate a altura do texto,
    nao do icone (que e mais alto que a linha de texto). */
 .sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__body { align-items: start; }
 .sx-page--suite .sx-insights-story .sx-emotions-free .sx-emotion-stage__visual { margin-top: 30px; }
@@ -3613,7 +3612,7 @@
    Cartoes simples com a moldura que acende conforme o cursor (BorderGlow, sem
    `alwaysOn`, que e como o componente original reage ao mouse).
    O BorderGlow ja desenha borda, fundo e raio proprios, entao o cartao por
-   dentro entra sem os dele — dois quadros concentricos era o que dava aquele
+   dentro entra sem os dele, dois quadros concentricos era o que dava aquele
    aspecto de cartao dentro de cartao.
    ========================================================================== */
 .sx-page--suite .sx-glow--card,
@@ -3634,7 +3633,7 @@
 /* ==========================================================================
    Glow so na borda, nunca por dentro.
    O `edge-light` do BorderGlow desenha o brilho com um `box-shadow` que mistura
-   camadas externas e camadas `inset` de ate 50px — e sao as `inset` que jogavam
+   camadas externas e camadas `inset` de ate 50px, e sao as `inset` que jogavam
    a mancha azul para dentro do cartao ao passar o mouse. Aqui ficam apenas o
    fio de 1px que marca a borda e as camadas externas.
    Vale so para as molduras que reagem ao cursor: as `--always` (cartao azul do

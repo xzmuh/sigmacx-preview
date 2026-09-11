@@ -12,9 +12,25 @@
     "body": "Um agente de IA autônomo, em voz e texto, que entende intenções e resolve solicitações de ponta a ponta.",
     "cta": "Você sabe a diferença entre um bot e um Agente de IA?"
   },
+  "bridge": {
+    "lead": "O Sigma Brain ajuda operações de atendimento a entender intenções, agir com autonomia e criar conversas mais humanas, que geram resultados melhores.",
+    "items": [
+      {
+        "title": "Entende intenções",
+        "body": "Capta objetivos, contexto e emoção do cliente com IA."
+      },
+      {
+        "title": "Executa ações",
+        "body": "Resolve solicitações com autonomia, em todos os seus sistemas."
+      },
+      {
+        "title": "Aprende a cada interação",
+        "body": "Fica mais inteligente com o tempo e melhora conversas e resultados."
+      }
+    ]
+  },
   "pillars": {
     "title": "Deixe seu atendimento **falar por você**",
-    "lead": "Três coisas que o Sigma Brain faz em toda conversa.",
     "items": [
       {
         "title": "Ofereça conversas fluidas e eficazes 24/7",
@@ -91,7 +107,7 @@
       "windowTitle": "Builder / Campanha · Auto Checagem de veículo",
       "preview": "Preview",
       "save": "Salvar",
-      "hint": "Arraste os blocos para reorganizar o fluxo. Clique na paleta para adicionar um bloco ligado ao selecionado — e Delete para remover.",
+      "hint": "Arraste os blocos para reorganizar o fluxo. Clique na paleta para adicionar um bloco ligado ao selecionado, e Delete para remover.",
       "reset": "Recomeçar",
       "palette": {
         "message": "Mensagem",

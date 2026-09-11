@@ -8,8 +8,8 @@
 :root {
   /* 1440px: o eixo pedido em 2026-09-08, tirado da faixa no-code do Sigma
      Brain, que era a unica secao mais larga que o resto e virou a referencia.
-     Header, rodape e todas as paginas leem daqui — inclusive o `.dlg-x` da
-     pagina do Dialogi —, entao mudar so este valor alinha o site inteiro. */
+     Header, rodape e todas as paginas leem daqui, inclusive o `.dlg-x` da
+     pagina do Dialogi, , entao mudar so este valor alinha o site inteiro. */
   --sx-shell: 1440px;
   --sx-gutter: clamp(20px, 5vw, 64px);
   --sx-radius: 22px;
@@ -103,7 +103,8 @@
 /* ------------------------------- Botoes --------------------------------- */
 
 .sx-cta { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 24px; border-radius: 999px; background: var(--green); color: var(--navy); font-weight: 650; font-size: 0.92rem; border: 1px solid transparent; transition: transform 0.3s var(--ease-sigma), box-shadow 0.3s var(--ease-sigma); white-space: nowrap; }
-.sx-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(185, 255, 155, 0.28); }
+/* Sem deslocamento no hover (pedido 2026-09-11): so a sombra acende. */
+.sx-cta:hover { box-shadow: 0 14px 34px rgba(185, 255, 155, 0.28); }
 .sx-cta--sm { padding: 10px 18px; font-size: 0.85rem; }
 .sx-cta--lg { padding: 15px 32px; font-size: 1rem; }
 .sx-cta--block { width: 100%; }

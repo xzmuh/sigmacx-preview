@@ -12,6 +12,23 @@
     "body": "Un agente de IA autónomo, en voz y texto, que entiende intenciones y resuelve solicitudes de punta a punta.",
     "cta": "¿Cuál es la diferencia entre los chatbots y los agentes de IA?"
   },
+  "bridge": {
+    "lead": "Sigma Brain ayuda a las operaciones de atención a entender intenciones, actuar con autonomía y crear conversaciones más humanas que generan mejores resultados.",
+    "items": [
+      {
+        "title": "Entiende intenciones",
+        "body": "Capta objetivos, contexto y emoción del cliente con IA."
+      },
+      {
+        "title": "Ejecuta acciones",
+        "body": "Resuelve solicitudes con autonomía, en todos tus sistemas."
+      },
+      {
+        "title": "Aprende de cada interacción",
+        "body": "Se vuelve más inteligente con el tiempo para mejorar conversaciones y resultados."
+      }
+    ]
+  },
   "pillars": {
     "title": "Deja que tu atención **hable por ti**",
     "items": [
@@ -27,8 +44,7 @@
         "title": "Atención empática en cada llamada",
         "body": "Identifica el tono de voz y el estado emocional del cliente en tiempo real y ajusta las respuestas para transmitir empatía. Con análisis de sentimiento integrado y adaptación del lenguaje, las conversaciones se vuelven más humanas, lo que fortalece la confianza y aumenta la satisfacción."
       }
-    ],
-    "lead": "Tres cosas que Sigma Brain hace en cada conversación."
+    ]
   },
   "tabs": [
     {
@@ -90,7 +106,7 @@
       "windowTitle": "Builder / Campaña · Auto chequeo de vehículo",
       "preview": "Preview",
       "save": "Guardar",
-      "hint": "Arrastre los bloques para reorganizar el flujo. Haga clic en la paleta para añadir un bloque conectado al seleccionado — y Suprimir para quitarlo.",
+      "hint": "Arrastre los bloques para reorganizar el flujo. Haga clic en la paleta para añadir un bloque conectado al seleccionado, y Suprimir para quitarlo.",
       "reset": "Empezar de nuevo",
       "palette": {
         "message": "Mensaje",

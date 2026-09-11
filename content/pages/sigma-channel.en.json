@@ -13,7 +13,9 @@
     "eyebrow": "Sigma Channel",
     "title": "The same experience on any channel",
     "body": "A single, consistent journey at every step, no matter which channel the customer chooses to reach you.",
-    "cta": "Connect your channels"
+    "cta": "Connect your channels",
+    "hubLabel": "WhatsApp, Instagram, Facebook, X, email and phone connected to Sigma Channel",
+    "channels": ["WhatsApp", "Instagram", "Facebook", "X", "Email", "Phone"]
   },
   "tabs": [
     {

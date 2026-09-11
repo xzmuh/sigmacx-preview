@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Painéis — direção "Borda Viva"
+   Painéis, direção "Borda Viva"
    --------------------------------------------------------------------------
    Substitui a linguagem de faixas empilhadas (.section-transition + emendas
    diagonais) por cartões escuros arredondados que flutuam no branco. O branco
@@ -9,7 +9,7 @@
    O aro é o mesmo princípio do .dlg-feature-slide do Dialogi: um gradiente em
    border-box mascarado com mask-composite. Encaixotado ele contorna o cartão;
    quando o painel fica inteiro (margem 0, raio 0) ele vira a linha neon no
-   topo e na base — que é a "borda neon" da transição claro→escuro.
+   topo e na base, que é a "borda neon" da transição claro→escuro.
 
    As variáveis --sx-panel-x (margem) e --sx-panel-r (raio) são escritas pelo
    componente Panel a cada quadro de scroll. Ver src/site/Panel.tsx.
@@ -89,7 +89,7 @@
    Tipografia sobre o painel escuro.
    A .sx-hero da linguagem antiga era BRANCA, então os títulos herdavam tinta
    escura (--sg-ink). Dentro do painel isso vira preto no preto: aqui o
-   contraste é remapeado. O trecho em **negrito** não entra nesta conta — ele
+   contraste é remapeado. O trecho em **negrito** não entra nesta conta, ele
    é um GradientText com backgroundImage inline, então a paleta clara vem do
    prop `onDark` do SplitText, não do CSS.
    -------------------------------------------------------------------------- */
@@ -100,7 +100,7 @@
 /* O trecho em **negrito** vinha como GradientText: `background-clip: text` com
    `color: transparent`. Dentro do painel as palavras do SplitText ficam com
    `transform` durante a entrada, e o recorte do gradiente nao acompanha o
-   glifo transformado — o texto sumia por inteiro ("...cada ponto da" e nada
+   glifo transformado, o texto sumia por inteiro ("...cada ponto da" e nada
    mais). Aqui o destaque volta a ser cor solida, que e o que precisa ser
    legivel sobre o painel escuro. */
 .sx-page--panels .sx-panel .sx-title-gradient .text-content {
@@ -295,7 +295,7 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
 }
 
 /* ========================================================================== 
-   Plataforma — ritmo editorial inspirado em páginas SaaS de alta conversão.
+   Plataforma, ritmo editorial inspirado em páginas SaaS de alta conversão.
    O hero mantém a linguagem própria da Sigma; depois dele, cada trecho ganha
    uma composição diferente em vez de repetir o painel escuro expansível.
    ========================================================================== */
@@ -972,8 +972,7 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
    Escala tirada da folha de estilo da Zendesk (medida, nao estimada):
    container 1150px; padding vertical de secao em degraus 48/64/88/104;
    raio dominante 16px, com 20/32/40 nos blocos maiores; titulos em 1.25 de
-   entrelinha e corpo em 1.45. Os valores anteriores aqui eram chute meu —
-   raio de 30-36px, quase o dobro do que a referencia usa.
+   entrelinha e corpo em 1.45. Os valores anteriores aqui eram chute meu, raio de 30-36px, quase o dobro do que a referencia usa.
    ========================================================================== */
 
 /* O container de 1150px vinha da folha da Zendesk, mas o header, o rodape e
@@ -1009,7 +1008,7 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
 }
 
 /* ========================================================================== 
-   Páginas dos módulos — o sistema visual lançado em /produto.
+   Páginas dos módulos, o sistema visual lançado em /produto.
    O conteúdo continua sendo o de cada JSON; esta camada muda só composição,
    superfícies e ritmo entre claro/escuro.
    ========================================================================== */
@@ -1956,3 +1955,143 @@ body .sx-footer-expand .sx-final { padding-top: clamp(64px, 7vw, 100px) !importa
   .sx-auto-ui--schedule > :is(strong, .sx-auto-ui__lines, .sx-auto-ui__actions),
   .sx-auto-ui--messages > div { animation: none !important; }
 }
+
+/* Sigma Brain: faixa "Deixe seu atendimento falar por voce" no formato do
+   print de referencia (2026-09-11). Titulo e texto a esquerda; tres colunas
+   com icone a direita, separadas por filetes verticais; linhas finas e pontos
+   em teal nas bordas. */
+.sx-page--panels .sx-section.sx-brain-bridge { padding-block: clamp(72px, 7vw, 112px) !important; }
+.sx-brain-bridge__deco { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.sx-brain-bridge__deco path { stroke: rgba(0, 169, 169, .22); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.sx-brain-bridge__deco circle { fill: #19b5c4; filter: drop-shadow(0 0 6px rgba(0, 169, 169, .5)); }
+.sx-brain-bridge__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 2fr);
+  gap: clamp(32px, 4vw, 64px);
+  align-items: center;
+}
+.sx-brain-bridge__intro { padding-right: clamp(20px, 3vw, 56px); border-right: 1px solid rgba(24, 90, 125, .14); }
+.sx-page--panels .sx-brain-bridge .sx-h2 { max-width: none; margin-top: 14px; font-size: clamp(2.2rem, 3.1vw, 3.2rem); line-height: 1.04; }
+/* Final do titulo no teal claro da referencia (o degrade padrao puxa petroleo). */
+.sx-brain-bridge .sx-h2 strong .text-content { background-image: linear-gradient(90deg, #0aa7a4, #19b5c4, #0aa7a4) !important; }
+.sx-brain-bridge .sx-h2 strong { display: block; }
+.sx-brain-bridge .sx-lead { max-width: 44ch; margin: 26px 0 0; color: rgba(31, 41, 57, .68); font-size: 1rem; line-height: 1.65; }
+.sx-brain-bridge__items { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+.sx-brain-bridge__items li { padding: 6px clamp(18px, 2.2vw, 36px); }
+.sx-brain-bridge__items li + li { border-left: 1px solid rgba(24, 90, 125, .14); }
+.sx-brain-bridge__icon {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 17px;
+  color: #0e8f96;
+  background: linear-gradient(145deg, #e3f7f5, #cfeef0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 12px 26px rgba(0, 120, 130, .12);
+}
+.sx-brain-bridge__icon--1 { color: #2f5fe0; background: linear-gradient(145deg, #e8efff, #d7e3fb); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 12px 26px rgba(47, 95, 224, .12); }
+.sx-brain-bridge__icon svg { width: 31px; height: 31px; }
+.sx-brain-bridge__items h3 { margin: 22px 0 0; color: #16213a; font-size: 1.15rem; font-weight: 650; line-height: 1.25; letter-spacing: -.02em; }
+.sx-brain-bridge__items p { margin: 8px 0 0; color: rgba(31, 41, 57, .64); font-size: .93rem; line-height: 1.55; }
+@media (max-width: 1100px) {
+  .sx-brain-bridge__layout { grid-template-columns: minmax(0, 1fr); }
+  .sx-brain-bridge__intro { padding-right: 0; border-right: 0; }
+  .sx-brain-bridge__items li:first-child { padding-left: 0; }
+}
+@media (max-width: 700px) {
+  .sx-brain-bridge__items { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .sx-brain-bridge__items li { padding: 28px 0 0; }
+  .sx-brain-bridge__items li + li { border-left: 0; border-top: 1px solid rgba(24, 90, 125, .14); }
+}
+
+/* Sigma Channel: a logo no lugar do sobretitulo e a faixa dos seis canais
+   chegando ao simbolo do Sigma (2026-09-11). */
+.sx-channel-bridge__logo { display: block; width: auto; height: clamp(28px, 2.4vw, 36px); }
+.sx-channel-hub {
+  --hub-line: rgba(24, 90, 125, .16);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: clamp(48px, 5vw, 76px);
+  padding-top: 8px;
+  isolation: isolate;
+}
+.sx-channel-hub__item { position: relative; flex: 1 1 0; display: grid; justify-items: center; gap: 12px; }
+.sx-channel-hub__item small { color: rgba(31, 41, 57, .62); font-size: .78rem; font-weight: 600; letter-spacing: .01em; }
+/* Linha de cada canal ate o vizinho, na direcao do centro. */
+.sx-channel-hub__item::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 31px;
+  left: 50%;
+  width: 100%;
+  height: 1px;
+  background: var(--hub-line);
+}
+.sx-channel-hub__item.is-out::before { left: auto; right: 50%; }
+.sx-channel-hub__item::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 29px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #19b5c4;
+  box-shadow: 0 0 10px 2px rgba(25, 181, 196, .55);
+  opacity: 0;
+  animation: sx-hub-in 2.4s var(--d, 0s) cubic-bezier(.45, 0, .3, 1) infinite;
+}
+.sx-channel-hub__item.is-out::after { left: auto; right: 50%; animation-name: sx-hub-out; }
+@keyframes sx-hub-in { 0% { opacity: 0; left: 50%; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; left: 150%; } }
+@keyframes sx-hub-out { 0% { opacity: 0; right: 50%; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; right: 150%; } }
+.sx-channel-hub__tile {
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 62px;
+  border: 1px solid rgba(24, 90, 125, .12);
+  border-radius: 18px;
+  color: #136d87;
+  background: linear-gradient(150deg, #fff, #eef7f8);
+  box-shadow: 0 14px 30px rgba(19, 109, 135, .1), inset 0 1px 0 #fff;
+  transition: transform .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.sx-channel-hub__tile svg { width: 28px; height: 28px; }
+.sx-channel-hub__item:hover .sx-channel-hub__tile { transform: translateY(-3px); color: #00a9a9; box-shadow: 0 18px 36px rgba(0, 169, 169, .18), inset 0 1px 0 #fff; }
+.sx-channel-hub__core {
+  position: relative;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  margin: -11px clamp(8px, 1.5vw, 24px) 0;
+  border-radius: 24px;
+  background: radial-gradient(circle at 30% 25%, #1b3d5c, #0a1830 70%);
+  box-shadow: 0 0 0 8px rgba(0, 169, 169, .08), 0 0 0 16px rgba(0, 169, 169, .04), 0 22px 44px rgba(10, 24, 48, .28);
+}
+.sx-channel-hub__core img { width: 42px; height: auto; }
+.sx-channel-hub__core::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(25, 181, 196, .45);
+  border-radius: 30px;
+  animation: sx-hub-core 2.4s ease-out infinite;
+}
+@keyframes sx-hub-core { from { opacity: .9; scale: .92; } to { opacity: 0; scale: 1.18; } }
+@media (max-width: 900px) {
+  .sx-channel-hub { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 26px; justify-items: center; }
+  .sx-channel-hub__core { grid-column: 1 / -1; grid-row: 1; margin: 0 0 8px; }
+  .sx-channel-hub__item::before, .sx-channel-hub__item::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sx-channel-hub__item::after, .sx-channel-hub__core::after { animation: none; display: none; }
+}
+
+/* Acoes do Sigma Channel: as fotos ja trazem a notificacao desenhada perto da
+   borda. Sem o zoom de hover, que cortaria o "agora" e o botao de fechar. */
+.sx-channel-actions .sx-card--media:hover .sx-card__media img { transform: none; }

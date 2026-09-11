@@ -15,7 +15,6 @@ gsap.registerPlugin(ScrollTrigger);
  * - marca S em fatias: entra do centro, flutua, segue o mouse e gira no scroll;
  * - midias (imagens/videos) com parallax dentro das molduras;
  * - cards e molduras com tilt 3D e brilho que acompanha o cursor;
- * - botoes magneticos;
  * - numeros (20%, 87%...) contam ao entrar na tela;
  * - glow teal seguindo o cursor;
  * - faixas das emendas diagonais deslizam com o scroll.
@@ -151,10 +150,15 @@ export function useSuiteMotion(enabled: boolean) {
         });
       }
 
-      /* --------------------------------------- parallax das midias emolduradas */
+      /* --------------------------------------- parallax das midias emolduradas
+         As telas das abas (.sx-tabs__panel img) e as imagens de card
+         (.sx-card__media img) ficam de fora: com o zoom de 110% o quadro
+         cortava o topo e a lateral do dashboard e as notificacoes desenhadas
+         na borda das fotos das acoes do Channel. Imagem com texto aparece
+         inteira. */
       root
         .querySelectorAll<HTMLElement>(
-          ".sx-figure img, .sx-feature__media img, .sx-card__media img, .sx-tabs__panel img, .sx-emotion-stage__visual > img, .sx-video iframe, .sx-video video",
+          ".sx-figure img, .sx-feature__media img, .sx-emotion-stage__visual > img, .sx-video iframe, .sx-video video",
         )
         .forEach((media) => {
           gsap.fromTo(
@@ -292,23 +296,8 @@ export function useSuiteMotion(enabled: boolean) {
         });
       });
 
-      /* ------------------------------------------------------- botoes magneticos */
-      root.querySelectorAll<HTMLElement>(".sx-cta").forEach((btn) => {
-        const x = gsap.quickTo(btn, "x", { duration: 0.4, ease: "power2.out" });
-        const y = gsap.quickTo(btn, "y", { duration: 0.4, ease: "power2.out" });
-        const onMove = (e: PointerEvent) => {
-          const b = btn.getBoundingClientRect();
-          x((e.clientX - (b.left + b.width / 2)) * 0.22);
-          y((e.clientY - (b.top + b.height / 2)) * 0.32);
-        };
-        const onLeave = () => gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: "elastic.out(1, 0.45)" });
-        btn.addEventListener("pointermove", onMove);
-        btn.addEventListener("pointerleave", onLeave);
-        cleanups.push(() => {
-          btn.removeEventListener("pointermove", onMove);
-          btn.removeEventListener("pointerleave", onLeave);
-        });
-      });
+      /* Botoes magneticos removidos a pedido (2026-09-11): o CTA nao se move
+         com o cursor. */
 
       // Glow que seguia o cursor (.sx-cursor) removido a pedido (2026-09-03).
     }, root);

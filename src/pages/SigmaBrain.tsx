@@ -11,6 +11,13 @@ import es from "../../content/pages/sigma-brain.es.json";
 import "../site/brainLaser.css";
 
 const pillarIcons = ["bolt", "translate", "smile"];
+/* Icones da faixa "Deixe seu atendimento falar por voce": intencao (alvo),
+   acao (raio) e aprendizado (barras subindo). */
+const BRIDGE_ICONS = [
+  <svg key="intent" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="4.2" /><circle cx="12" cy="12" r="1.3" fill="currentColor" /></svg>,
+  <svg key="action" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"><path d="M13.5 3 5.5 13.2h6L10.5 21l8-10.2h-6l1-7.8Z" /></svg>,
+  <svg key="learn" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M6 19v-5M10.7 19V9.5M15.3 19v-7M20 19V6.5M4 19.5h17" /></svg>,
+];
 const tabImages = ["omni.webp", "Bot-BR.webp", "Flutuacao-BR.png"];
 function BenefitDiagram({ index }: { index: number }) {
   return <svg className="sx-brain-benefit__diagram" viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -57,7 +64,7 @@ export default function SigmaBrain() {
             <p className="sx-lead">{t.intro.body}</p>
           </div>
           <div className="sx-hero__actions">
-            <a className="sx-cta sx-cta--outline sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">{t.hero.cta} <span aria-hidden="true">→</span></a>
+            <a className="sx-cta sx-cta--grad sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">{t.hero.cta} <span aria-hidden="true">→</span></a>
             <a className="sx-cta sx-cta--ghost sx-cta--lg" href={BOT_VS_AGENT_URL} target="_blank" rel="noreferrer">{t.intro.cta}</a>
           </div>
         </div>
@@ -65,15 +72,30 @@ export default function SigmaBrain() {
 
       {/* Pausa editorial clara entre o hero e o palco funcional. O conteúdo
           já existia na cena seguinte; apenas muda de lugar. */}
-      <section className="sx-section sx-subproduct-bridge" data-reveal>
-        <div className="sx-shell sx-subproduct-bridge__layout">
-          <div>
+      <section className="sx-section sx-subproduct-bridge sx-brain-bridge" data-reveal>
+        <svg className="sx-brain-bridge__deco" viewBox="0 0 1600 420" preserveAspectRatio="none" fill="none" aria-hidden="true">
+          <path d="M-40 150C120 210 150 330 110 460" />
+          <path d="M-60 250C60 280 90 360 60 460" />
+          <path d="M1080 60C1260 20 1440 40 1660 170" />
+          <path d="M1240 -20C1330 60 1420 120 1660 120" />
+          <circle cx="104" cy="303" r="6" />
+          <circle cx="1450" cy="56" r="7" />
+        </svg>
+        <div className="sx-shell sx-brain-bridge__layout">
+          <div className="sx-brain-bridge__intro">
             <p className="sx-eyebrow">{t.hero.badge}</p>
             <h2 className="sx-h2"><SplitText text={t.pillars.title} /></h2>
+            <p className="sx-lead">{t.bridge.lead}</p>
           </div>
-          <div className="sx-subproduct-bridge__copy">
-            <p className="sx-lead">{t.pillars.lead}</p>
-          </div>
+          <ul className="sx-brain-bridge__items">
+            {t.bridge.items.map((item, index) => (
+              <li key={item.title}>
+                <span className={`sx-brain-bridge__icon sx-brain-bridge__icon--${index}`} aria-hidden="true">{BRIDGE_ICONS[index]}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

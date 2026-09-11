@@ -12,6 +12,23 @@
     "body": "An autonomous AI agent, in voice and text, that understands intent and resolves requests end to end.",
     "cta": "What is the difference between Chatbots and AI Agents?"
   },
+  "bridge": {
+    "lead": "Sigma Brain helps service operations understand intent, act autonomously, and create more human conversations that drive better outcomes.",
+    "items": [
+      {
+        "title": "Understands intent",
+        "body": "Grasps customer goals, context and emotion with AI."
+      },
+      {
+        "title": "Takes action",
+        "body": "Resolves requests autonomously, across your systems."
+      },
+      {
+        "title": "Learns from every interaction",
+        "body": "Gets smarter over time to improve conversations and outcomes."
+      }
+    ]
+  },
   "pillars": {
     "title": "Let your service **speak for you**",
     "items": [
@@ -27,8 +44,7 @@
         "title": "Empathetic service in every call",
         "body": "Identify the customer's tone of voice and emotional state in real time, and adjust your responses to convey empathy. With integrated sentiment analysis and language adaptation, create more human conversations, strengthening trust and increasing satisfaction."
       }
-    ],
-    "lead": "Three things Sigma Brain does in every conversation."
+    ]
   },
   "tabs": [
     {
@@ -90,7 +106,7 @@
       "windowTitle": "Builder / Campaign · Vehicle auto check",
       "preview": "Preview",
       "save": "Save",
-      "hint": "Drag the blocks to rearrange the flow. Click the palette to add a block wired to the selected one — and Delete to remove it.",
+      "hint": "Drag the blocks to rearrange the flow. Click the palette to add a block wired to the selected one, and Delete to remove it.",
       "reset": "Start over",
       "palette": {
         "message": "Message",

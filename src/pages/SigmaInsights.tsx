@@ -35,7 +35,7 @@ export default function SigmaInsights() {
             <p className="sx-lead">{t.hero.lead}</p>
           </div>
           <div className="sx-hero__actions">
-            <a className="sx-cta sx-cta--outline sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">{t.hero.cta} <span aria-hidden="true">→</span></a>
+            <a className="sx-cta sx-cta--grad sx-cta--lg" href={DEMO_URL} target="_blank" rel="noreferrer">{t.hero.cta} <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>

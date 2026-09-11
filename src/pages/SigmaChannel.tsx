@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
 import { Carousel, Icon, Watermark, SplitText, SuiteGlow, SuiteGradient, TechLines } from "../site/ui";
 import { DEMO_URL, VIMEO } from "../site/site-data";
@@ -13,6 +13,16 @@ const tabImages = ["Dashboard-2.webp", "Criar-Fluxo-1.webp", "Sigma-Campaigns.we
 const stepIcons = ["list", "chat", "send", "heart", "sliders"];
 const benefitIcons = ["users", "layers", "search"];
 const actionImages = ["sigmaaa-01.webp", "Sigmaaaaaaaa-02.webp", "sigma-cxxx-03.webp", "sigma-cxxx-04.webp", "sigma-cxxx-05.webp", "sigma-cxxx-06.webp"];
+
+/* Icones de traco dos canais, na cor da marca (sem as cores de cada rede). */
+const CHANNEL_ICONS = [
+  <svg key="whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M12 3.4a8.6 8.6 0 0 0-7.4 13l-1.1 4.2 4.3-1.1A8.6 8.6 0 1 0 12 3.4Z" /><path d="M9.1 8.3h.8l1 2.2-.8.9a5.6 5.6 0 0 0 2.6 2.6l.9-.8 2.2 1v.8c0 .6-.6 1.2-1.4 1.1a6.6 6.6 0 0 1-6.4-6.4c0-.8.5-1.4 1.1-1.4Z" fill="currentColor" stroke="none" /></svg>,
+  <svg key="instagram" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><circle cx="12" cy="12" r="3.9" /><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" /></svg>,
+  <svg key="facebook" viewBox="0 0 24 24" fill="currentColor"><path d="M13.6 21v-7.3h2.5l.4-2.9h-2.9V9c0-.8.3-1.4 1.5-1.4h1.5V5a19 19 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.1H8.2v2.9h2.5V21Z" /></svg>,
+  <svg key="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M4.2 4h4.4l11.2 16h-4.4Z" /><path d="M19.4 4 13 11.3M4.6 20l6.4-7.3" strokeLinecap="round" /></svg>,
+  <svg key="email" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><rect x="3.2" y="5.4" width="17.6" height="13.2" rx="2.6" /><path d="m4.4 7.4 7.6 5.6 7.6-5.6" strokeLinecap="round" /></svg>,
+  <svg key="phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M6.7 3.8h2.5l1.3 4-1.8 1.3a11 11 0 0 0 6.2 6.2l1.3-1.8 4 1.3v2.5a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.7 6a2 2 0 0 1 2-2.2Z" /></svg>,
+];
 
 export default function SigmaChannel() {
   useReveal();
@@ -43,15 +53,34 @@ export default function SigmaChannel() {
 
       {/* O texto de abertura deixa de disputar com uma segunda cena azul.
           Ele cria a pausa clara entre o hero e a demonstração do produto. */}
-      <section className="sx-section sx-subproduct-bridge" data-reveal>
+      <section className="sx-section sx-subproduct-bridge sx-channel-bridge" data-reveal>
         <div className="sx-shell sx-subproduct-bridge__layout">
           <div>
-            <p className="sx-eyebrow">{t.intro.eyebrow}</p>
+            <img className="sx-channel-bridge__logo" src="/media/brand/sigma-channel-default.png" alt={t.intro.eyebrow} />
             <h2 className="sx-h2"><SplitText text={t.intro.title} /></h2>
           </div>
           <div className="sx-subproduct-bridge__copy">
             <p className="sx-lead">{t.intro.body}</p>
             <a className="sx-cta sx-cta--outline" href={DEMO_URL} target="_blank" rel="noreferrer">{t.intro.cta} <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        {/* Os seis canais chegando ao Sigma Channel: tres de cada lado, com um
+            ponto de luz correndo pela linha ate o centro. */}
+        <div className="sx-shell">
+          <div className="sx-channel-hub" role="img" aria-label={t.intro.hubLabel}>
+            {t.intro.channels.map((name, index) => (
+              <Fragment key={name}>
+                {index === 3 && (
+                  <span className="sx-channel-hub__core" aria-hidden="true">
+                    <img src="/media/sigma-mark.png" alt="" />
+                  </span>
+                )}
+                <span className={`sx-channel-hub__item${index < 3 ? " is-in" : " is-out"}`} aria-hidden="true" style={{ ["--d" as string]: `${(index % 3) * 0.45}s` }}>
+                  <span className="sx-channel-hub__tile">{CHANNEL_ICONS[index]}</span>
+                  <small>{name}</small>
+                </span>
+              </Fragment>
+            ))}
           </div>
         </div>
       </section>
@@ -99,12 +128,11 @@ export default function SigmaChannel() {
                 ))}
               </ol>
             </div>
-            {/* WebP animado no lugar do GIF: mesma animação e mesmos 544x440,
-                sem a paleta de 256 cores (some o dithering nas curvas) e 30%
-                mais leve. O arquivo em produção tem MD5 igual ao do repo, então
-                não existe versão em resolução maior para buscar. */}
+            {/* O GIF original do sigmacx.ai (544x440, o unico tamanho que
+                existe no servidor), no lugar do WebP convertido: pedido do
+                usuario em 2026-09-11 para ficar igual ao site antigo. */}
             <div className="sx-flows__media" aria-hidden="true">
-              <img src="/media/site/Fluxo.webp" alt="" loading="lazy" />
+              <img src="/media/site/Fluxo.gif" alt="" loading="lazy" width={544} height={440} />
             </div>
           </div>
         </div>
