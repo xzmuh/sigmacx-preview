@@ -4,8 +4,8 @@ import * as THREE from "three";
 import { intelligenceNodes } from "./IntelligenceNodes";
 import logoSamples from "./sigmaLogoPoints.json";
 
-const LOGO_HOLD_END = 1.7;
-const OPENING_END = 3.5;
+const LOGO_HOLD_END = .75;
+const OPENING_END = 2.55;
 
 type ExperienceProps = {
   progress: MutableRefObject<number>;
@@ -88,7 +88,7 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
       logoPositions.set([sample[0], sample[1], 0], index * 3);
     }
     return {
-      positions,
+      positions: reducedMotion ? positions : logoPositions.slice(),
       colors,
       sizes,
       phases,
@@ -96,7 +96,7 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
       spherePositions: positions.slice(),
       logoPositions,
     };
-  }, [surfaceCount, totalCount, trailCount]);
+  }, [surfaceCount, totalCount, trailCount, reducedMotion]);
   const velocities = useMemo(() => new Float32Array(totalCount * 3), [totalCount]);
   const dotUniforms = useMemo(() => ({
     uOpacity: { value: 1 },
@@ -107,7 +107,7 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
     openingTime.current = 0;
     motionTime.current = 0;
     velocities.fill(0);
-    cloud.positions.set(cloud.basePositions);
+    cloud.positions.set(reducedMotion ? cloud.basePositions : cloud.logoPositions);
     cloud.spherePositions.set(cloud.basePositions);
     if (points.current) {
       points.current.rotation.set(0, 0, 0);
@@ -249,12 +249,11 @@ export default function IntelligenceCore({ progress, reducedMotion, nodeAnchors 
     if (opening < OPENING_END) {
       for (let index = 0; index < totalCount; index++) {
         const offset = index * 3;
-        const assemble = THREE.MathUtils.smootherstep(opening, (index % 11) * .015, .85 + (index % 11) * .015);
         for (let axis = 0; axis < 3; axis++) {
-          const logo = THREE.MathUtils.lerp(cloud.basePositions[offset + axis], cloud.logoPositions[offset + axis], assemble);
+          const logo = cloud.logoPositions[offset + axis];
           const breath = Math.sin(opening * .85 + axis * 1.8) * .006;
           renderedPositions[offset + axis] = THREE.MathUtils.lerp(logo, positions[offset + axis], spread)
-            + breath * assemble * (1 - spread)
+            + breath * (1 - spread)
             + Math.sin(Math.PI * spread) * Math.sin(index * .7 + axis) * .09;
         }
       }

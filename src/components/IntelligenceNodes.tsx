@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import { Link } from "react-router-dom";
 import { href, type Lang } from "../lib/i18n";
+import { startDialogiJourney, startProductJourney } from "../site/ProductJourney";
 import "./intelligenceNodes.css";
 
 function ModulePreview({ path }: { path: string }) {
@@ -98,7 +99,13 @@ export default function IntelligenceNodes({ anchors, lang }: { anchors: MutableR
         <h2>{node.title}</h2>
         <ModulePreview path={node.path} />
         <p>{node.body}</p>
-        <Link to={href(node.path, lang)}>Conheça {node.title}<span aria-hidden="true">→</span></Link>
+        <Link to={href(node.path, lang)} onClick={(event) => {
+          if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+          event.preventDefault();
+          cancelClose();
+          if (node.path === "/dialogi") startDialogiJourney(href(node.path, lang), lang);
+          else startProductJourney(href(node.path, lang), lang, node.path === "/produto" ? undefined : node.title);
+        }}>Conheça {node.title}<span aria-hidden="true">→</span></Link>
       </div> : null}
     </div>)}
   </div>;

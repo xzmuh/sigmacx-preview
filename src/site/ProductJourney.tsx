@@ -19,6 +19,9 @@ async function preloadDestination(to: string) {
   switch (stripLang(to)) {
     case "/dialogi": await import("../pages/Dialogi"); break;
     case "/produto": await import("../pages/Produto"); break;
+    case "/sigma-brain": await import("../pages/SigmaBrain"); break;
+    case "/sigma-channel": await import("../pages/SigmaChannel"); break;
+    case "/sigma-insights": await import("../pages/SigmaInsights"); break;
     case "/": await import("../SigmaExperience"); break;
   }
 }
@@ -27,6 +30,7 @@ type JourneyDetail = {
   to: string;
   lang: Lang;
   direction: "forward" | "back" | "dialogi";
+  destinationName?: string;
 };
 
 type BrowserViewTransition = {
@@ -46,9 +50,9 @@ const copy: Record<Lang, Record<JourneyDetail["direction"], string>> = {
   es: { forward: "Entrando en Sigma Suite", back: "Volviendo al inicio", dialogi: "Entrando en Dialogi" },
 };
 
-export function startProductJourney(to: string, lang: Lang) {
+export function startProductJourney(to: string, lang: Lang, destinationName?: string) {
   window.dispatchEvent(new CustomEvent<JourneyDetail>(PRODUCT_JOURNEY_EVENT, {
-    detail: { to, lang, direction: "forward" },
+    detail: { to, lang, direction: "forward", destinationName },
   }));
 }
 
@@ -100,7 +104,9 @@ export function ProductJourney() {
       if (!detail || running.current || window.location.pathname === detail.to) return;
       running.current = true;
       const source = window.location.pathname;
-      setAnnouncement(copy[detail.lang][detail.direction]);
+      setAnnouncement(detail.destinationName
+        ? `${({ pt: "Entrando em", en: "Entering", es: "Entrando en" })[detail.lang]} ${detail.destinationName}`
+        : copy[detail.lang][detail.direction]);
       let navigated = false;
       const navigate = () => {
         navigated = true;
