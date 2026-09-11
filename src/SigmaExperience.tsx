@@ -18,6 +18,7 @@ import { href, langFromPath } from "./lib/i18n";
 import GradientText from "./components/GradientText";
 import IntelligenceNodes from "./components/IntelligenceNodes";
 import IntelligenceCore from "./components/IntelligenceCore";
+import InvestorTeaser from "./components/InvestorTeaser";
 
 const DEMO_URL =
   "https://api.whatsapp.com/send/?phone=551142008282&text=Ol%C3%A1%2C+gostaria+de+saber+mais+sobre+a+SigmaCX&type=phone_number&app_absent=0";
@@ -387,6 +388,8 @@ export function SigmaExperience() {
           </div>
           <IntelligenceNodes anchors={nodeAnchors} lang={lang} />
         </section>
+
+        <InvestorTeaser lang={lang} />
 
         <section className="manifesto section-dark" aria-labelledby="manifesto-title">
           <div className="manifesto-signal" aria-hidden="true">

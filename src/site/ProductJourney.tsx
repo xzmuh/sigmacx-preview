@@ -22,6 +22,7 @@ async function preloadDestination(to: string) {
     case "/sigma-brain": await import("../pages/SigmaBrain"); break;
     case "/sigma-channel": await import("../pages/SigmaChannel"); break;
     case "/sigma-insights": await import("../pages/SigmaInsights"); break;
+    case "/investidores": await import("../pages/Investidores"); break;
     case "/": await import("../SigmaExperience"); break;
   }
 }

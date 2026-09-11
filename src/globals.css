@@ -730,8 +730,9 @@ video {
   margin-bottom: -170px;
   padding: 10rem 7vw calc(10rem + 170px);
   background:
-    radial-gradient(circle at 18% 50%, rgba(93, 166, 255, 0.15), transparent 30%),
-    linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(8, 18, 41, 0.94));
+    radial-gradient(ellipse at 22% 48%, rgba(93, 166, 255, 0.08), transparent 38%),
+    radial-gradient(ellipse at 33% 62%, rgba(0, 169, 169, 0.055), transparent 34%),
+    linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(5, 11, 25, 0.94));
   mask-image: linear-gradient(to bottom, transparent 0, #000 90px, #000 calc(100% - 220px), transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 90px, #000 calc(100% - 220px), transparent 100%);
 }
@@ -742,8 +743,10 @@ video {
   place-items: center;
   width: min(34vw, 480px);
   aspect-ratio: 1;
-  border: 1px solid rgba(93, 166, 255, 0.2);
+  border: 1px solid rgba(135, 188, 223, 0.18);
   border-radius: 50%;
+  background: radial-gradient(ellipse at 28% 18%, rgba(209, 239, 255, .045), transparent 54%), radial-gradient(circle at center, rgba(93, 166, 255, .035), transparent 72%);
+  box-shadow: inset 0 1px 0 rgba(223, 247, 255, .045), 0 0 70px rgba(93, 166, 255, .035);
   animation: manifestoRotate 28s linear infinite;
 }
 
@@ -756,13 +759,16 @@ video {
 
 .manifesto-signal::before {
   inset: 18%;
-  border: 1px dashed rgba(185, 255, 155, 0.22);
+  border: 1px solid rgba(185, 255, 155, 0.13);
+  border-right-color: rgba(93, 166, 255, .23);
+  box-shadow: inset 0 0 32px rgba(93, 166, 255, .035);
 }
 
 .manifesto-signal::after {
   inset: 38%;
-  background: radial-gradient(circle, rgba(185, 255, 155, 0.35), rgba(93, 166, 255, 0.05) 58%, transparent 70%);
-  box-shadow: 0 0 70px rgba(185, 255, 155, 0.14);
+  background: radial-gradient(circle at 32% 24%, rgba(225, 255, 243, .28), transparent 36%), radial-gradient(circle at 58% 64%, rgba(93, 166, 255, .2), transparent 65%), radial-gradient(circle, rgba(111, 200, 172, .2), rgba(10, 25, 43, .68) 72%);
+  border: 1px solid rgba(177, 225, 220, .14);
+  box-shadow: inset 0 2px 12px rgba(220, 255, 245, .1), 0 0 42px rgba(93, 166, 255, .1);
   animation: signalPulse 2.2s ease-in-out infinite;
 }
 
@@ -774,8 +780,11 @@ video {
   height: 56px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 50%;
-  background: rgba(10, 20, 44, 0.82);
-  color: rgba(255, 255, 255, 0.55);
+  background: linear-gradient(135deg, rgba(175, 211, 228, .08), rgba(10, 20, 35, .7));
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+  color: rgba(235, 246, 255, 0.76);
   font-family: monospace;
   font-size: 0.58rem;
   animation: manifestoCounterRotate 28s linear infinite;
@@ -3320,7 +3329,7 @@ video {
 .site-shell .trust-metric p { font-size: clamp(1.05rem, 1.2vw, 1.3rem); }
 .site-shell .security-core strong { font-size: var(--sx-core); }
 /* Texto de apoio do manifesto: corpo grande do Dialogi (17-19px), nao titulo. */
-.site-shell .manifesto-copy > p { font-size: clamp(1.0625rem, 1.15vw, 1.1875rem); line-height: 1.7; }
+.site-shell .manifesto-copy > p { max-width: 52ch; font-size: clamp(1.0625rem, 1.15vw, 1.1875rem); line-height: 1.7; letter-spacing: -.01em; text-wrap: pretty; }
 .site-shell .section-heading--dark > p,
 .site-shell .connection-copy > p,
 .site-shell .security-copy > p { font-size: clamp(0.9375rem, 1vw, 1.0625rem); line-height: 1.7; }
