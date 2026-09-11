@@ -159,3 +159,37 @@
   .ab-timeline__hint { transition: none; }
   .ab-timeline__hint-icon path { animation: none; }
 }
+
+/* O "S" de "NOS" saia do limite onde o degradê é pintado: com o espaçamento
+   negativo do título, a última letra passa da caixa do texto. Folga à direita
+   devolvida com margem negativa, sem mexer no alinhamento. */
+.ab-refined .ab-hero__gradient .text-content { padding-right: .12em; margin-right: -.12em; }
+
+/* Linha do tempo: o traço de fundo segue até a borda direita da tela. Pontos,
+   preenchimento e pulso continuam no trecho original (até o fim do conteúdo),
+   então a leitura do progresso não muda. Só na versão com rolagem. */
+@media (min-width: 761px) and (min-height: 601px) and (prefers-reduced-motion: no-preference) {
+  .ab-refined .ab-timeline__rule { right: 0; background: linear-gradient(90deg, transparent, rgba(93, 166, 255, .22) 4%, rgba(93, 166, 255, .22)); }
+  .ab-refined .ab-timeline__fill { width: calc(100% - var(--ab-inset)); }
+  .ab-refined .ab-timeline__nodes { right: var(--ab-inset); }
+  .ab-refined .ab-timeline__pulse { left: calc(var(--ab-progress) * (100% - var(--ab-inset))); }
+}
+
+/* Seta da foto da liderança: ícone desenhado no lugar do caractere "↗", que
+   saía fino e torto. Vidro escuro em repouso; no hover o círculo acende em
+   verde e a seta avança na diagonal. */
+.ab-refined .ab-leader__portrait > .ab-leader__arrow {
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  background: rgba(7, 19, 41, .42);
+  box-shadow: 0 10px 28px rgba(4, 12, 28, .32), inset 0 1px 0 rgba(255, 255, 255, .14);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3);
+  backdrop-filter: blur(12px) saturate(1.3);
+  transition: background .35s ease, border-color .35s ease, color .35s ease, transform .35s cubic-bezier(.22, 1, .36, 1);
+}
+.ab-leader__arrow svg { width: 18px; height: 18px; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.ab-refined .ab-leader:hover .ab-leader__arrow,
+.ab-refined .ab-leader__portrait:focus-visible .ab-leader__arrow { border-color: var(--green); background: var(--green); color: #071329; transform: scale(1.06); }
+.ab-refined .ab-leader:hover .ab-leader__arrow svg,
+.ab-refined .ab-leader__portrait:focus-visible .ab-leader__arrow svg { transform: translate(2px, -2px); }

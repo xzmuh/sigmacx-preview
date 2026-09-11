@@ -19,9 +19,12 @@ const timelineLogos = [
   "DIALOGI-08.png",
   "SigmaBrain-Default.png",
 ];
+/* Mesma ordem de team.members nos JSON: Marcos (CEO), Luis (CRO), Murillo (CTO).
+   Sem LinkedIn pessoal informado, o link cai no perfil da SigmaCX. */
 const team = [
+  { photo: "marcos-moraes.webp", href: LINKEDIN_URL },
+  { photo: "luis-palermo.webp", href: LINKEDIN_URL },
   { photo: "1566506294844.webp", href: "https://www.linkedin.com/in/murillomelo/" },
-  { photo: "Design-sem-nome.webp", href: LINKEDIN_URL },
 ];
 
 const labels = {
@@ -215,15 +218,17 @@ export default function Sobre() {
             </header>
             <div className="ab-leadership__grid">
               {t.team.members.map((person, index) => (
-                <article className={`ab-leader${index === 1 ? " ab-leader--reverse" : ""}`} key={person.name}>
+                <article className={`ab-leader${index % 2 === 1 ? " ab-leader--reverse" : ""}`} key={person.name}>
                   <a className="ab-leader__portrait" href={team[index].href} target="_blank" rel="noreferrer">
                     <img src={`/media/site/${team[index].photo}`} alt={person.name} loading="lazy" />
-                    <span aria-hidden="true">↗</span>
+                    <span className="ab-leader__arrow" aria-hidden="true">
+                      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M6 14 14 6M7.5 6H14v6.5" /></svg>
+                    </span>
                   </a>
                   <div className="ab-leader__copy">
                     <span>{person.role}</span>
                     <h3>{person.name}</h3>
-                    <p>{person.bio}</p>
+                    {person.bio.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                     <a href={team[index].href} target="_blank" rel="noreferrer">{person.cta} <span aria-hidden="true">↗</span></a>
                   </div>
                 </article>
@@ -236,7 +241,7 @@ export default function Sobre() {
           <div className="ab-history__timeline-band">
             <div className="sx-shell ab-history__intro">
               <header className="ab-history__head" data-reveal>
-                <div><p className="ab-kicker">2020 — 2024</p><h2>{l.history}</h2></div>
+                <div><p className="ab-kicker">2020 - 2024</p><h2>{l.history}</h2></div>
                 <p>{t.history.intro}</p>
               </header>
             </div>

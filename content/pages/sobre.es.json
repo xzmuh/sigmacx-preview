@@ -80,20 +80,11 @@
     "continues": "A nossa história continua sendo construída e podemos contar com muitas pessoas dispostas a tornar o impossível, um de nossos lugares. Evaristo Canete embarca no time, e assume o cargo de chefe de operações da SigmaCX."
   },
   "team": {
-    "title": "Conheça nossa equipe",
+    "title": "Conoce a nuestro equipo",
     "members": [
-      {
-        "name": "Murillo Melo",
-        "role": "CTO",
-        "cta": "Conozca Marcos",
-        "bio": "Actualmente, como Founder & Board Member de cinco empresas, lidera la estrategia y el desarrollo de nuevos negocios y alianzas, impulsando la transformación de los recorridos del cliente mediante inteligencia artificial. Fundador y CEO global, Marcos cuenta con 27 años de experiencia en ventas y gestión. Al frente de SigmaCX, lidera la gestión de soluciones de Customer Experience unificadas, inteligentes y seguras, promoviendo experiencias digitales integradas y elevando el estándar de relación entre las empresas y sus clientes."
-      },
-      {
-        "name": "Evaristo Canete",
-        "role": "COO",
-        "cta": "Conozca Luís",
-        "bio": "Con más de 30 años de experiencia en el mercado de TI y contact centers, Luis cuenta con una sólida trayectoria en ventas y ha ocupado cargos ejecutivos en empresas multinacionales. Es licenciado en Ingeniería Mecánica, con un posgrado en Marketing y un MBA por la Fundação Dom Cabral, además de estudios en la Kellogg School of Management de Chicago."
-      }
+      { "name": "Marcos Moraes", "role": "CEO", "cta": "Conoce a Marcos", "bio": ["Ejecutivo con experiencia internacional en telecomunicaciones, contact centers y customer experience, especializado en la implementación de infraestructura y la operación de sites globales.", "Con años de trayectoria en Miami al frente de proyectos multiculturales y operaciones internacionales, aplica esa experiencia en la construcción de SigmaCX, desarrollando soluciones de CX, automatización y analytics alineadas con la realidad operativa de las grandes empresas."] },
+      { "name": "Luis Palermo", "role": "CRO", "cta": "Conoce a Luis", "bio": ["Ejecutivo con una sólida trayectoria en el mercado global de comunicaciones corporativas y customer experience, con paso por empresas como Lucent Technologies y Avaya, referentes en infraestructura de telecomunicaciones y contact centers corporativos.", "Lidera la expansión comercial e internacional de SigmaCX, conectando grandes operaciones enterprise con la nueva generación de infraestructura AI-native para interacciones corporativas."] },
+      { "name": "Murillo Melo", "role": "CTO", "cta": "Conoce a Murillo", "bio": ["Ejecutivo con más de 15 años de experiencia en arquitectura de TI, data centers y transformación digital, que combina visión técnica, capacidad de ejecución y un profundo entendimiento operativo.", "Con una trayectoria emprendedora y foco en innovación aplicada, lidera la evolución tecnológica de SigmaCX, desarrollando soluciones de automatización, analytics e inteligencia operativa para entornos enterprise de alta complejidad y operaciones AI-native."] }
     ]
   }
 }
