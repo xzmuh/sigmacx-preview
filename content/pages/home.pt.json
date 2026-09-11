@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "SigmaCX — Inteligência para cada conversa",
+    "title": "SigmaCX | Inteligência para cada conversa",
     "description": "Soluções que escutam, entendem e melhoram cada conversa entre marcas e pessoas."
   },
   "aria": {
@@ -13,8 +13,10 @@
   "voice": "VOZ",
   "hero": {
     "kicker": "CX inteligente começa com a tecnologia certa",
-    "copy": "Soluções que **escutam**, entendem e melhoram cada conversa entre marcas e pessoas.",
-    "cta": "Entre na experiência",
+    "title": "A próxima camada bilionária não será",
+    "accent": "mais um canal.",
+    "lead": "A SigmaCX está construindo uma nova camada de inteligência para transformar interações em decisões.",
+    "cta": "Conheça nossa visão para o futuro",
     "specialist": "Fale com um especialista"
   },
   "manifesto": {

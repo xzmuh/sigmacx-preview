@@ -2,7 +2,7 @@
 .intelligence-nodes.is-settled { opacity: 1; transition: opacity 1.2s ease-in-out; }
 .intelligence-node { position: absolute; left: 0; top: 0; pointer-events: none; visibility: hidden; opacity: 0; }
 .intelligence-node.is-open { z-index: 10; }
-.intelligence-node__trigger { position: absolute; transform: translate(-50%, -50%); display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; background: transparent; color: var(--node-color); cursor: pointer; }
+.intelligence-node__trigger { position: absolute; z-index: 2; transform: translate(-50%, -50%); display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border: 0; background: transparent; color: var(--node-color); cursor: pointer; }
 .intelligence-node__dot { position: relative; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, #efffff 0%, var(--node-color) 40%, color-mix(in srgb, var(--node-color) 65%, transparent) 65%, transparent 85%); filter: drop-shadow(0 0 4px var(--node-color)); transition: transform .3s ease; animation: intelligence-node-breathe 4.5s ease-in-out infinite alternate; }
 .intelligence-node__dot::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--node-color) 16%, transparent), transparent 70%); }
 .intelligence-node:nth-child(2n) .intelligence-node__dot { animation-delay: -2.3s; }
@@ -11,7 +11,7 @@
 .is-open .intelligence-node__dot { transform: scale(1.2); }
 .is-open .intelligence-node__tag { color: var(--node-color); }
 .intelligence-node__trigger:focus-visible { outline: 1px solid var(--node-color); outline-offset: 3px; border-radius: 50%; }
-.intelligence-node__card { position: absolute; top: 26px; left: -126px; width: 252px; padding: 18px; border: 1px solid #a2dce42c; border-radius: 18px; background: #0c1c29ed; backdrop-filter: blur(18px); box-shadow: 0 18px 50px #0005; color: #e9f1f3; animation: intelligence-card-in .24s ease both; }
+.intelligence-node__card { position: absolute; z-index: 1; top: 26px; left: -126px; width: 252px; padding: 18px; border: 1px solid #a2dce42c; border-radius: 18px; background: #0c1c29ed; backdrop-filter: blur(18px); box-shadow: 0 18px 50px #0005; color: #e9f1f3; animation: intelligence-card-in .24s ease both; }
 .intelligence-node__card::before { content: ""; position: absolute; left: 0; right: 0; top: -27px; height: 28px; }
 .intelligence-node.is-lower .intelligence-node__card { top: auto; bottom: 26px; }
 .intelligence-node.is-lower .intelligence-node__card::before { top: auto; bottom: -27px; }
@@ -39,3 +39,8 @@
   .intelligence-node__card::before { top: auto; bottom: -27px; }
 }
 @media (prefers-reduced-motion: reduce) { .intelligence-nodes, .intelligence-nodes.is-settled { transition: none; } .intelligence-node__card { animation: none; } .intelligence-node__dot { transition: none; animation: none; } }
+/* O ponto fica acima do card: a ponte invisivel (::before) que liga o card ao
+   ponto cobria metade dele e o cursor virava seta nos nos de baixo. O nome vem
+   junto com o ponto, entao nos de baixo (card abre para cima, sobre o nome)
+   ele some enquanto o card esta aberto. */
+.intelligence-node.is-lower.is-open .intelligence-node__tag { visibility: hidden; }

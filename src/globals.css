@@ -448,7 +448,7 @@ video {
     radial-gradient(ellipse at 38% 62%, rgba(255, 255, 255, 0.065), transparent 52%);
   overflow: visible;
   /* Mascara radial: o brilho se dissolve em todas as direcoes antes de
-     encostar na borda da div — sem corte reto embaixo/em cima. */
+     encostar na borda da div, sem corte reto embaixo/em cima. */
   -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 46%, transparent 96%);
   mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 46%, transparent 96%);
 }
@@ -3472,4 +3472,41 @@ video {
     linear-gradient(180deg, transparent 68%, var(--navy) 100%),
     radial-gradient(circle at 24% 48%, #605be547, transparent 33%),
     radial-gradient(circle at 82% 18%, #5da6ff17, transparent 28%);
+}
+
+/* Titulo da home (2026-09-11): a tese "A proxima camada bilionaria nao sera
+   mais um canal." substitui o "It's for you.". A frase e longa, entao o corpo
+   cai e a primeira linha quebra sozinha; o final segue em degrade, sem o recuo
+   e o encaixe negativo que o "you." usava. */
+.site-shell .hero-title--thesis {
+  /* Teto em vw: a 1440 e 1920 a primeira linha encostava no rotulo
+     "Sigma Channel" da esfera. */
+  max-width: min(14.5em, 42vw);
+  font-size: clamp(2.5rem, 4.3vw, 4.7rem);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+}
+.hero-title--thesis .line-wrap:nth-child(2) {
+  padding-left: 0.08em;
+  margin-top: -0.25em;
+}
+@media (max-width: 760px) {
+  .site-shell .hero-title--thesis { font-size: clamp(2.2rem, 9.4vw, 3rem); }
+}
+
+/* Chamada acima do titulo sem formato de pilula: so o texto em caixa alta. */
+.site-shell .hero-kicker {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+}
+
+/* Manifesto (01 / Por que existimos), 2026-09-11: sem os brilhos azul e
+   verde-azulado do lado esquerdo, e com ar ate a secao seguinte. O
+   padding-bottom encolheu em scale.css, mas a sobreposicao de -170px ficou,
+   e o "02 / A inteligencia" subia para rente ao circulo. */
+.site-shell .manifesto {
+  margin-bottom: -30px;
+  background: linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(5, 11, 25, 0.94));
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import { Link } from "react-router-dom";
-import { href, type Lang } from "../lib/i18n";
+import { href, pick, type Lang } from "../lib/i18n";
 import { startDialogiJourney, startProductJourney } from "../site/ProductJourney";
 import "./intelligenceNodes.css";
 
@@ -56,12 +56,49 @@ export const intelligenceNodes = [
   { title: "Integrações", tag: "Conexões", position: [.74, -.57, .6], color: "#bee69e", path: "/produto", body: "Une canais, dados e processos para que a informação acompanhe cada etapa do relacionamento." },
 ];
 
+/* Textos dos nos por idioma, na mesma ordem de `intelligenceNodes` (que segue
+   com posicao, cor e rota, usados tambem pela esfera em IntelligenceCore). */
+const NODE_TEXT: Record<Lang, { title: string; tag: string; body: string }[]> = {
+  pt: intelligenceNodes.map(({ title, tag, body }) => ({ title, tag, body })),
+  en: [
+    { title: "Sigma Brain", tag: "AI", body: "Understands intent, keeps the context and takes action to resolve requests end to end." },
+    { title: "Sigma Channel", tag: "Channels", body: "Connects WhatsApp, voice and digital channels in one continuous journey, with the history always at hand." },
+    { title: "Sigma Insights", tag: "Data", body: "Turns conversations into sentiment, quality and opportunity analysis for your operation." },
+    { title: "Dialogi AI", tag: "Conversations", body: "Text and voice service that reads intent and emotion, bringing brands and people closer." },
+    { title: "Integrations", tag: "Connections", body: "Brings channels, data and processes together so information follows every step of the relationship." },
+  ],
+  es: [
+    { title: "Sigma Brain", tag: "IA", body: "Entiende intenciones, preserva el contexto y ejecuta acciones para resolver solicitudes de punta a punta." },
+    { title: "Sigma Channel", tag: "Canales", body: "Conecta WhatsApp, voz y canales digitales en un recorrido continuo, con el historial siempre a mano." },
+    { title: "Sigma Insights", tag: "Datos", body: "Transforma conversaciones en análisis de sentimiento, calidad y oportunidades para tu operación." },
+    { title: "Dialogi AI", tag: "Conversaciones", body: "Atención por texto y voz con lectura de intención y emoción, que acerca marcas y personas." },
+    { title: "Integraciones", tag: "Conexiones", body: "Une canales, datos y procesos para que la información acompañe cada etapa de la relación." },
+  ],
+};
+
+const UI_TEXT: Record<Lang, { group: string; explore: string; close: string; discover: string }> = {
+  pt: { group: "Explore os módulos SigmaCX", explore: "Explorar", close: "Fechar detalhes", discover: "Conheça" },
+  en: { group: "Explore the SigmaCX modules", explore: "Explore", close: "Close details", discover: "Discover" },
+  es: { group: "Explora los módulos de SigmaCX", explore: "Explorar", close: "Cerrar detalles", discover: "Conoce" },
+};
+
 export default function IntelligenceNodes({ anchors, lang }: { anchors: MutableRefObject<(HTMLDivElement | null)[]>; lang: Lang }) {
   const [active, setActive] = useState<number | null>(null);
+  const text = pick(NODE_TEXT, lang);
+  const ui = pick(UI_TEXT, lang);
   const [settledAtTop, setSettledAtTop] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cancelClose = () => { if (closeTimer.current) clearTimeout(closeTimer.current); };
   const open = (index: number) => { cancelClose(); setActive(index); };
+  /* Clique no ponto ou no link do card: vai para a pagina do modulo com a
+     transicao de rota (a do Dialogi tem jornada propria). */
+  const go = (index: number) => {
+    const node = intelligenceNodes[index];
+    const to = href(node.path, lang);
+    cancelClose();
+    if (node.path === "/dialogi") startDialogiJourney(to, lang);
+    else startProductJourney(to, lang, node.path === "/produto" ? undefined : text[index].title);
+  };
   useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
   useEffect(() => {
     let revealTimer: ReturnType<typeof setTimeout>;
@@ -81,7 +118,7 @@ export default function IntelligenceNodes({ anchors, lang }: { anchors: MutableR
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
-  return <div className={`intelligence-nodes${settledAtTop ? " is-settled" : ""}`} inert={!settledAtTop} role="group" aria-label="Explore os módulos SigmaCX">
+  return <div className={`intelligence-nodes${settledAtTop ? " is-settled" : ""}`} inert={!settledAtTop} role="group" aria-label={ui.group}>
     {intelligenceNodes.map((node, index) => <div key={node.title}
       ref={(element) => { anchors.current[index] = element; }}
       className={`intelligence-node${active === index ? " is-open" : ""}${index > 2 ? " is-lower" : ""}`}
@@ -90,22 +127,20 @@ export default function IntelligenceNodes({ anchors, lang }: { anchors: MutableR
       onPointerLeave={() => { cancelClose(); closeTimer.current = setTimeout(() => setActive(null), 200); }}
       onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) { cancelClose(); setActive(null); } }}
       onKeyDown={(event) => { if (event.key === "Escape") { cancelClose(); setActive(null); event.stopPropagation(); } }}>
-      <button className="intelligence-node__trigger" type="button" aria-label={`Explorar ${node.title}`} aria-expanded={active === index} aria-controls={`intelligence-card-${index}`}
-        onFocus={() => open(index)} onClick={(event) => { cancelClose(); if (event.detail === 0) open(index); else setActive(index); }}>
-        <span className="intelligence-node__dot" aria-hidden="true" /><span className="intelligence-node__tag">{node.title}</span>
+      <button className="intelligence-node__trigger" type="button" aria-label={`${ui.explore} ${text[index].title}`} aria-expanded={active === index} aria-controls={`intelligence-card-${index}`}
+        onFocus={() => open(index)} onClick={() => go(index)}>
+        <span className="intelligence-node__dot" aria-hidden="true" /><span className="intelligence-node__tag">{text[index].title}</span>
       </button>
       {active === index ? <div className="intelligence-node__card" id={`intelligence-card-${index}`}>
-        <div className="intelligence-node__heading"><span className="intelligence-node__badge" aria-hidden="true">{node.tag}</span><button type="button" aria-label="Fechar detalhes" onClick={() => { cancelClose(); setActive(null); }}>×</button></div>
-        <h2>{node.title}</h2>
+        <div className="intelligence-node__heading"><span className="intelligence-node__badge" aria-hidden="true">{text[index].tag}</span><button type="button" aria-label={ui.close} onClick={() => { cancelClose(); setActive(null); }}>×</button></div>
+        <h2>{text[index].title}</h2>
         <ModulePreview path={node.path} />
-        <p>{node.body}</p>
+        <p>{text[index].body}</p>
         <Link to={href(node.path, lang)} onClick={(event) => {
           if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
           event.preventDefault();
-          cancelClose();
-          if (node.path === "/dialogi") startDialogiJourney(href(node.path, lang), lang);
-          else startProductJourney(href(node.path, lang), lang, node.path === "/produto" ? undefined : node.title);
-        }}>Conheça {node.title}<span aria-hidden="true">→</span></Link>
+          go(index);
+        }}>{ui.discover} {text[index].title}<span aria-hidden="true">→</span></Link>
       </div> : null}
     </div>)}
   </div>;

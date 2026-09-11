@@ -402,17 +402,15 @@ export function SigmaExperience() {
           <div className="hero-kicker">
             {t.hero.kicker}
           </div>
-          <h1 id="hero-title" className="hero-title">
-            <span className="line-wrap"><span className="line">It’s for</span></span>
-            <span className="line-wrap"><span className="line line--accent"><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={6}>you.</GradientText></span></span>
+          <h1 id="hero-title" className="hero-title hero-title--thesis">
+            <span className="line-wrap"><span className="line">{t.hero.title}</span></span>
+            <span className="line-wrap"><span className="line line--accent"><GradientText className="home-gradient-text" colors={HOME_GRADIENT} animationSpeed={6}>{t.hero.accent}</GradientText></span></span>
           </h1>
-          <p className="hero-copy">
-            {rich(t.hero.copy)}
-          </p>
+          <p className="hero-copy">{t.hero.lead}</p>
           <div className="hero-actions">
-            <a className="pill pill--primary" href="#experience">
-              {t.hero.cta} <span aria-hidden="true">↓</span>
-            </a>
+            <Link className="pill pill--primary" to={href("/investidores", lang)}>
+              {t.hero.cta} <span aria-hidden="true">→</span>
+            </Link>
             <a className="text-link" href={DEMO_URL} target="_blank" rel="noreferrer">
               {t.hero.specialist} <span aria-hidden="true">↗</span>
             </a>

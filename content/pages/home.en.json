@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "SigmaCX — Intelligence for every conversation",
+    "title": "SigmaCX | Intelligence for every conversation",
     "description": "Solutions that listen to, understand and improve every conversation between brands and people."
   },
   "aria": {
@@ -13,8 +13,10 @@
   "voice": "VOICE",
   "hero": {
     "kicker": "Smart CX starts with the right technology",
-    "copy": "Solutions that **listen**, understand and improve every conversation between brands and people.",
-    "cta": "Enter the experience",
+    "title": "The next billion-dollar layer won’t be",
+    "accent": "another channel.",
+    "lead": "SigmaCX is building a new intelligence layer that turns interactions into decisions.",
+    "cta": "See our vision for the future",
     "specialist": "Talk to a specialist"
   },
   "manifesto": {

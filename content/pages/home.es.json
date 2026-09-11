@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "SigmaCX — Inteligencia para cada conversación",
+    "title": "SigmaCX | Inteligencia para cada conversación",
     "description": "Soluciones que escuchan, entienden y mejoran cada conversación entre marcas y personas."
   },
   "aria": {
@@ -13,8 +13,10 @@
   "voice": "VOZ",
   "hero": {
     "kicker": "El CX inteligente empieza con la tecnología correcta",
-    "copy": "Soluciones que **escuchan**, entienden y mejoran cada conversación entre marcas y personas.",
-    "cta": "Entra en la experiencia",
+    "title": "La próxima capa multimillonaria no será",
+    "accent": "otro canal.",
+    "lead": "SigmaCX está construyendo una nueva capa de inteligencia para transformar interacciones en decisiones.",
+    "cta": "Conoce nuestra visión de futuro",
     "specialist": "Habla con un especialista"
   },
   "manifesto": {
