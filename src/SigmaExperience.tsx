@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import { startDialogiJourney } from "./site/ProductJourney";
 import { href, langFromPath } from "./lib/i18n";
 import GradientText from "./components/GradientText";
+import IntelligenceNodes from "./components/IntelligenceNodes";
+import IntelligenceCore from "./components/IntelligenceCore";
 
 const DEMO_URL =
   "https://api.whatsapp.com/send/?phone=551142008282&text=Ol%C3%A1%2C+gostaria+de+saber+mais+sobre+a+SigmaCX&type=phone_number&app_absent=0";
@@ -34,6 +36,7 @@ const clientLogoLoop = [...clientLogos, ...clientLogos];
 type ExperienceProps = {
   progress: MutableRefObject<number>;
   reducedMotion: boolean;
+  nodeAnchors: MutableRefObject<(HTMLDivElement | null)[]>;
 };
 
 function SignalField({ progress, reducedMotion }: ExperienceProps) {
@@ -117,242 +120,6 @@ function SignalField({ progress, reducedMotion }: ExperienceProps) {
   );
 }
 
-function IntelligenceCore({ progress, reducedMotion }: ExperienceProps) {
-  const group = useRef<THREE.Group>(null);
-  const points = useRef<THREE.Points>(null);
-  const motionTime = useRef(0);
-  // Esfera ja nasce na posicao/escala finais: sem deslocamento ate o centro ao abrir.
-  const settled = useRef(false);
-  const surfaceCount = reducedMotion ? 760 : 1120;
-  const trailCount = reducedMotion ? 48 : 84;
-  const totalCount = surfaceCount + trailCount;
-  const cloud = useMemo(() => {
-    const positions = new Float32Array(totalCount * 3);
-    const colors = new Float32Array(totalCount * 3);
-    const sizes = new Float32Array(totalCount);
-    const phases = new Float32Array(totalCount);
-    const palette = [
-      new THREE.Color("#ffffff"),
-      new THREE.Color("#dff4ff"),
-      new THREE.Color("#b9ff9b"),
-      new THREE.Color("#8fcaff"),
-      new THREE.Color("#eef9ff"),
-      new THREE.Color("#7ebe70"),
-    ];
-    const signalGreen = new THREE.Color("#b9ff9b");
-    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-
-    for (let index = 0; index < surfaceCount; index += 1) {
-      const pointProgress = index / Math.max(surfaceCount - 1, 1);
-      const y = 1 - pointProgress * 2;
-      const radius = Math.sqrt(Math.max(0, 1 - y * y));
-      const angle = goldenAngle * index;
-      const offset = index * 3;
-      positions[offset] = Math.cos(angle) * radius * 1.1;
-      positions[offset + 1] = y * 1.1;
-      positions[offset + 2] = Math.sin(angle) * radius * 1.1;
-
-      const color = index % 61 === 0 ? signalGreen : palette[index % palette.length];
-      colors[offset] = color.r;
-      colors[offset + 1] = color.g;
-      colors[offset + 2] = color.b;
-      sizes[index] = index % 61 === 0 ? 3.05 : index % 19 === 0 ? 2.08 : index % 7 === 0 ? 1.34 : 0.82;
-      phases[index] = (index * 0.754877666) % (Math.PI * 2);
-    }
-
-    const trailSegments = trailCount / 3;
-    for (let localIndex = 0; localIndex < trailCount; localIndex += 1) {
-      const index = surfaceCount + localIndex;
-      const trail = localIndex % 3;
-      const step = Math.floor(localIndex / 3);
-      const trailProgress = step / Math.max(trailSegments - 1, 1);
-      const angle = -1.12 + trailProgress * 2.24 + trail * 1.18;
-      const radius = 1.42 + trail * 0.24 + Math.sin(trailProgress * Math.PI) * 0.12;
-      const offset = index * 3;
-      positions[offset] = Math.cos(angle) * radius;
-      positions[offset + 1] = (trailProgress - 0.5) * (0.9 - trail * 0.1) + Math.sin(angle * 1.7 + trail) * 0.16;
-      positions[offset + 2] = Math.sin(angle) * radius * 0.62 - 0.18 + trail * 0.08;
-
-      const color = localIndex % 11 === 0
-        ? signalGreen
-        : palette[(localIndex + trail * 2) % palette.length];
-      colors[offset] = color.r;
-      colors[offset + 1] = color.g;
-      colors[offset + 2] = color.b;
-      sizes[index] = localIndex % 11 === 0 ? 2.4 : localIndex % 5 === 0 ? 1.36 : 0.72;
-      phases[index] = (localIndex * 1.173 + trail * 0.8) % (Math.PI * 2);
-    }
-
-    return {
-      positions,
-      colors,
-      sizes,
-      phases,
-      basePositions: positions.slice(),
-    };
-  }, [surfaceCount, totalCount, trailCount]);
-  const velocities = useMemo(() => new Float32Array(totalCount * 3), [totalCount]);
-  const dotUniforms = useMemo(() => ({
-    uOpacity: { value: 1 },
-    uTime: { value: 0 },
-  }), []);
-
-  useFrame((state, delta) => {
-    if (!group.current || !points.current) return;
-    const isCompact = state.size.width < 980;
-    const visualWidth = isCompact
-      ? Math.min(state.size.width * (state.size.width < 720 ? 1.18 : 0.72), 640)
-      : Math.min(state.size.width * 0.5, 780);
-    const visualCenterOffset = isCompact
-      ? 0
-      : state.size.width * 0.42 - visualWidth * 0.5;
-    const cameraSpan = 2 * Math.tan(THREE.MathUtils.degToRad(20)) * 7;
-    const targetX = visualCenterOffset * cameraSpan / state.size.height;
-    const targetScale = THREE.MathUtils.clamp(
-      visualWidth * 0.64 * cameraSpan / (2 * state.size.height),
-      state.size.width < 720 ? 0.78 : 0.94,
-      1.24,
-    );
-    if (!settled.current) {
-      group.current.position.x = targetX;
-      group.current.scale.setScalar(targetScale);
-      settled.current = true;
-    }
-    group.current.position.x = THREE.MathUtils.lerp(
-      group.current.position.x,
-      targetX,
-      0.05,
-    );
-    group.current.scale.setScalar(
-      THREE.MathUtils.lerp(group.current.scale.x, targetScale - progress.current * 0.045, 0.05),
-    );
-    const visualIntensity = 1 - 0.86 * Math.sqrt(progress.current);
-    dotUniforms.uOpacity.value = visualIntensity;
-    if (reducedMotion) return;
-
-    const safeDelta = Math.min(delta, 1 / 30);
-    motionTime.current += safeDelta * 0.78;
-    const animatedTime = motionTime.current;
-    dotUniforms.uTime.value = animatedTime;
-    const positionAttribute = points.current.geometry.getAttribute("position") as THREE.BufferAttribute;
-    const positions = positionAttribute.array as Float32Array;
-    const damping = Math.pow(0.87, safeDelta * 60);
-
-    group.current.position.y = THREE.MathUtils.lerp(group.current.position.y, state.pointer.y * 0.04, 0.04);
-    points.current.rotation.z += safeDelta * 0.032;
-    points.current.rotation.y += safeDelta * 0.016;
-    points.current.rotation.x = -0.1 + Math.sin(animatedTime * 0.42) * 0.052;
-
-    for (let index = 0; index < surfaceCount; index += 1) {
-      const offset = index * 3;
-      const baseX = cloud.basePositions[offset];
-      const baseY = cloud.basePositions[offset + 1];
-      const baseZ = cloud.basePositions[offset + 2];
-      const currentX = positions[offset];
-      const currentY = positions[offset + 1];
-      const currentZ = positions[offset + 2];
-      const phase = cloud.phases[index];
-      const longitude = Math.atan2(baseZ, baseX);
-      const latitude = Math.asin(THREE.MathUtils.clamp(baseY / 1.1, -1, 1));
-
-      const travelingWave = Math.sin(animatedTime * 2.15 - latitude * 9.5 + longitude * 2.4);
-      const crossWave = Math.sin(animatedTime * 1.45 + longitude * 6.2 + phase);
-      const fineRipple = Math.sin(animatedTime * 3.8 + latitude * 15 - phase * 0.6);
-      const gelatin = Math.sin(animatedTime * 1.18 + phase + baseY * 3.2) * 0.024;
-      const radialScale = 1 + travelingWave * 0.034 + crossWave * 0.022 + fineRipple * 0.008 + gelatin;
-      const shearX = Math.sin(animatedTime * 0.82 + baseY * 4.8) * 0.025;
-      const shearY = Math.cos(animatedTime * 0.7 + baseX * 4.1) * 0.02;
-      const targetX = baseX * radialScale + shearX * baseZ;
-      const targetY = baseY * (radialScale + gelatin * 0.45) + shearY * baseX;
-      const targetZ = baseZ * radialScale - shearX * baseX;
-
-      velocities[offset] += (targetX - currentX) * 11.5 * safeDelta;
-      velocities[offset + 1] += (targetY - currentY) * 11.5 * safeDelta;
-      velocities[offset + 2] += (targetZ - currentZ) * 11.5 * safeDelta;
-      velocities[offset] *= damping;
-      velocities[offset + 1] *= damping;
-      velocities[offset + 2] *= damping;
-      positions[offset] = currentX + velocities[offset];
-      positions[offset + 1] = currentY + velocities[offset + 1];
-      positions[offset + 2] = currentZ + velocities[offset + 2];
-    }
-
-    for (let index = surfaceCount; index < totalCount; index += 1) {
-      const offset = index * 3;
-      const phase = cloud.phases[index];
-      const currentX = positions[offset];
-      const currentY = positions[offset + 1];
-      const currentZ = positions[offset + 2];
-      const targetX = cloud.basePositions[offset] + Math.sin(animatedTime * 0.58 + phase) * 0.045;
-      const targetY = cloud.basePositions[offset + 1] + Math.cos(animatedTime * 0.46 + phase) * 0.035;
-      const targetZ = cloud.basePositions[offset + 2] + Math.sin(animatedTime * 0.52 + phase * 0.7) * 0.04;
-
-      velocities[offset] += (targetX - currentX) * 8.5 * safeDelta;
-      velocities[offset + 1] += (targetY - currentY) * 8.5 * safeDelta;
-      velocities[offset + 2] += (targetZ - currentZ) * 8.5 * safeDelta;
-      velocities[offset] *= damping;
-      velocities[offset + 1] *= damping;
-      velocities[offset + 2] *= damping;
-      positions[offset] = currentX + velocities[offset];
-      positions[offset + 1] = currentY + velocities[offset + 1];
-      positions[offset + 2] = currentZ + velocities[offset + 2];
-    }
-
-    positionAttribute.needsUpdate = true;
-  });
-
-  return (
-    <group ref={group} position={[0, 0.05, 0]}>
-      <points ref={points}>
-        <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[cloud.positions, 3]} />
-          <bufferAttribute attach="attributes-color" args={[cloud.colors, 3]} />
-          <bufferAttribute attach="attributes-pointSize" args={[cloud.sizes, 1]} />
-        </bufferGeometry>
-        <shaderMaterial
-          transparent
-          depthWrite={false}
-          vertexColors
-          blending={THREE.NormalBlending}
-          uniforms={dotUniforms}
-          vertexShader={`
-            attribute float pointSize;
-            uniform float uTime;
-            varying vec3 vColor;
-            varying float vOpacity;
-            varying float vSignal;
-            void main() {
-              vColor = color;
-              vOpacity = mix(0.44, 0.98, clamp(pointSize / 3.05, 0.0, 1.0));
-              float sweepPosition = sin(uTime * 0.72) * 0.94;
-              vSignal = 1.0 - smoothstep(0.045, 0.19, abs(position.y - sweepPosition));
-              vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
-              gl_Position = projectionMatrix * viewPosition;
-              gl_PointSize = pointSize * (5.05 + vSignal * 1.25) * (7.0 / max(1.0, -viewPosition.z));
-            }
-          `}
-          fragmentShader={`
-            uniform float uOpacity;
-            varying vec3 vColor;
-            varying float vOpacity;
-            varying float vSignal;
-            void main() {
-              float distanceToCenter = length(gl_PointCoord - vec2(0.5));
-              float core = 1.0 - smoothstep(0.16, 0.34, distanceToCenter);
-              float halo = (1.0 - smoothstep(0.24, 0.5, distanceToCenter)) * 0.24;
-              float alpha = min(1.0, core + halo);
-              if (alpha < 0.02) discard;
-              vec3 signalColor = vec3(0.73, 1.0, 0.61);
-              vec3 outputColor = mix(vColor, signalColor, vSignal * 0.52);
-              gl_FragColor = vec4(outputColor, alpha * vOpacity * uOpacity * (1.0 + vSignal * 0.16));
-            }
-          `}
-        />
-      </points>
-    </group>
-  );
-}
-
 function CanvasReady({ onReady }: { onReady: () => void }) {
   const reported = useRef(false);
 
@@ -399,10 +166,17 @@ export function SigmaExperience() {
     startDialogiJourney(href("/dialogi", lang), lang);
   };
   const progress = useRef(0);
+  const nodeAnchors = useRef<(HTMLDivElement | null)[]>([]);
   const [sceneReady, setSceneReady] = useState(false);
   const [introMinElapsed, setIntroMinElapsed] = useState(false);
-  const motionEnabled = true;
-  const reducedMotion = !motionEnabled;
+  const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const motionEnabled = !reducedMotion;
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReducedMotion(preference.matches);
+    preference.addEventListener("change", sync);
+    return () => preference.removeEventListener("change", sync);
+  }, []);
   // Sem espera minima nem dependencia do canvas: texto e nav aparecem de imediato.
   const visualReady = reducedMotion || introMinElapsed || sceneReady;
 
@@ -578,12 +352,11 @@ export function SigmaExperience() {
         <div className="tech-hud">
           <div className="tech-hud__grid" />
           <div className="tech-hud__aura" />
-          <div className="tech-hud__frame">
-            <span className="tech-hud__rail"><i /><i /><i /><i /><i /><i /></span>
-          </div>
+          <div className="tech-hud__frame" />
         </div>
         <ExperienceCanvas
           progress={progress}
+          nodeAnchors={nodeAnchors}
           reducedMotion={reducedMotion}
           onReady={() => setSceneReady(true)}
         />
@@ -612,6 +385,7 @@ export function SigmaExperience() {
             </a>
           </div>
           </div>
+          <IntelligenceNodes anchors={nodeAnchors} lang={lang} />
         </section>
 
         <section className="manifesto section-dark" aria-labelledby="manifesto-title">
