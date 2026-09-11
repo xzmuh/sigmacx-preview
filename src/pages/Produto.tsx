@@ -89,7 +89,6 @@ export default function Produto() {
         <div className="sx-shell">
           <div className="sx-platform-overview__intro" data-reveal>
             <div>
-              <p className="sx-eyebrow">{t.overview.eyebrow}</p>
               <h2 className="sx-h2"><SplitText text={t.overview.title} /></h2>
             </div>
             <p className="sx-lead">{t.overview.lead}</p>
@@ -112,7 +111,6 @@ export default function Produto() {
           <img className="sx-platform-products__mark" src="/media/site/SigmaIcone-Normal2x.png" alt="" aria-hidden="true" />
           <div className="sx-shell" data-reveal>
             <header className="sx-platform-products__head">
-              <p className="sx-eyebrow sx-platform-products__brand"><img src="/media/brand/sigma-white.png" alt="Sigma" loading="lazy" /><span>Suite</span></p>
               <h2 className="sx-h2"><SplitText text={t.suiteIntro.title} onDark /></h2>
               <p className="sx-lead">{t.suiteIntro.lead}</p>
             </header>
@@ -241,7 +239,6 @@ export default function Produto() {
         <Watermark side="right" />
         <div className="sx-shell">
           <div className="sx-editorial-head">
-            <p className="sx-eyebrow">SigmaCX</p>
             <h2 className="sx-h2"><SplitText text={t.cases.title} /></h2>
           </div>
           <div className="sx-case-switcher">

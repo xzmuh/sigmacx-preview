@@ -83,7 +83,6 @@ export default function SigmaBrain() {
         </svg>
         <div className="sx-shell sx-brain-bridge__layout">
           <div className="sx-brain-bridge__intro">
-            <p className="sx-eyebrow">{t.hero.badge}</p>
             <h2 className="sx-h2"><SplitText text={t.pillars.title} /></h2>
             <p className="sx-lead">{t.bridge.lead}</p>
           </div>
@@ -116,7 +115,6 @@ export default function SigmaBrain() {
             </div>
           </div>
           <div className="sx-story-content">
-            <p className="sx-eyebrow">Sigma Brain</p>
             <FeatureAccordion
               items={t.pillars.items}
               icons={pillarIcons}
@@ -158,7 +156,6 @@ export default function SigmaBrain() {
         <TechLines variant="nocode" />
         <div className="sx-shell sx-feature">
           <div className="sx-nocode__copy">
-            <p className="sx-eyebrow">Sigma Brain</p>
             <h2 className="sx-h2"><SplitText text={t.nocode.title} /></h2>
             <p className="sx-lead">{t.nocode.lead}</p>
             <p className="sx-body">{t.nocode.body}</p>
@@ -185,7 +182,6 @@ export default function SigmaBrain() {
       <section className="sx-section sx-brain-benefits" data-reveal>
         <div className="sx-shell sx-brain-benefits__layout">
           <header className="sx-brain-benefits__head">
-            <p className="sx-eyebrow">Sigma Brain</p>
             <h2 className="sx-h2">{t.benefits.title}</h2>
             <p className="sx-lead">{t.benefits.lead}</p>
             <div className="sx-brain-benefits__cta">

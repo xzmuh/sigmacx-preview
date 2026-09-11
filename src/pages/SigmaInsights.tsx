@@ -45,7 +45,6 @@ export default function SigmaInsights() {
         <Watermark side="left" />
         <div className="sx-shell">
           <div className="sx-editorial-head sx-editorial-head--center">
-            <p className="sx-eyebrow">{t.dashboards.eyebrow}</p>
             <h2 className="sx-h2"><SplitText text={t.dashboards.title} /></h2>
           </div>
           <div className="sx-insights-console">
@@ -89,7 +88,6 @@ export default function SigmaInsights() {
         <div className="sx-shell">
           <div className="sx-emotion-stage sx-subproduct-light-stage">
             <div className="sx-emotion-stage__head">
-              <p className="sx-eyebrow">{t.emotions.eyebrow}</p>
               <h2 className="sx-h2"><SplitText text={t.emotions.title} /></h2>
             </div>
             <div className="sx-emotion-stage__body">
@@ -122,7 +120,6 @@ export default function SigmaInsights() {
       <section className="sx-section sx-section--atmosphere sx-subproduct-cases" data-reveal>
         <div className="sx-shell">
           <div className="sx-editorial-head">
-            <p className="sx-eyebrow">Sigma Insights</p>
             <h2 className="sx-h2"><SplitText text={t.benefits.title} /></h2>
           </div>
           <div className="sx-benefits-bento">
