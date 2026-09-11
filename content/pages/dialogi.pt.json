@@ -24,20 +24,20 @@
   },
   "why": {
     "kicker": "Por que o Dialogi",
-    "title": "Atendimento digital sem trocar de tela, de app ou de canal.",
-    "body": "Boa parte da reputação de uma marca nasce na conexão com o cliente. O Dialogi coloca essa conexão em um fluxo único e devolve, em cada conversa, contexto e leitura de intenção para o time de atendimento.",
+    "title": "Atendimento digital sem trocar de canal.",
+    "body": "A reputação nasce na conexão com o cliente. O Dialogi une essa conexão em um só fluxo, com contexto e intenção em cada conversa.",
     "pillars": [
       {
         "title": "Todos os canais em um só lugar",
-        "body": "WhatsApp, chat no site, redes sociais e voz em uma fila só, com o histórico do cliente preservado na troca de canal."
+        "body": "WhatsApp, chat, redes sociais e voz numa fila só, sem perder o histórico."
       },
       {
         "title": "Voz nativa no WhatsApp",
-        "body": "Chamada de voz, mensagem de áudio e vídeo chamada dentro do mesmo fluxo da conversa. O cliente não sai do WhatsApp."
+        "body": "Chamada de voz, áudio e vídeo sem o cliente sair do WhatsApp."
       },
       {
         "title": "Empatia como camada da plataforma",
-        "body": "A empat.ia interpreta emoção, idioma e intenção durante o atendimento e evolui a cada interação, em vez de repetir respostas fixas."
+        "body": "A empat.ia lê emoção, idioma e intenção e evolui a cada interação."
       }
     ]
   },

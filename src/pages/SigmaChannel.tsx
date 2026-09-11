@@ -172,7 +172,6 @@ export default function SigmaChannel() {
         <section className="sx-section sx-channel-actions sx-subproduct-cases" data-reveal>
           <div className="sx-shell">
             <div className="sx-center" style={{ marginBottom: 36 }}>
-              <p className="sx-eyebrow">Sigma Channel</p>
               <h2 className="sx-h2"><SplitText text={t.actions.title} /></h2>
               <p className="sx-lead">{t.actions.lead}</p>
             </div>

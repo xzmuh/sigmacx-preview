@@ -24,20 +24,20 @@
   },
   "why": {
     "kicker": "Why Dialogi",
-    "title": "Digital service without switching screen, app or channel.",
-    "body": "Much of a brand reputation is born in the connection with the customer. Dialogi puts that connection into a single flow and gives the service team context and intent reading in every conversation.",
+    "title": "Digital service without switching channels.",
+    "body": "Reputation is born in the connection with the customer. Dialogi brings it into a single flow, with context and intent in every conversation.",
     "pillars": [
       {
         "title": "Every channel in one place",
-        "body": "WhatsApp, website chat, social media and voice in a single queue, with the customer history preserved when the channel changes."
+        "body": "WhatsApp, chat, social media and voice in one queue, without losing history."
       },
       {
         "title": "Native voice on WhatsApp",
-        "body": "Voice call, audio message and video call inside the same conversation flow. The customer never leaves WhatsApp."
+        "body": "Voice calls, audio and video without the customer leaving WhatsApp."
       },
       {
         "title": "Empathy as a platform layer",
-        "body": "empat.ia interprets emotion, language and intent during the service and evolves with every interaction, instead of repeating fixed answers."
+        "body": "empat.ia reads emotion, language and intent and evolves with every interaction."
       }
     ]
   },
