@@ -414,6 +414,8 @@ video {
 .experience-layer canvas {
   position: relative;
   z-index: 2;
+  /* A cena entra depois do texto (chunk proprio): surge suave, sem piscar. */
+  animation: experience-canvas-in 0.9s ease both;
   /* Particulas se dissolvem em toda a volta: elipse unica, sem corte seco
      em nenhuma borda (topo, base, esquerda, direita). */
   -webkit-mask-image: radial-gradient(ellipse 72% 66% at 50% 46%, #000 46%, rgba(0, 0, 0, 0.75) 64%, transparent 94%);
@@ -564,6 +566,8 @@ video {
 .tech-hud__rail i:nth-child(4) { width: 36px; }
 .tech-hud__rail i:nth-child(5) { width: 23px; }
 .tech-hud__rail i:nth-child(6) { width: 11px; background: rgba(185, 255, 155, 0.5); }
+
+@keyframes experience-canvas-in { from { opacity: 0; } }
 
 .experience-fallback {
   position: absolute;
@@ -3506,4 +3510,29 @@ video {
 .site-shell .manifesto {
   margin-bottom: -30px;
   background: linear-gradient(180deg, rgba(5, 11, 25, 0.48), rgba(5, 11, 25, 0.94));
+}
+
+/* ==========================================================================
+   Celular (2026-09-14)
+   ========================================================================== */
+/* Nada decorativo alarga a pagina: a animacao dos passos desliza cada um 56px
+   para o lado e as orbitas do rodape passam da borda. No celular isso deixava
+   a pagina com 438px numa tela de 412px, e o cabecalho fixo, que acompanha a
+   largura, perdia o botao de menu. `clip` (e nao `hidden`) nao cria area de
+   rolagem, entao o que gruda na rolagem e as secoes fixadas seguem iguais. */
+.site-shell,
+.sx-page { overflow-x: clip; }
+
+@media (max-width: 720px) {
+  /* A regra de "metade da trilha" do desktop vencia a do celular e deixava
+     cada passo com ~130px, partindo palavras ("reconh ece"). */
+  .site-shell .story-step,
+  .site-shell .story-step--right { width: 100%; padding-left: 2.25rem; }
+  /* Texto do hero sobre as particulas: mais opaco e com um halo escuro, para
+     os pontos claros nao atravessarem as letras. */
+  .site-shell .hero-copy { color: rgba(255, 255, 255, 0.82); text-shadow: 0 0 14px rgba(5, 11, 25, 0.95), 0 0 3px rgba(5, 11, 25, 0.9); }
+  /* O teto de 42vw do titulo e para nao encostar na esfera no desktop; no
+     celular deixava o titulo com 173px, em seis linhas encostadas a esquerda. */
+  .site-shell .hero-title--thesis { max-width: 100%; margin-inline: auto; }
+  .site-shell .hero-kicker { max-width: 100%; margin-inline: auto; text-align: center; }
 }
