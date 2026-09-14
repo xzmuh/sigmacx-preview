@@ -1,0 +1,11 @@
+# Cache na Cloudflare Pages.
+# /assets: o nome de cada arquivo leva o hash do conteudo (Vite), entao pode
+# ficar um ano no cache sem risco de servir versao velha.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# /media: nomes fixos. Uma semana, revalidando em segundo plano por mais um
+# dia. Ao trocar uma midia pelo mesmo nome, quem ja visitou ve a nova em ate
+# uma semana; se precisar na hora, use um nome novo.
+/media/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400

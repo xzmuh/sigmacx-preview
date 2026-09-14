@@ -1,11 +1,10 @@
-import { Canvas, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import * as THREE from "three";
 import { useLazyVideo } from "./site/useLazyVideo";
 import {
   Fragment,
-  MutableRefObject,
+  lazy,
+  Suspense,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -22,8 +21,10 @@ import homeEn from "../content/pages/home.en.json";
 import homeEs from "../content/pages/home.es.json";
 import GradientText from "./components/GradientText";
 import IntelligenceNodes from "./components/IntelligenceNodes";
-import IntelligenceCore from "./components/IntelligenceCore";
 import InvestorTeaser from "./components/InvestorTeaser";
+
+/* A cena 3D entra depois que a home aparece: ver ExperienceCanvas.tsx. */
+const ExperienceCanvas = lazy(() => import("./components/ExperienceCanvas"));
 
 const DEMO_URL =
   "https://api.whatsapp.com/send/?phone=551142008282&text=Ol%C3%A1%2C+gostaria+de+saber+mais+sobre+a+SigmaCX&type=phone_number&app_absent=0";
@@ -39,122 +40,6 @@ const clientLogos = [
 
 const clientLogoLoop = [...clientLogos, ...clientLogos];
 
-type ExperienceProps = {
-  progress: MutableRefObject<number>;
-  reducedMotion: boolean;
-  nodeAnchors: MutableRefObject<(HTMLDivElement | null)[]>;
-};
-
-function SignalField({ progress, reducedMotion }: ExperienceProps) {
-  const points = useRef<THREE.Points>(null);
-  const count = reducedMotion ? 360 : 860;
-  const geometry = useMemo(() => {
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
-    const white = new THREE.Color("#f7fcff");
-    const blue = new THREE.Color("#9ed7ff");
-    const green = new THREE.Color("#b9ff9b");
-
-    for (let index = 0; index < count; index += 1) {
-      const radius = 2.3 + Math.random() * 4.7;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[index * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta) * 0.62;
-      positions[index * 3 + 2] = radius * Math.cos(phi);
-      const color = index % 13 === 0 ? green : white.clone().lerp(blue, Math.random());
-      colors[index * 3] = color.r;
-      colors[index * 3 + 1] = color.g;
-      colors[index * 3 + 2] = color.b;
-    }
-
-    const next = new THREE.BufferGeometry();
-    next.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    next.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    return next;
-  }, [count]);
-
-  const particleTexture = useMemo(() => {
-    const size = 32;
-    const data = new Uint8Array(size * size * 4);
-    for (let y = 0; y < size; y += 1) {
-      for (let x = 0; x < size; x += 1) {
-        const dx = (x + 0.5) / size - 0.5;
-        const dy = (y + 0.5) / size - 0.5;
-        const distance = Math.sqrt(dx * dx + dy * dy) / 0.5;
-        const glow = Math.max(0, 1 - distance);
-        const alpha = Math.pow(glow, 1.65);
-        const offset = (y * size + x) * 4;
-        data[offset] = 255;
-        data[offset + 1] = 255;
-        data[offset + 2] = 255;
-        data[offset + 3] = Math.round(alpha * 255);
-      }
-    }
-    const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
-    texture.needsUpdate = true;
-    texture.magFilter = THREE.LinearFilter;
-    texture.minFilter = THREE.LinearFilter;
-    return texture;
-  }, []);
-
-  useFrame((state, delta) => {
-    if (!points.current || reducedMotion) return;
-    points.current.rotation.y += delta * (0.12 + progress.current * 0.16);
-    points.current.rotation.x = state.pointer.y * 0.14 + progress.current * 0.22;
-    points.current.position.x = THREE.MathUtils.lerp(
-      points.current.position.x,
-      state.pointer.x * 0.32,
-      0.055,
-    );
-  });
-
-  return (
-    <points ref={points} geometry={geometry}>
-      <pointsMaterial
-        size={0.056}
-        map={particleTexture}
-        alphaTest={0.015}
-        transparent
-        opacity={0.54}
-        vertexColors
-        sizeAttenuation
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  );
-}
-
-function CanvasReady({ onReady }: { onReady: () => void }) {
-  const reported = useRef(false);
-
-  useFrame(() => {
-    if (reported.current) return;
-    reported.current = true;
-    window.requestAnimationFrame(onReady);
-  });
-
-  return null;
-}
-
-function ExperienceCanvas(props: ExperienceProps & { onReady: () => void }) {
-  return (
-    <Canvas
-      camera={{ position: [0, 0, 7], fov: 40 }}
-      dpr={[1, 1.45]}
-      gl={{
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance",
-      }}
-    >
-      <CanvasReady onReady={props.onReady} />
-      <SignalField {...props} />
-      <IntelligenceCore {...props} />
-    </Canvas>
-  );
-}
 
 /** Video da home: o src so entra a 600px da tela (woman 1.8 MB, brain 2.6 MB). */
 /* O holograma e so particulas: comprimido demais vira borrao. O arquivo de desktop
@@ -201,6 +86,22 @@ export function SigmaExperience() {
   const progress = useRef(0);
   const nodeAnchors = useRef<(HTMLDivElement | null)[]>([]);
   const [sceneReady, setSceneReady] = useState(false);
+  /* Monta a cena 3D quando o navegador fica ocioso depois do primeiro
+     quadro (no maximo 1,5 s): texto, menu e botoes respondem antes. */
+  const [canvasOn, setCanvasOn] = useState(false);
+  useEffect(() => {
+    let idle = 0;
+    const frame = window.requestAnimationFrame(() => {
+      const start = () => setCanvasOn(true);
+      if (typeof window.requestIdleCallback === "function") idle = window.requestIdleCallback(start, { timeout: 1500 });
+      else idle = window.setTimeout(start, 200);
+    });
+    return () => {
+      window.cancelAnimationFrame(frame);
+      if (typeof window.cancelIdleCallback === "function") window.cancelIdleCallback(idle);
+      window.clearTimeout(idle);
+    };
+  }, []);
   const [introMinElapsed, setIntroMinElapsed] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   const motionEnabled = !reducedMotion;
@@ -387,12 +288,16 @@ export function SigmaExperience() {
           <div className="tech-hud__aura" />
           <div className="tech-hud__frame" />
         </div>
-        <ExperienceCanvas
-          progress={progress}
-          nodeAnchors={nodeAnchors}
-          reducedMotion={reducedMotion}
-          onReady={() => setSceneReady(true)}
-        />
+        {canvasOn && (
+          <Suspense fallback={null}>
+            <ExperienceCanvas
+              progress={progress}
+              nodeAnchors={nodeAnchors}
+              reducedMotion={reducedMotion}
+              onReady={() => setSceneReady(true)}
+            />
+          </Suspense>
+        )}
         <div className="experience-vignette" />
       </div>
 

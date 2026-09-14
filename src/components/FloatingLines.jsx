@@ -1,28 +1,28 @@
 import { useEffect, useRef } from 'react';
-import {
-  Clock,
-  Mesh,
-  OrthographicCamera,
-  PlaneGeometry,
-  Scene,
-  ShaderMaterial,
-  Vector2,
-  Vector3,
-  WebGLRenderer
-} from 'three';
 
 import './FloatingLines.css';
 
-const vertexShader = `
-precision highp float;
+/*
+ * Linhas ambientais da marca em WebGL2 puro. Antes usava o three.js inteiro
+ * (~220 KB comprimido e ~1,2 s de script no celular) so para desenhar um
+ * shader de tela cheia. O shader de fragmento e o mesmo, em GLSL ES 3.00
+ * como o three gerava; o triangulo de tela cheia cobre os mesmos pixels que
+ * o plano 2x2 com camera ortografica, entao cada quadro sai igual.
+ */
+
+const vertexShader = `#version 300 es
+in vec2 position;
 
 void main() {
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  gl_Position = vec4(position, 0.0, 1.0);
 }
 `;
 
-const fragmentShader = `
+const fragmentShader = `#version 300 es
 precision highp float;
+precision highp int;
+
+out vec4 fragOut;
 
 uniform float iTime;
 uniform vec3  iResolution;
@@ -213,7 +213,7 @@ if (lightMode) {
 void main() {
   vec4 color = vec4(0.0);
   mainImage(color, gl_FragCoord.xy);
-  gl_FragColor = color;
+  fragOut = color;
 }
 `;
 
@@ -240,7 +240,19 @@ function hexToVec3(hex) {
     b = parseInt(value.slice(4, 6), 16);
   }
 
-  return new Vector3(r / 255, g / 255, b / 255);
+  return [r / 255, g / 255, b / 255];
+}
+
+function compile(gl, type, source) {
+  const shader = gl.createShader(type);
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    const log = gl.getShaderInfoLog(shader);
+    gl.deleteShader(shader);
+    throw new Error(`FloatingLines: shader nao compilou: ${log}`);
+  }
+  return shader;
 }
 
 export default function FloatingLines({
@@ -263,12 +275,12 @@ export default function FloatingLines({
   lightMode = false
 }) {
   const containerRef = useRef(null);
-  const targetMouseRef = useRef(new Vector2(-1000, -1000));
-  const currentMouseRef = useRef(new Vector2(-1000, -1000));
+  const targetMouseRef = useRef([-1000, -1000]);
+  const currentMouseRef = useRef([-1000, -1000]);
   const targetInfluenceRef = useRef(0);
   const currentInfluenceRef = useRef(0);
-  const targetParallaxRef = useRef(new Vector2(0, 0));
-  const currentParallaxRef = useRef(new Vector2(0, 0));
+  const targetParallaxRef = useRef([0, 0]);
+  const currentParallaxRef = useRef([0, 0]);
 
   const getLineCount = waveType => {
     if (typeof lineCount === 'number') return lineCount;
@@ -298,111 +310,122 @@ export default function FloatingLines({
 
     let active = true;
 
-    const scene = new Scene();
-
-    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    camera.position.z = 1;
-
-    let renderer;
-    try {
-      renderer = new WebGLRenderer({ antialias: true, alpha: false });
-    } catch (err) {
-      // Sem WebGL o fundo fica so com a cor da secao; nada mais quebra.
-      console.warn('FloatingLines: WebGL indisponivel, efeito desligado.', err);
+    const canvas = document.createElement('canvas');
+    // Mesmo contexto que o three pedia: WebGL2, antialias, sem alfa.
+    const gl = canvas.getContext('webgl2', { antialias: true, alpha: false, powerPreference: 'default' });
+    if (!gl) {
+      // Sem WebGL2 o fundo fica so com a cor da secao; nada mais quebra.
+      console.warn('FloatingLines: WebGL2 indisponivel, efeito desligado.');
       return undefined;
     }
-    // Shader de tela cheia: custo proporcional aos pixels. 1.5x ja fica liso
-    // em telas retina e corta ~44% do trabalho por quadro frente a 2x.
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-    renderer.domElement.style.width = '100%';
-    renderer.domElement.style.height = '100%';
-    container.appendChild(renderer.domElement);
 
-    const uniforms = {
-      iTime: { value: 0 },
-      iResolution: { value: new Vector3(1, 1, 1) },
-      animationSpeed: { value: animationSpeed },
-
-      enableTop: { value: enabledWaves.includes('top') },
-      enableMiddle: { value: enabledWaves.includes('middle') },
-      enableBottom: { value: enabledWaves.includes('bottom') },
-
-      topLineCount: { value: topLineCount },
-      middleLineCount: { value: middleLineCount },
-      bottomLineCount: { value: bottomLineCount },
-
-      topLineDistance: { value: topLineDistance },
-      middleLineDistance: { value: middleLineDistance },
-      bottomLineDistance: { value: bottomLineDistance },
-
-      topWavePosition: {
-        value: new Vector3(topWavePosition?.x ?? 10.0, topWavePosition?.y ?? 0.5, topWavePosition?.rotate ?? -0.4)
-      },
-      middleWavePosition: {
-        value: new Vector3(
-          middleWavePosition?.x ?? 5.0,
-          middleWavePosition?.y ?? 0.0,
-          middleWavePosition?.rotate ?? 0.2
-        )
-      },
-      bottomWavePosition: {
-        value: new Vector3(
-          bottomWavePosition?.x ?? 2.0,
-          bottomWavePosition?.y ?? -0.7,
-          bottomWavePosition?.rotate ?? 0.4
-        )
-      },
-
-      iMouse: { value: new Vector2(-1000, -1000) },
-      interactive: { value: interactive },
-      bendRadius: { value: bendRadius },
-      bendStrength: { value: bendStrength },
-      bendInfluence: { value: 0 },
-
-      parallax: { value: parallax },
-      parallaxStrength: { value: parallaxStrength },
-      parallaxOffset: { value: new Vector2(0, 0) },
-
-      lineGradient: {
-        value: Array.from({ length: MAX_GRADIENT_STOPS }, () => new Vector3(1, 1, 1))
-      },
-      lineGradientCount: { value: 0 },
-      backgroundColor: { value: hexToVec3(backgroundColor) },
-      lightMode: { value: lightMode }
-    };
-
-    if (linesGradient && linesGradient.length > 0) {
-      const stops = linesGradient.slice(0, MAX_GRADIENT_STOPS);
-      uniforms.lineGradientCount.value = stops.length;
-
-      stops.forEach((hex, i) => {
-        const color = hexToVec3(hex);
-        uniforms.lineGradient.value[i].set(color.x, color.y, color.z);
-      });
+    let program;
+    let vertexObject;
+    let buffer;
+    try {
+      const vs = compile(gl, gl.VERTEX_SHADER, vertexShader);
+      const fs = compile(gl, gl.FRAGMENT_SHADER, fragmentShader);
+      program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        throw new Error(`FloatingLines: programa nao ligou: ${gl.getProgramInfoLog(program)}`);
+      }
+    } catch (err) {
+      console.warn(err);
+      return undefined;
     }
 
-    const material = new ShaderMaterial({
-      uniforms,
-      vertexShader,
-      fragmentShader
-    });
+    // Shader de tela cheia: custo proporcional aos pixels. 1.5x ja fica liso
+    // em telas retina e corta ~44% do trabalho por quadro frente a 2x.
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.display = 'block';
+    container.appendChild(canvas);
 
-    const geometry = new PlaneGeometry(2, 2);
-    const mesh = new Mesh(geometry, material);
-    scene.add(mesh);
+    gl.useProgram(program);
 
-    const clock = new Clock();
+    // Triangulo que cobre a tela inteira (tres vertices, sem indice).
+    vertexObject = gl.createVertexArray();
+    gl.bindVertexArray(vertexObject);
+    buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    const positionLocation = gl.getAttribLocation(program, 'position');
+    gl.enableVertexAttribArray(positionLocation);
+    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+    const loc = name => gl.getUniformLocation(program, name);
+    const u = {
+      iTime: loc('iTime'),
+      iResolution: loc('iResolution'),
+      iMouse: loc('iMouse'),
+      bendInfluence: loc('bendInfluence'),
+      parallaxOffset: loc('parallaxOffset')
+    };
+
+    const setVec3 = (name, [x, y, z]) => gl.uniform3f(loc(name), x, y, z);
+
+    gl.uniform1f(loc('animationSpeed'), animationSpeed);
+    gl.uniform1i(loc('enableTop'), enabledWaves.includes('top') ? 1 : 0);
+    gl.uniform1i(loc('enableMiddle'), enabledWaves.includes('middle') ? 1 : 0);
+    gl.uniform1i(loc('enableBottom'), enabledWaves.includes('bottom') ? 1 : 0);
+    gl.uniform1i(loc('topLineCount'), topLineCount);
+    gl.uniform1i(loc('middleLineCount'), middleLineCount);
+    gl.uniform1i(loc('bottomLineCount'), bottomLineCount);
+    gl.uniform1f(loc('topLineDistance'), topLineDistance);
+    gl.uniform1f(loc('middleLineDistance'), middleLineDistance);
+    gl.uniform1f(loc('bottomLineDistance'), bottomLineDistance);
+    setVec3('topWavePosition', [topWavePosition?.x ?? 10.0, topWavePosition?.y ?? 0.5, topWavePosition?.rotate ?? -0.4]);
+    setVec3('middleWavePosition', [middleWavePosition?.x ?? 5.0, middleWavePosition?.y ?? 0.0, middleWavePosition?.rotate ?? 0.2]);
+    setVec3('bottomWavePosition', [bottomWavePosition?.x ?? 2.0, bottomWavePosition?.y ?? -0.7, bottomWavePosition?.rotate ?? 0.4]);
+    gl.uniform2f(u.iMouse, -1000, -1000);
+    gl.uniform1i(loc('interactive'), interactive ? 1 : 0);
+    gl.uniform1f(loc('bendRadius'), bendRadius);
+    gl.uniform1f(loc('bendStrength'), bendStrength);
+    gl.uniform1f(u.bendInfluence, 0);
+    gl.uniform1i(loc('parallax'), parallax ? 1 : 0);
+    gl.uniform1f(loc('parallaxStrength'), parallaxStrength);
+    gl.uniform2f(u.parallaxOffset, 0, 0);
+    setVec3('backgroundColor', hexToVec3(backgroundColor));
+    gl.uniform1i(loc('lightMode'), lightMode ? 1 : 0);
+
+    const gradient = new Float32Array(MAX_GRADIENT_STOPS * 3).fill(1);
+    let gradientCount = 0;
+    if (linesGradient && linesGradient.length > 0) {
+      const stops = linesGradient.slice(0, MAX_GRADIENT_STOPS);
+      gradientCount = stops.length;
+      stops.forEach((hex, i) => gradient.set(hexToVec3(hex), i * 3));
+    }
+    gl.uniform3fv(loc('lineGradient[0]') ?? loc('lineGradient'), gradient);
+    gl.uniform1i(loc('lineGradientCount'), gradientCount);
+
+    // Relogio que comeca no primeiro quadro, como o Clock do three.
+    let clockStart = null;
+    const elapsed = () => {
+      const now = performance.now();
+      if (clockStart === null) clockStart = now;
+      return (now - clockStart) / 1000;
+    };
 
     const setSize = () => {
       if (!active) return;
       const width = container.clientWidth || 1;
       const height = container.clientHeight || 1;
+      canvas.width = Math.floor(width * pixelRatio);
+      canvas.height = Math.floor(height * pixelRatio);
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.uniform3f(u.iResolution, canvas.width, canvas.height, 1);
+    };
 
-      renderer.setSize(width, height, false);
-
-      const canvasWidth = renderer.domElement.width;
-      const canvasHeight = renderer.domElement.height;
-      uniforms.iResolution.value.set(canvasWidth, canvasHeight, 1);
+    const draw = () => {
+      gl.clearColor(0, 0, 0, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
     setSize();
@@ -412,18 +435,18 @@ export default function FloatingLines({
         ? new ResizeObserver(() => {
             if (!active) return;
             setSize();
+            if (!running) draw();
           })
         : null;
 
     if (ro) ro.observe(container);
 
     const handlePointerMove = event => {
-      const rect = renderer.domElement.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
-      const dpr = renderer.getPixelRatio();
 
-      targetMouseRef.current.set(x * dpr, (rect.height - y) * dpr);
+      targetMouseRef.current = [x * pixelRatio, (rect.height - y) * pixelRatio];
       targetInfluenceRef.current = 1.0;
 
       if (parallax) {
@@ -431,7 +454,7 @@ export default function FloatingLines({
         const centerY = rect.height / 2;
         const offsetX = (x - centerX) / rect.width;
         const offsetY = -(y - centerY) / rect.height;
-        targetParallaxRef.current.set(offsetX * parallaxStrength, offsetY * parallaxStrength);
+        targetParallaxRef.current = [offsetX * parallaxStrength, offsetY * parallaxStrength];
       }
     };
 
@@ -440,30 +463,36 @@ export default function FloatingLines({
     };
 
     if (interactive) {
-      renderer.domElement.addEventListener('pointermove', handlePointerMove);
-      renderer.domElement.addEventListener('pointerleave', handlePointerLeave);
+      canvas.addEventListener('pointermove', handlePointerMove);
+      canvas.addEventListener('pointerleave', handlePointerLeave);
     }
 
+    const lerp = (current, target) => [
+      current[0] + (target[0] - current[0]) * mouseDamping,
+      current[1] + (target[1] - current[1]) * mouseDamping
+    ];
+
     let raf = 0;
+    let running = false;
     const renderLoop = () => {
       if (!active || !running) return;
 
-      uniforms.iTime.value = clock.getElapsedTime();
+      gl.uniform1f(u.iTime, elapsed());
 
       if (interactive) {
-        currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
-        uniforms.iMouse.value.copy(currentMouseRef.current);
+        currentMouseRef.current = lerp(currentMouseRef.current, targetMouseRef.current);
+        gl.uniform2f(u.iMouse, currentMouseRef.current[0], currentMouseRef.current[1]);
 
         currentInfluenceRef.current += (targetInfluenceRef.current - currentInfluenceRef.current) * mouseDamping;
-        uniforms.bendInfluence.value = currentInfluenceRef.current;
+        gl.uniform1f(u.bendInfluence, currentInfluenceRef.current);
       }
 
       if (parallax) {
-        currentParallaxRef.current.lerp(targetParallaxRef.current, mouseDamping);
-        uniforms.parallaxOffset.value.copy(currentParallaxRef.current);
+        currentParallaxRef.current = lerp(currentParallaxRef.current, targetParallaxRef.current);
+        gl.uniform2f(u.parallaxOffset, currentParallaxRef.current[0], currentParallaxRef.current[1]);
       }
 
-      renderer.render(scene, camera);
+      draw();
       raf = requestAnimationFrame(renderLoop);
     };
 
@@ -474,7 +503,6 @@ export default function FloatingLines({
     // O loop so roda enquanto a secao esta na tela e a aba visivel: fora
     // disso o WebGL parava de aparecer mas seguia queimando CPU/bateria a
     // cada quadro (e derrubava a nota de performance mobile).
-    let running = false;
     let inView = false;
     const start = () => {
       if (running || !active) return;
@@ -501,8 +529,8 @@ export default function FloatingLines({
         : null;
 
     if (prefersReducedMotion) {
-      uniforms.iTime.value = 0.8;
-      renderer.render(scene, camera);
+      gl.uniform1f(u.iTime, 0.8);
+      draw();
     } else if (io) {
       io.observe(container);
       document.addEventListener('visibilitychange', sync);
@@ -513,6 +541,7 @@ export default function FloatingLines({
 
     return () => {
       active = false;
+      running = false;
 
       cancelAnimationFrame(raf);
 
@@ -521,16 +550,16 @@ export default function FloatingLines({
       document.removeEventListener('visibilitychange', sync);
 
       if (interactive) {
-        renderer.domElement.removeEventListener('pointermove', handlePointerMove);
-        renderer.domElement.removeEventListener('pointerleave', handlePointerLeave);
+        canvas.removeEventListener('pointermove', handlePointerMove);
+        canvas.removeEventListener('pointerleave', handlePointerLeave);
       }
 
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
-      renderer.forceContextLoss();
-      if (renderer.domElement.parentElement) {
-        renderer.domElement.parentElement.removeChild(renderer.domElement);
+      gl.deleteBuffer(buffer);
+      gl.deleteVertexArray(vertexObject);
+      gl.deleteProgram(program);
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      if (canvas.parentElement) {
+        canvas.parentElement.removeChild(canvas);
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
