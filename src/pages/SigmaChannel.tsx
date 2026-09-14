@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState, type RefObject } from "react";
 import { PageShell, useReveal } from "../site/PageShell";
 import { Carousel, Icon, Watermark, SplitText, SuiteGlow, SuiteGradient, TechLines } from "../site/ui";
 import { DEMO_URL, VIMEO } from "../site/site-data";
@@ -14,6 +14,86 @@ const stepIcons = ["list", "chat", "send", "heart", "sliders"];
 const benefitIcons = ["users", "layers", "search"];
 const actionImages = ["sigmaaa-01.webp", "Sigmaaaaaaaa-02.webp", "sigma-cxxx-03.webp", "sigma-cxxx-04.webp", "sigma-cxxx-05.webp", "sigma-cxxx-06.webp"];
 
+/**
+ * Riscos do hub no celular: com os canais em duas fileiras e o Sigma no meio,
+ * as linhas retas do desktop nao servem. Mede onde ficaram os icones e o
+ * nucleo e desenha curvas: da base do nome de cada canal de cima ate o topo
+ * do nucleo (entrando) e da base do nucleo ate o topo do icone de baixo
+ * (saindo), com o ponto de luz correndo no sentido do fluxo. Nenhum risco
+ * passa por cima de texto. No desktop o CSS esconde este SVG.
+ */
+type HubPath = { d: string; out: boolean; delay: number };
+
+function HubLinks({ hubRef }: { hubRef: RefObject<HTMLDivElement | null> }) {
+  const [paths, setPaths] = useState<HubPath[]>([]);
+  const [size, setSize] = useState({ w: 0, h: 0 });
+  const [motion, setMotion] = useState(true);
+
+  useEffect(() => {
+    const hub = hubRef.current;
+    if (!hub) return;
+    const mobile = window.matchMedia("(max-width: 900px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+
+    const measure = () => {
+      frame = 0;
+      setMotion(!reduced.matches);
+      if (!mobile.matches) { setPaths([]); return; }
+      const box = hub.getBoundingClientRect();
+      const core = hub.querySelector<HTMLElement>(".sx-channel-hub__core")?.getBoundingClientRect();
+      if (!core) return;
+      const cx = core.left + core.width / 2 - box.left;
+      const coreTop = core.top - box.top;
+      const coreBottom = core.bottom - box.top;
+      const next: HubPath[] = [];
+      hub.querySelectorAll<HTMLElement>(".sx-channel-hub__item").forEach((item, index) => {
+        const out = item.classList.contains("is-out");
+        const tile = item.querySelector<HTMLElement>(".sx-channel-hub__tile")!.getBoundingClientRect();
+        const tx = tile.left + tile.width / 2 - box.left;
+        const x1 = out ? cx : tx;
+        const y1 = out ? coreBottom : item.getBoundingClientRect().bottom - box.top + 6;
+        const x2 = out ? tx : cx;
+        const y2 = out ? tile.top - box.top : coreTop;
+        const mid = (y1 + y2) / 2;
+        next.push({ d: `M${x1.toFixed(1)} ${y1.toFixed(1)} C${x1.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${mid.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`, out, delay: (index % 3) * 0.45 });
+      });
+      setSize({ w: box.width, h: box.height });
+      setPaths(next);
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(measure); };
+    const observer = new ResizeObserver(schedule);
+    observer.observe(hub);
+    mobile.addEventListener("change", schedule);
+    reduced.addEventListener("change", schedule);
+    void document.fonts.ready.then(schedule);
+    schedule();
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      mobile.removeEventListener("change", schedule);
+      reduced.removeEventListener("change", schedule);
+    };
+  }, [hubRef]);
+
+  if (!paths.length) return null;
+  return (
+    <svg className="sx-channel-hub__links" width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`} aria-hidden="true">
+      {paths.map((path, index) => (
+        <g key={index}>
+          <path d={path.d} />
+          {motion && (
+            <circle r="2.6">
+              <animateMotion dur="2.4s" begin={`${path.delay}s`} repeatCount="indefinite" path={path.d} keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".45 0 .3 1" />
+              <animate attributeName="opacity" dur="2.4s" begin={`${path.delay}s`} repeatCount="indefinite" values="0;1;1;0" keyTimes="0;.15;.85;1" />
+            </circle>
+          )}
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 /* Icones de traco dos canais, na cor da marca (sem as cores de cada rede). */
 const CHANNEL_ICONS = [
   <svg key="whatsapp" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"><path d="M12 3.4a8.6 8.6 0 0 0-7.4 13l-1.1 4.2 4.3-1.1A8.6 8.6 0 1 0 12 3.4Z" /><path d="M9.1 8.3h.8l1 2.2-.8.9a5.6 5.6 0 0 0 2.6 2.6l.9-.8 2.2 1v.8c0 .6-.6 1.2-1.4 1.1a6.6 6.6 0 0 1-6.4-6.4c0-.8.5-1.4 1.1-1.4Z" fill="currentColor" stroke="none" /></svg>,
@@ -25,10 +105,20 @@ const CHANNEL_ICONS = [
 ];
 
 export default function SigmaChannel() {
+  const hubRef = useRef<HTMLDivElement>(null);
   useReveal();
   const lang = useLang();
   const t = pick({ pt, en, es }, lang);
   const [active, setActive] = useState(0);
+  /* Celular: as abas viram slide com setas e arraste lateral. */
+  const tabCount = t.tabs.length;
+  const goTab = (step: number) => setActive((current) => (current + step + tabCount) % tabCount);
+  const swipeStart = useRef<number | null>(null);
+  const tabsNav = {
+    pt: { prev: "Anterior", next: "Próximo" },
+    en: { prev: "Previous", next: "Next" },
+    es: { prev: "Anterior", next: "Siguiente" },
+  }[lang];
   const automationButtons = {
     pt: { cancel: "Cancelar", confirm: "Confirmar" },
     en: { cancel: "Cancel", confirm: "Confirm" },
@@ -67,7 +157,8 @@ export default function SigmaChannel() {
         {/* Os seis canais chegando ao Sigma Channel: tres de cada lado, com um
             ponto de luz correndo pela linha ate o centro. */}
         <div className="sx-shell">
-          <div className="sx-channel-hub" role="img" aria-label={t.intro.hubLabel}>
+          <div className="sx-channel-hub" role="img" aria-label={t.intro.hubLabel} ref={hubRef}>
+            <HubLinks hubRef={hubRef} />
             {t.intro.channels.map((name, index) => (
               <Fragment key={name}>
                 {index === 3 && (
@@ -89,10 +180,31 @@ export default function SigmaChannel() {
       <section className="sx-band sx-dark sx-subproduct-stage">
         <div className="sx-shell" data-reveal>
           <div className="sx-tabs">
-            <div className="sx-tabs__panel" key={active} role="tabpanel" id={`channel-panel-${active}`} aria-labelledby={`channel-tab-${active}`}>
+            <div className="sx-tabs__panel" key={active} role="tabpanel" id={`channel-panel-${active}`} aria-labelledby={`channel-tab-${active}`}
+              onTouchStart={(event) => { swipeStart.current = event.touches[0].clientX; }}
+              onTouchEnd={(event) => {
+                if (swipeStart.current === null) return;
+                const dx = event.changedTouches[0].clientX - swipeStart.current;
+                swipeStart.current = null;
+                if (Math.abs(dx) > 48) goTab(dx < 0 ? 1 : -1);
+              }}>
               <h3 className="sx-h2"><SuiteGradient onDark>{t.tabs[active].headline}</SuiteGradient></h3>
               <p className="sx-lead">{t.tabs[active].body}</p>
               <SuiteGlow radius={22} animated><img src={`/media/site/${tabImages[active]}`} alt={t.tabs[active].label} loading="lazy" /></SuiteGlow>
+            </div>
+            <div className="sx-tabs__nav">
+              <button type="button" className="sx-tabs__arrow" aria-label={tabsNav.prev} onClick={() => goTab(-1)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+              </button>
+              <div className="sx-tabs__where" aria-live="polite">
+                <strong>{t.tabs[active].label}</strong>
+                <span className="sx-tabs__dots" aria-hidden="true">
+                  {t.tabs.map((item, index) => <i key={item.label} className={index === active ? "is-active" : undefined} />)}
+                </span>
+              </div>
+              <button type="button" className="sx-tabs__arrow" aria-label={tabsNav.next} onClick={() => goTab(1)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+              </button>
             </div>
             <div className="sx-tabs__buttons" role="tablist" aria-label="Sigma Channel">
               {t.tabs.map((item, index) => (
