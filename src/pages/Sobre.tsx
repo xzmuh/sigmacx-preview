@@ -119,9 +119,11 @@ export default function Sobre() {
       timeline.style.setProperty("--ab-progress", String(progress));
       timeline.style.setProperty("--ab-shift", `${fallback.matches ? 0 : -shift}px`);
       timeline.style.setProperty("--ab-cursor", `${cursor}px`);
+      // O no so acende quando o pulso chega nele: e o ultimo no ja alcancado,
+      // nao o mais proximo (esse acendia o proximo no antes do pulso passar).
       let active = 0;
       offsets.forEach((offset, index) => {
-        if (Math.abs(cursor - offset) < Math.abs(cursor - offsets[active])) active = index;
+        if (cursor + 1 >= offset) active = index;
         const proximity = 1 - Math.min(1, Math.abs(cursor - offset) / Math.max(1, items[index].offsetWidth));
         items[index].style.setProperty("--ab-focus", String(.38 + .62 * proximity));
       });
@@ -302,7 +304,6 @@ export default function Sobre() {
                       <strong className="ab-timeline__hint-touch">{l.swipeHint}</strong>
                     </div>
                   </div>
-                  <span>{String(activeMilestone + 1).padStart(2, "0")} / {String(milestones.length).padStart(2, "0")}</span>
                 </div>
                 <div className="ab-timeline__viewport" tabIndex={0} role="region" aria-label={l.timelineLabel}>
                   <div className="ab-timeline__rule" aria-hidden="true">

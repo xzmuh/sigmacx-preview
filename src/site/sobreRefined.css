@@ -67,7 +67,6 @@
 .ab-refined .ab-timeline { --ab-inset: max(var(--sx-gutter), calc((100vw - var(--sx-shell)) / 2)); --ab-card: min(64vw, 700px); height: calc(100svh - 90px + var(--ab-travel, 2800px)); margin: 0; }
 .ab-refined .ab-timeline__sticky { position: sticky; top: 90px; display: flex; flex-direction: column; justify-content: center; align-items: stretch; height: calc(100svh - 90px); padding: 32px 0; }
 .ab-refined .ab-timeline__status { display: flex; justify-content: space-between; gap: 24px; margin: 0 var(--ab-inset) 32px; color: #b8c9dd; font-size: .8rem; font-weight: 650; letter-spacing: .05em; }
-.ab-refined .ab-timeline__status > span:last-child { color: var(--green); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ab-refined .ab-timeline__viewport { overflow: clip; margin: 0; padding: 0; mask-image: none; -webkit-mask-image: none; }
 .ab-refined .ab-timeline__rule { top: 100px; left: var(--ab-inset); right: auto; width: var(--ab-length, 2800px); transform: translate3d(var(--ab-shift), 0, 0); background: rgba(93, 166, 255, .22); will-change: transform; }
 .ab-refined .ab-timeline__fill { background: linear-gradient(90deg, var(--blue), var(--green) 68%, #b9ff9b29); box-shadow: 0 0 14px #5da6ff8c, 0 0 30px #b9ff9b38; }
