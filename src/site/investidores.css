@@ -74,6 +74,17 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-login__pending { padding: 14px; border: 1px solid #b9ff9b40; border-radius: 8px; background: #b9ff9b09; color: #b6c3d1; font-size: .8rem; line-height: 1.55; overflow-wrap: anywhere; }
 .inv-login__links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; color: var(--inv-muted); font-size: .74rem; }
 .inv-login :is(.inv-login__links, .inv-login__pending) a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+/* Passo do codigo: fonte monoespacada em caixa alta, para conferir letra a
+   letra com o e-mail sem confundir parecidos. */
+.inv-login__code input { padding-left: calc(14px + .32em); font-family: ui-monospace, "SF Mono", Consolas, Menlo, monospace; font-size: 1.3rem; font-weight: 600; letter-spacing: .32em; text-align: center; text-transform: uppercase; }
+.inv-login__code input::placeholder { color: #4d5a6b; }
+.inv-login .inv-small b { color: #e3eaf5; font-weight: 550; overflow-wrap: anywhere; }
+.inv-login .inv-form__error a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.inv-login__ok { color: var(--green); font-size: .78rem; line-height: 1.5; }
+.inv-login__ok:empty { display: none; }
+.inv-login__back { display: inline-flex; gap: 8px; padding: 0; border: 0; background: none; color: var(--inv-muted); font: inherit; cursor: pointer; transition: color .25s; }
+.inv-login__back:hover, .inv-login__back:focus-visible { color: var(--green); }
+.inv-login .pill:disabled { opacity: .6; cursor: progress; transform: none; box-shadow: none; }
 .inv-creds { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(60px, 7vw, 108px); padding-block: 34px; border-top: 1px solid #ffffff20; }
 .inv-cred { padding: 0 30px; }
 .inv-cred:first-child { padding-left: 0; }
@@ -260,6 +271,9 @@ html:has(.inv) { scroll-behavior: smooth; }
 .inv-consent a, .inv-sent a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
 .inv-form__error { color: #ffad91; font-size: .78rem; line-height: 1.5; }
 .inv-form__error:empty { display: none; }
+/* Isca do formulario: fora da tela para pessoas, visivel para robos que leem o HTML. */
+.inv-form__trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.inv-form .pill:disabled { opacity: .6; cursor: progress; transform: none; box-shadow: none; }
 .inv-form .pill { justify-content: space-between; width: 100%; }
 .inv-form .inv-small { margin-top: 0; font-size: .71rem; }
 .inv-sent { padding: 40px; border: 1px solid #b9ff9b60; border-radius: 24px; background: #b9ff9b09; }

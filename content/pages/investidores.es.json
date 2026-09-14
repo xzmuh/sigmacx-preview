@@ -175,24 +175,32 @@
       "submit": "Solicitar acceso",
       "note": "Cada solicitud se revisa individualmente. Aprobada, usted recibe un acceso nominal, válido por tiempo determinado.",
       "required": "Complete nombre, e-mail corporativo, empresa y la aceptación.",
-      "subject": "Solicitud de acceso: área de inversores",
-      "sentTitle": "Solicitud preparada.",
-      "sentBody": "Su programa de correo abrió con la solicitud lista. Si no se abrió nada, escriba a"
+      "sending": "Enviando…",
+      "failed": "No pudimos enviarla ahora. Inténtalo de nuevo o escribe a",
+      "sentTitle": "Solicitud enviada.",
+      "sentBody": "Recibimos tu solicitud. Cuando sea aprobada, recibirás un e-mail con el acceso al área del inversor."
     }
   },
   "login": {
     "title": "Área del inversor",
-    "lead": "Acceso restringido a inversores con NDA firmado.",
+    "lead": "Escribe tu e-mail autorizado y te enviaremos un código de acceso.",
     "email": "E-mail",
     "emailPlaceholder": "nombre@empresa.com",
-    "password": "Contraseña",
-    "passwordPlaceholder": "Tu contraseña",
-    "submit": "Ingresar",
-    "forgot": "Olvidé mi contraseña",
+    "submit": "Enviar código",
+    "sending": "Enviando…",
+    "invalidEmail": "Escribe un e-mail válido.",
+    "notAllowed": "Este e-mail no tiene acceso al área de inversores. Escríbenos a",
+    "codeTitle": "Revisa tu e-mail",
+    "codeLead": "Enviamos un código de 8 caracteres a {email}. Es válido por 10 minutos.",
+    "code": "Código de acceso",
+    "codeSubmit": "Ingresar",
+    "verifying": "Verificando…",
+    "wrongCode": "Código incorrecto o vencido. Revisa tu e-mail.",
+    "entering": "¡Listo! Ingresando…",
+    "back": "Usar otro e-mail",
+    "network": "Falló la conexión. Inténtalo de nuevo.",
     "noAccess": "¿Todavía no tienes acceso?",
     "request": "Solicitar acceso",
-    "required": "Completa e-mail y contraseña.",
-    "pending": "El acceso se libera tras la firma del NDA. Si ya lo firmaste, escríbenos a",
     "close": "Cerrar"
   }
 }

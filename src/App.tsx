@@ -13,6 +13,7 @@ const SigmaInsights = lazy(() => import("./pages/SigmaInsights"));
 const Dialogi = lazy(() => import("./pages/Dialogi"));
 const Sobre = lazy(() => import("./pages/Sobre"));
 const Investidores = lazy(() => import("./pages/Investidores"));
+const InvestidoresArea = lazy(() => import("./pages/InvestidoresArea"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Privacidade = lazy(() => import("./pages/Privacidade"));
@@ -38,6 +39,7 @@ export function App() {
               <Route path="dialogi" element={<Dialogi />} />
               <Route path="sobre" element={<Sobre />} />
               <Route path="investidores" element={<Investidores />} />
+              <Route path="investidores/area" caseSensitive element={<InvestidoresArea />} />
               <Route path="blog" element={<Blog />} />
               <Route path="blog/:slug" element={<BlogPost />} />
               <Route path="category/:category" element={<Blog />} />

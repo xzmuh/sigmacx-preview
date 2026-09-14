@@ -60,5 +60,8 @@ export default defineConfig({
   server: {
     // Permite acessar o dev server por tuneis (ngrok) sem o bloqueio de host.
     allowedHosts: true,
+    // Login da area do investidor: /api/* sao Cloudflare Pages Functions. No
+    // dev elas rodam no wrangler (npm run dev:api, porta 8789; a 8788 fica para o treinamento) e o Vite repassa.
+    proxy: { "/api": "http://127.0.0.1:8789" },
   },
 });

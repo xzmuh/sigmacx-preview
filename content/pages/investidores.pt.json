@@ -175,24 +175,32 @@
       "submit": "Solicitar acesso",
       "note": "Cada solicitação é revisada individualmente. Aprovada, você recebe um acesso nominal, válido por tempo determinado.",
       "required": "Preencha nome, e-mail corporativo, empresa e o aceite.",
-      "subject": "Solicitação de acesso: área de investidores",
-      "sentTitle": "Solicitação preparada.",
-      "sentBody": "Seu programa de e-mail abriu com a solicitação pronta. Se nada abriu, escreva para"
+      "sending": "Enviando…",
+      "failed": "Não conseguimos enviar agora. Tente de novo ou escreva para",
+      "sentTitle": "Pedido enviado.",
+      "sentBody": "Recebemos sua solicitação. Quando ela for aprovada, você recebe um e-mail com o acesso à área do investidor."
     }
   },
   "login": {
     "title": "Área do investidor",
-    "lead": "Acesso restrito a investidores com NDA assinado.",
+    "lead": "Digite seu e-mail autorizado e enviaremos um código de acesso.",
     "email": "E-mail",
     "emailPlaceholder": "nome@empresa.com",
-    "password": "Senha",
-    "passwordPlaceholder": "Sua senha",
-    "submit": "Entrar",
-    "forgot": "Esqueci minha senha",
+    "submit": "Enviar código",
+    "sending": "Enviando…",
+    "invalidEmail": "Digite um e-mail válido.",
+    "notAllowed": "Este e-mail não tem acesso à área de investidores. Fale com a gente em",
+    "codeTitle": "Confira seu e-mail",
+    "codeLead": "Enviamos um código de 8 caracteres para {email}. Ele vale por 10 minutos.",
+    "code": "Código de acesso",
+    "codeSubmit": "Entrar",
+    "verifying": "Verificando…",
+    "wrongCode": "Código incorreto ou expirado. Confira o e-mail.",
+    "entering": "Pronto! Entrando…",
+    "back": "Usar outro e-mail",
+    "network": "Falha de conexão. Tente de novo.",
     "noAccess": "Ainda não tem acesso?",
     "request": "Solicitar acesso",
-    "required": "Preencha e-mail e senha.",
-    "pending": "O acesso é liberado após a assinatura do NDA. Se você já assinou, fale com a gente em",
     "close": "Fechar"
   }
 }

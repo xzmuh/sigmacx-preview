@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useId, useRef, useState, type CSSProperties, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PageShell } from "../site/PageShell";
 import { useInvestorsMotion } from "../site/investorsMotion";
 import { INVESTORS_MAIL } from "../site/site-data";
@@ -194,7 +194,7 @@ function Select({ label, value, options, onChange }: {
   );
 }
 
-const EMPTY_FORM = { name: "", email: "", company: "", role: "", profile: "", message: "", consent: false };
+const EMPTY_FORM = { name: "", email: "", company: "", role: "", profile: "", message: "", consent: false, website: "" };
 
 function Sculpture() {
   return (
@@ -229,18 +229,43 @@ function ForceArt({ index }: { index: number }) {
 }
 
 /**
- * Login da area do investidor: janela nativa (`<dialog>`), que ja fecha no Esc e
- * prende o foco. O site nao tem autenticacao: ate existir um endpoint, o envio
- * so orienta quem ja assinou o NDA a falar com a caixa de investidores. Trocar
- * o trecho marcado em `submit` pela chamada real quando houver backend.
+ * Login da area do investidor por codigo de e-mail, a mesma receita do
+ * hub-de-mkt (functions/api/auth). Janela nativa (`<dialog>`), que ja fecha
+ * no Esc e prende o foco. Dois passos, sem senha: o e-mail autorizado recebe
+ * um codigo de 8 caracteres; o codigo certo grava o cookie de sessao e a
+ * pessoa segue para /investidores/area.
+ *
+ * As chamadas /api/auth/* so existem nas Cloudflare Pages Functions. No
+ * `npm run dev` elas passam pelo proxy do Vite ate o wrangler (ver
+ * docs/LOGIN-INVESTIDORES.md); sem ele, a tela mostra falha de conexao.
  */
 type LoginText = (typeof pt)["login"];
 
-function InvestorLogin({ t, open, onClose }: { t: LoginText; open: boolean; onClose: () => void }) {
+async function postJson(url: string, body: unknown) {
+  const response = await fetch(url, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return response.json() as Promise<Record<string, unknown>>;
+}
+
+function InvestorLogin({ t, open, onClose, onSuccess }: {
+  t: LoginText;
+  open: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}) {
+  const lang = useLang();
   const ref = useRef<HTMLDialogElement>(null);
+  const codeInput = useRef<HTMLInputElement>(null);
+  const [step, setStep] = useState<"email" | "code">("email");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [status, setStatus] = useState<"idle" | "error" | "pending">("idle");
+  const [code, setCode] = useState("");
+  const [challenge, setChallenge] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<"" | "invalidEmail" | "notAllowed" | "wrongCode" | "network" | "entering">("");
 
   useEffect(() => {
     const dialog = ref.current;
@@ -249,15 +274,78 @@ function InvestorLogin({ t, open, onClose }: { t: LoginText; open: boolean; onCl
     if (!open && dialog.open) dialog.close();
   }, [open]);
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (step === "code") codeInput.current?.focus();
+  }, [step]);
+
+  const requestCode = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!/.+@.+\..+/.test(email) || !password) {
-      setStatus("error");
+    const address = email.trim().toLowerCase();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(address)) {
+      setMessage("invalidEmail");
       return;
     }
-    // Sem backend de login ainda: aqui entra a autenticacao real.
-    setStatus("pending");
+    setBusy(true);
+    setMessage("");
+    try {
+      const data = await postJson("/api/auth/request-code", { email: address, lang });
+      if (!data.allowed || typeof data.challenge !== "string") {
+        setMessage("notAllowed");
+        return;
+      }
+      setChallenge(data.challenge);
+      setEmail(address);
+      setCode("");
+      setStep("code");
+    } catch {
+      setMessage("network");
+    } finally {
+      setBusy(false);
+    }
   };
+
+  const verifyCode = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (code.length < 8) {
+      setMessage("wrongCode");
+      return;
+    }
+    setBusy(true);
+    setMessage("");
+    try {
+      const data = await postJson("/api/auth/verify", { challenge, code });
+      if (data.ok) {
+        setMessage("entering");
+        onSuccess();
+        return;
+      }
+      setMessage("wrongCode");
+    } catch {
+      setMessage("network");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const back = () => {
+    setStep("email");
+    setChallenge("");
+    setCode("");
+    setMessage("");
+  };
+
+  const head = (title: string) => (
+    <div className="inv-login__head">
+      <h3 id="inv-login-title">{title}</h3>
+      <button type="button" className="inv-login__close" aria-label={t.close} onClick={onClose}>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+          <path d="M4 4l8 8M12 4l-8 8" />
+        </svg>
+      </button>
+    </div>
+  );
+
+  const [codeLeadStart, codeLeadEnd] = t.codeLead.split("{email}");
 
   return (
     <dialog
@@ -268,42 +356,56 @@ function InvestorLogin({ t, open, onClose }: { t: LoginText; open: boolean; onCl
       onClose={onClose}
       onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}
     >
-      <form className="inv-form" onSubmit={submit} noValidate>
-        <div className="inv-login__head">
-          <h3 id="inv-login-title">{t.title}</h3>
-          <button type="button" className="inv-login__close" aria-label={t.close} onClick={onClose}>
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-              <path d="M4 4l8 8M12 4l-8 8" />
-            </svg>
-          </button>
-        </div>
-        <p className="inv-small">{t.lead}</p>
-        <label className="inv-field">
-          <span>{t.email}</span>
-          <input type="email" value={email} placeholder={t.emailPlaceholder} autoComplete="username"
-            onChange={(event) => setEmail(event.target.value)} />
-        </label>
-        <label className="inv-field">
-          <span>{t.password}</span>
-          <input type="password" value={password} placeholder={t.passwordPlaceholder} autoComplete="current-password"
-            onChange={(event) => setPassword(event.target.value)} />
-        </label>
-        <p className="inv-form__error" role="alert">{status === "error" ? t.required : ""}</p>
-        {status === "pending" && (
-          <p className="inv-login__pending" role="status">
-            {t.pending} <a href={`mailto:${INVESTORS_MAIL}`}>{INVESTORS_MAIL}</a>.
+      {step === "email" ? (
+        <form className="inv-form" onSubmit={requestCode} noValidate>
+          {head(t.title)}
+          <p className="inv-small">{t.lead}</p>
+          <label className="inv-field">
+            <span>{t.email}</span>
+            <input type="email" value={email} placeholder={t.emailPlaceholder} autoComplete="email" required
+              onChange={(event) => { setEmail(event.target.value); setMessage(""); }} />
+          </label>
+          <p className="inv-form__error" role="alert">
+            {message === "invalidEmail" && t.invalidEmail}
+            {message === "network" && t.network}
+            {message === "notAllowed" && <>{t.notAllowed} <a href={`mailto:${INVESTORS_MAIL}`}>{INVESTORS_MAIL}</a>.</>}
           </p>
-        )}
-        <button className="pill pill--primary" type="submit">
-          {t.submit} <span aria-hidden="true">→</span>
-        </button>
-        <div className="inv-login__links">
-          <a href={`mailto:${INVESTORS_MAIL}?subject=${encodeURIComponent(t.forgot)}`}>{t.forgot}</a>
-          <span>
-            {t.noAccess} <a href="#material" onClick={onClose}>{t.request}</a>
-          </span>
-        </div>
-      </form>
+          <button className="pill pill--primary" type="submit" disabled={busy}>
+            {busy ? t.sending : t.submit} <span aria-hidden="true">→</span>
+          </button>
+          <div className="inv-login__links">
+            <span>
+              {t.noAccess} <a href="#material" onClick={onClose}>{t.request}</a>
+            </span>
+          </div>
+        </form>
+      ) : (
+        <form className="inv-form" onSubmit={verifyCode} noValidate>
+          {head(t.codeTitle)}
+          <p className="inv-small">{codeLeadStart}<b>{email}</b>{codeLeadEnd}</p>
+          <label className="inv-field inv-login__code">
+            <span>{t.code}</span>
+            {/* Caixa alta e so letras e numeros enquanto digita; quem vale e a
+                normalizacao do servidor (normalizeCode em functions/_lib/auth.js). */}
+            <input ref={codeInput} type="text" inputMode="text" autoComplete="one-time-code" autoCapitalize="characters"
+              autoCorrect="off" spellCheck={false} maxLength={8} placeholder="XXXXXXXX" required value={code}
+              onChange={(event) => { setCode(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8)); setMessage(""); }} />
+          </label>
+          <p className={message === "entering" ? "inv-login__ok" : "inv-form__error"} role="alert">
+            {message === "wrongCode" && t.wrongCode}
+            {message === "network" && t.network}
+            {message === "entering" && t.entering}
+          </p>
+          <button className="pill pill--primary" type="submit" disabled={busy || message === "entering"}>
+            {busy ? t.verifying : t.codeSubmit} <span aria-hidden="true">→</span>
+          </button>
+          <div className="inv-login__links">
+            <button type="button" className="inv-login__back" onClick={back}>
+              <span aria-hidden="true">←</span> {t.back}
+            </button>
+          </div>
+        </form>
+      )}
     </dialog>
   );
 }
@@ -315,34 +417,62 @@ export default function Investidores() {
   const t = pick({ pt, en, es }, lang);
   const f = t.gate.form;
   const [form, setForm] = useState(EMPTY_FORM);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<"" | "required" | "failed">("");
+  const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
+  const navigate = useNavigate();
+  const { search } = useLocation();
+  /* A rota /investidores/area manda para ca com ?entrar=1 quem chega sem
+     sessao: a janela ja abre. */
+  const [loginOpen, setLoginOpen] = useState(() => new URLSearchParams(search).has("entrar"));
+  const area = href("/investidores/area", lang);
+
+  /* Quem ja tem sessao valida vai direto para a area, sem pedir outro codigo. */
+  const openLogin = async () => {
+    try {
+      const response = await fetch("/api/auth/me", { credentials: "same-origin" });
+      if (response.ok) {
+        navigate(area);
+        return;
+      }
+    } catch {
+      /* sem as Functions (dev sem wrangler): segue para o login */
+    }
+    setLoginOpen(true);
+  };
+
+  const closeLogin = () => {
+    setLoginOpen(false);
+    if (new URLSearchParams(search).has("entrar")) navigate(href("/investidores", lang), { replace: true });
+  };
   const set = (field: keyof typeof EMPTY_FORM, value: string | boolean) =>
     setForm((current) => ({ ...current, [field]: value }));
 
-  /* Sem endpoint de formulario no site: a solicitacao e montada como e-mail e
-     entregue ao programa do visitante. Trocar por um POST quando existir um
-     destino (INVESTORS_MAIL segue sendo a caixa que recebe). */
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  /* O pedido vai para /api/investidores/solicitar (Pages Function), que
+     avisa o aprovador por e-mail com "Sim" e "Nao". Aprovado, o e-mail da
+     pessoa ganha acesso a area na hora. */
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const valid = form.name.trim() && /.+@.+\..+/.test(form.email) && form.company.trim() && form.consent;
+    const valid = form.name.trim() && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email.trim()) && form.company.trim() && form.consent;
     if (!valid) {
-      setError(true);
+      setError("required");
       return;
     }
-    setError(false);
-    const body = [
-      `${f.name}: ${form.name}`,
-      `${f.email}: ${form.email}`,
-      `${f.company}: ${form.company}`,
-      `${f.role}: ${form.role}`,
-      `${f.profile}: ${form.profile || f.profiles[0]}`,
-      `${f.message}: ${form.message}`,
-    ].join("\n");
-    window.location.href =
-      `mailto:${INVESTORS_MAIL}?subject=${encodeURIComponent(f.subject)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setError("");
+    setSending(true);
+    try {
+      const response = await fetch("/api/investidores/solicitar", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...form, profile: form.profile || f.profiles[0], lang }),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      setSent(true);
+    } catch {
+      setError("failed");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -367,7 +497,7 @@ export default function Investidores() {
               <a className="pill pill--primary" href="#material">
                 {t.hero.cta} <span aria-hidden="true">↓</span>
               </a>
-              <button className="pill pill--outline" type="button" onClick={() => setLoginOpen(true)}>
+              <button className="pill pill--outline" type="button" onClick={openLogin}>
                 {t.hero.login}
                 <svg className="inv-lock" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6"
                   strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -540,9 +670,7 @@ export default function Investidores() {
               {sent ? (
                 <div className="inv-sent">
                   <h3>{f.sentTitle}</h3>
-                  <p>
-                    {f.sentBody} <a href={`mailto:${INVESTORS_MAIL}`}>{INVESTORS_MAIL}</a>.
-                  </p>
+                  <p>{f.sentBody}</p>
                 </div>
               ) : (
                 <form className="inv-form" onSubmit={submit} noValidate>
@@ -594,9 +722,15 @@ export default function Investidores() {
                       {f.consentEnd}
                     </span>
                   </label>
-                  <p className="inv-form__error" role="alert">{error ? f.required : ""}</p>
-                  <button className="pill pill--primary" type="submit">
-                    {f.submit} <span aria-hidden="true">→</span>
+                  {/* Isca contra robo: invisivel e fora do teclado; pessoa nao preenche. */}
+                  <input className="inv-form__trap" type="text" name="website" tabIndex={-1} autoComplete="off"
+                    aria-hidden="true" value={form.website} onChange={(event) => set("website", event.target.value)} />
+                  <p className="inv-form__error" role="alert">
+                    {error === "required" && f.required}
+                    {error === "failed" && <>{f.failed} <a href={`mailto:${INVESTORS_MAIL}`}>{INVESTORS_MAIL}</a>.</>}
+                  </p>
+                  <button className="pill pill--primary" type="submit" disabled={sending}>
+                    {sending ? f.sending : f.submit} <span aria-hidden="true">→</span>
                   </button>
                   <p className="inv-small">{f.note}</p>
                 </form>
@@ -605,7 +739,7 @@ export default function Investidores() {
           </div>
         </section>
 
-        <InvestorLogin t={t.login} open={loginOpen} onClose={() => setLoginOpen(false)} />
+        <InvestorLogin t={t.login} open={loginOpen} onClose={closeLogin} onSuccess={() => navigate(area)} />
       </div>
     </PageShell>
   );

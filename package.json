@@ -8,6 +8,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "publicar": "node scripts/publicar-cloudflare.mjs",
+    "trello:listas": "node scripts/trello-listas.mjs",
+    "apps-script": "node scripts/gerar-apps-script.mjs",
+    "cifrar:investidores": "node scripts/cifrar-investidores.mjs",
+    "dev:api": "npx --yes wrangler@3 pages dev --port 8789",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint ."

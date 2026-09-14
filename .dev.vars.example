@@ -1,0 +1,32 @@
+# Variaveis do login por codigo da area do investidor.
+#
+# LOCAL: copie para `.dev.vars` (ignorado pelo git). Ver docs/LOGIN-INVESTIDORES.md.
+# PRODUCAO: os MESMOS nomes em
+#   Cloudflare > Pages > (projeto) > Settings > Environment variables
+#   (Production E Preview, senao o preview fica sem login).
+#
+# Gere segredos fortes com:  openssl rand -hex 32
+
+# Assina os cookies de sessao e os desafios de codigo.
+# Trocar este valor derruba TODAS as sessoes (logout geral).
+# Use um valor DIFERENTE do hub-de-mkt e do treinamento-sigmacx.
+AUTH_SESSION_SECRET=coloque-um-segredo-aleatorio-longo-aqui
+
+# Quem entra na area. Separado por virgula, sem espaco. Match exato de e-mail.
+AUTH_ALLOWED_EMAILS=investidor@fundo.com,outro@fundo.com
+
+# Web App do Apps Script que envia o codigo (pode ser o MESMO do hub e do
+# treinamento: ele responde a acao send_login_code).
+AUTH_MAIL_URL=https://script.google.com/macros/s/XXXXXXXX/exec
+
+# Segredo compartilhado com o Apps Script (MAIL_SECRET la). Identico nos dois lados.
+AUTH_MAIL_SECRET=coloque-outro-segredo-aleatorio-aqui
+
+# Chave do material cifrado da area (functions/_content/investidores-area.enc.json).
+# 64 hex. Sem ela, o conteudo nao abre. Guarde num cofre: perdida, o material
+# cifrado nao volta (o texto aberto so existe em content/private, fora do git).
+INVESTOR_CONTENT_KEY=coloque-64-caracteres-hex-aqui
+
+# SO LOCAL: 1 mostra o codigo no terminal do wrangler, para testar sem e-mail.
+# Nunca definir em producao.
+AUTH_DEV_LOG_CODE=1

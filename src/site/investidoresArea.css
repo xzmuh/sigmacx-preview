@@ -1,0 +1,141 @@
+/* Area logada do investidor: herda .inv (investidores.css) e troca a narrativa
+   por um material de consulta, com sumario fixo e secoes numeradas. */
+.inv-area { padding-bottom: clamp(80px, 9vw, 140px); }
+.inv-area section[id] { scroll-margin-top: 120px; }
+.inv-area__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Topo: a mesma luz do hero publico, mais baixa, e a faixa de confidencialidade. */
+.inv-area__top {
+  position: relative; isolation: isolate;
+  padding-top: clamp(118px, 10vw, 160px);
+  background: radial-gradient(ellipse at 90% 0, #183e4833, transparent 58%), radial-gradient(ellipse at 10% 10%, #5da6ff0d, transparent 50%);
+}
+.inv-area__bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; padding-block: 18px; border-block: 1px solid #ffffff20; color: var(--inv-muted); font-size: .76rem; line-height: 1.5; }
+.inv-area__bar-label { color: var(--green); font-size: .62rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.inv-area__bar-who { margin-left: auto; color: #6f7c8e; }
+.inv-area__logout { color: var(--inv-muted); text-decoration: underline; text-underline-offset: 3px; transition: color .25s; }
+.inv-area__logout:hover { color: var(--green); }
+/* Enquanto sessao e conteudo chegam da API: so o fundo, sem piscar texto. */
+.inv-area__loading { min-height: 100vh; }
+
+.inv-area__grid { display: grid; grid-template-columns: 250px minmax(0, 1fr); column-gap: clamp(40px, 6vw, 110px); align-items: start; }
+
+/* Sumario: a lista numerada do bloco "O que voce recebe acesso", agora navegavel. */
+.inv-area__toc { position: sticky; top: 120px; padding-top: clamp(56px, 6vw, 92px); }
+.inv-area__toc ol { counter-reset: none; }
+.inv-area__toc li { border-top: 1px solid #ffffff16; }
+.inv-area__toc li:last-child { border-bottom: 1px solid #ffffff16; }
+.inv-area__toc a { position: relative; display: flex; gap: 16px; padding: 12px 0 12px 0; color: #a5b2c2; font-size: .82rem; line-height: 1.45; transition: color .25s, padding .35s var(--ease-sigma); }
+.inv-area__toc a > span { flex-shrink: 0; width: 16px; padding-top: 2px; font-variant-numeric: tabular-nums; color: #718094; font-size: .62rem; transition: color .25s; }
+.inv-area__toc a::before { position: absolute; left: 0; top: 50%; width: 0; height: 1px; content: ""; background: var(--green); transition: width .35s var(--ease-sigma); }
+.inv-area__toc a:hover { color: #eaffdf; }
+.inv-area__toc a.is-active { padding-left: 22px; color: #eaffdf; }
+.inv-area__toc a.is-active::before { width: 12px; }
+.inv-area__toc a:is(:hover, .is-active) > span { color: var(--green); }
+
+/* Secoes do material. */
+.inv-slide { padding-block: clamp(56px, 6vw, 92px); }
+.inv-slide + .inv-slide { border-top: 1px solid #ffffff16; }
+.inv-slide .section-index { margin-bottom: 20px; }
+.inv-slide__title { max-width: 28ch; font-size: clamp(1.75rem, 2.7vw, 2.85rem); }
+.inv-slide__blocks { display: grid; gap: 24px; margin-top: 36px; }
+.inv-slide__p { max-width: 64ch; color: var(--inv-muted); font-size: clamp(.98rem, 1.1vw, 1.08rem); line-height: 1.66; letter-spacing: -.012em; }
+.inv-slide__p b { color: #e4ebf6; font-weight: 550; }
+.inv-slide__blocks > .inv-small { max-width: 72ch; margin-top: 0; }
+.inv-slide__legal { margin-top: 20px !important; padding-top: 24px; border-top: 1px solid #ffffff16; }
+
+/* Numeros: a faixa de credenciais do hero, fechada numa moldura de card. */
+.inv-metrics { display: grid; gap: 1px; overflow: hidden; border: 1px solid #ffffff18; border-radius: 24px; background: #ffffff14; }
+.inv-metrics--2, .inv-metrics--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.inv-metrics--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (min-width: 1400px) { .inv-metrics--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.inv-metric { container-type: inline-size; display: flex; flex-direction: column; padding: clamp(24px, 2.4vw, 36px); background: linear-gradient(160deg, #0d1828, #08111f); }
+.inv-metric__k { display: block; color: var(--inv-muted); font-size: .6rem; font-weight: 550; letter-spacing: .14em; text-transform: uppercase; }
+.inv-metric__v { display: block; margin-top: 18px; color: #d9f5da; font-size: clamp(1.9rem, 2.6vw, 2.9rem); font-weight: 400; letter-spacing: -.055em; line-height: 1.08; font-variant-numeric: tabular-nums; text-wrap: balance; }
+.inv-metrics--4 .inv-metric__v { font-size: clamp(1.7rem, 2vw, 2.3rem); }
+/* Valor longo (mais de 9 caracteres) fica numa linha so: encolhe pela largura da celula. */
+.inv-metric__v.is-long { white-space: nowrap; font-size: min(clamp(1.7rem, 2.6vw, 2.9rem), 12.5cqi); }
+.inv-metric__v.is-small { font-size: clamp(1.15rem, 1.45vw, 1.45rem); font-weight: 450; letter-spacing: -.03em; line-height: 1.25; }
+.inv-metric__d { max-width: 44ch; margin-top: 14px; color: var(--inv-muted); font-size: .84rem; line-height: 1.6; }
+
+/* Tabelas: linhas finas, primeira coluna como titulo da linha. */
+.inv-table { overflow-x: auto; border: 1px solid #ffffff18; border-radius: 24px; background: linear-gradient(140deg, #ffffff06, #ffffff01); }
+.inv-table table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: .88rem; }
+.inv-table thead th { padding: 22px 24px 16px; border-bottom: 1px solid #ffffff24; color: var(--inv-muted); font-size: .6rem; font-weight: 550; letter-spacing: .14em; text-align: left; text-transform: uppercase; }
+.inv-table tbody :is(th, td) { padding: 20px 24px; border-bottom: 1px solid #ffffff10; color: #a5b2c2; line-height: 1.6; text-align: left; vertical-align: top; }
+.inv-table tbody tr:last-child :is(th, td) { border-bottom: 0; }
+.inv-table tbody th { font-weight: 400; }
+.inv-table tbody th b { display: block; color: #eef3f8; font-weight: 550; }
+.inv-table tbody th small { display: block; max-width: 24ch; margin-top: 4px; color: #6f7c8e; font-size: .74rem; line-height: 1.45; }
+.inv-table td.is-muted { color: #6f7c8e; }
+
+/* Projecao de receita: quatro barras no degrade da marca. */
+.inv-bars { display: flex; align-items: flex-end; gap: clamp(14px, 3vw, 44px); height: clamp(220px, 22vw, 320px); padding: 32px clamp(20px, 3vw, 44px) 0; border: 1px solid #ffffff18; border-radius: 24px; background: radial-gradient(ellipse at 90% 0, #b9ff9b0d, transparent 60%), linear-gradient(140deg, #ffffff06, #ffffff01); }
+.inv-bar { display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: flex-end; gap: 10px; height: 100%; }
+.inv-bar i { display: block; width: 100%; max-width: 120px; height: calc(var(--h) * .72); min-height: 6px; border-radius: 12px 12px 2px 2px; background: linear-gradient(180deg, #b9ff9b, #5da6ff 55%, #5da6ff33); }
+.inv-bar b { color: #eef3f8; font-size: .9rem; font-weight: 550; font-variant-numeric: tabular-nums; }
+.inv-bar span { padding: 12px 0 16px; color: #6f7c8e; font-size: .7rem; letter-spacing: .08em; }
+
+.inv-slide__list { display: grid; gap: 12px; max-width: 72ch; margin-top: 8px; }
+.inv-slide__list li { position: relative; padding-left: 28px; color: var(--inv-muted); font-size: .92rem; line-height: 1.64; }
+.inv-slide__list li::before { position: absolute; left: 0; top: .82em; width: 14px; height: 1px; content: ""; background: var(--green); }
+
+/* Secoes claras (04 e 07): o painel de "O diagnostico" da pagina publica,
+   cantos assimetricos e tinta verde escura. O texto fica no mesmo alinhamento
+   das outras secoes; so o painel se estende para fora da coluna. */
+.inv-slide--light {
+  --inv-panel-grow: 28px;
+  --inv-panel-radius: 48px;
+  position: relative; isolation: isolate;
+  margin-block: clamp(20px, 3vw, 44px);
+  color: #152b32;
+}
+.inv-slide.inv-slide--light, .inv-slide--light + .inv-slide { border-top: 0; }
+.inv-slide--light::before {
+  position: absolute; z-index: -1;
+  inset: 0 calc(clamp(16px, 2.4vw, 36px) * -1 - var(--inv-panel-grow));
+  content: "";
+  border-radius: var(--inv-panel-radius) 24px var(--inv-panel-radius) 24px;
+  background: radial-gradient(ellipse at 95% 85%, #cbdfd2, transparent 55%), #eef3ed;
+  box-shadow: 0 -24px 70px -42px #b9ff9b30, 0 30px 80px -48px #5da6ff2b;
+}
+.inv-slide--light .section-index { color: #5d716c; }
+.inv-slide--light .section-index i { color: #39724e; }
+.inv-slide--light .inv-slide__p, .inv-slide--light .inv-slide__list li { color: #586b65; }
+.inv-slide--light .inv-slide__p b { color: #16352a; }
+.inv-slide--light .inv-small { color: #6b7d76; }
+.inv-slide--light .inv-slide__list li::before { background: #39724e; }
+.inv-slide--light .inv-table,
+.inv-slide--light .inv-bars { border-color: #17362d16; background: #ffffff5c; }
+.inv-slide--light .inv-table thead th { border-bottom-color: #17362d24; color: #5d716c; }
+.inv-slide--light .inv-table tbody :is(th, td) { border-bottom-color: #17362d12; color: #586b65; }
+.inv-slide--light .inv-table tbody th b { color: #16352a; }
+.inv-slide--light .inv-table tbody th small { color: #6f837b; }
+/* Barras no tom do passo em destaque do diagnostico, o verde escuro da marca. */
+.inv-slide--light .inv-bar i { background: linear-gradient(180deg, #173a32, #2f6b53 60%, #4f8c70); }
+.inv-slide--light .inv-bar:last-child i { background: linear-gradient(180deg, #173a32, #1b644f 45%, #b9ff9b); }
+.inv-slide--light .inv-bar b { color: #16352a; }
+.inv-slide--light .inv-bar span { color: #658276; }
+
+@media (max-width: 1100px) {
+  .inv-area__grid { grid-template-columns: 210px minmax(0, 1fr); column-gap: 40px; }
+  .inv-metrics--3 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 860px) {
+  .inv-area__grid { grid-template-columns: minmax(0, 1fr); }
+  /* No celular o sumario vira uma trilha horizontal logo abaixo da faixa. */
+  .inv-area__toc { position: static; padding-top: 28px; }
+  .inv-area__toc .inv-toc__head { padding-bottom: 12px; }
+  .inv-area__toc ol { display: flex; gap: 0; overflow-x: auto; margin-inline: calc(var(--sx-gutter) * -1); padding-inline: var(--sx-gutter); border-block: 1px solid #ffffff16; scrollbar-width: none; }
+  .inv-area__toc li, .inv-area__toc li:last-child { border: 0; }
+  .inv-area__toc a { padding: 14px 18px 14px 0; white-space: nowrap; }
+  .inv-area__toc a.is-active { padding-left: 0; }
+  .inv-area__toc a::before { display: none; }
+  .inv-area__bar-who { margin-left: 0; }
+  .inv-slide--light::before { inset-inline: calc(var(--sx-gutter) * -1 + 8px); border-radius: 38px 14px 38px 14px; }
+}
+@media (max-width: 580px) {
+  .inv-metrics--2, .inv-metrics--4 { grid-template-columns: minmax(0, 1fr); }
+  .inv-metric__v { font-size: 2.1rem; }
+  .inv-bar b { font-size: .78rem; }
+}

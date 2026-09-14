@@ -16,3 +16,19 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+
+# login da area do investidor (wrangler): segredos locais e cache, nunca versionar
+.dev.vars
+.wrangler/
+
+# material da area do investidor em texto aberto: so o .enc.json cifrado vai ao git
+/content/private/
+
+# segredos de producao da Cloudflare (gerado por npm run publicar)
+.producao.vars
+
+# previa local dos e-mails do Apps Script
+/apps-script/previa/
+
+# segredo do Apps Script novo (so local)
+.apps-script.local.txt

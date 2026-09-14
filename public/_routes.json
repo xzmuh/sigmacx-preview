@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "include": [
+    "/api/*",
+    "/investidores/area",
+    "/investidores/area/",
+    "/en/investidores/area",
+    "/en/investidores/area/",
+    "/es/investidores/area",
+    "/es/investidores/area/",
+    "/investidores/decisao"
+  ],
+  "exclude": []
+}

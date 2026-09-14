@@ -1,0 +1,12 @@
+# Configuracao da Cloudflare Pages (projeto "sigmacx").
+# Os segredos NAO ficam aqui: vao por `npm run publicar` (ver docs/LOGIN-INVESTIDORES.md).
+name = "sigmacx"
+pages_build_output_dir = "./dist"
+compatibility_date = "2024-11-01"
+
+# Aprovados pelo formulario, pedidos de acesso e limites contra spam.
+# O id e trocado pelo `npm run publicar` na primeira publicacao; em
+# `npm run dev:api` o KV e simulado localmente e o id nao importa.
+[[kv_namespaces]]
+binding = "INVESTIDORES"
+id = "f32c944dfa684aee8058bd6856a69181"

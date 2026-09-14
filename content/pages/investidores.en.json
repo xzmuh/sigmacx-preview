@@ -175,24 +175,32 @@
       "submit": "Request access",
       "note": "Every request is reviewed individually. Once approved, you receive a named access, valid for a set period.",
       "required": "Fill in name, work email, company and the consent.",
-      "subject": "Access request: investor area",
-      "sentTitle": "Request ready.",
-      "sentBody": "Your email client opened with the request ready to send. If nothing opened, write to"
+      "sending": "Sending…",
+      "failed": "We could not send it right now. Try again or write to",
+      "sentTitle": "Request sent.",
+      "sentBody": "We received your request. Once it is approved, you will get an email with access to the investor area."
     }
   },
   "login": {
     "title": "Investor area",
-    "lead": "Restricted to investors with a signed NDA.",
+    "lead": "Enter your authorised email and we will send you an access code.",
     "email": "Email",
     "emailPlaceholder": "name@company.com",
-    "password": "Password",
-    "passwordPlaceholder": "Your password",
-    "submit": "Sign in",
-    "forgot": "Forgot my password",
+    "submit": "Send code",
+    "sending": "Sending…",
+    "invalidEmail": "Enter a valid email.",
+    "notAllowed": "This email does not have access to the investor area. Reach us at",
+    "codeTitle": "Check your email",
+    "codeLead": "We sent an 8-character code to {email}. It is valid for 10 minutes.",
+    "code": "Access code",
+    "codeSubmit": "Sign in",
+    "verifying": "Verifying…",
+    "wrongCode": "Incorrect or expired code. Check your email.",
+    "entering": "Done! Signing you in…",
+    "back": "Use another email",
+    "network": "Connection failed. Please try again.",
     "noAccess": "Don't have access yet?",
     "request": "Request access",
-    "required": "Fill in email and password.",
-    "pending": "Access is granted after the NDA is signed. If you have already signed it, reach us at",
     "close": "Close"
   }
 }
