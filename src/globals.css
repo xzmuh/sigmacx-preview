@@ -22,6 +22,19 @@ video {
   font-display: swap;
 }
 
+/* So as letras de "SigmaCX", peso 700, com as sobreposicoes dos contornos
+   fundidas. Na fonte variavel cada letra e feita de pecas sobrepostas, e o
+   contorno do wordmark do rodape riscava as emendas por dentro das letras.
+   Gerada a partir de plus-jakarta.woff2 com fontTools (instancer com remocao
+   de sobreposicao + subset). */
+@font-face {
+  font-family: "SigmaCX Wordmark";
+  src: url("/media/sigmacx-wordmark.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
   --navy: #0a142c;
   --navy-deep: #050b19;
@@ -2480,6 +2493,7 @@ video {
 }
 
 .footer-wordmark > span {
+  font-family: "SigmaCX Wordmark", "Plus Jakarta Sans", system-ui, sans-serif;
   color: rgba(255, 255, 255, 0.055);
   -webkit-text-stroke: 1px rgba(185, 255, 155, 0.18);
   font-size: clamp(5.74rem, 11.76vw, 12.24rem);
@@ -2487,15 +2501,6 @@ video {
   letter-spacing: -0.062em;
   line-height: 1.12;
   white-space: nowrap;
-}
-
-.footer-wordmark small {
-  flex: 0 0 auto;
-  margin: 0 0 0.8rem;
-  color: #9ea9bd;
-  font-family: monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
 }
 
 .footer-bottom {
@@ -2516,10 +2521,6 @@ video {
   color: var(--green);
   font-family: monospace;
   font-style: normal;
-}
-
-.footer-bottom b {
-  color: rgba(255, 255, 255, 0.58);
 }
 
 /* Interaction motion system */
@@ -3080,10 +3081,6 @@ video {
   .footer-wordmark > span {
     font-size: clamp(4.1rem, 16.8vw, 6.12rem);
     letter-spacing: -0.055em;
-  }
-
-  .footer-wordmark small {
-    display: none;
   }
 
   .footer-bottom {

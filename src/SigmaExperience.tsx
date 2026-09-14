@@ -721,13 +721,11 @@ export function SigmaExperience() {
 
         <div className="footer-wordmark" aria-hidden="true">
           <span>SigmaCX</span>
-          <small>{f.wordmark}</small>
         </div>
 
         <div className="footer-bottom">
           <span>{f.place} <i>UTC −03:00</i></span>
           <span>{f.rights}</span>
-          <span>{f.tagline1} <b>{f.tagline2}</b></span>
         </div>
       </footer>
       </div>

@@ -82,13 +82,11 @@ export function SiteFooter({ sharedBackground = false }: { sharedBackground?: bo
 
         <div className="footer-wordmark" aria-hidden="true">
           <span>SigmaCX</span>
-          <small>{t.wordmark}</small>
         </div>
 
         <div className="footer-bottom">
           <span>{t.place} <i>UTC −03:00</i></span>
           <span>{t.rights}</span>
-          <span>{t.tagline1} <b>{t.tagline2}</b></span>
         </div>
       </footer>
     </>
